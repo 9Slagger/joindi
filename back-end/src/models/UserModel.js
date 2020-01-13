@@ -26,6 +26,20 @@ UserModel.init(
       validate: {
         notEmpty: true
       }
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false
+      }
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false
+      }
     }
   },
   { sequelize, modelName: "user" }
