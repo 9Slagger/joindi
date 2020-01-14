@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "antd": "^3.26.6",
+    "antd": "^3.26.7",
     "connected-react-router": "^6.6.1",
     "fuse.js": "^3.4.6",
     "jwt-decode": "^2.2.0",
@@ -20,7 +20,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8086 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

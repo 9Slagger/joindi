@@ -25,7 +25,7 @@ class Header extends React.Component {
 
           
           <Menu.Item key="search">
-            <SearchEvents/>
+             <SearchEvents/>
           </Menu.Item>
           
 
