@@ -19,7 +19,7 @@
     display: flex;
     justify-content: right;
     padding-top: 10px;
-    /* padding-right: 10px; */
+    padding-right: 10px;
 }
 
 .RightFooter a {

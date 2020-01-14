@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./src/dbconfig");
-// const databaseLoader = require('./src/databaseLoader')
+const databaseLoader = require('./src/databaseLoader')
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -22,14 +22,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "uploads")));
 
-app.use('/user', require('./src/routes/userRouter'))
+app.use("/user", require("./src/routes/userRouter"));
+app.use("/signin", require("./src/routes/authticationRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
     await sequelize.sync({ force });
-    // force && databaseLoader()
+    await databaseLoader()
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });
