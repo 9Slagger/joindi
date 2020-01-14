@@ -4,6 +4,11 @@ import { createBrowserHistory as createHistory } from "history";
 import { connect } from "react-redux";
 import HomePage from "../pages/Home";
 import AboutPage from "../pages/About";
+import CheckoutPage from "../pages/Checkout";
+import PayPage from "../pages/Pay";
+import ConfirmPage from "../pages/Confirm";
+import CompletePage from "../pages/Complete";
+
 export const history = createHistory();
 
 const Routers = props => {
@@ -12,6 +17,10 @@ const Routers = props => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
+        <Route exact path="/pay" component={PayPage} />
+        <Route exact path="/confirm" component={ConfirmPage} />
+        <Route exact path="/complete" component={CompletePage} />
       </Switch>
     </Router>
   );
