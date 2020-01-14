@@ -6,31 +6,19 @@ UserCompanyDetailModel.init(
   {
     company_name_en: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     company_name_th: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     company_address_en: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     company_address_th: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     }
   },
   { sequelize, modelName: "user_company_detail" }

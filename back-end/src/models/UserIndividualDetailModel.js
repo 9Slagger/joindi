@@ -6,40 +6,24 @@ UserIndividualDetailModel.init(
   {
     first_name_en: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     first_name_th: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     last_name_en: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     last_name_th: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     birthday: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isNumeric: true,
-        notEmpty: false
-      }
-    },
+      allowNull: false
+    }
   },
   { sequelize, modelName: "user_individual_detail" }
 );
