@@ -1,13 +1,19 @@
 import React from "react";
 import { Layout } from "antd";
-import Header from "./Header";
+import HeaderAdmin from "./HeaderAdmin";
 import Content from "./Content";
 import Footer from "./Footer";
+import SiderAdmin from "./SiderAdmin";
+import ContentAdmin from "./ContentAdmin";
 
 export default props => {
   return (
     <Layout>
-      <Header {...props} />
+      <HeaderAdmin {...props} />
+      <Layout>
+        <SiderAdmin/>
+        <ContentAdmin/>
+      </Layout>
       <Content>{props.children}</Content>
       <Footer />
     </Layout>

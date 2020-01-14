@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Row,Col,Icon} from 'antd'
 import '../css/Footer.css'
+import { Link } from 'react-router-dom'
 
 export class Footer extends Component {
 
@@ -18,8 +19,8 @@ export class Footer extends Component {
                         </div>
                         <div>© 2020 Join Di</div>
                         <div className="LinkFooter">
-                            <a>Term of Service</a> &nbsp; | &nbsp;
-                            <a>Primary Policy</a>
+                            <Link to="/">Term of Service</Link> &nbsp; | &nbsp;
+                            <Link to="/">Primary Policy</Link>
                         </div>
                     </Col>
                     <Col span={8}></Col>
@@ -27,16 +28,16 @@ export class Footer extends Component {
                         <Row className="RightFooter">
                             <br/>
                             <Col span={5}>
-                                <a>About us</a>
+                                <Link to="/">About us</Link>
                                 <br/>
-                                <a>Blog</a>
+                                <Link to="/">Blog</Link>
                                 <br/>
-                                <a>Join Di News</a>
+                                <Link to="/">Join Di News</Link>
                             </Col>
                             <Col span={4}>
-                                <a>For Creator</a>
+                                <Link to="/">For Creator</Link>
                                 <br/>
-                                <a>Host on events</a>
+                                <Link to="/">Host on events</Link>
                             </Col>
                         </Row>
                         <br/>
