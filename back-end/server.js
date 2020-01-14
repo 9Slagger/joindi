@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./src/dbconfig");
-// const databaseLoader = require('./src/databaseLoader')
+const databaseLoader = require('./src/databaseLoader')
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 (async () => {
   try {
     await sequelize.sync({ force });
-    // force && databaseLoader()
+    await databaseLoader()
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });

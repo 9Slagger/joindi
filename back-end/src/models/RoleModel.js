@@ -1,34 +1,32 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
-class UserModel extends Model {}
-UserModel.init(
+class RoleModel extends Model {}
+RoleModel.init(
   {
-    email: {
+    role_code: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        isEmail: true,
-        isLowercase: true
+        notEmpty: false
       }
     },
-    password: {
+    role_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: false
       }
     },
-    phone_number: {
+    role_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: false
       }
     }
   },
-  { sequelize, modelName: "user" }
+  { sequelize, modelName: "role" }
 );
 
-module.exports = { UserModel };
+module.exports = { RoleModel };
