@@ -34,11 +34,7 @@ export class HeaderAdmin extends Component {
               // visible={this.state.visible}
               size="large"
             >
-              <p
-                className="ant-dropdown-link"
-                href="#"
-                style={{ fontColor: "FFFFFF" }}
-              >
+              <p className="ant-dropdown-link" href="#">
                 Admin <Icon type="down" />
               </p>
             </Dropdown>
