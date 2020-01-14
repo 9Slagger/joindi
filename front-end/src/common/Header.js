@@ -1,5 +1,6 @@
 import React from "react"
-import { Menu, Icon } from 'antd';
+import SearchEvents from "./SearchEvents"
+import { Menu, Icon, Row} from 'antd';
 
 class Header extends React.Component {
   state = {
@@ -15,38 +16,57 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail">
-          <Icon type="mail" />
-          Navigation One
-        </Menu.Item>
-        <Menu.Item key="app" disabled>
-          <Icon type="appstore" />
-          Navigation Two
-        </Menu.Item>
-        <Menu.SubMenu
-          title={
-            <span className="submenu-title-wrapper">
-              <Icon type="setting" />
-              Navigation Three - Submenu
-            </span>
-          }
-        >
-          <Menu.ItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup title="Item 2">
-            <Menu.Item key="setting:3">Option 3</Menu.Item>
-            <Menu.Item key="setting:4">Option 4</Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
-        <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
-        </Menu.Item>
-      </Menu>
+      <Row>
+         <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+          <Menu.Item key="mail">
+            <Icon type="mail" />
+            Navigation One
+          </Menu.Item>
+
+          
+          <Menu.Item key="search">
+            <SearchEvents/>
+          </Menu.Item>
+          
+
+          <Menu.SubMenu
+            title={
+              <span className="submenu-title-wrapper">               
+                Events
+                <Icon type="caret-down" />
+              </span>
+            }
+          >
+
+            <Menu.Item title="hot">
+              Hot
+            </Menu.Item>
+            <Menu.ItemGroup title="Tag">
+              <Menu.Item key="artdesign">Art Design</Menu.Item>
+              <Menu.Item key="beauty">Beauty</Menu.Item>
+              <Menu.Item key="book">Book</Menu.Item>
+              <Menu.Item key="business">Business</Menu.Item>
+              <Menu.Item key="comedy">Comedy</Menu.Item>
+              <Menu.Item key="concert">Concert</Menu.Item>
+              <Menu.Item key="education">Education</Menu.Item>
+              <Menu.Item key="esport">E-sport</Menu.Item>
+              <Menu.Item key="foodanddring">Food & Drink</Menu.Item>
+              <Menu.Item key="health">Health</Menu.Item>
+              <Menu.Item key="seemore">See More ...</Menu.Item>
+            </Menu.ItemGroup>
+          </Menu.SubMenu>
+
+      
+
+          <Menu.Item key="login">
+            Log in
+          </Menu.Item>
+          
+          <Menu.Item key="signup">
+            Sign Up
+          </Menu.Item>
+        </Menu>
+      </Row>
     );
   }
 }
