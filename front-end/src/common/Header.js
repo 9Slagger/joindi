@@ -1,52 +1,100 @@
 import React from "react"
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Row, Col, Dropdown, Modal, Button, Input } from 'antd';
+import '../css/Header.css'
+
+const { SubMenu } = Menu;
+const { Search } = Input;
+
+const menu = (
+  <Menu>
+    <Menu.Item>Hot</Menu.Item>
+    <SubMenu title="Tag ">
+      <Menu.Item key="beauty">Beauty</Menu.Item>
+      <Menu.Item key="book">Book</Menu.Item>
+      <Menu.Item key="business">Business</Menu.Item>
+      <Menu.Item key="comedy">Comedy</Menu.Item>
+      <Menu.Item key="concert">Concert</Menu.Item>
+      <Menu.Item key="education">Education</Menu.Item>
+      <Menu.Item key="esport">E-sport</Menu.Item>
+      <Menu.Item key="foodanddring">Food & Drink</Menu.Item>
+      <Menu.Item key="health">Health</Menu.Item>
+      <Menu.Item key="seemore">See More ...</Menu.Item>
+    </SubMenu>
+  </Menu>
+);
 
 class Header extends React.Component {
   state = {
-    current: 'mail',
+    loading: false,
+    visible: false,
   };
 
-  handleClick = e => {
-    console.log('click ', e);
+  showModal = () => {
     this.setState({
-      current: e.key,
+      visible: true,
     });
   };
 
+  handleOk = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false });
+    }, 1000);
+  };
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+  
   render() {
+    const { visible } = this.state;
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail">
-          <Icon type="mail" />
-          Navigation One
-        </Menu.Item>
-        <Menu.Item key="app" disabled>
-          <Icon type="appstore" />
-          Navigation Two
-        </Menu.Item>
-        <Menu.SubMenu
-          title={
-            <span className="submenu-title-wrapper">
-              <Icon type="setting" />
-              Navigation Three - Submenu
-            </span>
-          }
-        >
-          <Menu.ItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup title="Item 2">
-            <Menu.Item key="setting:3">Option 3</Menu.Item>
-            <Menu.Item key="setting:4">Option 4</Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
-        <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
+      <Row className="header" type="flex" justify="space-around" align="middle">
+          <Col span={3}>
+            <img src="https://i.ibb.co/28WfkY9/join-DI-logo1.png" alt="join-DI-logo1" style={{ height: '50px', width: 'auto'}}/> 
+          </Col>
+          <Col span={1}></Col>
+          <Col span={2}>
+            <Dropdown overlay={menu} trigger={['click']}>
+              <a className="dropDownHeader" href="#">
+                Events&nbsp;
+                <Icon type="down" />
+              </a>
+            </Dropdown>
+          </Col>
+          <Col span={10}>
+          <Search
+            placeholder="input search text"
+            onSearch={value => console.log(value)}
+            style={{ width: 500 }}
+          />
+          </Col>
+          <Col span={8}>
+          <Row type="flex" justify="end" >
+          <a onClick={this.showModal} className="buttonHeader">
+            Log in
           </a>
-        </Menu.Item>
-      </Menu>
+          <Modal
+            visible={visible}
+            // title="Log in"
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+            footer={[
+              <Button key="submit" onClick={this.handleCancel}>
+                Log in
+              </Button>
+            ]}
+          >
+          <p>Log in</p>
+          </Modal>
+          <Col span={1}></Col>
+          <a onClick={this.showModal} className="buttonHeader">
+            Log in
+          </a>
+            </Row>
+          
+          </Col>
+        </Row>
     );
   }
 }

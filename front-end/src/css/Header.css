@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt&display=swap');
+
+.header {
+    background-color: #345586;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.dropDownHeader {
+    font-family: 'Prompt', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    color: #FFF;
+}
+.buttonHeader {
+    padding-right: 5px;
+}
