@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt&display=swap');
+
+.header {
+    background-color: #345586;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+}
+
+.dropDownHeader {
+    font-family: 'Prompt', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    color: #FFF;
+}
+
+.buttonHeader {
+    padding-right: 5px;
+    color: #FFFFFF;
+    /* border-right: 2px solid #fff; */
+}
+
+.loginandsignin {
+    color: #FFFFFF;
+    font-family: 'Prompt',
+        sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.login {
+    border-right: 2px solid #fff;
+    padding-right: 5px;
+}
+
+.signup {
+    padding-left: 7px;
+}

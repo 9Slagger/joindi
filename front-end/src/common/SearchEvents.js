@@ -57,6 +57,7 @@ class SearchEvents extends React.Component {
       ]
     });
     this.setState({searchList:fuse.search(e)})
+    console.log(this.state.searchList)
   }
 
 
@@ -69,13 +70,13 @@ class SearchEvents extends React.Component {
           style={{ width: "500px" }}
         />
         <br />
-        {this.state.searchList.map(element => (
+        {/* {this.state.searchList.map(element => (
 
         <Card size="small" title={element.eventName} style={{ width: 300 }} key={element.id}>
           <p>{element.catagory.catagory_name}</p>
     
     </Card>
-        ))}
+        ))} */}
       </div>
     )
   }
