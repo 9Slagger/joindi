@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import HomePage from "../pages/Home";
 import AdminPage from "../pages/Admin/Payment/waiting";
 import ManageTag from "../pages/Admin/ManageTag/managetag";
+import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment"
 import AboutPage from "../pages/About";
 import CheckoutPage from "../pages/Checkout";
 import PayPage from "../pages/Pay";
@@ -26,6 +27,7 @@ const Routers = props => {
         <Route exact path="/confirm" component={ConfirmPage} />
         <Route exact path="/complete" component={CompletePage} />
         <Route exact path="/createevents" component={CreateEvents} />
+        <Route exact path="/approvepayment" component={ApprovePayment} />
       </Switch>
     </Router>
   );
