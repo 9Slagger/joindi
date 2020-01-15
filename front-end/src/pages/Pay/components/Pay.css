@@ -1,0 +1,19 @@
+#bank-account-div > div {
+  background-color: #bcbabe;
+}
+
+#process-div button {
+  border: none;
+  border-radius: 50%;
+  background-color: #bcbabe;
+  color: white;
+}
+
+#process-div button.active {
+  background-color: #345586;
+  color: white;
+}
+
+#process-div p {
+  color: #345586;
+}
