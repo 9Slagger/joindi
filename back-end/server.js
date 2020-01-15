@@ -30,7 +30,11 @@ app.use((req, res, next) => {
 (async () => {
   try {
     await sequelize.sync({ force });
+<<<<<<< HEAD
     await databaseLoader()
+=======
+    // force && databaseLoader
+>>>>>>> create-event
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });
