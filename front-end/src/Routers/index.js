@@ -16,15 +16,15 @@ const Routers = props => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={HomePage} />{" "}
-        <Route path="/admin" component={AdminPage} />{" "}
-        <Route path="/admin/managetag" component={ManageTag} />{" "}
-        <Route exact path="/about" component={AboutPage} />{" "}
-        <Route exact path="/checkout" component={CheckoutPage} />{" "}
-        <Route exact path="/pay" component={PayPage} />{" "}
-        <Route exact path="/confirm" component={ConfirmPage} />{" "}
-        <Route exact path="/complete" component={CompletePage} />{" "}
-      </Switch>{" "}
+        <Route exact path="/" component={HomePage} />
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/managetag" component={ManageTag} />
+        <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
+        <Route exact path="/pay" component={PayPage} />
+        <Route exact path="/confirm" component={ConfirmPage} />
+        <Route exact path="/complete" component={CompletePage} />
+      </Switch>
     </Router>
   );
 };
