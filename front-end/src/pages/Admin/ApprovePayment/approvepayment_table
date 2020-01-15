@@ -1,0 +1,97 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
+import "./index.css";
+import { Card, Icon, Row, Col, Button, Input } from "antd";
+
+const { Search } = Input;
+
+const tabListNoTitle = [
+  {
+    key: "Waiting",
+    tab: (
+      <span>
+        <Icon type="question-circle" />
+        Waiting
+      </span>
+    )
+  },
+  {
+    key: "Approved",
+    tab: (
+      <span>
+        <Icon type="check-circle" />
+        Approve
+      </span>
+    )
+  },
+  {
+    key: "Rejected",
+    tab: (
+      <span>
+        <Icon type="close-circle" />
+        Rejected
+      </span>
+    )
+  }
+];
+
+const contentListNoTitle = {
+  Waiting: (
+    <Card style={{ width: "200", height: "20" }}>
+      <Row type="flex" justify="space-between">
+        <Col>Cat Concert 2019</Col>
+        <Col>
+          <Button style={{ border: "none" }} shape="circle">
+            <Icon type="check-circle" style={{ fontSize: "20px" }} />
+          </Button>
+          <Button style={{ border: "none" }} shape="circle">
+            <Icon type="close-circle" style={{ fontSize: "20px" }} />
+          </Button>
+        </Col>
+      </Row>
+    </Card>
+  ),
+  Approved: <p>app content</p>,
+  Rejected: <p>project content</p>
+};
+
+class TabsCard extends React.Component {
+  state = {
+    key: "tab1",
+    noTitleKey: "app"
+  };
+
+  onTabChange = (key, type) => {
+    console.log(key, type);
+    this.setState({ [type]: key });
+  };
+
+  render() {
+    return (
+      <div>
+        <br />
+        <Card
+          style={{ width: "100%", textAlign: "center" }}
+          tabList={tabListNoTitle}
+          activeTabKey={this.state.noTitleKey}
+          // tabBarExtraContent={<a href="#">More</a>}
+          onTabChange={key => {
+            this.onTabChange(key, "noTitleKey");
+          }}
+        >
+          <Search
+            placeholder="input search text"
+            onSearch={value => console.log(value)}
+            style={{ width: "70vh" }}
+          />
+          <br />
+          <br />
+          {contentListNoTitle[this.state.noTitleKey]}
+        </Card>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<TabsCard />, document.getElementById("container"));

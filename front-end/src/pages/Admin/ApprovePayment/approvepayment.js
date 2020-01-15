@@ -42,33 +42,33 @@ export default class ApprovePayment extends Component {
     theData: [
       {
         id:'1',
-        name: 'name1',
+        name: 'จ่ายค่ากิจกรรมดูหนังนะจ้ะ',
         status:'1'
       },
       {
         id:'2',
-        name: 'name2',
+        name: 'จ่ายเงินค่ากิจกรรมร้องเพลงที่ตู้คาราโอเกะ',
         status:'1'
       },
       {
         id:'3',
-        name: 'name1',
-        status:'2'
+        name: 'จ่ายเงินค่ากิจกรรมไปจ่ายชาบูชิ โปรโมชั่นมา 4 จ่าย 3',
+        status:'1'
       },
       {
         id:'4',
-        name: 'name2',
-        status:'2'
+        name: 'จ่ายเงินค่ากิจกรรมไปกินไอติมที่ท่าน้ำนนท์',
+        status:'1'
       },
       {
         id:'5',
-        name: 'name1',
-        status:'3'
+        name: 'จ่ายเงินค่ากิจกรรมไปออกกำลังกายเพื่อสุขภาพที่ดี',
+        status:'1'
       },
       {
         id:'6',
-        name: 'name2',
-        status:'3'
+        name: 'จ่ายเงินค่ากิจกรรมวิ่งสู้ฟัดเพื่อลดความอ้วนนะจ้ะ',
+        status:'1'
       },
     ]
   };
@@ -78,39 +78,91 @@ export default class ApprovePayment extends Component {
     this.setState({ [type]: key });
   };
 
-  handleDelete = (id1) => {
-    console.log(id1)
-    // this.setState.theData.filter((theData) => theData.id != id1);
-    const newArray = this.state.theData.filter(item => item.id !== id1)
-    this.setState({
-      theData: newArray
-    })  
+  handleApprove = (id) => {
+    var theData = [...this.state.theData];
+    var index = theData.findIndex(obj => obj.id === id);
+    theData[index].status = '2';
+    this.setState({theData});
+  }
+
+  handleDelete = (id) => {
+    var theData = [...this.state.theData];
+    var index = theData.findIndex(obj => obj.id === id);
+    theData[index].status = '3';
+    this.setState({theData});
   }
 
   render() {
     const contentListNoTitle = {
       Waiting: ( 
-        this.state.theData.map((obj)=>{
+        this.state.theData.filter(item => item.status === '1').map((obj)=>{
+          // console.log(obj)
           return(
-            <Card style={{ width: "200", height: "20" }}>
-              <Row type="flex" justify="space-between">
-                <Col>{obj.name}</Col>
-                <Col>
-                  <Button style={{ border: "none" }} shape="circle">
-                    <Icon type="check-circle" style={{ fontSize: "20px" }} />
-                  </Button>
-                  <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
-                    <Icon type="close-circle" style={{ fontSize: "20px" }} />
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
+            <div>
+              <Card style={{ width: "200", height: "20" }}>
+                <Row type="flex" justify="space-between">
+                  <Col>{obj.name}</Col>
+                  <Col>
+                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleApprove(`${obj.id}`)}>
+                      <Icon type="check-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
+                      <Icon type="close-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                  </Col>
+                </Row>
+              </Card><br/>
+            </div>
           );
         })
         
       ),
-      Approved: <p>app content</p>,
-      Rejected: <p>project content</p>
+      Approved: ( 
+        this.state.theData.filter(item => item.status === '2').map((obj)=>{
+          // console.log(obj)
+          return(
+            <div>
+              <Card style={{ width: "200", height: "20" }}>
+                <Row type="flex" justify="space-between">
+                  <Col>{obj.name}</Col>
+                  {/* <Col>
+                    <Button style={{ border: "none" }} shape="circle">
+                      <Icon type="check-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
+                      <Icon type="close-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                  </Col> */}
+                </Row>
+              </Card><br/>
+            </div>
+          );
+        })
+        
+      ),
+      Rejected: ( 
+        this.state.theData.filter(item => item.status === '3').map((obj)=>{
+          // console.log(obj)
+          return(
+            <div>
+              <Card style={{ width: "200", height: "20" }}>
+                <Row type="flex" justify="space-between">
+                  <Col>{obj.name}</Col>
+                  {/* <Col>
+                    <Button style={{ border: "none" }} shape="circle">
+                      <Icon type="check-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
+                      <Icon type="close-circle" style={{ fontSize: "20px" }} />
+                    </Button>
+                  </Col> */}
+                </Row>
+              </Card><br/>
+            </div>
+          );
+        })
+        
+      ),
     };
 
     return <AdminLayout>
