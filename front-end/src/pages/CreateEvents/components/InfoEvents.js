@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
-import { Upload, Icon,  Row, Col,  Form, Input } from "antd";
+import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import './StyleComponents/infoEventStyle.css'
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -54,12 +55,14 @@ class InfoEvents extends Component {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form>
+      <Form className="decorationForm">
         <Row>
           {/* ---------------------Photo Upload----------------------- */}
           <Col span={8}>
-            <Row>
+            <Row type="flex" justify="center">
+              <Col>
               <Upload
+              
                 {...props}
                 name="avatar"
                 listType="picture-card"
@@ -75,12 +78,13 @@ class InfoEvents extends Component {
                   uploadButton
                 )}
               </Upload>
+              </Col>
             </Row>
           </Col>
           {/* --------------------------Info Events------------------------------- */}
-          <Col span={16}>
+          <Col span={16} style={{marginTop:"20px"}} >
             <Row>
-              <Col span={4}>Event Name:</Col>
+              <Col span={4} ><h5 style={{marginTop:"6px",color:"white"}}>Event Name:</h5></Col>
               <Col span={20}>
                 <Form.Item>
                   {getFieldDecorator("eventname", {
@@ -90,12 +94,12 @@ class InfoEvents extends Component {
                         message: "Please put Event name!"
                       }
                     ]
-                  })(<Input placeholder="Event name" />)}
+                  })(<Input style={{width:"410px"}} className="inputDecolation" placeholder="Event name" />)}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>Creater name:</Col>
+              <Col span={4}><h5 style={{marginTop:"6px",color:"white"}}>Creater name :</h5></Col>
               <Col span={20}>
                 <Form.Item>
                   {getFieldDecorator("creatername", {
@@ -105,13 +109,13 @@ class InfoEvents extends Component {
                         message: "Please put Creater name!"
                       }
                     ]
-                  })(<Input placeholder="Creater name" />)}
+                  })(<Input style={{width:"410px"}} placeholder="Creater name" />)}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={4}>
-                <Icon type="calendar" /> Date:
+                <h5 style={{marginTop:"6px",color:"white"}}><Icon type="calendar" /> Date : </h5>
               </Col>
               <Col span={20}>
                 <Form.Item>
@@ -128,25 +132,37 @@ class InfoEvents extends Component {
             </Row>
             <Row>
               <Col span={4}>
-                <Icon type="compass" /> Location:
+                <h5 style={{marginTop:"6px",color:"white"}}><Icon type="compass" /> Location : </h5>
               </Col>
-              <Col span={20}>
+              <Col span={5}>
                 <Form.Item>
-                  {getFieldDecorator("location", {
+                  {getFieldDecorator("latitudeLocation", {
                     rules: [
                       {
                         required: true,
-                        message: "Please put Location!"
+                        message: "Please put Latitude Location!"
                       }
                     ]
-                  })(<Input placeholder="Location" />)}
+                  })(<Input type="number" style={{width:"200px"}} placeholder="Latitude (Ex 13.756331)" />)}
+                </Form.Item>
+              </Col>
+              <Col span={5} >
+              <Form.Item >
+                  {getFieldDecorator("longitudeLocation", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please put Longitude Location!"
+                      }
+                    ]
+                  })(<Input type="number"  style={{width:"200px",marginLeft:"10px"}} placeholder="Longitude (Ex 1.501762)" />)}
                 </Form.Item>
               </Col>
             </Row>
 
             <Row>
               <Col span={4}>
-                <Icon type="tags" /> Tags:
+              <h5 style={{marginTop:"6px",color:"white"}}><Icon type="tags" /> Tags : </h5>
               </Col>
               <Col span={20}>
                 <Form.Item>
@@ -160,7 +176,7 @@ class InfoEvents extends Component {
                   })(
                     <Select
                       mode="multiple"
-                      style={{ width: "100%" }}
+                      style={{width:"410px"}}
                       placeholder="Please select"
                       defaultValue={["a10", "c12"]}
                       // onChange={handleChange}

@@ -1,0 +1,8 @@
+.avatar-uploader > .ant-upload {
+  margin-top: 60px;
+  width: 200px!important;
+  height: 200px!important;
+}
+.decorationForm{
+  font-family: 'Prompt', sans-serif;
+}

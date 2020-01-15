@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import DefaultLayout from "../../common/DefaultLayout";
 import InfoEvents from "./components/InfoEvents";
 import Ticket from "./components/Ticket";
-import Description from "./components/Description";
 import OrganizedBy from "./components/OrganizedBy";
-import { Row } from "antd";
+import { Row, Col, Button } from "antd";
 import RichText from "./components/RichText";
+import './CreateEventsStyle.css'
 
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
-        <Row>
+      <DefaultLayout >
+        <div className="outerBox">
+        <Row className="infoEvents">
           <InfoEvents />
         </Row>
         <Row>
@@ -21,11 +22,15 @@ export default class index extends Component {
           <Ticket />
         </Row>
         <Row>
-          <Description />
-        </Row>
-        <Row>
           <OrganizedBy />
         </Row>
+        <Row>
+          <Col span={24} style={{textAlign:"right"}}>
+            <Button style={{margin:"10px 10px"}}>Back</Button>
+            <Button style={{margin:"10px 10px"}}>Confirm</Button>
+          </Col>
+        </Row>
+        </div>    
       </DefaultLayout>
     );
   }
