@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Form, Button, Modal, Col, Row, Input } from "antd";
+import { Form, Button, Modal, Col, Row, Input, Table } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import Column from "antd/lib/table/Column";
+import "./StyleComponents/OrganizedBy.css";
 
 class OrganizedBy extends Component {
   state = {
@@ -24,11 +26,14 @@ class OrganizedBy extends Component {
       };
       console.log(datas);
       if (!err) {
+        let arrayOfOrganizedData = this.state.organizedData;
+        arrayOfOrganizedData.push(datas);
+        await this.setState(arrayOfOrganizedData);
         await this.setState({
-          organizedData: datas,
           visible: false
         });
         this.props.form.resetFields();
+        console.log(this.state.organizedData);
       }
     });
   };
@@ -41,20 +46,33 @@ class OrganizedBy extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const dataOrganizedTable = this.state.organizedData;
     return (
-      <div>
+      <div className="organizedBox">
+        <Row>
+          <Col span={24} style={{ textAlign: "center" }}>
+            <h3>Organized By</h3>
+          </Col>
+        </Row>
+        <Table dataSource={dataOrganizedTable} style={{ width:"100%",overflow:"auto" }}>
+          <Column title="name" dataIndex="name" key="name" />
+          <Column
+            title ="Description"
+            dataIndex="description"
+            key="description"
+            // render={(text, data) => (
+            //   <lebel style={{ fontSize: 100 }}>{data.description}</lebel>
+            // )}
+          />
+        </Table>
+        <Row>
+          <Col span={24} style={{ textAlign: "center", margin: "20px" }}>
+            <Button type="primary" onClick={this.showModal}>
+              Add Organized By
+            </Button>
+          </Col>
+        </Row>
         <Form>
-          <Row>
-            <Col span={12}>
-              <Row>{this.state.organizedData.name}</Row>
-            </Col>
-            <Col span={12}>
-            <Row>{this.state.organizedData.description}</Row>
-            </Col>
-          </Row>
-          <Button type="primary" onClick={this.showModal}>
-            Add Organized By
-          </Button>
           <Modal
             title="Organized By"
             visible={this.state.visible}
