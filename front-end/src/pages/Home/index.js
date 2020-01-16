@@ -7,6 +7,9 @@ export default class index extends Component {
     return (
       <DefaultLayout>
         <h1>this is homepage</h1>
+        <h1>this is homepage</h1>
+        <h1>this is homepage</h1>
+        <h1>this is homepage</h1>
     
       </DefaultLayout>
     )
