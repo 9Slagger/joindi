@@ -1,0 +1,104 @@
+{
+    "EventStatusModel":
+    [
+        {
+            "EventStatusModel_id": 1,
+            "user_id": 2,
+            "event_status_id": 1, 
+            "event_name": "JoinDi 1",
+            "event_latitude_map": 123,
+            "event_longitude_map": 456,
+            "event_date_start": "2020-01-15",
+            "event_date_end": "2020-01-16",
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+        },
+        {
+            "EventStatusModel_id": 2,
+            "user_id": 2,
+            "event_status_id": 1,
+            "event_name": "JoinDi 2",
+            "event_latitude_map": 123,
+            "event_longitude_map": 456,
+            "event_date_start": "2020-01-15",
+            "event_date_end": "2020-01-16",
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+        },
+        {
+            "EventStatusModel_id": 3,
+            "user_id": 2,
+            "event_status_id": 1,
+            "event_name": "JoinDi 3",
+            "event_latitude_map": 123,
+            "event_longitude_map": 456,
+            "event_date_start": "2020-01-15",
+            "event_date_end": "2020-01-16",
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+        }
+    ],
+
+    "OrganizedContactModel": 
+    [
+        {
+            "organized_contact_title": "Organizer 1",
+            "organized_contact": "detail"
+        }
+    ],
+
+    "EventTagModel":
+    [
+        {
+            "tag_name_en": "tag EN",
+            "tag_name_th": "tag TH"
+        }
+    ],
+
+    "TicketModel":
+    [
+        {
+            "ticket_title": "Paid",
+            "ticket_detail": "detail",
+            "ticket_note": "remark", 
+            "ticket_total_quantity": 2, 
+            "ticket_price": 120,
+            "ticket_manufacturing_date": "2020-01-15",
+            "ticket_expiry_date": "2020-01-16"
+        },
+        {
+            "ticket_title": "Free",
+            "ticket_detail": "detail",
+            "ticket_note": "remark",
+            "ticket_total_quantity": 2,
+            "ticket_price": 0,
+            "ticket_manufacturing_date": "2020-01-15",
+            "ticket_expiry_date": "2020-01-16"
+        }
+    ],
+
+    "EventCategoryModel":
+    [
+        {
+            "category_name_en":"Category EN",
+            "category_name_th": "Category TH"
+        }
+    ],
+
+    "UserCompanyDetailModel":
+    [
+        {
+            "company_name_en": "Company EN",
+            "company_name_th": "Company TH",
+            "company_address_en": "Company address EN",
+            "company_address_th": "Company address TH"
+        }
+    ],
+
+    "UserIndividualDetailModel":
+    [
+        {
+            "first_name_en": "Firstname EN",
+            "first_name_th": "Firstname TH",
+            "last_name_en": "Lastname EN",
+            "last_name_th": "Lastname TH"
+        }
+    ]
+}
