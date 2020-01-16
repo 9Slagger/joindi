@@ -21,8 +21,6 @@ export class Footer extends Component {
             </div>
             <div>© 2020 Join Di</div>
             <div className="LinkFooter">
-              <a>Term of Service</a> &nbsp; | &nbsp;
-              <a>Primary Policy</a>
               <Link>Term of Service</Link> &nbsp; | &nbsp;
               <Link>Primary Policy</Link>
             </div>
