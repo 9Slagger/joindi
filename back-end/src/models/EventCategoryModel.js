@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
-class CustomerTypeModel extends Model {}
-CustomerTypeModel.init(
+class EventCategoryModel extends Model {}
+EventCategoryModel.init(
   {
-    customer_type_code: {
+    category_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -12,15 +12,7 @@ CustomerTypeModel.init(
         notEmpty: false
       }
     },
-    customer_type_name_en: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: false
-      }
-    },
-    customer_type_name_th: {
+    category_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -29,8 +21,8 @@ CustomerTypeModel.init(
       }
     }
   },
-  { sequelize, modelName: "customer_type" }
+  { sequelize, modelName: "event_category" }
 );
 
-module.exports = { CustomerTypeModel };
+module.exports = { EventCategoryModel };
 

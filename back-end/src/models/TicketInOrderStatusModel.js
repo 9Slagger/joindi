@@ -1,36 +1,33 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
-class CustomerTypeModel extends Model {}
-CustomerTypeModel.init(
+class TicketInOrderStatusModel extends Model {}
+TicketInOrderStatusModel.init(
   {
-    customer_type_code: {
+    status_code: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: false
       }
     },
-    customer_type_name_en: {
+    status_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: false
       }
     },
-    customer_type_name_th: {
+    status_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: false
       }
-    }
+    },
   },
-  { sequelize, modelName: "customer_type" }
+  { sequelize, modelName: "ticket_in_order_status" }
 );
 
-module.exports = { CustomerTypeModel };
+module.exports = { TicketInOrderStatusModel };
 

@@ -10,6 +10,7 @@ export const serviceAuth = {
         setToken(JSON.stringify(res.data.result.token));
         resolve(res.data);
       } catch (error) {
+        if(error.status  < 500)
         reject(error.response.data);
       }
     });

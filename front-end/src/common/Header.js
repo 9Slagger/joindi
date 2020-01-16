@@ -1,14 +1,6 @@
-import React from "react"
-import Fuse from 'fuse.js';
-import {
-  Menu,
-  Icon,
-  Row,
-  Col,
-  Dropdown,
-  Input,
-  Form
-} from "antd";
+import React from "react";
+import Fuse from "fuse.js";
+import { Menu, Icon, Row, Col, Dropdown, Input, Form } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -18,9 +10,14 @@ import { Link } from "react-router-dom";
 const { SubMenu } = Menu;
 const { Search } = Input;
 
-function handleClickTag(e){
-  console.log("click : " , e)
+function handleClickTag(e) {
+  console.log("click : ", e);
 }
+
+function handleMenuUser(e){
+ console.log(e)
+}
+
 
 const menu = (
   <Menu onClick={handleClickTag}>
@@ -35,8 +32,19 @@ const menu = (
       <Menu.Item key="esport"> E - sport </Menu.Item>
       <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
       <Menu.Item key="health"> Health </Menu.Item>
-      <Menu.Item key="seemore"> See More... </Menu.Item>
+      <Menu.Item key="seemore" > See More... </Menu.Item>
     </SubMenu>{" "}
+  </Menu>
+);
+
+const menuUser = (
+  <Menu onClick={handleMenuUser} className="dropDownUser">
+    <Menu.Item key="profile">Profile</Menu.Item>
+    <Menu.Item key="payoders">Pay Orders</Menu.Item>
+    <Menu.Item key="myevents">My Events</Menu.Item>
+    <Menu.Item key="joinevents">Join Events</Menu.Item>
+    <Menu.Item key="wishlist">Wish List</Menu.Item>
+    <Menu.Item key="logout"> Logout</Menu.Item>
   </Menu>
 );
 
@@ -46,44 +54,44 @@ class Header extends React.Component {
     visibleSignUp: false,
     visibleLogIn: false,
     isDirty: false,
-    searchList:[],
+    searchList: [],
     data: [
       {
-        "id": 1,
-        "eventName": "วิ่งไล่ลุง",
-        "catagory": {
-          "id": 1,
-          "catagory_name": "Popular"
+        id: 1,
+        eventName: "วิ่งไล่ลุง",
+        catagory: {
+          id: 1,
+          catagory_name: "Popular"
         },
-        "tag": [
+        tag: [
           {
-            "id": 1,
-            "tag_name": "Coding"
+            id: 1,
+            tag_name: "Coding"
           },
           {
-            "id": 2,
-            "tag_name": "Run"
+            id: 2,
+            tag_name: "Run"
           }
         ]
       },
       {
-        "id": 1,
-        "eventName": "เดินเชียร์ลุง",
-        "catagory": {
-          "id": 1,
-          "catagory_name": "Hot"
+        id: 1,
+        eventName: "เดินเชียร์ลุง",
+        catagory: {
+          id: 1,
+          catagory_name: "Hot"
         },
-        "tag": [
+        tag: [
           {
-            "id": 3,
-            "tag_name": "Walk"
+            id: 3,
+            tag_name: "Walk"
           }
         ]
       }
     ]
   };
 
-  handleSearch = (e) => {
+  handleSearch = e => {
     const fuse = new Fuse(this.state.data, {
       shouldSort: true,
       threshold: 0.6,
@@ -91,16 +99,11 @@ class Header extends React.Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: [
-        "eventName",
-        "catagory_name"
-      ]
+      keys: ["eventName", "catagory_name"]
     });
-    this.setState({searchList:fuse.search(e)})
-    console.log("search : ",this.state.searchList)
-  }
-
-
+    this.setState({ searchList: fuse.search(e) });
+    console.log("search : ", this.state.searchList);
+  };
 
   showModalSignUp = () => {
     this.setState({
@@ -170,26 +173,6 @@ class Header extends React.Component {
     callback();
   };
 
-  handleSubmitSignUp = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
-  handleSubmitLogIn = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
   render() {
     const { Authentication } = this.props;
     return (
@@ -224,7 +207,12 @@ class Header extends React.Component {
         <Col span={8}>
           <Row className="loginandsignin" type="flex" justify="end">
             {Authentication.item && Authentication.item.isAuthenticated ? (
-              <label>Hi {Authentication.item.email}</label>
+              <Dropdown overlay={menuUser} trigger={["click"]}>
+                <label>
+                  Hi {Authentication.item.email}
+                  <Icon type="down" />
+                </label>
+              </Dropdown>
             ) : (
               <>
                 <Login />

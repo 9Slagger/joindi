@@ -1,36 +1,33 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
-class RoleModel extends Model {}
-RoleModel.init(
+class OrganizedContactModel extends Model {}
+OrganizedContactModel.init(
   {
-    role_code: {
+    organized_contact_title: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: false
       }
     },
-    role_name_en: {
-      type: DataTypes.STRING,
+    organized_contact: {
+      type: DataTypes.STRING(1000),
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: false
       }
     },
-    role_name_th: {
-      type: DataTypes.STRING,
+    priority: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       validate: {
-        notEmpty: false
+        isNumeric: true
       }
     }
   },
-  { sequelize, modelName: "role" }
+  { sequelize, modelName: "organized_contact" }
 );
 
-module.exports = { RoleModel };
+module.exports = { OrganizedContactModel };
 
