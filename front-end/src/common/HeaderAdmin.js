@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Menu, Dropdown, Button } from "antd";
+import { Row, Col, Icon, Menu, Dropdown } from "antd";
 import "../css/HeaderAdmin.css";
 
 const menu = (
