@@ -19,11 +19,13 @@ export default class CategoriesEvents extends Component {
               <Select
                 labelInValue
                 defaultValue={{ key: "Sort By" }}
-                style={{ width: 120 }}
+                style={{ width: 200 }}
                 onChange={this.handleChange}
               >
-                <Option value="time">Upcoming</Option>
-                <Option value="popular">Popular</Option>
+
+                <Option value="recommendbyadmin">Recommend by JoinDi</Option>
+                <Option value="recommendforyou">Recommend for You</Option>
+
               </Select>
             </Row>
           </Col>
