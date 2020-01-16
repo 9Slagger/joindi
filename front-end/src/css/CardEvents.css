@@ -1,0 +1,12 @@
+.card-events{
+  text-align: center;
+  width: 200px;
+  height: 350px;
+  border-radius: 5% !important;
+  text-align: left
+}
+
+.avatar-events {
+  width: 150px;
+  height: 200px !important;
+}
