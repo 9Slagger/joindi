@@ -33,3 +33,4 @@ EventStatusModel.init(
 );
 
 module.exports = { EventStatusModel };
+

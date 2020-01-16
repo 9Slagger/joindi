@@ -33,3 +33,4 @@ CustomerTypeModel.init(
 );
 
 module.exports = { CustomerTypeModel };
+

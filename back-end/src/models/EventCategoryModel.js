@@ -25,3 +25,4 @@ EventCategoryModel.init(
 );
 
 module.exports = { EventCategoryModel };
+

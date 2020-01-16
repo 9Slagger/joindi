@@ -25,3 +25,4 @@ EventTagModel.init(
 );
 
 module.exports = { EventTagModel };
+

@@ -24,3 +24,4 @@ UserCompanyDetailModel.init(
 );
 
 module.exports = { UserCompanyDetailModel };
+
