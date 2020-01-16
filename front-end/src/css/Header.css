@@ -36,3 +36,12 @@
 .signup {
     padding-left: 7px;
 }
+
+
+.dropDownUser{
+    text-align: center !important;
+    font-family: 'Prompt', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    color: #FFF;
+}
