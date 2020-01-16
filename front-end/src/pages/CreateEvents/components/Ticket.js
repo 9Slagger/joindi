@@ -132,7 +132,7 @@ class Ticket extends Component {
             <h3>Ticket</h3>
           </Col>
         </Row>
-        <Table dataSource={dataTicketTable} style={{ width:"100%" }}>
+        <Table dataSource={dataTicketTable} style={{ width:"100%",overflow:"auto" }}>
           <Column title="Title" dataIndex="title" key="title" />
           <Column
             title="Description"

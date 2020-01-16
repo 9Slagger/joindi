@@ -54,7 +54,7 @@ class OrganizedBy extends Component {
             <h3>Organized By</h3>
           </Col>
         </Row>
-        <Table dataSource={dataOrganizedTable}>
+        <Table dataSource={dataOrganizedTable} style={{ width:"100%",overflow:"auto" }}>
           <Column title="name" dataIndex="name" key="name" />
           <Column
             title ="Description"
