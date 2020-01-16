@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import DefaultLayout from "../../common/DefaultLayout";
-import { Row, Col, Input, Icon, Divider } from "antd";
+import { Row, Col, Icon,
+  // Divider, Input
+} from "antd";
 import "./EventDetail.css";
 
 export default class EventDetail extends Component {

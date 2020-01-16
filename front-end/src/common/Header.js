@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  Menu,
-  Icon,
-  Row,
-  Col,
-  Dropdown,
-  Input,
-  Form
-} from "antd";
+import { Menu, Icon, Row, Col, Dropdown, Input, Form } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
 import Signup from "./Signup";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
@@ -36,19 +28,9 @@ const menu = (
 );
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      loading: false,
-      visibleSignUp: false,
-      visibleLogIn: false,
-      isDirty: false
-    };
-  }
-
   render() {
+    const { Authentication } = this.props;
+    console.log("Authentication", Authentication);
     return (
       <Row className="header" type="flex" justify="space-around" align="middle">
         <Col span={3}>
@@ -80,8 +62,14 @@ class Header extends React.Component {
         </Col>
         <Col span={8}>
           <Row className="loginandsignin" type="flex" justify="end">
-            <Login />
-            <Signup />
+            {Authentication.item && Authentication.item.isAuthenticated ? (
+              <label>Hi {Authentication.item.email}</label>
+            ) : (
+              <>
+                <Login />
+                <Signup />
+              </>
+            )}
           </Row>
         </Col>
       </Row>
