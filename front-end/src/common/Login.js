@@ -33,7 +33,7 @@ class Login extends Component {
         try {
           this.props.signin(email, password);
         } catch (error) {
-          console.log("error", error);
+          alert(this.props.Authentication.item.messages.title_en)
         }
       }
     });

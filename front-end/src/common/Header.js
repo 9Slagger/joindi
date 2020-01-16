@@ -170,26 +170,6 @@ class Header extends React.Component {
     callback();
   };
 
-  handleSubmitSignUp = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
-  handleSubmitLogIn = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
   render() {
     const { Authentication } = this.props;
     return (

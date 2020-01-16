@@ -7,6 +7,7 @@ EventTagModel.init(
     tag_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -14,6 +15,7 @@ EventTagModel.init(
     tag_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
