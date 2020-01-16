@@ -179,17 +179,26 @@ export default class ApprovePayment extends Component {
           // console.log(obj)
           return(
             <div>
-              <Card style={{ width: "200", height: "20" }}>
+              <Card
+                style={{
+                  width: "200",
+                  boxShadow: " 0px 0px 10px -5px rgba(0,0,0,0.75)",
+                  height: "80px"
+                }}
+                className="card-list"
+              >
                 <Row type="flex" justify="space-between">
                   <Col>{obj.name}</Col>
-                  {/* <Col>
-                    <Button style={{ border: "none" }} shape="circle">
-                      <Icon type="check-circle" style={{ fontSize: "20px" }} />
-                    </Button>
-                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
-                      <Icon type="close-circle" style={{ fontSize: "20px" }} />
-                    </Button>
-                  </Col> */}
+                  <Col>
+                  &nbsp;&nbsp;
+                  <Button
+                    style={{ border: "none", color: "#8D021F" }}
+                    shape="circle"
+                    onClick={()=>this.modalDelete(obj.id)}
+                  >
+                    <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                  </Button>
+                  </Col>
                 </Row>
               </Card><br/>
             </div>
@@ -202,18 +211,17 @@ export default class ApprovePayment extends Component {
           // console.log(obj)
           return(
             <div>
-              <Card style={{ width: "200", height: "20" }}>
+              <Card
+                style={{
+                  width: "200",
+                  boxShadow: " 0px 0px 10px -5px rgba(0,0,0,0.75)",
+                  height: "80px"
+                }}
+                className="card-list"
+              >
                 <Row type="flex" justify="space-between">
                   <Col>{obj.name}</Col>
                   <Col>{obj.remark}</Col>
-                  {/* <Col>
-                    <Button style={{ border: "none" }} shape="circle">
-                      <Icon type="check-circle" style={{ fontSize: "20px" }} />
-                    </Button>
-                    <Button style={{ border: "none" }} shape="circle" onClick={()=>this.handleDelete(`${obj.id}`)}>
-                      <Icon type="close-circle" style={{ fontSize: "20px" }} />
-                    </Button>
-                  </Col> */}
                 </Row>
               </Card><br/>
             </div>
