@@ -13,6 +13,8 @@
     margin-top: 60px;
     margin-left: 130px;
     margin-bottom: 60px;
+    width: "200px";
+    height: "200px";
 }
 
 .detail {
@@ -27,5 +29,23 @@
 }
 
 .event-date {
+    font-size: 20px;
+}
+
+.event-description {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /* color: #F1F1F2; */
+    margin-left: 100px;
+    margin-right: 100px;
+    font-size: 20px;
+}
+
+.event-ticket {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /* color: #F1F1F2; */
+    margin-left: 100px;
+    margin-right: 100px;
     font-size: 20px;
 }

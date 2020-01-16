@@ -11,7 +11,7 @@ import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
-import EventDetail from "../pages/EventDetail/EventDetail";
+import EventDetail from "../pages/EventDetail";
 export const history = createHistory();
 
 const Routers = props => {
