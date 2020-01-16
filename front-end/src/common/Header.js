@@ -191,7 +191,7 @@ class Header extends React.Component {
         <Col span={2}>
           <Dropdown overlay={menu} trigger={["click"]}>
             <Link to="/" className="dropDownHeader" href="#">
-              Events &nbsp; <Icon type="down" />
+              Events &nbsp; <Icon type="caret-down" />
             </Link>
           </Dropdown>
         </Col>
@@ -209,8 +209,10 @@ class Header extends React.Component {
             {Authentication.item && Authentication.item.isAuthenticated ? (
               <Dropdown overlay={menuUser} trigger={["click"]}>
                 <label>
-                  Hi {Authentication.item.email}
-                  <Icon type="down" />
+                  Hi {Authentication.item.email} &nbsp;
+                  <Icon type="caret-down" className="sizeIconDropdown" />
+                  
+                  
                 </label>
               </Dropdown>
             ) : (
