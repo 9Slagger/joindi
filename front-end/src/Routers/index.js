@@ -18,7 +18,7 @@ const Routers = props => {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/allevents" component={CategoriesEvents}/>
+        <Route exact path="/categoriesevents" component={CategoriesEvents}/>
         <Route path="/admin" component={AdminPage} />
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/checkout" component={CheckoutPage} />

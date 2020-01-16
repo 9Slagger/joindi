@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Row, Col, Divider, Select, Card } from "antd";
+import "./CategoriesEvents.css"
+import { Row, Col, Divider, Select, Card, Avatar, Icon } from "antd";
 const { Option } = Select;
 
 export default class CategoriesEvents extends Component {
@@ -14,7 +15,7 @@ export default class CategoriesEvents extends Component {
             <h3>Events</h3>
           </Col>
           <Col span={4}>
-            <Row type="flex" justify="end">
+            <Row type="flex" justify="end" style={{textAlign: 'centers'}}>
               <Select
                 labelInValue
                 defaultValue={{ key: "Sort By" }}
@@ -30,36 +31,74 @@ export default class CategoriesEvents extends Component {
           <Divider />
         </Row>
 
-        <Row >
-          <Col span={6}>
-            <Card title="Card title" style={{ width: 250 }}>
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+        <Row gutter={[32, 24]} center="xs">
+          <Col  xs={24}  md={12} xl={6}>
+            <Card
+              style={{
+                textAlign: "center",
+                width: "250px",
+                borderRadius: "10%",
+                margin: 'auto'
+              }}
+            >
+              <Avatar shape="square" size={200} />
+              <Icon type="book" className="avatarEvents" />
             </Card>
           </Col>
 
-          <Col span={6}>
-            <Card title="Card title" style={{ width: 250 }}>
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+          <Col xs={24}  md={12} xl={6} >
+            <Card
+              style={{
+                textAlign: "center",
+                width: "250px",
+                borderRadius: "10%",
+                margin: 'auto'
+              }}
+            >
+              <Avatar shape="square" size={200} />
+              <Icon type="book" className="avatarEvents" />
             </Card>
           </Col>
 
-          <Col span={6}>
-            <Card title="Card title" style={{ width: 250 }}>
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+          <Col xs={24}  md={12} xl={6} >
+            <Card
+              style={{
+                textAlign: "center",
+                width: "250px",
+                borderRadius: "10%",
+                margin: 'auto'
+              }}
+            >
+              <Avatar shape="square" size={200} />
+              <Icon type="book" className="avatarEvents" />
             </Card>
           </Col>
 
-          <Col span={6}>
-            <Card title="Card title" style={{ width: 250 }}>
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+          <Col xs={24}  md={12} xl={6}>
+            <Card
+              style={{
+                textAlign: "center",
+                width: "250px",
+                borderRadius: "10%",
+                margin: 'auto'
+              }}
+            >
+              <Avatar shape="square" size={200} />
+              <Icon type="book" className="avatarEvents" />
+            </Card>
+          </Col>
+
+          <Col  xs={24}  md={12} xl={6}>
+            <Card
+              style={{
+                textAlign: "center",
+                width: "250px",
+                borderRadius: "10%",
+                margin: 'auto'
+              }}
+            >
+              <Avatar shape="square" size={200} />
+              <Icon type="book" className="avatarEvents" />
             </Card>
           </Col>
         </Row>

@@ -12,7 +12,7 @@ export default class index extends Component {
           <CarouselEvents />
         </Row>
 
-        <Row style={{margin:"0 10%"}}>
+        <Row style={{margin:"50px 10%"}}>
           <CategoriesEvents />
         </Row>
       </DefaultLayout>
