@@ -10,7 +10,7 @@ import CheckoutPage from "../pages/Checkout";
 import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
-import CreateEvents from "../pages/CreateEvents"
+import CreateEvents from "../pages/CreateEvents";
 export const history = createHistory();
 
 const Routers = props => {
