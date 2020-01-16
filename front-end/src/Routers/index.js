@@ -11,6 +11,7 @@ import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
+import EventDetail from "../pages/EventDetail/EventDetail";
 export const history = createHistory();
 
 const Routers = props => {
@@ -26,6 +27,7 @@ const Routers = props => {
         <Route exact path="/confirm" component={ConfirmPage} />
         <Route exact path="/complete" component={CompletePage} />
         <Route exact path="/createevents" component={CreateEvents} />
+        <Route exact path="/eventdetail" component={EventDetail} />
       </Switch>
     </Router>
   );
