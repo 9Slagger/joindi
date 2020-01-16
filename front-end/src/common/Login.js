@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Row, Col, Modal, Button, Input, Divider, Form } from "antd";
+import { Row, Col, Modal, Button, Input, Divider, Form} from "antd";
 import { connect } from "react-redux";
 import { signin } from "../redux/actions";
+
 
 class Login extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Login extends Component {
         try {
           this.props.signin(email, password);
         } catch (error) {
-          console.log("error", error);
+          alert(this.props.Authentication.item.messages.title_en)
         }
       }
     });

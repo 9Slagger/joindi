@@ -7,6 +7,7 @@ EventStatusModel.init(
     status_code: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -14,6 +15,7 @@ EventStatusModel.init(
     status_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -21,6 +23,7 @@ EventStatusModel.init(
     status_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
