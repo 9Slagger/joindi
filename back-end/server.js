@@ -24,6 +24,8 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", require("./src/routes/userRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
+app.use("/event", require("./src/routes/eventRouter"))
+app.use("/tag", require("./src/routes/tagRouter"))
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
