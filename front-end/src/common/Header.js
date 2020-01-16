@@ -6,47 +6,10 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import {signout} from "../redux/actions"
 
 const { SubMenu } = Menu;
 const { Search } = Input;
-
-function handleClickTag(e) {
-  console.log("click : ", e);
-}
-
-function handleMenuUser(e){
- console.log(e)
-}
-
-
-const menu = (
-  <Menu onClick={handleClickTag}>
-    <Menu.Item key="hot"> Hot </Menu.Item>
-    <SubMenu title="Tag ">
-      <Menu.Item key="beauty"> Beauty </Menu.Item>
-      <Menu.Item key="book"> Book </Menu.Item>
-      <Menu.Item key="business"> Business </Menu.Item>
-      <Menu.Item key="comedy"> Comedy </Menu.Item>
-      <Menu.Item key="concert"> Concert </Menu.Item>
-      <Menu.Item key="education"> Education </Menu.Item>
-      <Menu.Item key="esport"> E - sport </Menu.Item>
-      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-      <Menu.Item key="health"> Health </Menu.Item>
-      <Menu.Item key="seemore" > See More... </Menu.Item>
-    </SubMenu>{" "}
-  </Menu>
-);
-
-const menuUser = (
-  <Menu onClick={handleMenuUser} className="dropDownUser">
-    <Menu.Item key="profile">Profile</Menu.Item>
-    <Menu.Item key="payoders">Pay Orders</Menu.Item>
-    <Menu.Item key="myevents">My Events</Menu.Item>
-    <Menu.Item key="joinevents">Join Events</Menu.Item>
-    <Menu.Item key="wishlist">Wish List</Menu.Item>
-    <Menu.Item key="logout"> Logout</Menu.Item>
-  </Menu>
-);
 
 class Header extends React.Component {
   state = {
@@ -90,6 +53,12 @@ class Header extends React.Component {
       }
     ]
   };
+
+
+handleClickTag(e) {
+  console.log("click : ", e);
+}
+
 
   handleSearch = e => {
     const fuse = new Fuse(this.state.data, {
@@ -173,6 +142,10 @@ class Header extends React.Component {
     callback();
   };
 
+  handleClickLogout = () => {
+    this.props.signout()
+  }
+
   render() {
     const { Authentication } = this.props;
     return (
@@ -189,9 +162,28 @@ class Header extends React.Component {
         </Col>
         <Col span={1}> </Col>
         <Col span={2}>
-          <Dropdown overlay={menu} trigger={["click"]}>
+          <Dropdown
+            overlay={
+              <Menu onClick={this.handleClickTag}>
+                <Menu.Item key="hot"> Hot </Menu.Item>
+                <SubMenu title="Tag ">
+                  <Menu.Item key="beauty"> Beauty </Menu.Item>
+                  <Menu.Item key="book"> Book </Menu.Item>
+                  <Menu.Item key="business"> Business </Menu.Item>
+                  <Menu.Item key="comedy"> Comedy </Menu.Item>
+                  <Menu.Item key="concert"> Concert </Menu.Item>
+                  <Menu.Item key="education"> Education </Menu.Item>
+                  <Menu.Item key="esport"> E - sport </Menu.Item>
+                  <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
+                  <Menu.Item key="health"> Health </Menu.Item>
+                  <Menu.Item key="seemore"> See More... </Menu.Item>
+                </SubMenu>
+              </Menu>
+            }
+            trigger={["click"]}
+          >
             <Link to="/" className="dropDownHeader" href="#">
-              Events &nbsp; <Icon type="down" />
+              Events &nbsp; <Icon type="caret-down" />
             </Link>
           </Dropdown>
         </Col>
@@ -207,10 +199,22 @@ class Header extends React.Component {
         <Col span={8}>
           <Row className="loginandsignin" type="flex" justify="end">
             {Authentication.item && Authentication.item.isAuthenticated ? (
-              <Dropdown overlay={menuUser} trigger={["click"]}>
+              <Dropdown
+                overlay={
+                  <Menu className="dropDownUser">
+                    <Menu.Item key="profile">Profile</Menu.Item>
+                    <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                    <Menu.Item key="myevents">My Events</Menu.Item>
+                    <Menu.Item key="joinevents">Join Events</Menu.Item>
+                    <Menu.Item key="wishlist">Wish List</Menu.Item>
+                    <Menu.Item key="logout" onClick={this.handleClickLogout}> Logout</Menu.Item>
+                  </Menu>
+                }
+                trigger={["click"]}
+              >
                 <label>
-                  Hi {Authentication.item.email}
-                  <Icon type="down" />
+                  Hi {Authentication.item.email} &nbsp;
+                  <Icon type="caret-down" className="sizeIconDropdown" />
                 </label>
               </Dropdown>
             ) : (
@@ -229,7 +233,7 @@ const mapStateToProps = ({ Authentication }) => ({
   Authentication
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { signout };
 
 export default connect(
   mapStateToProps,
