@@ -74,7 +74,7 @@ module.exports = {
       });
     }
     try {
-      userResult = await await db.UserModel.create(
+      userResult = await db.UserModel.create(
         {
           email: req.body.email,
           password: hash(req.body.password),
