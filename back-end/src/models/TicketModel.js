@@ -65,3 +65,4 @@ TicketModel.init(
 );
 
 module.exports = { TicketModel };
+

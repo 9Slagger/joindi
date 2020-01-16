@@ -59,7 +59,7 @@ module.exports = async () => {
         {
           email: "admin1@gmail.com",
           password: hash("12345678"),
-          phone_number: "0987654321",
+          phone_number: "0987654311",
           role_id: 1,
           customer_type_id: 1
         },
@@ -67,10 +67,8 @@ module.exports = async () => {
       );
       await db.UserIndividualDetailModel.create(
         {
-          first_name_en: "Akkarapong",
-          first_name_th: "อัครพงษ์",
-          last_name_en: "Khamtanet",
-          last_name_th: "คำทะเนตร",
+          first_name: "Akkarapong",
+          last_name: "Khamtanet",
           birthday: "1578985914618",
           user_id: userAdminResult.id
         },
@@ -80,7 +78,7 @@ module.exports = async () => {
         {
           email: "customer1@gmail.com",
           password: hash("12345678"),
-          phone_number: "0987654321",
+          phone_number: "0987654312",
           role_id: 2,
           customer_type_id: 1
         },
@@ -88,10 +86,8 @@ module.exports = async () => {
       );
       await db.UserIndividualDetailModel.create(
         {
-          first_name_en: "Nutthida",
-          first_name_th: "ณัฐธิดา",
-          last_name_en: "Yusenas",
-          last_name_th: "อยู่เสนาสน์",
+          first_name: "Nutthida",
+          last_name: "Yusenas",
           birthday: "1578985914618",
           user_id: userCustomer1Result.id
         },
@@ -101,7 +97,7 @@ module.exports = async () => {
         {
           email: "customer2@gmail.com",
           password: hash("12345678"),
-          phone_number: "0987654321",
+          phone_number: "0987654313",
           role_id: 2,
           customer_type_id: 2
         },
@@ -109,10 +105,8 @@ module.exports = async () => {
       );
       await db.UserCompanyDetailModel.create(
         {
-          company_name_en: "Software Park",
-          company_name_th: "ซอฟแวร์พาร์ค",
-          company_address_en: "Pantip ...",
-          company_address_th: "พันทิป ...",
+          company_name: "Software Park",
+          company_address: "Pantip ...",
           user_id: userCustomer2Result.id
         },
         { transaction }
@@ -121,7 +115,7 @@ module.exports = async () => {
       console.log("create UserModel ✅");
     } catch (error) {
       await transaction.rollback();
-      console.log("create UserModel ❌");
+      console.log("create UserModel ❌", error);
     }
   }
   if (showData) {
