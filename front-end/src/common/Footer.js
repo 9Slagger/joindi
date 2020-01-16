@@ -21,10 +21,8 @@ export class Footer extends Component {
             </div>
             <div>© 2020 Join Di</div>
             <div className="LinkFooter">
-              <a>Term of Service</a> &nbsp; | &nbsp;
-              <a>Primary Policy</a>
-              <Link>Term of Service</Link> &nbsp; | &nbsp;
-              <Link>Primary Policy</Link>
+              <Link to="/">Term of Service</Link> &nbsp; | &nbsp;
+              <Link to="/">Primary Policy</Link>
             </div>
           </Col>
           <Col span={8}></Col>
@@ -32,26 +30,16 @@ export class Footer extends Component {
             <Row className="RightFooter" type="flex" justify="end">
               <br />
               <Col span={5}>
-                <a>About us</a>
+                <Link to="/">About us</Link>
                 <br />
-                <a>Blog</a>
+                <Link to="/">Blog</Link>
                 <br />
-                <a>Join Di News</a>
+                <Link to="/">Join Di News</Link>
               </Col>
               <Col span={4}>
-                <a>For Creator</a>
+                <Link to="/">For Creator</Link>
                 <br />
-                <a>Host on events</a>
-                <Link>About us</Link>
-                <br />
-                <Link>Blog</Link>
-                <br />
-                <Link>Join Di News</Link>
-              </Col>
-              <Col span={4}>
-                <Link>For Creator</Link>
-                <br />
-                <Link>Host on events</Link>
+                <Link to="/">Host on events</Link>
               </Col>
             </Row>
             <br />

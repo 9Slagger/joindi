@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
-import { Upload, Icon,  Row, Col,  Form, Input } from "antd";
+import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import './StyleComponents/infoEventStyle.css'
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -54,12 +55,14 @@ class InfoEvents extends Component {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form>
+      <Form className="decorationForm" >
         <Row>
           {/* ---------------------Photo Upload----------------------- */}
-          <Col span={8}>
-            <Row>
+          <Col xs={24} md={24} xl={10} >
+            <Row type="flex" justify="center">
+              <Col>
               <Upload
+              
                 {...props}
                 name="avatar"
                 listType="picture-card"
@@ -75,13 +78,14 @@ class InfoEvents extends Component {
                   uploadButton
                 )}
               </Upload>
+              </Col>
             </Row>
           </Col>
           {/* --------------------------Info Events------------------------------- */}
-          <Col span={16}>
-            <Row>
-              <Col span={4}>Event Name:</Col>
-              <Col span={20}>
+          <Col className="infoPadding" xs={24} md={24} xl={14} style={{marginTop:"20px"}} >
+            <Row >
+              <Col xs={24} md={8} xl={6} ><h5 style={{marginTop:"6px",color:"white"}}>Event Name:</h5></Col>
+              <Col xs={24} md={10} xl={12} >
                 <Form.Item>
                   {getFieldDecorator("eventname", {
                     rules: [
@@ -90,13 +94,13 @@ class InfoEvents extends Component {
                         message: "Please put Event name!"
                       }
                     ]
-                  })(<Input placeholder="Event name" />)}
+                  })(<Input style={{width:"100%"}} className="inputDecolation" placeholder="Event name" />)}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>Creater name:</Col>
-              <Col span={20}>
+              <Col xs={24} md={8} xl={6} ><h5 style={{marginTop:"6px",color:"white"}}>Creater name :</h5></Col>
+              <Col xs={24} md={10} xl={12} >
                 <Form.Item>
                   {getFieldDecorator("creatername", {
                     rules: [
@@ -105,15 +109,15 @@ class InfoEvents extends Component {
                         message: "Please put Creater name!"
                       }
                     ]
-                  })(<Input placeholder="Creater name" />)}
+                  })(<Input style={{width:"100%"}} placeholder="Creater name" />)}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>
-                <Icon type="calendar" /> Date:
+              <Col xs={24} md={8} xl={6} >
+                <h5 style={{marginTop:"6px",color:"white"}}><Icon type="calendar" /> Date : </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={10} xl={12} >
                 <Form.Item>
                   {getFieldDecorator("date", {
                     rules: [
@@ -127,28 +131,40 @@ class InfoEvents extends Component {
               </Col>
             </Row>
             <Row>
-              <Col span={4}>
-                <Icon type="compass" /> Location:
+              <Col xs={24} md={8} xl={6} >
+                <h5 style={{marginTop:"6px",color:"white"}}><Icon type="compass" /> Location : </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={6} xl={6} >
                 <Form.Item>
-                  {getFieldDecorator("location", {
+                  {getFieldDecorator("latitudeLocation", {
                     rules: [
                       {
                         required: true,
-                        message: "Please put Location!"
+                        message: "Please put Latitude Location!"
                       }
                     ]
-                  })(<Input placeholder="Location" />)}
+                  })(<Input type="number" style={{width:"100%"}} placeholder="Latitude (Ex 13.756331)" />)}
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={6} xl={6}  >
+              <Form.Item >
+                  {getFieldDecorator("longitudeLocation", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please put Longitude Location!"
+                      }
+                    ]
+                  })(<Input type="number"  style={{width:"100%"}} placeholder="Longitude (Ex 1.501762)" />)}
                 </Form.Item>
               </Col>
             </Row>
 
             <Row>
-              <Col span={4}>
-                <Icon type="tags" /> Tags:
+              <Col xs={24} md={8} xl={6} >
+              <h5 style={{marginTop:"6px",color:"white"}}><Icon type="tags" /> Tags : </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={10} xl={12} >
                 <Form.Item>
                   {getFieldDecorator("addtags", {
                     rules: [
@@ -160,7 +176,7 @@ class InfoEvents extends Component {
                   })(
                     <Select
                       mode="multiple"
-                      style={{ width: "100%" }}
+                      style={{width:"100%"}}
                       placeholder="Please select"
                       defaultValue={["a10", "c12"]}
                       // onChange={handleChange}
