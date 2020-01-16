@@ -1,6 +1,7 @@
 const db = require("../models");
 const _ = require("lodash");
-const showData = false
+const { hash } = require("../_helper/bcrypt");
+const showData = false;
 
 module.exports = async () => {
   if (_.isEmpty(await db.RoleModel.findAll())) {
@@ -57,7 +58,7 @@ module.exports = async () => {
       const userAdminResult = await db.UserModel.create(
         {
           email: "admin1@gmail.com",
-          password: "12345678",
+          password: hash("12345678"),
           phone_number: "0987654321",
           role_id: 1,
           customer_type_id: 1
@@ -78,7 +79,7 @@ module.exports = async () => {
       const userCustomer1Result = await db.UserModel.create(
         {
           email: "customer1@gmail.com",
-          password: "12345678",
+          password: hash("12345678"),
           phone_number: "0987654321",
           role_id: 2,
           customer_type_id: 1
@@ -99,7 +100,7 @@ module.exports = async () => {
       const userCustomer2Result = await db.UserModel.create(
         {
           email: "customer2@gmail.com",
-          password: "12345678",
+          password: hash("12345678"),
           phone_number: "0987654321",
           role_id: 2,
           customer_type_id: 2
