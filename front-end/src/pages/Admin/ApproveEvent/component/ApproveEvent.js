@@ -22,7 +22,7 @@ const EventStatusModel = [
   {
     EventStatusModel_id: 2,
     user_id: 2,
-    event_status_id: 1,
+    event_status_id: 2,
     event_name: "JoinDi 2",
     event_latitude_map: 123,
     event_longitude_map: 456,
@@ -34,7 +34,7 @@ const EventStatusModel = [
   {
     EventStatusModel_id: 3,
     user_id: 2,
-    event_status_id: 1,
+    event_status_id: 3,
     event_name: "JoinDi 3",
     event_latitude_map: 123,
     event_longitude_map: 456,
@@ -44,16 +44,6 @@ const EventStatusModel = [
       '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>'
   }
 ];
-let dataEvent = EventStatusModel.filter(obj => obj.event_status_id === 1);
-console.log(dataEvent);
-// console.log(EventStatusModel);
-// let reformattedArray = EventStatusModel.map(obj => {
-// let rObj = {};
-// rObj[obj.key] = obj.value;
-// console.log("event_status_id:", obj.event_status_id);
-// return rObj;
-// });
-// console.log(reformattedArray);
 
 const { TextArea } = Input;
 const { Search } = Input;
@@ -78,19 +68,22 @@ export default class ApproveEvent extends Component {
   onChange = ({ target: { value } }) => {
     this.setState({ value });
   };
-
+  
   handleCancel = () => {
     this.setState({ visible: false });
   };
+  
+  handleSend = () => {
+    console.log('send')        
+  }
 
   render() {
     const { visible, value } = this.state;
-
     const tabListNoTitle = [
       {
         key: "Waiting",
         tab: (
-          <span className="sub-header-admin" onclick={this.handleWaiting}>
+          <span className="sub-header-admin">
             <Icon type="question-circle" />
             Waiting
           </span>
@@ -118,14 +111,20 @@ export default class ApproveEvent extends Component {
 
     const contentListNoTitle = {
       Waiting: this.state.theData
-        .filter(item => item.event_status_id === "1")
+        .filter(item => {
+          // console.log(item.event_status_id === 1);
+          // console.log(item.event_status_id);
+          return item.event_status_id === 1;}
+          )
         .map(obj => {
           return (
             <div>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">Cat Concert 2019</Link>
+                    <Link className="link-event">
+                      {obj.event_name}
+                    </Link>
                   </Col>
                   <Col>
                     <Button
@@ -156,14 +155,17 @@ export default class ApproveEvent extends Component {
           );
         }),
       Approved: this.state.theData
-        .filter(item => item.event_status_id === "2")
+        .filter(item => item.event_status_id === 2)
         .map(obj => {
+          console.log("Approved", this.state.theData);
           return (
             <div>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">Cat Concert 2019</Link>
+                    <Link className="link-event">
+                      {obj.event_name}
+                    </Link>
                   </Col>
                   <Col>
                     <Button
@@ -194,14 +196,17 @@ export default class ApproveEvent extends Component {
           );
         }),
       Rejected: this.state.theData
-        .filter(item => item.event_status_id === "3")
+        .filter(item => item.event_status_id === 3)
         .map(obj => {
+          console.log("Rejected", this.state.theData);
           return (
             <div>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">Cat Concert 2019</Link>
+                    <Link className="link-event">
+                      {obj.event_name}
+                    </Link>
                   </Col>
                   <Col>
                     <Button
@@ -237,10 +242,6 @@ export default class ApproveEvent extends Component {
       this.setState({
         visible: true
       });
-    };
-
-    this.handleWaiting = () => {
-      console.log("Waiting");
     };
 
     return (
@@ -280,9 +281,9 @@ export default class ApproveEvent extends Component {
           </Row>
           <Row style={{ textAlign: "center" }}>
             <br />
-            <Button className="btn-cancle">Cancle</Button>
-            &nbsp;
-            <Button className="btn-send">Send</Button>
+            {/* <Button className="btn-cancle" onClick={}>Cancle</Button> */}
+            {/* &nbsp; */}
+            <Button className="btn-send" onclick={this.handleSend}>Send</Button>
           </Row>
         </Modal>
       </div>
