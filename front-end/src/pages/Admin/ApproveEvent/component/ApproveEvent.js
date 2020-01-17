@@ -66,7 +66,8 @@ export default class ApproveEvent extends Component {
     visible: false,
     value: "",
     nameEvent: "",
-    status: ""
+    status: "",
+    theData: EventStatusModel
   };
 
   onTabChange = (key, type) => {
@@ -81,8 +82,6 @@ export default class ApproveEvent extends Component {
   handleCancel = () => {
     this.setState({ visible: false });
   };
-
-  
 
   render() {
     const { visible, value } = this.state;
@@ -118,33 +117,120 @@ export default class ApproveEvent extends Component {
     ];
 
     const contentListNoTitle = {
-      Waiting: (
-        <Card className="card-list">
-          <Row type="flex" justify="space-between">
-            <Col>
-              <Link className="link-event">Cat Concert 2019</Link>
-            </Col>
-            <Col>
-              <Button
-                style={{ border: "none", color: "#345586" }}
-                shape="circle"
-              >
-                <Icon type="check-circle" style={{ fontSize: "25px" }} />
-              </Button>
-              &nbsp;&nbsp;
-              <Button
-                style={{ border: "none", color: "#8D021F" }}
-                shape="circle"
-                onClick={this.showModal}
-              >
-                <Icon type="close-circle" style={{ fontSize: "25px" }} />
-              </Button>
-            </Col>
-          </Row>
-        </Card>
-      ),
-      Approved: <p>app content</p>,
-      Rejected: <p>project content</p>
+      Waiting: this.state.theData
+        .filter(item => item.event_status_id === "1")
+        .map(obj => {
+          return (
+            <div>
+              <Card className="card-list">
+                <Row type="flex" justify="space-between">
+                  <Col>
+                    <Link className="link-event">Cat Concert 2019</Link>
+                  </Col>
+                  <Col>
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#345586"
+                      }}
+                      shape="circle"
+                    >
+                      <Icon type="check-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                    &nbsp;&nbsp;
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#8D021F"
+                      }}
+                      shape="circle"
+                      onClick={this.showModal}
+                    >
+                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                  </Col>
+                </Row>
+              </Card>
+              <br />
+            </div>
+          );
+        }),
+      Approved: this.state.theData
+        .filter(item => item.event_status_id === "2")
+        .map(obj => {
+          return (
+            <div>
+              <Card className="card-list">
+                <Row type="flex" justify="space-between">
+                  <Col>
+                    <Link className="link-event">Cat Concert 2019</Link>
+                  </Col>
+                  <Col>
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#345586"
+                      }}
+                      shape="circle"
+                    >
+                      <Icon type="check-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                    &nbsp;&nbsp;
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#8D021F"
+                      }}
+                      shape="circle"
+                      onClick={this.showModal}
+                    >
+                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                  </Col>
+                </Row>
+              </Card>
+              <br />
+            </div>
+          );
+        }),
+      Rejected: this.state.theData
+        .filter(item => item.event_status_id === "3")
+        .map(obj => {
+          return (
+            <div>
+              <Card className="card-list">
+                <Row type="flex" justify="space-between">
+                  <Col>
+                    <Link className="link-event">Cat Concert 2019</Link>
+                  </Col>
+                  <Col>
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#345586"
+                      }}
+                      shape="circle"
+                    >
+                      <Icon type="check-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                    &nbsp;&nbsp;
+                    <Button
+                      style={{
+                        border: "none",
+                        color: "#8D021F"
+                      }}
+                      shape="circle"
+                      onClick={this.showModal}
+                    >
+                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                    </Button>
+                  </Col>
+                </Row>
+              </Card>
+              <br />
+            </div>
+          );
+        })
     };
 
     this.showModal = () => {
