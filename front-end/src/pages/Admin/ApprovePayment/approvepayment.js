@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Card, Icon, Row, Col, Button, Input,Modal } from "antd";
+import Axios from "axios";
+import { connect } from 'react-redux';
 import "antd/dist/antd.css";
 import "./index.css";
 import AdminLayout from "../../../common/AdminLayout";
 const { TextArea,Search } = Input;
 const { confirm } = Modal;
-
 
 const tabListNoTitle = [
   {
@@ -36,53 +37,17 @@ const tabListNoTitle = [
     )
   }
 ];
-
-
-export default class ApprovePayment extends Component {
-  state = {
-    key: "tab1",
-    noTitleKey: "app",
-    visible: false,
-    id: '',
-    remark: '',
-    theData: [
-      {
-        id:'1',
-        name: 'จ่ายค่ากิจกรรมดูหนังนะจ้ะ',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'2',
-        name: 'จ่ายเงินค่ากิจกรรมร้องเพลงที่ตู้คาราโอเกะ',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'3',
-        name: 'จ่ายเงินค่ากิจกรรมไปจ่ายชาบูชิ โปรโมชั่นมา 4 จ่าย 3',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'4',
-        name: 'จ่ายเงินค่ากิจกรรมไปกินไอติมที่ท่าน้ำนนท์',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'5',
-        name: 'จ่ายเงินค่ากิจกรรมไปออกกำลังกายเพื่อสุขภาพที่ดี',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'6',
-        name: 'จ่ายเงินค่ากิจกรรมวิ่งสู้ฟัดเพื่อลดความอ้วนนะจ้ะ',
-        remark:'',
-        status:'1'
-      },
-    ],
+class ApprovePayment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: "tab1",
+      noTitleKey: "app",
+      visible: false,
+      id: '',
+      remark: '',
+      data:[]
+    }
   };
   
   onTabChange = (key, type) => {
@@ -90,10 +55,10 @@ export default class ApprovePayment extends Component {
   };
 
   approvePayment=(id)=>{
-    var theData = [...this.state.theData];
-    var index = theData.findIndex(obj => obj.id === id);
-    theData[index].status = '2';
-    this.setState({theData});
+    var data = [...this.state.data];
+    var index = data.findIndex(obj => obj.id === id);
+    data[index].event_status_id = '2';
+    this.setState({data});
   }
 
   handleApprove = (id) => {
@@ -108,12 +73,12 @@ export default class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    var theData = [...this.state.theData];
-    var index = theData.findIndex(obj => obj.id === id);
-    theData[index].status = '3';
-    theData[index].remark = remark;
+    var data = [...this.state.data];
+    var index = data.findIndex(obj => obj.id === id);
+    data[index].event_status_id = '3';
+    data[index].event_remark_reject = remark;
     this.setState({
-      theData,
+      data,
       visible: false
     });
   }
@@ -133,11 +98,42 @@ export default class ApprovePayment extends Component {
     this.setState({ remark: e.target.value });
   };
 
+  async showData(){
+    const result = await Axios.get("http://localhost:8085/approvepayment");
+      let temp = result.data.map((item) => {
+        // const s = moment(`${item.start_date}`);
+        // const startdate = s.format("DD-MM-YYYY")
+        // const e = moment(`${item.end_date}`);
+        // const c = moment();
+        // const enddate = e.format("DD-MM-YYYY")
+        // const ddate = e.diff(s, 'days')
+        // const cdate = e.diff(c, 'days')
+        return {
+          id: item.id,
+          event_name: item.event_name,
+          event_remark_reject: item.event_remark_reject,
+          event_status_id: item.event_status_id
+        }
+      });
+      this.setState({ data: temp }, ()=>{});
+  }
+
+  componentDidMount = async () => {
+    this.showData()
+    // setInterval(
+    //   ()=>this.showData(), 
+    //   2000
+    // )
+  };
+
+
   render() {
+    
     const contentListNoTitle = {
       Waiting: ( 
-        this.state.theData.filter(item => item.status === '1').map((obj)=>{
-          // console.log(obj)
+        this.state.data.filter(item => item.event_status_id === 1).map((obj)=>{
+          // console.log('test')
+          // console.log(obj.id)
           return(
             <div>
                <Card
@@ -149,7 +145,7 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
+                  <Col>{obj.event_name}</Col>
                   <Col>
                   <Button
                     style={{ border: "none", color: "#345586" }}
@@ -175,7 +171,7 @@ export default class ApprovePayment extends Component {
         
       ),
       Approved: ( 
-        this.state.theData.filter(item => item.status === '2').map((obj)=>{
+        this.state.data.filter(item => item.event_status_id === 2).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -188,7 +184,7 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
+                  <Col>{obj.event_name}</Col>
                   <Col>
                   &nbsp;&nbsp;
                   <Button
@@ -207,7 +203,7 @@ export default class ApprovePayment extends Component {
         
       ),
       Rejected: ( 
-        this.state.theData.filter(item => item.status === '3').map((obj)=>{
+        this.state.data.filter(item => item.event_status_id === 3).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -220,8 +216,8 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
-                  <Col>{obj.remark}</Col>
+                  <Col>{obj.event_name}</Col>
+                  <Col>{obj.event_remark_reject}</Col>
                 </Row>
               </Card><br/>
             </div>
@@ -246,6 +242,7 @@ export default class ApprovePayment extends Component {
             width: "100%",
             textAlign: "center"
           }}
+          
           tabList={tabListNoTitle}
           activeTabKey={this.state.noTitleKey}
           onTabChange={key => {
@@ -254,14 +251,14 @@ export default class ApprovePayment extends Component {
         >
           <Search
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            onSearch={value => {}}
             style={{ width: "70vh" }}
           />
           <br />
           <br />
           {contentListNoTitle[this.state.noTitleKey]}
         </Card>
-
+{/* part Model Delete Item */}
         <Modal visible={visible} footer={null} onCancel={this.handleCancel}>
           <Row>
             <span className="head-modal-approve-payment">Reject</span>
@@ -293,3 +290,5 @@ export default class ApprovePayment extends Component {
     );
   }
 }
+
+export default (ApprovePayment)
