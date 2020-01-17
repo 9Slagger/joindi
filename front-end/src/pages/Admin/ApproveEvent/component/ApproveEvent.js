@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./ApproveEvent.css";
 import { Card, Icon, Row, Col, Button, Input, Modal } from "antd";
@@ -68,13 +68,17 @@ export default class ApproveEvent extends Component {
   onChange = ({ target: { value } }) => {
     this.setState({ value });
   };
-  
+
   handleCancel = () => {
     this.setState({ visible: false });
   };
-  
+
   handleSend = () => {
-    console.log('send')        
+    console.log("send");
+  };
+
+  handleContent = () => {
+    console.log("Content")
   }
 
   render() {
@@ -111,20 +115,14 @@ export default class ApproveEvent extends Component {
 
     const contentListNoTitle = {
       Waiting: this.state.theData
-        .filter(item => {
-          // console.log(item.event_status_id === 1);
-          // console.log(item.event_status_id);
-          return item.event_status_id === 1;}
-          )
+        .filter(item => item.event_status_id === 1)
         .map(obj => {
           return (
             <div>
-              <Card className="card-list">
+              <Card className="card-list" onClick={this.handleContent}>
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">
-                      {obj.event_name}
-                    </Link>
+                    <span className="link-event">{obj.event_name}</span>
                   </Col>
                   <Col>
                     <Button
@@ -157,15 +155,12 @@ export default class ApproveEvent extends Component {
       Approved: this.state.theData
         .filter(item => item.event_status_id === 2)
         .map(obj => {
-          console.log("Approved", this.state.theData);
           return (
             <div>
-              <Card className="card-list">
+              <Card className="card-list" onClick={this.handleContent}>
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">
-                      {obj.event_name}
-                    </Link>
+                    <span className="link-event">{obj.event_name}</span>
                   </Col>
                   <Col>
                     <Button
@@ -198,15 +193,12 @@ export default class ApproveEvent extends Component {
       Rejected: this.state.theData
         .filter(item => item.event_status_id === 3)
         .map(obj => {
-          console.log("Rejected", this.state.theData);
           return (
             <div>
-              <Card className="card-list">
+              <Card className="card-list" onClick={this.handleContent}>
                 <Row type="flex" justify="space-between">
                   <Col>
-                    <Link className="link-event">
-                      {obj.event_name}
-                    </Link>
+                    <span className="link-event">{obj.event_name}</span>
                   </Col>
                   <Col>
                     <Button
@@ -281,9 +273,9 @@ export default class ApproveEvent extends Component {
           </Row>
           <Row style={{ textAlign: "center" }}>
             <br />
-            {/* <Button className="btn-cancle" onClick={}>Cancle</Button> */}
-            {/* &nbsp; */}
-            <Button className="btn-send" onclick={this.handleSend}>Send</Button>
+            <Button className="btn-send" onClick={this.handleSend}>
+              Send
+            </Button>
           </Row>
         </Modal>
       </div>

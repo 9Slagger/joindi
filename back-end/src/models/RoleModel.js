@@ -7,6 +7,7 @@ RoleModel.init(
     role_code: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -14,6 +15,7 @@ RoleModel.init(
     role_name_en: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -21,6 +23,7 @@ RoleModel.init(
     role_name_th: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: false
       }
@@ -30,3 +33,4 @@ RoleModel.init(
 );
 
 module.exports = { RoleModel };
+

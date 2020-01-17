@@ -30,3 +30,4 @@ OrganizedContactModel.init(
 );
 
 module.exports = { OrganizedContactModel };
+
