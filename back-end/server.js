@@ -27,6 +27,7 @@ app.use("/role", require("./src/routes/roleRouter"));
 app.use("/customertype", require("./src/routes/customerControllers"));
 app.use("/signin", require("./src/routes/authticationRouter"));
 app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
+app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });

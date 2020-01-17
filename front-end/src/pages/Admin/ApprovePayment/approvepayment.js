@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Card, Icon, Row, Col, Button, Input,Modal } from "antd";
 import Axios from "axios";
-import { connect } from 'react-redux';
 import "antd/dist/antd.css";
 import "./index.css";
 import AdminLayout from "../../../common/AdminLayout";
@@ -55,10 +54,12 @@ class ApprovePayment extends Component {
   };
 
   approvePayment=(id)=>{
-    var data = [...this.state.data];
-    var index = data.findIndex(obj => obj.id === id);
-    data[index].event_status_id = '2';
-    this.setState({data});
+    const str = null;
+    Axios.post(`http://localhost:8085/update-approvepayment/${id}/2/${str}`).then(res => {
+      });
+    this.setState({
+      remark: ''
+    });
   }
 
   handleApprove = (id) => {
@@ -73,12 +74,10 @@ class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    var data = [...this.state.data];
-    var index = data.findIndex(obj => obj.id === id);
-    data[index].event_status_id = '3';
-    data[index].event_remark_reject = remark;
+    Axios.post(`http://localhost:8085/update-approvepayment/${id}/3/${remark}`).then(res => {
+      });
     this.setState({
-      data,
+      remark: '',
       visible: false
     });
   }
@@ -91,7 +90,7 @@ class ApprovePayment extends Component {
   }
 
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ remark: '',visible: false });
   };
 
   onChangeRemark = (e) => {
@@ -101,13 +100,6 @@ class ApprovePayment extends Component {
   async showData(){
     const result = await Axios.get("http://localhost:8085/approvepayment");
       let temp = result.data.map((item) => {
-        // const s = moment(`${item.start_date}`);
-        // const startdate = s.format("DD-MM-YYYY")
-        // const e = moment(`${item.end_date}`);
-        // const c = moment();
-        // const enddate = e.format("DD-MM-YYYY")
-        // const ddate = e.diff(s, 'days')
-        // const cdate = e.diff(c, 'days')
         return {
           id: item.id,
           event_name: item.event_name,
@@ -120,10 +112,10 @@ class ApprovePayment extends Component {
 
   componentDidMount = async () => {
     this.showData()
-    // setInterval(
-    //   ()=>this.showData(), 
-    //   2000
-    // )
+    setInterval(
+      ()=>this.showData(), 
+      2000
+    )
   };
 
 
@@ -229,6 +221,7 @@ class ApprovePayment extends Component {
     const { visible, value } = this.state;
     this.showModal = () => {
       this.setState({
+        remark: '',
         visible: true
       });
     };
