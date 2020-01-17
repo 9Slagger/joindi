@@ -1,0 +1,63 @@
+.event-detail {
+  background-color: #f1f1f2;
+  margin: 20px 10%;
+  font-family: "Prompt", sans-serif;
+}
+
+.event-info {
+  background: linear-gradient(90deg, #3a538d 0%, #182848 100%);
+}
+
+.img-info {
+  margin-top: 60px;
+  margin-left: 130px;
+  margin-bottom: 60px;
+  width: "200px";
+  height: "200px";
+}
+
+.detail {
+  margin-top: 60px;
+  margin-bottom: 60px;
+
+  color: #f1f1f2;
+}
+
+.event-name {
+  font-size: 30px;
+}
+
+.event-date {
+  font-size: 20px;
+}
+
+.event-description {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  /* color: #F1F1F2; */
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: 20px;
+}
+
+.event-ticket {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  /* color: #F1F1F2; */
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: 20px;
+}
+
+.ps {
+  font-size: 10px;
+}
+
+.Organized {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  /* color: #F1F1F2; */
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: 15px;
+}
