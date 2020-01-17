@@ -22,8 +22,7 @@
 
 .loginandsignin {
     color: #FFFFFF;
-    font-family: 'Prompt',
-        sans-serif;
+    font-family: 'Prompt',sans-serif;
     font-weight: normal;
     font-size: 16px;
 }
@@ -35,4 +34,17 @@
 
 .signup {
     padding-left: 7px;
+}
+
+.inputSearch{
+    width:100% !important;
+}
+
+.colLogo{
+    width:50%;
+}
+
+.logo{
+    height: 50px;
+    width:auto;
 }

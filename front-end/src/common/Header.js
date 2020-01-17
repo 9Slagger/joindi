@@ -194,14 +194,15 @@ class Header extends React.Component {
     const { Authentication } = this.props;
     return (
       <Row className="header" type="flex" justify="space-around" align="middle">
-        <Col span={3}>
+        <Col span={3} className="colLogo">
           <img
             src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
             alt="join-DI-logo1"
-            style={{
-              height: "50px",
-              width: "auto"
-            }}
+            className="logo"
+            // style={{
+            //   height: "50px",
+            //   width: "auto"
+            // }}
           />
         </Col>
         <Col span={1}> </Col>
@@ -216,15 +217,13 @@ class Header extends React.Component {
           <Search
             placeholder="input search text"
             onSearch={this.handleSearch}
-            style={{
-              width: 500
-            }}
+            className="inputSearch"
           />
         </Col>
         <Col span={8}>
-          <Row className="loginandsignin" type="flex" justify="end">
+          <Row  type="flex" justify="end">
             {Authentication.item && Authentication.item.isAuthenticated ? (
-              <label>Hi {Authentication.item.email}</label>
+              <label className="loginandsignin">Hi {Authentication.item.email}</label>
             ) : (
               <>
                 <Login />
