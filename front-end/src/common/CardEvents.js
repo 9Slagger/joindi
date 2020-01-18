@@ -6,7 +6,6 @@ const { Text, Paragraph } = Typography;
 export default class CardEvents extends Component {
   render() {
     return (
-      <Row>
         <Card className="card-events">
           <Avatar shape="square" size={150} className="avatar-events" />
           <Col>
@@ -28,7 +27,6 @@ export default class CardEvents extends Component {
             </Row>
           </Col>
         </Card>
-      </Row>
     );
   }
 }
