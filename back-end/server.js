@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./src/dbconfig");
-const databaseLoader = require('./src/databaseLoader')
+const databaseLoader = require("./src/databaseLoader");
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -24,17 +24,29 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
-app.use("/customertype", require("./src/routes/customerControllers"));
+app.use("/customertype", require("./src/routes/customerTypeRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-app.use("/event", require("./src/routes/eventRouter"))
-app.use("/tag", require("./src/routes/tagRouter"))
+app.use("/event", require("./src/routes/eventRouter"));
+app.use("/tag", require("./src/routes/tagRouter"));
+app.use("/ticket", require("./src/routes/ticketRouter"));
+app.use(
+  "/ticketInOrderStatus",
+  require("./src/routes/ticketInOrderStatusRouter")
+);
+app.use("/ticketInOrder", require("./src/routes/ticketInOrderRouter"));
+app.use(
+  "/ticketInOrderHasImage",
+  require("./src/routes/ticketInOrderHasImageRouter")
+);
+app.use("/image", require("./src/routes/imageRouter"));
+
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
     await sequelize.sync({ force });
-    await databaseLoader()
+    await databaseLoader();
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });
