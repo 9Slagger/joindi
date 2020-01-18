@@ -1,5 +1,6 @@
 const db = require("../models");
 const _ = require("lodash");
+const { Op } = require("sequelize");
 
 module.exports = {
   createEvent: async (req, res, next) => {
@@ -14,7 +15,6 @@ module.exports = {
         where: { status_code: "01PA" }
       });
       let resultInfo;
-      console.log("gogoogogogogosdlfkjasldfkjasdlkjfhalskdjhflaksjdfhalskdjfhalkdsfjhalsdkfjhalskdjfhalksjhfalskjh");
       resultInfo = await db.EventModel.create(
         {
           event_name: req.body.event_name,
@@ -48,6 +48,42 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(400).send({ message: error.message });
+    }
+  },
+  getEvents: async (req, res, next) => {
+    let eventResult;
+    try {
+      eventResult = await db.EventStatusModel.findAll({
+        where: {
+          status_code: "02AD"
+        },
+        include: [
+          {
+            model: db.EventModel,
+            include: [
+              { model: db.EventTagModel },
+              { model: db.EventCategoryModel }
+            ]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get events success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get events fail",
+          title_th: ""
+        }
+      });
+      return;
     }
   }
 };
