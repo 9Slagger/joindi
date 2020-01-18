@@ -48,5 +48,36 @@ module.exports = {
     } catch (error) {
       res.status(400).send({ message: error.message });
     }
-  }
-};
+  },
+
+  // getStatusEvent: async (req, res, next) => {
+  //   let statusEvent;
+  //   try {
+  //     statusEvent = await db.EventStatusModel.findAll({
+  //       attributes: ["id", "status_code"]
+  //     });
+  //     return res.status(200).json({
+  //       result: statusEvent,
+  //       messages: { title_en: "get status event success", title_th: "" }
+  //     });
+  //   } catch (error) {
+  //     return res
+  //       .status(400)
+  //       .json({ messages: { title_en: "someting is wrong", title_th: "" } });
+  //   }
+  //   let detailEvent;
+  //   try {
+  //     detailEvent = await db.EventModel.findAll({
+  //       attributes: ["id", "event_name", "event_remark"]
+  //     });
+  //     return res.status(200).json({
+  //       result: detailEvent,
+  //       messages: { title_en: "get name and remark success", title_th: "" }
+  //     });
+  //   } catch (error) {
+  //     return res
+  //       .status(400)
+  //       .json({ messages: { title_en: "someting is wrong", title_th: "" } });
+  //   }
+  // }
+}
