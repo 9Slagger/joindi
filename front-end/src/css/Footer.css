@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Prompt&display=swap');
 
+
 .footer {
     background-color: #345586 !important;
     color: #fff;
@@ -8,6 +9,8 @@
     font-size: 10px;
     padding-right: 10px;
     padding-left: 10px;
+    min-height: 15vh;
+    max-height: 15vh;
 }
 
 .LinkFooter a {

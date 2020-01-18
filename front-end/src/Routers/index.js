@@ -5,17 +5,16 @@ import { connect } from "react-redux";
 import HomePage from "../pages/Home";
 import AdminPage from "../pages/Admin/Payment/waiting";
 import ManageTag from "../pages/Admin/ManageTag/managetag";
-import ApproveEvent from "../pages/Admin/ApproveEvent"
-import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment"
-import CategoriesEvents from "../pages/CategoriesEvents"
+import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment";
+import CategoriesEvents from "../pages/CategoriesEvents";
 import AboutPage from "../pages/About";
 import CheckoutPage from "../pages/Checkout";
 import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
-import CreateEvents from "../pages/CreateEvents"
-import PopularEvents from "../pages/PopularEvents"
-import EventDetail from "../pages/EventDetail"
+import CreateEvents from "../pages/CreateEvents";
+import PopularEvents from "../pages/PopularEvents";
+import EventDetail from "../pages/EventDetail";
 export const history = createHistory();
 
 const Routers = props => {
@@ -23,7 +22,7 @@ const Routers = props => {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/categoriesevents" component={CategoriesEvents}/>
+        <Route exact path="/categoriesevents" component={CategoriesEvents} />
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
@@ -48,4 +47,3 @@ const mapStateToProps = ({ Authentication }) => ({
 const mapDispatchToProps = null;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routers);
-
