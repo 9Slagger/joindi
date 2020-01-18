@@ -15,6 +15,7 @@ import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
 import PopularEvents from "../pages/PopularEvents";
 import EventDetail from "../pages/EventDetail";
+import ApproveEvent from "../pages/Admin/ApproveEvent"
 export const history = createHistory();
 
 const Routers = props => {
