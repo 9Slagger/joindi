@@ -20,7 +20,7 @@ TicketModel.init(
     },
     ticket_note: {
       type: DataTypes.STRING(2000),
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: false
       }
