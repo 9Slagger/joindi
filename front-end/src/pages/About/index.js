@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import DefaultLayout from "../../common/DefaultLayout";
-import CardEvents from "../../common/CardEvents";
-
+import Product from "./components/Product.js";
 export default class index extends Component {
   render() {
     return (
       <DefaultLayout>
-        <CardEvents />
+        <h1>this is about page</h1>
+        <Product />
       </DefaultLayout>
     );
   }

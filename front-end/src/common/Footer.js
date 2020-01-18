@@ -8,7 +8,7 @@ export class Footer extends Component {
     return (
       <div>
         <Row className="footer">
-          <Col span={8}>
+          <Col md={24} xl={12}>
             <img
               src="https://i.ibb.co/CQbsfSH/noun-contact-1784720-new.png"
               alt="join-di logo"
@@ -25,79 +25,82 @@ export class Footer extends Component {
               <Link to="/">Primary Policy</Link>
             </div>
           </Col>
-          <Col span={8}></Col>
-          <Col span={8}>
+
+          <Col md={24} xl={12}>
             <Row className="RightFooter" type="flex" justify="end">
               <br />
-              <Col span={5}>
+              <Col md={12} xl={5}>
                 <Link to="/">About us</Link>
                 <br />
                 <Link to="/">Blog</Link>
                 <br />
                 <Link to="/">Join Di News</Link>
               </Col>
-              <Col span={4}>
+              <Col md={12} xl={4}>
                 <Link to="/">For Creator</Link>
                 <br />
                 <Link to="/">Host on events</Link>
               </Col>
             </Row>
             <br />
+
             <Row type="flex" justify="end">
-              <Icon
-                type="facebook"
-                style={{
-                  fontSize: "15px",
-                  color: "#345586",
-                  backgroundColor: "#fff",
-                  borderRadius: "50%",
-                  padding: "10px"
-                }}
-              />
-              &nbsp;
-              <Icon
-                type="instagram"
-                style={{
-                  fontSize: "15px",
-                  color: "#345586",
-                  backgroundColor: "#fff",
-                  borderRadius: "50%",
-                  padding: "10px"
-                }}
-              />
-              &nbsp;
-              <Icon
-                type="medium"
-                style={{
-                  fontSize: "15px",
-                  color: "#345586",
-                  backgroundColor: "#fff",
-                  borderRadius: "50%",
-                  padding: "10px"
-                }}
-              />
-              &nbsp;
-              <Icon
-                type="twitter"
-                style={{
-                  fontSize: "15px",
-                  color: "#345586",
-                  backgroundColor: "#fff",
-                  borderRadius: "50%",
-                  padding: "10px"
-                }}
-              />
-              &nbsp;
-              <Icon
-                type="wechat"
-                style={{
-                  fontSize: "15px",
-                  color: "#345586",
-                  backgroundColor: "#fff",
-                  borderRadius: "50%",
-                  padding: "10px"
-                }}
-              />
+              <Col md={24} xl={8}>
+                <Icon
+                  type="facebook"
+                  style={{
+                    fontSize: "15px",
+                    color: "#345586",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    padding: "10px"
+                  }}
+                />
+                &nbsp;
+                <Icon
+                  type="instagram"
+                  style={{
+                    fontSize: "15px",
+                    color: "#345586",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    padding: "10px"
+                  }}
+                />
+                &nbsp;
+                <Icon
+                  type="medium"
+                  style={{
+                    fontSize: "15px",
+                    color: "#345586",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    padding: "10px"
+                  }}
+                />
+                &nbsp;
+                <Icon
+                  type="twitter"
+                  style={{
+                    fontSize: "15px",
+                    color: "#345586",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    padding: "10px"
+                  }}
+                />
+                &nbsp;
+                <Icon
+                  type="wechat"
+                  style={{
+                    fontSize: "15px",
+                    color: "#345586",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    padding: "10px"
+                  }}
+                />
+              </Col>
             </Row>
           </Col>
         </Row>
