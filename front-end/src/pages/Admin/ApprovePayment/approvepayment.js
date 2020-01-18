@@ -92,7 +92,6 @@ class ApprovePayment extends Component {
   handleCancel = () => {
     this.setState({ remark: '',visible: false });
   };
-exit
 
   onChangeRemark = (e) => {
     this.setState({ remark: e.target.value });
