@@ -30,3 +30,4 @@ TicketInOrderStatusModel.init(
 );
 
 module.exports = { TicketInOrderStatusModel };
+

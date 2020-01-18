@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DefaultLayout from "../../common/DefaultLayout"
-import CarouselPopularEvents from "./components/CarouselPopularEvents"
+import CarouselEvents from "../../common/CarouselEvents"
 import CategoriesPopularEvents from "./components/CategoriesPopularEvents"
 import {Row} from "antd"
 
@@ -10,7 +10,7 @@ export default class index extends Component {
       <DefaultLayout>
 
         <Row>
-          <CarouselPopularEvents/>
+          <CarouselEvents/>
         </Row>
 
         <Row style={{margin:"50px 10%"}}>

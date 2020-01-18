@@ -8,6 +8,7 @@ export const serviceCustomerType = {
         res = await axios.get("/customertype", { email, password });
         resolve(res.data);
       } catch (error) {
+        if(error.status  < 500)
         reject(error.response.data);
       }
     });

@@ -10,8 +10,9 @@
 .dropDownHeader {
     font-family: 'Prompt', sans-serif;
     font-weight: lighter;
-    font-size: 20px;
-    color: #FFF;
+    color: #FFF !important;
+    margin-bottom: 0px !important;
+    font-size: 20px !important;
 }
 
 .buttonHeader {
@@ -24,7 +25,7 @@
     color: #FFFFFF;
     font-family: 'Prompt',sans-serif;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .login {
@@ -40,11 +41,35 @@
     width:100% !important;
 }
 
-.colLogo{
-    width:50%;
-}
 
 .logo{
     height: 50px;
-    width:auto;
+    width: auto
+
+
 }
+
+.dropDownUser{
+    text-align: center !important;
+    color: #FFF !important;
+    font-family: 'Prompt', sans-serif;
+    font-weight: lighter;
+    font-size: 20px !important;
+}
+
+
+.sizeIconDropdown{
+    font-size: 20px;
+}
+
+
+
+@media only screen and (max-width: 800px) {
+    .dropDownHeader{
+        display: none !important;
+    }
+
+    .logo{
+        height: 30px;
+    }
+  }

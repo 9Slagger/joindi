@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
-class EventTagModel extends Model {}
-EventTagModel.init(
+class ImageModel extends Model {}
+ImageModel.init(
   {
-    tag_name_en: {
+    file_size: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -12,7 +12,7 @@ EventTagModel.init(
         notEmpty: false
       }
     },
-    tag_name_th: {
+    filename_extension: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -21,7 +21,7 @@ EventTagModel.init(
       }
     }
   },
-  { sequelize, modelName: "event_tag" }
+  { sequelize, modelName: "image" }
 );
 
-module.exports = { EventTagModel };
+module.exports = { ImageModel };

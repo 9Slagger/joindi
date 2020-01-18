@@ -8,6 +8,7 @@ export const serviceRole = {
         res = await axios.get("/role", { email, password });
         resolve(res.data);
       } catch (error) {
+        if(error.status  < 500)
         reject(error.response.data);
       }
     });

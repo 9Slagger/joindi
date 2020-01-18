@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Modal, Button, Input, Divider, Form, Radio } from "antd";
-import { serviceCustomerType } from "../_service";
+import { serviceCustomerType, serviceUser } from "../_service";
 
 class Signup extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class Signup extends Component {
   compareToSecondPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && this.state.isDirty) {
-      form.validateFields(["confirm"], { force: true });
+      form.validateFields(["confirmPassword"], { force: true });
     }
     callback();
   };
@@ -62,9 +62,31 @@ class Signup extends Component {
 
   handleSubmitSignUp = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    const {
+      email,
+      password,
+      phoneNumber,
+      firstName,
+      lastName,
+      companyName,
+      customerTypeId
+    } = this.state;
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        try {
+          let res = await serviceUser.createUser(
+            email,
+            password,
+            phoneNumber,
+            firstName,
+            lastName,
+            companyName,
+            customerTypeId
+          );
+          alert(res.messages.title_en)
+        } catch (error) {
+          alert(error.messages.title_en)
+        }
       }
     });
   };
@@ -114,7 +136,7 @@ class Signup extends Component {
           onClick={this.showModalSignUp}
           className="buttonHeader"
         >
-          Sign in
+          Sign up
         </Button>
         <Modal
           visible={this.state.visibleSignUp}
