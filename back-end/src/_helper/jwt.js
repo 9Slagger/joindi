@@ -29,7 +29,7 @@ const verify = (req, res, next) => {
 }
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
@@ -49,7 +49,7 @@ const verifyToken = (req, res, next) => {
 }
 
 const verifyAdmin = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
@@ -72,7 +72,7 @@ const verifyAdmin = (req, res, next) => {
 }
 
 const verifyCustomer = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
