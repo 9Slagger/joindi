@@ -1,10 +1,14 @@
-import React, { Component } from "react";
-import AdminLayout from "../../../common/AdminLayout";
+import React, { Component } from 'react'
+import AdminLayout from '../../../common/AdminLayout'
 
 export class waiting extends Component {
-  render() {
-    return <AdminLayout>Test </AdminLayout>;
-  }
+    render() {
+        return (
+            <AdminLayout>
+                Test
+            </AdminLayout>
+        )
+    }
 }
 
-export default waiting;
+export default waiting
