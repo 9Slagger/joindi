@@ -74,7 +74,7 @@ module.exports = {
       });
     }
     try {
-      userResult = await db.UserModel.create(
+      userResult = await await db.UserModel.create(
         {
           email: req.body.email,
           password: hash(req.body.password),
@@ -85,7 +85,7 @@ module.exports = {
         { transaction }
       );
       if (customerTypeResult.customer_type_code === "01INDV") {
-        if (validate(req.body.firstName)) {
+        if (validate(req.body.firstNameEn) && validate(req.body.firstNameTh)) {
           return res.status(400).json({
             messages: {
               title_en: "plese specify first name",
@@ -93,7 +93,15 @@ module.exports = {
             }
           });
         }
-        if (validate(req.body.lastName)) {
+        if (validate(req.body.lastNameEn) && validate(req.body.lastNameTh)) {
+          return res.status(400).json({
+            messages: {
+              title_en: "plese specify last name",
+              title_th: ""
+            }
+          });
+        }
+        if (validate(req.body.birthday)) {
           return res.status(400).json({
             messages: {
               title_en: "plese specify birthday",
@@ -104,9 +112,11 @@ module.exports = {
         try {
           await db.UserIndividualDetailModel.create(
             {
-              first_name: req.body.firstName,
-              last_name: req.body.lastName,
-              birthday: req.body.birthday || null,
+              firstNameEn: req.body.firstNameEn,
+              firstNameTh: req.body.firstNameTh,
+              lastNameEn: req.body.lastNameEn,
+              lastNameTh: req.body.lastNameTh,
+              birthday: req.body.birthday,
               user_id: userResult.id
             },
             { transaction }
@@ -122,7 +132,8 @@ module.exports = {
         }
       } else if (customerTypeResult.customer_type_code === "02CO") {
         if (
-          validate(req.body.companyName)
+          validate(req.body.companyNameEn) &&
+          validate(req.body.companyNameTh)
         ) {
           return res.status(400).json({
             messages: {
@@ -131,11 +142,24 @@ module.exports = {
             }
           });
         }
+        if (
+          validate(req.body.companyAddressEn) &&
+          validate(req.body.companyAddressTh)
+        ) {
+          return res.status(400).json({
+            messages: {
+              title_en: "plese specify company address",
+              title_th: ""
+            }
+          });
+        }
         try {
           await db.UserCompanyDetailModel.create(
             {
-              company_name: req.body.companyName,
-              company_address: req.body.companyAddress || null,
+              companyNameEn: req.body.companyNameEn,
+              companyNameTh: req.body.companyNameTh,
+              companyAddressEn: req.body.companyAddressEn,
+              companyAddressTh: req.body.companyAddressTh,
               user_id: userResult.id
             },
             { transaction }

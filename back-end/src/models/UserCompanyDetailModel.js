@@ -4,24 +4,24 @@ const sequelize = require("../dbconfig");
 class UserCompanyDetailModel extends Model {}
 UserCompanyDetailModel.init(
   {
-    company_name: {
+    company_name_en: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: true
-      }
+      allowNull: true
     },
-    company_address: {
+    company_name_th: {
       type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        notEmpty: true
-      }
+      allowNull: true
     },
+    company_address_en: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    company_address_th: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   },
   { sequelize, modelName: "user_company_detail" }
 );
 
 module.exports = { UserCompanyDetailModel };
-
