@@ -83,7 +83,36 @@ module.exports = {
           title_th: ""
         }
       });
-      return;
+    }
+  },
+  adminGetEvents: async (req, res, next) => {
+    let eventResult;
+    try {
+      eventResult = await db.EventModel.findAll({
+        include: [
+          { model: db.EventStatusModel },
+          { model: db.EventTagModel },
+          { model: db.EventCategoryModel },
+          { model: db.OrganizedContactModel },
+          { model: db.TicketModel }
+        ]
+      });
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get events success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get events fail",
+          title_th: ""
+        }
+      });
     }
   }
 };
