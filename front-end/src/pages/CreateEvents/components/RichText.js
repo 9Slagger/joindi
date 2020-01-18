@@ -7,8 +7,9 @@ export default class RichText extends Component {
   state = {
     editorData: []
   };
-  handleEditorChange = e => {
+  handleGetRichText = e => {
     console.log("Content was updated:", e.target.getContent());
+    this.props.handleGetRichText(e.target.getContent())
   };
 
   render() {
@@ -57,7 +58,7 @@ export default class RichText extends Component {
                 // xhr.send(formData);
               }
             }}
-            onChange={this.handleEditorChange}
+            onChange={this.handleGetRichText}
           />
         </Row>
       </div>

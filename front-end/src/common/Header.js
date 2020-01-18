@@ -6,7 +6,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {signout} from "../redux/actions"
+import { signout } from "../redux/actions";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
@@ -54,11 +54,9 @@ class Header extends React.Component {
     ]
   };
 
-
-handleClickTag(e) {
-  console.log("click : ", e);
-}
-
+  handleClickTag(e) {
+    console.log("click : ", e);
+  }
 
   handleSearch = e => {
     const fuse = new Fuse(this.state.data, {
@@ -143,8 +141,8 @@ handleClickTag(e) {
   };
 
   handleClickLogout = () => {
-    this.props.signout()
-  }
+    this.props.signout();
+  };
 
   render() {
     const { Authentication } = this.props;
@@ -207,7 +205,10 @@ handleClickTag(e) {
                     <Menu.Item key="myevents">My Events</Menu.Item>
                     <Menu.Item key="joinevents">Join Events</Menu.Item>
                     <Menu.Item key="wishlist">Wish List</Menu.Item>
-                    <Menu.Item key="logout" onClick={this.handleClickLogout}> Logout</Menu.Item>
+                    <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                      {" "}
+                      Logout
+                    </Menu.Item>
                   </Menu>
                 }
                 trigger={["click"]}
@@ -229,6 +230,7 @@ handleClickTag(e) {
     );
   }
 }
+
 const mapStateToProps = ({ Authentication }) => ({
   Authentication
 });

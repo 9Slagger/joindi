@@ -67,4 +67,3 @@ EventModel.init(
 );
 
 module.exports = { EventModel };
-
