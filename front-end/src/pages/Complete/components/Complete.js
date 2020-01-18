@@ -67,7 +67,7 @@ export default class Complete extends Component {
         {this.renderProcess()}
         {this.renderComplete()}
 
-        <Row className="mt-4">
+        <Row className="mt-4 mb-3">
           <Col span={24} className="text-center">
             <Button type="primary">Home</Button>
           </Col>

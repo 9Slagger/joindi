@@ -75,7 +75,9 @@ export default class ConfirmSuccess extends Component {
 
         <Row className="mt-4">
           <Col span={24} className="text-right">
-            <Button type="primary">Complete</Button>
+            <Button href="/complete" type="primary">
+              Complete
+            </Button>
           </Col>
         </Row>
       </section>

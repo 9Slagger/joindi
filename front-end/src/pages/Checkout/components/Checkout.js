@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Row, Col, Table } from "antd";
 
+import Axios from "../../../_helper/axios";
+
 import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
@@ -70,6 +72,23 @@ export default class Checkout extends Component {
         subtotal: 1500 * 2
       }
     ]
+  };
+
+  componentDidMount() {
+    this.getTicketInOrderDatas();
+  }
+
+  getTicketInOrderDatas = () => {
+    Axios.get(`https://localhost:8085/tickets`)
+      .then(res => {
+        console.log(res);
+        const datas = res.data;
+        this.setState({ datas });
+        console.log(this.stage);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
@@ -158,16 +177,18 @@ export default class Checkout extends Component {
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
-        {this.renderConuntDown()}
+        {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
         {this.renderReviewOrderSummary()}
 
-        <Row className="mt-4">
+        <Row className="mt-4 mb-3">
           <Col span={24 / 2}>
             <Button type="danger">Cancel Order</Button>
           </Col>
           <Col span={24 / 2} className="text-right">
-            <Button type="primary">Confirm Order</Button>
+            <Button href="/pay" type="primary">
+              Confirm Order
+            </Button>
           </Col>
         </Row>
       </section>

@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Button, Row, Col, Table, Upload, Icon,
+import {
+  Button,
+  Row,
+  Col,
+  Table,
+  Upload,
+  Icon
   // message
 } from "antd";
 
@@ -167,9 +173,9 @@ export default class Pay extends Component {
         {this.renderBankAccount()}
         {this.renderUploadPaymentSlip()}
 
-        <Row className="mt-4">
+        <Row className="mt-4 mb-3">
           <Col span={24} className="text-right">
-            <Button type="primary">
+            <Button href="/confirm" type="primary">
               <i className="far fa-check-square mr-2"></i>Confirm
             </Button>
           </Col>
