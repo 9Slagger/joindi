@@ -10,7 +10,8 @@
             "event_longitude_map": 456,
             "event_date_start": "2020-01-15",
             "event_date_end": "2020-01-16",
-            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>",
+            "event_remark": ""
         },
         {
             "EventStatusModel_id": 2,
@@ -21,7 +22,8 @@
             "event_longitude_map": 456,
             "event_date_start": "2020-01-15",
             "event_date_end": "2020-01-16",
-            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>",
+            "event_remark": ""
         },
         {
             "EventStatusModel_id": 3,
@@ -32,7 +34,8 @@
             "event_longitude_map": 456,
             "event_date_start": "2020-01-15",
             "event_date_end": "2020-01-16",
-            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>"
+            "event_content": "<h4>test<br /><img src=\"https: //i.ibb.co/GQysSdf/color-Scheme.png\" alt=\"theme\" width=\"795\" height=\"397\" /></h4>",
+            "event_remark": ""
         }
     ],
 

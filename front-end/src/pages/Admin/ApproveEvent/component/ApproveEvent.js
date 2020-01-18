@@ -17,31 +17,34 @@ const EventStatusModel = [
     event_date_start: "2020-01-15",
     event_date_end: "2020-01-16",
     event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>'
+      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
+    event_remark: ""
   },
   {
     EventStatusModel_id: 2,
     user_id: 2,
-    event_status_id: 2,
+    event_status_id: 1,
     event_name: "JoinDi 2",
     event_latitude_map: 123,
     event_longitude_map: 456,
     event_date_start: "2020-01-15",
     event_date_end: "2020-01-16",
     event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>'
+      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
+    event_remark: ""
   },
   {
     EventStatusModel_id: 3,
     user_id: 2,
-    event_status_id: 3,
+    event_status_id: 1,
     event_name: "JoinDi 3",
     event_latitude_map: 123,
     event_longitude_map: 456,
     event_date_start: "2020-01-15",
     event_date_end: "2020-01-16",
     event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>'
+      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
+    event_remark: ""
   }
 ];
 
@@ -54,18 +57,18 @@ export default class ApproveEvent extends Component {
     noTitleKey: "app",
     loading: false,
     visible: false,
-    value: "",
     nameEvent: "",
     status: "",
-    theData: EventStatusModel
+    theData: EventStatusModel,
+    value: ""
   };
 
   onTabChange = (key, type) => {
-    // console.log(key, type);
     this.setState({ [type]: key });
   };
 
   onChange = ({ target: { value } }) => {
+    // console.log('remark',value)
     this.setState({ value });
   };
 
@@ -73,13 +76,33 @@ export default class ApproveEvent extends Component {
     this.setState({ visible: false });
   };
 
-  handleSend = () => {
-    console.log("send");
+  handleSendReject = id => {
+    let theData = [...this.state.theData];
+    theData[id - 1].event_remark = this.state.value;
+    theData[id - 1].event_status_id = 3;
+    console.log(
+      "send",
+      id,
+      "status",
+      theData[id - 1].event_status_id,
+      "remark",
+      theData[id - 1].event_remark
+    );
+    this.setState({ theData });
+    this.setState({ visible: false });
+    this.setState({value: ""});
+  };
+
+  handleApprove = id => {
+    let theData = [...this.state.theData];
+    theData[id - 1].event_status_id = 2;
+    this.setState({ theData });
+    console.log("approve", theData);
   };
 
   handleContent = () => {
-    console.log("Content")
-  }
+    console.log("Content");
+  };
 
   render() {
     const { visible, value } = this.state;
@@ -118,10 +141,10 @@ export default class ApproveEvent extends Component {
         .filter(item => item.event_status_id === 1)
         .map(obj => {
           return (
-            <div>
-              <Card className="card-list" onClick={this.handleContent}>
+            <div key={obj.EventStatusModel_id}>
+              <Card className="card-list">
                 <Row type="flex" justify="space-between">
-                  <Col>
+                  <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
                   <Col>
@@ -131,6 +154,9 @@ export default class ApproveEvent extends Component {
                         color: "#345586"
                       }}
                       shape="circle"
+                      onClick={() =>
+                        this.handleApprove(`${obj.EventStatusModel_id}`)
+                      }
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -141,7 +167,12 @@ export default class ApproveEvent extends Component {
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={this.showModal}
+                      onClick={() =>
+                        this.showModal(
+                          obj.EventStatusModel_id,
+                          obj.event_remark
+                        )
+                      }
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -156,30 +187,20 @@ export default class ApproveEvent extends Component {
         .filter(item => item.event_status_id === 2)
         .map(obj => {
           return (
-            <div>
-              <Card className="card-list" onClick={this.handleContent}>
+            <div key={obj.EventStatusModel_id}>
+              <Card className="card-list">
                 <Row type="flex" justify="space-between">
-                  <Col>
+                  <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
                   <Col>
                     <Button
                       style={{
                         border: "none",
-                        color: "#345586"
-                      }}
-                      shape="circle"
-                    >
-                      <Icon type="check-circle" style={{ fontSize: "25px" }} />
-                    </Button>
-                    &nbsp;&nbsp;
-                    <Button
-                      style={{
-                        border: "none",
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={this.showModal}
+                      onClick={() => this.showModal(obj.EventStatusModel_id)}
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -194,12 +215,13 @@ export default class ApproveEvent extends Component {
         .filter(item => item.event_status_id === 3)
         .map(obj => {
           return (
-            <div>
-              <Card className="card-list" onClick={this.handleContent}>
+            <div key={obj.EventStatusModel_id}>
+              <Card className="card-list">
                 <Row type="flex" justify="space-between">
-                  <Col>
+                  <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
+                  <Col className="modal-remark">{obj.event_remark}</Col>
                   <Col>
                     <Button
                       style={{
@@ -207,19 +229,11 @@ export default class ApproveEvent extends Component {
                         color: "#345586"
                       }}
                       shape="circle"
+                      onClick={() =>
+                        this.handleApprove(`${obj.EventStatusModel_id}`)
+                      }
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
-                    </Button>
-                    &nbsp;&nbsp;
-                    <Button
-                      style={{
-                        border: "none",
-                        color: "#8D021F"
-                      }}
-                      shape="circle"
-                      onClick={this.showModal}
-                    >
-                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
                   </Col>
                 </Row>
@@ -230,14 +244,15 @@ export default class ApproveEvent extends Component {
         })
     };
 
-    this.showModal = () => {
+    this.showModal = id => {
       this.setState({
-        visible: true
+        visible: true,
+        status: id
       });
     };
 
     return (
-      <div>
+      <div className="approveEvent">
         <Card
           style={{
             width: "100%",
@@ -248,6 +263,7 @@ export default class ApproveEvent extends Component {
           onTabChange={key => {
             this.onTabChange(key, "noTitleKey");
           }}
+          bordered={false}
         >
           <Search
             placeholder="input search text"
@@ -266,14 +282,17 @@ export default class ApproveEvent extends Component {
             <TextArea
               value={value}
               onChange={this.onChange}
-              placeholder="Controlled autosize"
+              placeholder="รายละเอียดที่ต้องแก้ไข.."
               autoSize={{ minRows: 3, maxRows: 5 }}
               className="detail-approve-modal"
             />
           </Row>
           <Row style={{ textAlign: "center" }}>
             <br />
-            <Button className="btn-send" onClick={this.handleSend}>
+            <Button
+              className="btn-send"
+              onClick={() => this.handleSendReject(this.state.status)}
+            >
               Send
             </Button>
           </Row>
