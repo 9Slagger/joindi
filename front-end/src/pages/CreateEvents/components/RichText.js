@@ -29,6 +29,7 @@ export default class RichText extends Component {
                 "insertdatetime media table paste wordcount"
               ],
               toolbar:
+                // eslint-disable-next-line no-multi-str
                 "undo redo | formatselect | bold italic | \
                 alignleft aligncenter alignright | \
                 bullist numlist outdent indent | image",

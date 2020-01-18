@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Prompt&display=swap");
+
+.sub-header-admin {
+  font-family: "Prompt", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: #345586;
+}
+
+.card-list {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  width: 200;
+    box-shadow: 0px 0px 10px -5px rgba(0,0,0,0.75);
+    height: 80px;
+}
+
+.link-event {
+    color: #000;
+}
+
+.link-event:hover {
+    color: #345586;
+}
+
+.approveEvent .ant-tabs-top .ant-tabs-ink-bar-animated,
+.ant-tabs-bottom .ant-tabs-ink-bar-animated {
+  background-color: #345586;
+}
+
+.line-head-modal {
+  border: 1px solid #345586;
+}
+
+.head-modal-approve-payment {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  color: #345586;
+}
+
+.detail-approve-modal {
+  border: none;
+  box-shadow: 0px 0px 10px -5px rgba(0,0,0,0.75);
+}
+
+.modal-remark {
+  color: #A3A3A5;
+}
+
+.btn-cancle {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8d021f;
+}
+
+.btn-cancle:hover {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8d021f;
+}
+
+.btn-send {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #345586;
+}
+
+.btn-send:hover {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #345586;
+}

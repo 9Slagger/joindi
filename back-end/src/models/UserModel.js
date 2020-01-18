@@ -7,6 +7,7 @@ UserModel.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: true,
         isEmail: true,
@@ -23,6 +24,7 @@ UserModel.init(
     phone_number: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: true
       }
@@ -32,3 +34,4 @@ UserModel.init(
 );
 
 module.exports = { UserModel };
+

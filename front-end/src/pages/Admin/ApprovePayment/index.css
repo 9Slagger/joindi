@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css?family=Prompt&display=swap");
+
+.sub-header-admin {
+  font-family: "Prompt", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: #345586;
+}
+
+.card-list {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+/* .ant-tabs-top .ant-tabs-ink-bar-animated,
+.ant-tabs-bottom .ant-tabs-ink-bar-animated {
+  background-color: #345586;
+} */
+
+/* .ant-card-bordered {
+  border: none;
+} */
+
+.head-modal-approve-payment {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  color: #345586;
+}
+
+.btn-cancle {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8d021f;
+}
+
+.btn-cancle:hover {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8d021f;
+}
+
+.btn-send {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #345586;
+}
+
+.btn-send:hover {
+  font-family: "Prompt", sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+  color: #fff;
+  background-color: #345586;
+}
