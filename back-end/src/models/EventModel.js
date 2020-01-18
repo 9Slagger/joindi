@@ -36,7 +36,6 @@ EventModel.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isNumeric: true,
         notEmpty: false
       }
     },
@@ -44,7 +43,6 @@ EventModel.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isNumeric: true,
         notEmpty: false
       }
     },
@@ -60,4 +58,3 @@ EventModel.init(
 );
 
 module.exports = { EventModel };
-
