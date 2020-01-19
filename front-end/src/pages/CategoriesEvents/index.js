@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DefaultLayout from "../../common/DefaultLayout";
 import CategoriesEvents from "./components/CategoriesEvents";
-import CarouselEvents from "./components/CarouselEvents";
+import CarouselEvents from "../../common/CarouselEvents"
 import { Row } from "antd";
 
 export default class index extends Component {

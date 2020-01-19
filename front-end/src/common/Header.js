@@ -1,12 +1,22 @@
 import React from "react";
 import Fuse from "fuse.js";
-import { Menu, Icon, Row, Col, Dropdown, Input, Form } from "antd";
+import {
+  Menu,
+  Icon,
+  Row,
+  Col,
+  Dropdown,
+  Input,
+  Form,
+  Button,
+  Drawer
+} from "antd";
 import "../css/Header.css";
 import Login from "./Login";
 import Signup from "./Signup";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { signout } from "../redux/actions";
+import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
@@ -14,10 +24,13 @@ const { Search } = Input;
 class Header extends React.Component {
   state = {
     loading: false,
+    visibleDrawer: false,
     visibleSignUp: false,
     visibleLogIn: false,
     isDirty: false,
+    mobileScreen: false,
     searchList: [],
+
     data: [
       {
         id: 1,
@@ -52,6 +65,31 @@ class Header extends React.Component {
         ]
       }
     ]
+  };
+
+  componentDidMount = () => {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  };
+  resize = () => {
+    let isMobileScreen = window.innerWidth <= 1100;
+    if (isMobileScreen !== this.state.mobileScreen) {
+      this.setState({
+        mobileScreen: isMobileScreen
+      });
+    }
+  };
+
+  showDrawer = () => {
+    this.setState({
+      visibleDrawer: true
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visibleDrawer: false
+    });
   };
 
   handleClickTag(e) {
@@ -146,87 +184,171 @@ class Header extends React.Component {
 
   render() {
     const { Authentication } = this.props;
+    console.log(this.state.mobileScreen);
     return (
-      <Row className="header" type="flex" justify="space-around" align="middle">
-        <Col span={3}>
-          <img
-            src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
-            alt="join-DI-logo1"
-            style={{
-              height: "50px",
-              width: "auto"
-            }}
-          />
-        </Col>
-        <Col span={1}> </Col>
-        <Col span={2}>
-          <Dropdown
-            overlay={
-              <Menu onClick={this.handleClickTag}>
-                <Menu.Item key="hot"> Hot </Menu.Item>
-                <SubMenu title="Tag ">
-                  <Menu.Item key="beauty"> Beauty </Menu.Item>
-                  <Menu.Item key="book"> Book </Menu.Item>
-                  <Menu.Item key="business"> Business </Menu.Item>
-                  <Menu.Item key="comedy"> Comedy </Menu.Item>
-                  <Menu.Item key="concert"> Concert </Menu.Item>
-                  <Menu.Item key="education"> Education </Menu.Item>
-                  <Menu.Item key="esport"> E - sport </Menu.Item>
-                  <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                  <Menu.Item key="health"> Health </Menu.Item>
-                  <Menu.Item key="seemore"> See More... </Menu.Item>
-                </SubMenu>
-              </Menu>
-            }
-            trigger={["click"]}
-          >
-            <Link to="/" className="dropDownHeader" href="#">
-              Events &nbsp; <Icon type="caret-down" />
+      <div>
+        <Row
+          className="header"
+          type="flex"
+          justify="space-around"
+          align="middle"
+        >
+          <Col md={2} lg={2} xl={3} className="colLogo">
+            <Link to="/">
+              <img
+                src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
+                alt="join-DI-logo1"
+                className="logo"
+              />
             </Link>
-          </Dropdown>
-        </Col>
-        <Col span={10}>
-          <Search
-            placeholder="input search text"
-            onSearch={this.handleSearch}
-            style={{
-              width: 500
-            }}
-          />
-        </Col>
-        <Col span={8}>
-          <Row className="loginandsignin" type="flex" justify="end">
-            {Authentication.item && Authentication.item.isAuthenticated ? (
+          </Col>
+          <Col xs={0} md={0} lg={0} xl={3}>
+            <Row type="flex" justify="center">
               <Dropdown
                 overlay={
-                  <Menu className="dropDownUser">
-                    <Menu.Item key="profile">Profile</Menu.Item>
-                    <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                    <Menu.Item key="myevents">My Events</Menu.Item>
-                    <Menu.Item key="joinevents">Join Events</Menu.Item>
-                    <Menu.Item key="wishlist">Wish List</Menu.Item>
-                    <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                  <Menu
+                    onClick={this.handleClickTag}
+                    className="dropDownHeader"
+                  >
+                    <Menu.Item key="popular"> Popular</Menu.Item>
+                    <Menu.Item key="recommendbyjoindi">
                       {" "}
-                      Logout
+                      Recommend By JoinDi
                     </Menu.Item>
+                    <Menu.Item key="recommendforyou">
+                      {" "}
+                      Recommend For You
+                    </Menu.Item>
+                    <SubMenu title="Tag">
+                      <Menu.Item key="beauty"> Beauty </Menu.Item>
+                      <Menu.Item key="book"> Book </Menu.Item>
+                      <Menu.Item key="business"> Business </Menu.Item>
+                      <Menu.Item key="comedy"> Comedy </Menu.Item>
+                      <Menu.Item key="concert"> Concert </Menu.Item>
+                      <Menu.Item key="education"> Education </Menu.Item>
+                      <Menu.Item key="esport"> E - sport </Menu.Item>
+                      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
+                      <Menu.Item key="health"> Health </Menu.Item>
+                      <Menu.Item key="seemore"> See More... </Menu.Item>
+                    </SubMenu>
                   </Menu>
                 }
                 trigger={["click"]}
               >
-                <label>
-                  Hi {Authentication.item.email} &nbsp;
-                  <Icon type="caret-down" className="sizeIconDropdown" />
-                </label>
+                <Button type="link" className="dropDownHeader">
+                  Events &nbsp; <Icon type="caret-down" />
+                </Button>
               </Dropdown>
-            ) : (
-              <>
-                <Login />
-                <Signup />
-              </>
-            )}
-          </Row>
-        </Col>
-      </Row>
+            </Row>
+          </Col>
+          <Col xs={12} md={12} lg={12} xl={10}>
+            <Search
+              placeholder="input search text"
+              onSearch={this.handleSearch}
+              className="inputSearch"
+            />
+          </Col>
+
+          <Col xs={3} md={3} lg={3} xl={0}>
+            <Row type="flex" justify="end">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Hamburger_icon_white.svg/768px-Hamburger_icon_white.svg.png"
+                alt=""
+                className="buttonDrawer"
+                onClick={this.showDrawer}
+              />
+              <Drawer
+                placement="right"
+                closable={false}
+                onClose={this.onClose}
+                visible={this.state.visibleDrawer}
+              >
+                {Authentication.item && Authentication.item.isAuthenticated ? (
+                  <Menu mode="inline">
+                    <SubMenu title={Authentication.item.email}>
+                      <Menu.Item key="profile">Profile</Menu.Item>
+                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                      <Menu.Item key="myevents">My Events</Menu.Item>
+                      <Menu.Item key="joinevents">Join Events</Menu.Item>
+                      <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                        {" "}
+                        Logout
+                      </Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                ) : (
+                  <div className="logInAndSignUp-drawer">
+                    <Login />
+                    <Signup />
+                  </div>
+                )}
+
+                <Row>
+                  <Menu onClick={this.handleClickTag} mode="inline">
+                    <SubMenu title="Events">
+                      <Menu.Item key="popular"> Popular</Menu.Item>
+                      <Menu.Item key="recommendbyjoindi">
+                        {" "}
+                        Recommend By JoinDi
+                      </Menu.Item>
+                      <Menu.Item key="recommendforyou">
+                        {" "}
+                        Recommend For You
+                      </Menu.Item>
+                      <SubMenu title="Tag">
+                        <Menu.Item key="beauty"> Beauty </Menu.Item>
+                        <Menu.Item key="book"> Book </Menu.Item>
+                        <Menu.Item key="business"> Business </Menu.Item>
+                        <Menu.Item key="comedy"> Comedy </Menu.Item>
+                        <Menu.Item key="concert"> Concert </Menu.Item>
+                        <Menu.Item key="education"> Education </Menu.Item>
+                        <Menu.Item key="esport"> E - sport </Menu.Item>
+                        <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
+                        <Menu.Item key="health"> Health </Menu.Item>
+                        <Menu.Item key="seemore"> See More... </Menu.Item>
+                      </SubMenu>
+                    </SubMenu>
+                  </Menu>
+                </Row>
+              </Drawer>
+            </Row>
+          </Col>
+
+          <Col xs={0} md={0} lg={0} xl={7}>
+            <Row type="flex" justify="end">
+              {Authentication.item && Authentication.item.isAuthenticated ? (
+                <Dropdown
+                  overlay={
+                    <Menu className="dropDownUser">
+                      <Menu.Item key="profile">Profile</Menu.Item>
+                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                      <Menu.Item key="myevents">My Events</Menu.Item>
+                      <Menu.Item key="joinevents">Join Events</Menu.Item>
+                      <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                        {" "}
+                        Logout
+                      </Menu.Item>
+                    </Menu>
+                  }
+                  trigger={["click"]}
+                >
+                  <Button type="link" className="dropDownHeader">
+                    Hi {Authentication.item.email} &nbsp;
+                    <Icon type="caret-down" className="sizeIconDropdown" />
+                  </Button>
+                </Dropdown>
+              ) : (
+                <div className="logInAndSignUp-nav">
+                  <Login />
+                  <Signup />
+                </div>
+              )}
+            </Row>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

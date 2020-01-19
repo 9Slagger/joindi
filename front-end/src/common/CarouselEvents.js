@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import "./CarouselPopularEvents.css"
+import React, { Component } from "react";
+import "../css/CarouselEvents.css"
 import { Carousel } from "antd";
 
-export default class CarouselPopularEvents extends Component {
+export default class CarouselEvents extends Component {
   render() {
     return (
       <div>
-        <Carousel  autoplay className="carouselPopularEvents" style={{backgroundColor:"black", height:"400px"}}>
+        <Carousel  autoplay className="carouselEvents" style={{backgroundColor:"black", height:"400px"}}>
           <div>
           <h3 className="text">1</h3>
           </div>
@@ -21,6 +21,6 @@ export default class CarouselPopularEvents extends Component {
           </div>
         </Carousel>
       </div>
-    )
+    );
   }
 }
