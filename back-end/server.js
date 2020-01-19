@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./src/dbconfig");
-const databaseLoader = require('./src/databaseLoader')
+const databaseLoader = require("./src/databaseLoader");
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -26,15 +26,15 @@ app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
 app.use("/customertype", require("./src/routes/customerControllers"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-app.use("/event", require("./src/routes/eventRouter"))
-app.use("/tag", require("./src/routes/tagRouter"))
+app.use("/event", require("./src/routes/eventRouter"));
+app.use("/tag", require("./src/routes/tagRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
-    await sequelize.sync({ alter : true });
-    await databaseLoader()
+    await sequelize.sync({ force });
+    await databaseLoader();
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });
