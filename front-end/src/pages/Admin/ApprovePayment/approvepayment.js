@@ -57,9 +57,6 @@ class ApprovePayment extends Component {
     const str = null;
     Axios.post(`http://localhost:8085/update-approvepayment/${id}/2/${str}`).then(res => {
       });
-    this.setState({
-      remark: ''
-    });
   }
 
   handleApprove = (id) => {
@@ -75,14 +72,18 @@ class ApprovePayment extends Component {
 
   handleDelete = (id,remark) => {
     Axios.post(`http://localhost:8085/update-approvepayment/${id}/3/${remark}`).then(res => {
-      });
-    this.setState({
-      remark: '',
-      visible: false
-    });
+      this.setState({
+        remark: "",
+        visible: false
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    
   }
 
   modalDelete = (id) => {
+    console.log(id)
     this.setState({
       id: id
     })
@@ -90,7 +91,7 @@ class ApprovePayment extends Component {
   }
 
   handleCancel = () => {
-    this.setState({ remark: '',visible: false });
+    this.setState({ visible: false });
   };
 
   onChangeRemark = (e) => {
@@ -221,7 +222,6 @@ class ApprovePayment extends Component {
     const { visible, value } = this.state;
     this.showModal = () => {
       this.setState({
-        remark: '',
         visible: true
       });
     };
@@ -258,6 +258,7 @@ class ApprovePayment extends Component {
             <hr />
             <br />
             <TextArea
+              value={this.state.remark}
               onChange={(e)=>this.onChangeRemark(e)}
               placeholder="Controlled autosize"
               autoSize={{ minRows: 3, maxRows: 5 }}
