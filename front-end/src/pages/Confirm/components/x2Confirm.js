@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
 
-import * as constants from "../../../_constants";
+// import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Confirm.css";
 
-export default class ConfirmSuccess extends Component {
+export default class Confirm extends Component {
   state = {};
 
   renderProcess = () => (
@@ -60,7 +60,7 @@ export default class ConfirmSuccess extends Component {
         <Row className="text-center p-5">
           <Col span={12}>กำลังอยู่ในขั้นตอนการยืนยันการชำระเงิน</Col>
           <Col span={12}>
-            <Button type="default">Confirm Success</Button>
+            <Button type="default">Processing</Button>
           </Col>
         </Row>
       </div>
@@ -72,14 +72,6 @@ export default class ConfirmSuccess extends Component {
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {this.renderConfirmPayment()}
-
-        <Row className="mt-4">
-          <Col span={24} className="text-right">
-            <Button href="/complete" type="primary">
-              Complete
-            </Button>
-          </Col>
-        </Row>
       </section>
     );
   }
