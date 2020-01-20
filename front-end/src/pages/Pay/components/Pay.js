@@ -52,27 +52,31 @@ const totalColumns = [
 // };
 
 export default class Pay extends Component {
-  state = {
-    ticketLists: [
-      {
-        key: "1",
-        event_name: "Event",
-        ticket: "Early Bird",
-        price: 1000,
-        amount: 1,
-        price_amount: `1000 x 1`,
-        subtotal: 1000 * 1
-      },
-      {
-        key: "2",
-        event_name: "Event 2",
-        ticket: "Normal",
-        price: 1500,
-        amount: 2,
-        price_amount: `1500 x 2`,
-        subtotal: 1500 * 2
-      }
-    ]
+  state = { ticketLists: [] };
+
+  getTicketData = () => {
+    this.setState({
+      ticketLists: [
+        {
+          key: "1",
+          event_name: "Event",
+          ticket: "Early Bird",
+          price: 1000,
+          amount: 1,
+          price_amount: `1000 x 1`,
+          subtotal: 1000 * 1
+        },
+        {
+          key: "2",
+          event_name: "Event 2",
+          ticket: "Normal",
+          price: 1500,
+          amount: 2,
+          price_amount: `1500 x 2`,
+          subtotal: 1500 * 2
+        }
+      ]
+    });
   };
 
   renderProcess = () => (

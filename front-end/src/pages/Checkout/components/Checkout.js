@@ -52,43 +52,49 @@ const reviewOrderSummaryColumns = [
 
 export default class Checkout extends Component {
   state = {
-    ticketLists: [
-      {
-        key: "1",
-        event_name: "Event",
-        ticket: "Early Bird",
-        price: 1000,
-        amount: 1,
-        price_amount: `1000 x 1`,
-        subtotal: 1000 * 1
-      },
-      {
-        key: "2",
-        event_name: "Event 2",
-        ticket: "Normal",
-        price: 1500,
-        amount: 2,
-        price_amount: `1500 x 2`,
-        subtotal: 1500 * 2
-      }
-    ]
+    ticketLists: []
   };
 
   componentDidMount() {
     this.getTicketInOrderDatas();
   }
 
+  getTicketDatas = () => {
+    this.setState({
+      ticketLists: [
+        {
+          key: "1",
+          event_name: "Event",
+          ticket: "Early Bird",
+          price: 1000,
+          amount: 1,
+          price_amount: `1000 x 1`,
+          subtotal: 1000 * 1
+        },
+        {
+          key: "2",
+          event_name: "Event 2",
+          ticket: "Normal",
+          price: 1500,
+          amount: 2,
+          price_amount: `1500 x 2`,
+          subtotal: 1500 * 2
+        }
+      ]
+    });
+  };
+
   getTicketInOrderDatas = () => {
-    Axios.get(`https://localhost:8085/tickets`)
-      .then(res => {
-        console.log(res);
-        const datas = res.data;
-        this.setState({ datas });
-        console.log(this.stage);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // Axios.get(`https://localhost:8085/tickets`)
+    //   .then(res => {
+    //     console.log(res);
+    //     const datas = res.data;
+    //     this.setState({ datas });
+    //     console.log(this.stage);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   };
 
   renderProcess = () => (

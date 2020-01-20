@@ -69,7 +69,9 @@ export default class Complete extends Component {
 
         <Row className="mt-4 mb-3">
           <Col span={24} className="text-center">
-            <Button type="primary">Home</Button>
+            <Button href="#" type="primary">
+              Home
+            </Button>
           </Col>
         </Row>
       </section>
