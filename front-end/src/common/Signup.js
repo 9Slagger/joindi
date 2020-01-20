@@ -136,7 +136,7 @@ class Signup extends Component {
           onClick={this.showModalSignUp}
           className="buttonHeader"
         >
-          Sign in
+          Sign up
         </Button>
         <Modal
           visible={this.state.visibleSignUp}

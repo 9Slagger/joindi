@@ -227,7 +227,9 @@ class ApprovePayment extends Component {
         
       ),
     };
-    const { visible, value } = this.state;
+    const { visible, 
+      // value
+    } = this.state;
     this.showModal = () => {
       this.setState({
         visible: true

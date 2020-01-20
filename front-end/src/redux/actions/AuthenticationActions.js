@@ -29,16 +29,16 @@ export const signin = (email, password) => {
   };
 };
 
-// export const signout = () => {
-//   return async dispatch => {
-//     dispatch({
-//       type: authConstants.SIGNOUT_REQUEST
-//     });
-//     try {
-//       const data = await serviceAuth.signout();
-//       dispatch({ type: authConstants.SIGNOUT_SUCCESS, payload: data });
-//     } catch (error) {
-//       dispatch({ type: authConstants.SIGNOUT_FAILURE, payload: error });
-//     }
-//   };
-// };
+export const signout = () => {
+  return async dispatch => {
+    dispatch({
+      type: authConstants.SIGNOUT_REQUEST
+    });
+    try {
+      let data = await serviceAuth.signout()
+      dispatch({ type: authConstants.SIGNOUT_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: authConstants.SIGNOUT_FAILURE, payload: error });
+    }
+  };
+};
