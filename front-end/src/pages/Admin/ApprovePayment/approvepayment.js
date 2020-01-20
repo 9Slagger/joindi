@@ -138,8 +138,8 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.event_name}</Col>
-                  <Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.event_name}</Col>
+                  <Col span={4} style={{textAlign:'right'}}>
                   <Button
                     style={{ border: "none", color: "#345586" }}
                     shape="circle"
@@ -177,16 +177,15 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.event_name}</Col>
-                  <Col>
-                  &nbsp;&nbsp;
-                  <Button
-                    style={{ border: "none", color: "#8D021F" }}
-                    shape="circle"
-                    onClick={()=>this.modalDelete(obj.id)}
-                  >
-                    <Icon type="close-circle" style={{ fontSize: "25px" }} />
-                  </Button>
+                  <Col span={20} style={{textAlign:'left'}}>{obj.event_name}</Col>
+                  <Col span={4} style={{textAlign:'right'}}>
+                    <Button
+                      style={{ border: "none", color: "#8D021F" }}
+                      shape="circle"
+                      onClick={()=>this.modalDelete(obj.id)}
+                    >
+                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                    </Button>
                   </Col>
                 </Row>
               </Card><br/>
@@ -209,8 +208,17 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.event_name}</Col>
-                  <Col>{obj.event_remark_reject}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.event_name}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.event_remark_reject}</Col>
+                  <Col span={4} style={{textAlign:'right'}}>
+                  <Button
+                    style={{ border: "none", color: "#345586" }}
+                    shape="circle"
+                    onClick={()=>this.handleApprove(`${obj.id}`)}
+                  >
+                    <Icon type="check-circle" style={{ fontSize: "25px" }} />
+                  </Button>
+                  </Col>
                 </Row>
               </Card><br/>
             </div>
