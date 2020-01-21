@@ -38,12 +38,17 @@ app.use("/tag", require("./src/routes/tagRouter"));
 app.use("/image", require("./src/routes/imageController"));
 app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
 app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
+app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
+<<<<<<< HEAD
     await sequelize.sync({ force, alter: force });
+=======
+    await sequelize.sync({ force: true ,alter: true });
+>>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     await databaseLoader();
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
