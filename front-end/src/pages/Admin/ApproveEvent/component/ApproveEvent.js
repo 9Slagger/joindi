@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "./ApproveEvent.css";
 import { Card, Icon, Row, Col, Button, Input, Modal } from "antd";
-import "./approveEvent.json";
 import { serviceEvent } from "../../../../_service";
 
 const { TextArea } = Input;
@@ -17,25 +16,56 @@ export default class ApproveEvent extends Component {
     loading: false,
     visible: false,
     nameEvent: "",
-    status: "",
+    id: "",
     value: "",
-    eventList: []
+    eventList: [],
+    eventStatus: []
   };
 
   componentDidMount() {
-    this.getEventAdmin()
+    this.getEventAdmin();
   }
 
- async getEventAdmin() {
-   try {
-     let eventList = await serviceEvent.getEventAdmin()
-     eventList = eventList.result
-     this.setState({ eventList });
-   } catch (error) {
-     console.log("error", error);
-   }
+  async getEventAdmin() {
+    try {
+      let eventList = await serviceEvent.getEventAdmin();
+      eventList = eventList.result;
+      this.setState({ eventList });
+    } catch (error) {
+      console.log("error", error);
+    }
   }
- 
+
+  async approveEventAdminWait(event_id) {
+    console.log("event_id", event_id);
+    try {
+      let eventStatus = await serviceEvent.approveEventAdminWait(event_id);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async approveEventAdminReject(event_id) {
+    console.log("event_id", event_id);
+    try {
+      let eventStatus = await serviceEvent.approveEventAdminReject(event_id);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async rejectEventAdmin(event_id, remark) {
+    console.log("reject approve", event_id, remark);
+    try {
+      let eventStatus = await serviceEvent.rejectEventAdmin(event_id, remark);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   onTabChange = (key, type) => {
     this.setState({ [type]: key });
   };
@@ -49,33 +79,25 @@ export default class ApproveEvent extends Component {
     this.setState({ visible: false });
   };
 
-  handleSendReject = id => {
-    let theData = [...this.state.eventList];
-    theData[id - 1].event_remark = this.state.value;
-    theData[id - 1].event_status_id = 3;
-    console.log(
-      "send",
-      id,
-      "status",
-      theData[id - 1].event_status_id,
-      "remark",
-      theData[id - 1].event_remark
-    );
-    this.setState({ theData });
+  handleSendReject = (id, remark) => {
+    console.log({
+      id: id,
+      remark: remark
+    });
+    this.rejectEventAdmin(id, remark);
     this.setState({ visible: false });
     this.setState({ value: "" });
-    
+    window.location.reload(true);
   };
 
-  handleApprove = id => {
-    let theData = [...this.state.eventList];
-    theData[id - 1].event_status_id = 2;
-    this.setState({ theData });
-    console.log("approve", theData);
+  handleApproveWait = id => {
+    this.approveEventAdminWait(id);
+    window.location.reload(true);
   };
 
-  handleContent = () => {
-    console.log("Content");
+  handleApproveReject = id => {
+    this.approveEventAdminReject(id);
+    window.location.reload(true);
   };
 
   render() {
@@ -114,6 +136,7 @@ export default class ApproveEvent extends Component {
       Waiting: this.state.eventList
         .filter(item => item.event_status_id === 1)
         .map(obj => {
+          // console.log('obj', obj)
           return (
             <div key={obj.id}>
               <Card className="card-list">
@@ -128,7 +151,7 @@ export default class ApproveEvent extends Component {
                         color: "#345586"
                       }}
                       shape="circle"
-                      onClick={() => this.handleApprove(`${obj.id}`)}
+                      onClick={() => this.handleApproveWait(`${obj.id}`)}
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -139,7 +162,7 @@ export default class ApproveEvent extends Component {
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={() => this.showModal(obj.id, obj.event_remark)}
+                      onClick={() => this.showModal(obj.id)}
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -160,7 +183,7 @@ export default class ApproveEvent extends Component {
                   <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Button
                       style={{
                         border: "none",
@@ -171,7 +194,7 @@ export default class ApproveEvent extends Component {
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Card>
               <br />
@@ -196,7 +219,7 @@ export default class ApproveEvent extends Component {
                         color: "#345586"
                       }}
                       shape="circle"
-                      onClick={() => this.handleApprove(`${obj.id}`)}
+                      onClick={() => this.handleApproveReject(obj.id)}
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -210,9 +233,10 @@ export default class ApproveEvent extends Component {
     };
 
     this.showModal = id => {
+      // console.log('Select id', id)
       this.setState({
         visible: true,
-        status: id
+        id: id
       });
     };
 
@@ -256,7 +280,9 @@ export default class ApproveEvent extends Component {
             <br />
             <Button
               className="btn-send"
-              onClick={() => this.handleSendReject(this.state.status)}
+              onClick={() =>
+                this.handleSendReject(this.state.id, this.state.value)
+              }
             >
               Send
             </Button>
