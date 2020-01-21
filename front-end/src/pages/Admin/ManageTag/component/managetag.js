@@ -35,9 +35,22 @@ const columns = [
   },
   {
     title: "Action",
-    dataIndex: "name",
-    key: "name",
-    width: "100"
+    key: "operation",
+    width: "100",
+    render: () => (
+      <Row>
+        <Col span={7}>
+          <Button type="primary" shape="circle">
+            <Icon type="edit" />
+          </Button>
+        </Col>
+        <Col span={7}>
+          <Button type="danger" shape="circle">
+            <Icon type="delete" />
+          </Button>
+        </Col>
+      </Row>
+    )
   }
 ];
 
