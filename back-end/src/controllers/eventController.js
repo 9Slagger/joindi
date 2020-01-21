@@ -115,7 +115,6 @@ module.exports = {
       });
     }
   },
-<<<<<<< HEAD
   approveEventFromWait: async (req, res, next) => {
     let eventTarget, eventStatusApproveResult, eventStatusPendingApproveResult;
     try {
@@ -289,7 +288,8 @@ module.exports = {
           title_th: ""
         }
       });
-=======
+    }
+  },
   getCategorieAndEvent: async (req, res, next) => {
     let categorieAndEventResult;
     try {
@@ -305,7 +305,6 @@ module.exports = {
       return res
         .status(400)
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
->>>>>>> develop
     }
   }
 };
