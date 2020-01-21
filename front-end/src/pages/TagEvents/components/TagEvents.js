@@ -35,6 +35,7 @@ export default class TagEvents extends Component {
             <Col xs={24} sm={12} md={12} lg={12} xl={5}>
               <Card className="cardTagEvents" hoverable>
                 <p className="textTagEvents">{tagevents.tag_name_en}</p>
+                <p className="textTagEvents">{tagevents.tag_name_th}</p>
               </Card>
             </Col>
           ))}
