@@ -8,15 +8,35 @@ const getToken = obj => {
   })
 }
 
+const verify = (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
+  if (_.isEmpty(token)) {
+    return next()
+  }
+  jwt.verify(token, secretKey, (error, decoded) => {
+    if (!_.isEmpty(error)) {
+      return res
+        .status(401)
+        .send({ messages: ['Failed to authenticate token.'] })
+    } else {
+      req.user = {}
+      req.user.id = decoded.id
+      req.user.email = decoded.email
+      req.user.role = decoded.role
+      next()
+    }
+  })
+}
+
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
   jwt.verify(token, secretKey, (error, decoded) => {
     if (!_.isEmpty(error)) {
       return res
-        .status(400)
+        .status(401)
         .send({ messages: ['Failed to authenticate token.'] })
     } else {
       req.user = {}
@@ -29,14 +49,14 @@ const verifyToken = (req, res, next) => {
 }
 
 const verifyAdmin = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
   jwt.verify(token, secretKey, (error, decoded) => {
     if (!_.isEmpty(error)) {
       return res
-        .status(400)
+        .status(401)
         .send({ messages: ['Failed to authenticate token.'] })
     } else {
       req.user = {}
@@ -52,14 +72,14 @@ const verifyAdmin = (req, res, next) => {
 }
 
 const verifyCustomer = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
     return res.status(403).send({ messages: ['no token provided.'] })
   }
   jwt.verify(token, secretKey, (error, decoded) => {
     if (!_.isEmpty(error)) {
       return res
-        .status(400)
+        .status(401)
         .send({ messages: ['Failed to authenticate token.'] })
     } else {
       req.user = {}
@@ -74,4 +94,4 @@ const verifyCustomer = (req, res, next) => {
   })
 }
 
-module.exports = { getToken, verifyToken, verifyAdmin, verifyCustomer }
+module.exports = { getToken, verify, verifyToken, verifyAdmin, verifyCustomer }
