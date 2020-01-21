@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model } = require("sequelize");
 const sequelize = require("../dbconfig");
 
 class EventHasImageModel extends Model {}

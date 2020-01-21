@@ -50,7 +50,7 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   },
-  getEvents: async (req, res, next) => {
+  getEventApprove: async (req, res, next) => {
     let eventResult;
     try {
       eventResult = await db.EventStatusModel.findAll({
@@ -115,6 +115,7 @@ module.exports = {
       });
     }
   },
+<<<<<<< HEAD
   approveEventFromWait: async (req, res, next) => {
     let eventTarget, eventStatusApproveResult, eventStatusPendingApproveResult;
     try {
@@ -288,6 +289,23 @@ module.exports = {
           title_th: ""
         }
       });
+=======
+  getCategorieAndEvent: async (req, res, next) => {
+    let categorieAndEventResult;
+    try {
+      categorieAndEventResult = await db.EventCategoryModel.findOne({
+        where: { id: req.params.categorieId },
+        include: [{ model: db.EventModel }]
+      });
+      return res.status(200).json({
+        result: categorieAndEventResult,
+        messages: { title_en: "get categorie and event success", title_th: "" }
+      });
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ messages: { title_en: "someting is wrong", title_th: "" } });
+>>>>>>> develop
     }
   }
 };

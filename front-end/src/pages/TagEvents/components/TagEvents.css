@@ -1,0 +1,14 @@
+.textTagEvents{
+  font-family: "Prompt", sans-serif;
+  font-size: 20px;
+  color: #345586;
+  margin:0 0 ;
+}
+
+
+
+.cardTagEvents{
+  text-align: center;
+  border-radius: 5px ;
+  margin: auto;
+}
