@@ -3,7 +3,7 @@ const _ = require("lodash");
 const { Op } = require("sequelize");
 
 module.exports = {
-  approvePayment: async (req, res, next) => {
+  getTicketInOrder: async (req, res, next) => {
     try {
         let resultModel = await db.TicketInOrderModel.findAll({ 
           include: [{// Notice `include` takes an ARRAY
@@ -15,7 +15,7 @@ module.exports = {
         res.status(400).send({ message: error.message });
     }
   },
-  updateApprovePayment: async (req, res, next) => {
+  ApproveTicketInOrder: async (req, res, next) => {
     try {
         let resultModel = db.TicketInOrderModel
         .update(

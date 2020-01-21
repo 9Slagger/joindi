@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { approvePayment,updateApprovePayment } = require("../controllers/ticketController")
+const { getTicketInOrder,ApproveTicketInOrder } = require("../controllers/tickerInOrderControllers")
 
-router.get("/admin/approvepayment", approvePayment);
-router.post("/admin/update-approvepayment/:id/:status/:remark", updateApprovePayment);
+router.get("/admin/getticketinOrder", getTicketInOrder);
+router.post("/admin/approveticketinOrder/:id/:status/:remark", ApproveTicketInOrder);
 
 module.exports = router;

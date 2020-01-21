@@ -36,6 +36,7 @@ app.use("/signin", require("./src/routes/authticationRouter"));
 
 app.use("/event", require("./src/routes/eventRouter"))
 app.use("/tag", require("./src/routes/tagRouter"))
+app.use("/image", require("./src/routes/imageController"));
 
 app.use("/ticket", require("./src/routes/ticketRouter"))
 

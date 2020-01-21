@@ -55,7 +55,7 @@ class ApprovePayment extends Component {
 
   approvePayment=(id)=>{
     const str = null;
-    Axios.post(`http://localhost:8085/ticket/admin/update-approvepayment/${id}/2/${str}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/2/${str}`).then(res => {
       });
   }
 
@@ -71,7 +71,7 @@ class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    Axios.post(`http://localhost:8085/ticket/admin/update-approvepayment/${id}/3/${remark}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/3/${remark}`).then(res => {
       this.setState({
         remark: "",
         visible: false
@@ -99,7 +99,7 @@ class ApprovePayment extends Component {
   };
 
   async showData(){
-    const result = await Axios.get("http://localhost:8085/ticket/admin/approvepayment");
+    const result = await Axios.get("http://localhost:8085/ticket/admin/getticketinOrder");
       let temp = result.data.map((item) => {
         return {
           id: item.id,
