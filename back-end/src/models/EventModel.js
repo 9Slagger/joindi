@@ -54,6 +54,7 @@ EventModel.init(
       validate: {
         notEmpty: false
       }
+<<<<<<< HEAD
     },
     event_remark_reject: {
       type: DataTypes.STRING,
@@ -61,8 +62,9 @@ EventModel.init(
       validate: {
         notEmpty: false
       }
+=======
+>>>>>>> approve-payment
     }
-
   },
   { sequelize, modelName: "event" }
 );
