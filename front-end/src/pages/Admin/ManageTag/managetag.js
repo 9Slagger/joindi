@@ -118,7 +118,7 @@ export default class ManageTag extends Component {
             ></Row>
             <Row type="flex" justify="center" style={{ padding: "10px" }}>
               <Col style={{ padding: "10px" }}>
-                <Search style={{ width: "500px" }} />
+                {/* <Search style={{ width: "500px" }} /> */}
               </Col>
               <Col style={{ padding: "10px" }}>
                 <Button style={{ color: "#345586" }} onClick={this.showModal}>
