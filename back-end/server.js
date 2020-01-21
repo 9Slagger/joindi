@@ -31,12 +31,13 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
+app.use("/categorie", require("./src/routes/categoriesRouter"));
 app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-
-app.use("/event", require("./src/routes/eventRouter"))
-app.use("/tag", require("./src/routes/tagRouter"))
+app.use("/event", require("./src/routes/eventRouter"));
+app.use("/tag", require("./src/routes/tagRouter"));
 app.use("/image", require("./src/routes/imageController"));
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 app.use("/ticket", require("./src/routes/ticketRouter"))
@@ -46,12 +47,21 @@ app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
 app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 >>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
+=======
+app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
+app.use(
+  "/update-approvepayment",
+  require("./src/routes/updateApprovePaymentRouter")
+);
+app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
+app.use("/bookmark", require("./src/routes/bookmarkRouter"));
+>>>>>>> 9ffc9b592f5b1de7e8c4da14ad43916d2fc1636d
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
-    await sequelize.sync({ force: true ,alter: true });
+    await sequelize.sync({ force, alter: force });
     await databaseLoader();
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
