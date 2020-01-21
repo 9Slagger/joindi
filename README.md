@@ -1,8 +1,8 @@
-# JionDi
+# JoinDi
 
 ## 📘 Description
 
-JionDi คือ ระบบกลาง
+JoinDi คือ ระบบกลาง
 
 ## 📦 Built With
 
@@ -21,10 +21,10 @@ JionDi คือ ระบบกลาง
 
 ```mermaid
 graph LR;
-  jiondi-frontend --> jiondi-backend;
-  jiondi-backend -->JWT
-  JWT -->|Authentication| jiondi-backend;
-  jiondi-backend --> Sequelize;
+  JoinDi-frontend --> JoinDi-backend;
+  JoinDi-backend -->JWT
+  JWT -->|Authentication| JoinDi-backend;
+  JoinDi-backend --> Sequelize;
   Sequelize --> MySQL;
 ```
 
