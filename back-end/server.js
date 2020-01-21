@@ -44,11 +44,7 @@ app.use((req, res, next) => {
 });
 (async () => {
   try {
-<<<<<<< HEAD
     await sequelize.sync({ force, alter: force });
-=======
-    await sequelize.sync({ force: true ,alter: true });
->>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     await databaseLoader();
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
