@@ -61,7 +61,8 @@ module.exports = async () => {
           password: hash("12345678"),
           phone_number: "0987654311",
           role_id: 1,
-          customer_type_id: 1
+          customer_type_id: 1,
+          user_active: true
         },
         { transaction }
       );
@@ -80,7 +81,8 @@ module.exports = async () => {
           password: hash("12345678"),
           phone_number: "0987654312",
           role_id: 2,
-          customer_type_id: 1
+          customer_type_id: 1,
+          user_active: true
         },
         { transaction }
       );
@@ -99,7 +101,8 @@ module.exports = async () => {
           password: hash("12345678"),
           phone_number: "0987654313",
           role_id: 2,
-          customer_type_id: 2
+          customer_type_id: 2,
+          user_active: true
         },
         { transaction }
       );

@@ -168,5 +168,22 @@ module.exports = {
         }
       });
     }
-  }
+  }, 
+  toggleActiveUser: async (req, res, next) => {
+    try {
+        let toggleActiveUser = await db.UserModel.findOne({ 
+            where: { id: req.body.id}
+        });
+        if (!toggleActiveUser){
+            res.status(400).send({ message: "User not found"})
+        }else {
+          toggleActiveUser.update({ 
+                user_active: req.body.userActive //หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
+             })
+             res.status(200).json({ message: "success" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: error.message})
+    }
+}
 };
