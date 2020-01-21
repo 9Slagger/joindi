@@ -27,10 +27,6 @@ EventStatusModel.init(
       validate: {
         notEmpty: false
       }
-    },
-    tag_active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
     }
   },
   { sequelize, modelName: "event_status" }
