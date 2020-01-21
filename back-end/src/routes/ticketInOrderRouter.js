@@ -6,9 +6,10 @@ const {
   update,
   del
 } = require("../controllers/ticketInOrderController");
+const { verifyCustomer } = require("../_helper/jwt");
 
-router.get("/", findAll);
-router.post("/", create);
+router.get("/", verifyCustomer, findAll);
+router.post("/", verifyCustomer, create);
 router.put("/:id", update);
 router.delete("/:id", del);
 

@@ -3,6 +3,8 @@ import { Button, Row, Col, Table } from "antd";
 
 import Axios from "../../../_helper/axios";
 
+import _ from "lodash";
+
 import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
@@ -55,9 +57,10 @@ export default class Checkout extends Component {
     ticketLists: []
   };
 
-  componentDidMount() {
-    this.getTicketInOrderDatas();
-  }
+  componentDidMount = async () => {
+    await this.getTicketInOrderDatas();
+    console.log(this.state);
+  };
 
   getTicketDatas = () => {
     this.setState({
@@ -84,17 +87,44 @@ export default class Checkout extends Component {
     });
   };
 
-  getTicketInOrderDatas = () => {
-    // Axios.get(`https://localhost:8085/tickets`)
-    //   .then(res => {
-    //     console.log(res);
-    //     const datas = res.data;
-    //     this.setState({ datas });
-    //     console.log(this.stage);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+  getTicketInOrderDatas = async () => {
+    await Axios.get(`/ticketInOrder`)
+      .then(res => {
+        let temp = [],
+          datas = res.data;
+        console.log(datas);
+
+        // if (!_.isEmpty(datas)) {
+        //   datas.forEach((data, idx) => {
+        //     temp[idx] = {};
+        //     temp[idx].key = idx + 1;
+        //     temp[idx].ticket_quantity = data.ticket_quantity;
+        //     temp[idx].ticket_id = data.ticket_id;
+        //     temp[idx].ticket_in_order_status_id =
+        //       data.ticket_in_order_status_id;
+        //     temp[idx].order_id = data.order_id;
+        //     if (!_.isEmpty(data) && _.has(data, "ticket")) {
+        //       temp[idx].ticket_title = data.ticket.ticket_title;
+        //       temp[idx].ticket_title = data.ticket.ticket_detail;
+        //       temp[idx].ticket_note = data.ticket.ticket_note;
+        //       temp[idx].ticket_total_quantity =
+        //         data.ticket.ticket_total_quantity;
+        //       temp[idx].ticket_remaining_quantity =
+        //         data.ticket.ticket_remaining_quantity;
+        //       temp[idx].ticket_price = data.ticket.ticket_price;
+        //       temp[idx].ticket_manufacturing_date =
+        //         data.ticket.ticket_manufacturing_date;
+        //       temp[idx].ticket_expiry_date = data.ticket.ticket_expiry_date;
+        //       temp[idx].event_id = data.ticket.event_id;
+        //     }
+        //   });
+        // }
+
+        this.setState({ ticketLists: temp });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
@@ -179,7 +209,6 @@ export default class Checkout extends Component {
     );
   };
   render() {
-    console.log(this.state);
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}

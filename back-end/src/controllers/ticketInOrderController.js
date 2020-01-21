@@ -1,5 +1,6 @@
 const db = require("../models");
 const _ = require("lodash");
+const sequelize = require("sequelize");
 
 const modelName = "TicketInOrderModel";
 const arrayOfFields = [
@@ -9,11 +10,30 @@ const arrayOfFields = [
   "order_id"
 ];
 
+const { QueryTypes } = require("sequelize");
+
 module.exports = {
   findAll: async (req, res, next) => {
+    console.log(req.user);
     let resultInfo;
     try {
-      resultInfo = await db[modelName].findAll();
+      // resultInfo = await db[modelName].findAll({
+      //   include: [{ model: db.OrderModel }, { model: db.TicketModel }]
+      // });
+      // resultInfo = await db.OrderModel.findOne({
+      //   where: { user_id: req.user.id },
+      //   include: [
+      //     {
+      //       model: db.TicketInOrderModel,
+      //       include: [
+      //         { model: db.TicketModel },
+      //         { model: db.TicketInOrderStatusModel }
+      //       ]
+      //     }
+      //   ]
+      // });
+      resultInfo = await db.sequelize.query("SELECT * FROM `tickets`");
+
       console.log(resultInfo);
       res.status(200).send(resultInfo);
     } catch (error) {
