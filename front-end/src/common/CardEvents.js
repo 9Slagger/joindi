@@ -12,7 +12,7 @@ class CardEvents extends Component {
         <Avatar shape="square" size={150} className="avatar-events" />
         <Col>
           <Row>
-    <Icon type="calendar" /> : <Text>{event.event_date_start}</Text>{" "}
+            <Icon type="calendar" /> : <Text>{event.event_date_start}</Text>{" "}
             <br />
           </Row>
           <Row>
@@ -32,14 +32,12 @@ class CardEvents extends Component {
   }
 }
 
-
 CardEvents.defaultProps = {
-  event:{
-    event_name:"",
-    event_date_start:"",
-    event_address:""
+  event: {
+    event_name: "",
+    event_date_start: "",
+    event_address: ""
   }
-  
-}
+};
 
 export default CardEvents;

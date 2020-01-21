@@ -197,8 +197,8 @@ class Header extends React.Component {
   };
 
   toPageCategorie = id => () => {
-    this.props.history.push(`/categoriesevents/${id}`)
-  } 
+    this.props.history.push(`/categoriesevents/${id}`);
+  };
 
   render() {
     const { Authentication } = this.props;
@@ -229,8 +229,14 @@ class Header extends React.Component {
                     className="dropDownHeader"
                   >
                     {categorieList.map(data => (
-                      <Menu.Item key={data.id} onClick={this.toPageCategorie(data.id)}>
-                        {selectLang(data.category_name_en,data.category_name_th)}
+                      <Menu.Item
+                        key={data.id}
+                        onClick={this.toPageCategorie(data.id)}
+                      >
+                        {selectLang(
+                          data.category_name_en,
+                          data.category_name_th
+                        )}
                       </Menu.Item>
                     ))}
                     <SubMenu title="Tag">

@@ -14,13 +14,23 @@ export default class index extends Component {
       category_name_th: "",
       createdAt: "",
       updatedAt: "",
-      events:[]
+      events: []
     }
   };
 
   componentDidMount = () => {
     this.getCategorie();
+    console.log("----------------didmount");
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.match.params.categorieId !== this.props.match.params.categorieId
+    ) {
+      this.getCategorie();
+      console.log("pokemons state has changed.");
+    }
+  }
 
   getCategorie = async () => {
     try {
@@ -50,7 +60,7 @@ export default class index extends Component {
             <Divider />
             {categoryEvent.events &&
               categoryEvent.events.map(event => (
-                <CategoriesEvents event={event} key={event.id}/>
+                <CategoriesEvents event={event} key={event.id} />
               ))}
           </Col>
         </Row>

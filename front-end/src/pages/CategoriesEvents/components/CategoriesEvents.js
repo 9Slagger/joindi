@@ -16,7 +16,7 @@ export default class CategoriesEvents extends Component {
             lg={10}
             xl={6}
           >
-            <CardEvents event={this.props.event}/>
+            <CardEvents event={this.props.event} />
           </Col>
         </Row>
       </div>
