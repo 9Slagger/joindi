@@ -7,17 +7,15 @@ ImageModel.init(
     file_size: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
-        notEmpty: false
+        notEmpty: true
       }
     },
     filename_extension: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
-        notEmpty: false
+        notEmpty: true
       }
     }
   },
