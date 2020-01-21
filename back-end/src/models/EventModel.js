@@ -54,6 +54,16 @@ EventModel.init(
       validate: {
         notEmpty: false
       }
+<<<<<<< HEAD
+=======
+    },
+    event_remark_reject: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: false
+      }
+>>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     }
   },
   { sequelize, modelName: "event" }
