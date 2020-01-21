@@ -19,6 +19,13 @@ EventTagModel.init(
       validate: {
         notEmpty: false
       }
+    },
+    tag_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   },
   { sequelize, modelName: "event_tag" }
