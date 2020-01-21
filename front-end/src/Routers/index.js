@@ -4,7 +4,7 @@ import { createBrowserHistory as createHistory } from "history";
 import { connect } from "react-redux";
 import HomePage from "../pages/Home";
 import AdminPage from "../pages/Admin/Payment/waiting";
-import ManageTag from "../pages/Admin/ManageTag/managetag";
+import ManageTag from "../pages/Admin/ManageTag";
 import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment";
 import TagEvents from "../pages/TagEvents";
 import AboutPage from "../pages/About";
@@ -15,7 +15,7 @@ import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
 import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
-import ApproveEvent from "../pages/Admin/ApproveEvent"
+import ApproveEvent from "../pages/Admin/ApproveEvent";
 export const history = createHistory();
 
 const Routers = props => {
