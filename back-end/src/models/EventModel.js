@@ -49,7 +49,7 @@ EventModel.init(
       }
     },
     event_content: {
-      type: DataTypes.STRING(14500),
+      type: DataTypes.STRING(10000),
       allowNull: false,
       validate: {
         notEmpty: false

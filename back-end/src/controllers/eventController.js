@@ -50,6 +50,48 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   },
+  getEventDetail: async (req, res, next) => {
+    let eventDetailResult, eventStatusResult;
+    const getIncludeBookmarkModel = () => {
+      if (req.user) {
+        return { model: db.BookmarkModel, where: { user_id: req.user.id } };
+      }
+    };
+    try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AP" },
+        raw: true
+      });
+    } catch (error) {
+      console.log("eventDetailResult🟢", eventDetailResult);
+    }
+    try {
+      eventDetailResult = await db.EventModel.findOne({
+        where: { id: req.params.eventId },
+        include: [
+          getIncludeBookmarkModel(),
+          {
+            model: db.EventStatusModel,
+            where: { event_status_id: eventStatusResult.id }
+          },
+          { model: db.TicketModel },
+          { model: db.EventCategoryModel },
+          { model: db.EventTagModel }
+        ]
+      });
+      console.log("eventDetailResult🟢", eventDetailResult);
+      res.status(200).json({
+        result: eventDetailResult,
+        messages: { title_en: "get event detail success", title_th: "" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(400).json({
+        result: eventDetailResult,
+        messages: { title_en: "get event detail fail", title_th: "" }
+      });
+    }
+  },
   getEventApprove: async (req, res, next) => {
     let eventResult;
     try {
