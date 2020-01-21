@@ -115,7 +115,6 @@ class Signup extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { customerTypeList, customerTypeId } = this.state;
-    console.log(this.state);
     let showIndividualFeild = false,
       showCompanyFeild = false;
     if (customerTypeList.length) {
