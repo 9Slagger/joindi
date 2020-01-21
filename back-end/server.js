@@ -45,10 +45,15 @@ app.use((req, res, next) => {
 (async () => {
   try {
 <<<<<<< HEAD
+<<<<<<< HEAD
     await sequelize.sync({ alter: true });
     await databaseLoader()
 =======
+    await sequelize.sync({ force, alter: force });
+>>>>>>> 7b6d93ac309738a0e5ed86117d956e5279698a94
+=======
     await sequelize.sync({ force: true ,alter: true });
+>>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     await databaseLoader();
 >>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     app.listen(PORT, () => {
