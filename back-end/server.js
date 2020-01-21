@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
+app.use("/categorie", require("./src/routes/categoriesRouter"));
 app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
 app.use("/event", require("./src/routes/eventRouter"));
