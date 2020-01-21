@@ -35,6 +35,7 @@ app.use("/categorie", require("./src/routes/categoriesRouter"));
 app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
 app.use("/event", require("./src/routes/eventRouter"));
+app.use("/eventhascategories", require("./src/routes/eventHasCategoriesRouter"));
 app.use("/tag", require("./src/routes/tagRouter"));
 app.use("/image", require("./src/routes/imageController"));
 app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
