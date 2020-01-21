@@ -4,49 +4,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "./ApproveEvent.css";
 import { Card, Icon, Row, Col, Button, Input, Modal } from "antd";
-import "./approveEvent.json";
-
-const EventStatusModel = [
-  {
-    EventStatusModel_id: 1,
-    user_id: 2,
-    event_status_id: 1,
-    event_name: "JoinDi 1",
-    event_latitude_map: 123,
-    event_longitude_map: 456,
-    event_date_start: "2020-01-15",
-    event_date_end: "2020-01-16",
-    event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
-    event_remark: ""
-  },
-  {
-    EventStatusModel_id: 2,
-    user_id: 2,
-    event_status_id: 1,
-    event_name: "JoinDi 2",
-    event_latitude_map: 123,
-    event_longitude_map: 456,
-    event_date_start: "2020-01-15",
-    event_date_end: "2020-01-16",
-    event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
-    event_remark: ""
-  },
-  {
-    EventStatusModel_id: 3,
-    user_id: 2,
-    event_status_id: 1,
-    event_name: "JoinDi 3",
-    event_latitude_map: 123,
-    event_longitude_map: 456,
-    event_date_start: "2020-01-15",
-    event_date_end: "2020-01-16",
-    event_content:
-      '<h4>test<br /><img src="https: //i.ibb.co/GQysSdf/color-Scheme.png" alt="theme" width="795" height="397" /></h4>',
-    event_remark: ""
-  }
-];
+import { serviceEvent } from "../../../../_service";
 
 const { TextArea } = Input;
 const { Search } = Input;
@@ -58,10 +16,55 @@ export default class ApproveEvent extends Component {
     loading: false,
     visible: false,
     nameEvent: "",
-    status: "",
-    theData: EventStatusModel,
-    value: ""
+    id: "",
+    value: "",
+    eventList: [],
+    eventStatus: []
   };
+
+  componentDidMount() {
+    this.getEventAdmin();
+  }
+
+  async getEventAdmin() {
+    try {
+      let eventList = await serviceEvent.getEventAdmin();
+      eventList = eventList.result;
+      this.setState({ eventList });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async approveEventAdminWait(event_id) {
+    console.log("event_id", event_id);
+    try {
+      let eventStatus = await serviceEvent.approveEventAdminWait(event_id);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async pendEventAdminReject(event_id) {
+    console.log("event_id", event_id);
+    try {
+      let eventStatus = await serviceEvent.approveEventAdminReject(event_id);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async rejectEventAdmin(event_id, remark) {
+    console.log("reject approve", event_id, remark);
+    try {
+      let eventStatus = await serviceEvent.rejectEventAdmin(event_id, remark);
+      this.setState({ eventStatus });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 
   onTabChange = (key, type) => {
     this.setState({ [type]: key });
@@ -76,32 +79,25 @@ export default class ApproveEvent extends Component {
     this.setState({ visible: false });
   };
 
-  handleSendReject = id => {
-    let theData = [...this.state.theData];
-    theData[id - 1].event_remark = this.state.value;
-    theData[id - 1].event_status_id = 3;
-    console.log(
-      "send",
-      id,
-      "status",
-      theData[id - 1].event_status_id,
-      "remark",
-      theData[id - 1].event_remark
-    );
-    this.setState({ theData });
+  handleSendReject = (id, remark) => {
+    console.log({
+      id: id,
+      remark: remark
+    });
+    this.rejectEventAdmin(id, remark);
     this.setState({ visible: false });
-    this.setState({value: ""});
+    this.setState({ value: "" });
+    window.location.reload(true);
   };
 
-  handleApprove = id => {
-    let theData = [...this.state.theData];
-    theData[id - 1].event_status_id = 2;
-    this.setState({ theData });
-    console.log("approve", theData);
+  handleApproveWait = id => {
+    this.approveEventAdminWait(id);
+    window.location.reload(true);
   };
 
-  handleContent = () => {
-    console.log("Content");
+  handlePendReject = id => {
+    this.pendEventAdminReject(id);
+    window.location.reload(true);
   };
 
   render() {
@@ -137,11 +133,12 @@ export default class ApproveEvent extends Component {
     ];
 
     const contentListNoTitle = {
-      Waiting: this.state.theData
+      Waiting: this.state.eventList
         .filter(item => item.event_status_id === 1)
         .map(obj => {
+          // console.log('obj', obj)
           return (
-            <div key={obj.EventStatusModel_id}>
+            <div key={obj.id}>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col onClick={this.handleContent}>
@@ -154,9 +151,7 @@ export default class ApproveEvent extends Component {
                         color: "#345586"
                       }}
                       shape="circle"
-                      onClick={() =>
-                        this.handleApprove(`${obj.EventStatusModel_id}`)
-                      }
+                      onClick={() => this.handleApproveWait(`${obj.id}`)}
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -167,12 +162,7 @@ export default class ApproveEvent extends Component {
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={() =>
-                        this.showModal(
-                          obj.EventStatusModel_id,
-                          obj.event_remark
-                        )
-                      }
+                      onClick={() => this.showModal(obj.id)}
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
@@ -183,39 +173,39 @@ export default class ApproveEvent extends Component {
             </div>
           );
         }),
-      Approved: this.state.theData
+      Approved: this.state.eventList
         .filter(item => item.event_status_id === 2)
         .map(obj => {
           return (
-            <div key={obj.EventStatusModel_id}>
+            <div key={obj.id}>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Button
                       style={{
                         border: "none",
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={() => this.showModal(obj.EventStatusModel_id)}
+                      onClick={() => this.showModal(obj.id)}
                     >
                       <Icon type="close-circle" style={{ fontSize: "25px" }} />
                     </Button>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Card>
               <br />
             </div>
           );
         }),
-      Rejected: this.state.theData
+      Rejected: this.state.eventList
         .filter(item => item.event_status_id === 3)
         .map(obj => {
           return (
-            <div key={obj.EventStatusModel_id}>
+            <div key={obj.id}>
               <Card className="card-list">
                 <Row type="flex" justify="space-between">
                   <Col onClick={this.handleContent}>
@@ -223,18 +213,16 @@ export default class ApproveEvent extends Component {
                   </Col>
                   <Col className="modal-remark">{obj.event_remark}</Col>
                   <Col>
-                    <Button
+                    {/* <Button
                       style={{
                         border: "none",
                         color: "#345586"
                       }}
                       shape="circle"
-                      onClick={() =>
-                        this.handleApprove(`${obj.EventStatusModel_id}`)
-                      }
+                      onClick={() => this.handlePendReject(obj.id)}
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
-                    </Button>
+                    </Button> */}
                   </Col>
                 </Row>
               </Card>
@@ -245,9 +233,10 @@ export default class ApproveEvent extends Component {
     };
 
     this.showModal = id => {
+      // console.log('Select id', id)
       this.setState({
         visible: true,
-        status: id
+        id: id
       });
     };
 
@@ -291,7 +280,9 @@ export default class ApproveEvent extends Component {
             <br />
             <Button
               className="btn-send"
-              onClick={() => this.handleSendReject(this.state.status)}
+              onClick={() =>
+                this.handleSendReject(this.state.id, this.state.value)
+              }
             >
               Send
             </Button>

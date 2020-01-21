@@ -13,7 +13,7 @@ import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
-import PopularEvents from "../pages/PopularEvents";
+import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
 export const history = createHistory();
@@ -35,7 +35,7 @@ const Routers = props => {
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
         <Route exact path="/eventdetail" component={EventDetail} />
-        <Route exact path="/popularevents" component={PopularEvents} />
+        <Route exact path="/categoriesevents" component={CategoriesEvents} />
       </Switch>
     </Router>
   );
