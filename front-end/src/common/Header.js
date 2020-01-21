@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
 import { serviceCategorie } from "../_service";
-import { selectLang } from "../_constants";
+import selectLang from "../_helper/selectLang";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
