@@ -17,60 +17,74 @@ import Signup from "./Signup";
 import { connect } from "react-redux";
 import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
+import { serviceCategorie } from "../_service";
+import { selectLang } from "../_constants";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
 
 class Header extends React.Component {
-  state = {
-    loading: false,
-    visibleDrawer: false,
-    visibleSignUp: false,
-    visibleLogIn: false,
-    isDirty: false,
-    mobileScreen: false,
-    searchList: [],
-
-    data: [
-      {
-        id: 1,
-        eventName: "วิ่งไล่ลุง",
-        catagory: {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      visibleDrawer: false,
+      visibleSignUp: false,
+      visibleLogIn: false,
+      isDirty: false,
+      searchList: [],
+      categorieList: [],
+      data: [
+        {
           id: 1,
-          catagory_name: "Popular"
-        },
-        tag: [
-          {
+          eventName: "วิ่งไล่ลุง",
+          catagory: {
             id: 1,
-            tag_name: "Coding"
+            catagory_name: "Popular"
           },
-          {
-            id: 2,
-            tag_name: "Run"
-          }
-        ]
-      },
-      {
-        id: 1,
-        eventName: "เดินเชียร์ลุง",
-        catagory: {
-          id: 1,
-          catagory_name: "Hot"
+          tag: [
+            {
+              id: 1,
+              tag_name: "Coding"
+            },
+            {
+              id: 2,
+              tag_name: "Run"
+            }
+          ]
         },
-        tag: [
-          {
-            id: 3,
-            tag_name: "Walk"
-          }
-        ]
-      }
-    ]
-  };
+        {
+          id: 1,
+          eventName: "เดินเชียร์ลุง",
+          catagory: {
+            id: 1,
+            catagory_name: "Hot"
+          },
+          tag: [
+            {
+              id: 3,
+              tag_name: "Walk"
+            }
+          ]
+        }
+      ]
+    };
+  }
 
   componentDidMount = () => {
-    window.addEventListener("resize", this.resize.bind(this));
-    this.resize();
+    this.getCategorie();
   };
+
+  getCategorie = async () => {
+    try {
+      const res = await serviceCategorie.getCategorie();
+      const categorieList = res.result;
+      this.setState({ categorieList });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   resize = () => {
     let isMobileScreen = window.innerWidth <= 1100;
     if (isMobileScreen !== this.state.mobileScreen) {
@@ -182,9 +196,13 @@ class Header extends React.Component {
     this.props.signout();
   };
 
+  toPageCategorie = id => () => {
+    this.props.history.push(`/categoriesevents/${id}`)
+  } 
+
   render() {
     const { Authentication } = this.props;
-    console.log(this.state.mobileScreen);
+    const { categorieList } = this.state;
     return (
       <div>
         <Row
@@ -210,15 +228,11 @@ class Header extends React.Component {
                     onClick={this.handleClickTag}
                     className="dropDownHeader"
                   >
-                    <Menu.Item key="popular"> Popular</Menu.Item>
-                    <Menu.Item key="recommendbyjoindi">
-                      {" "}
-                      Recommend By JoinDi
-                    </Menu.Item>
-                    <Menu.Item key="recommendforyou">
-                      {" "}
-                      Recommend For You
-                    </Menu.Item>
+                    {categorieList.map(data => (
+                      <Menu.Item key={data.id} onClick={this.toPageCategorie(data.id)}>
+                        {selectLang(data.category_name_en,data.category_name_th)}
+                      </Menu.Item>
+                    ))}
                     <SubMenu title="Tag">
                       <Menu.Item key="beauty"> Beauty </Menu.Item>
                       <Menu.Item key="book"> Book </Menu.Item>

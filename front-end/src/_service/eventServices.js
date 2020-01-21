@@ -1,11 +1,11 @@
 import axios from "../_helper/axios";
 
 export const serviceEvent = {
-  getCategorieAndEvents: () => {
+  getCategorieAndEvents: categorieId => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.get("/event/categorie");
+        res = await axios.get(`/event/categorie/${categorieId}`);
         resolve(res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
