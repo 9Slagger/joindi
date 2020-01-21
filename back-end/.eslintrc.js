@@ -9,6 +9,7 @@ module.exports = {
     "no-unused-vars": 0,
     "prefer-const": 0,
     "camelcase": 0,
-    "no-undef": 0
+    "no-undef": 0,
+    "keyword-spacing": 0
   }
 };

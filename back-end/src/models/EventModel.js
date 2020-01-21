@@ -57,9 +57,9 @@ EventModel.init(
     },
     event_remark: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: false
       }
     }
   },

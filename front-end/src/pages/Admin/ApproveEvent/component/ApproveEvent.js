@@ -46,7 +46,7 @@ export default class ApproveEvent extends Component {
     }
   }
 
-  async approveEventAdminReject(event_id) {
+  async pendEventAdminReject(event_id) {
     console.log("event_id", event_id);
     try {
       let eventStatus = await serviceEvent.approveEventAdminReject(event_id);
@@ -95,8 +95,8 @@ export default class ApproveEvent extends Component {
     window.location.reload(true);
   };
 
-  handleApproveReject = id => {
-    this.approveEventAdminReject(id);
+  handlePendReject = id => {
+    this.pendEventAdminReject(id);
     window.location.reload(true);
   };
 
@@ -213,16 +213,16 @@ export default class ApproveEvent extends Component {
                   </Col>
                   <Col className="modal-remark">{obj.event_remark}</Col>
                   <Col>
-                    <Button
+                    {/* <Button
                       style={{
                         border: "none",
                         color: "#345586"
                       }}
                       shape="circle"
-                      onClick={() => this.handleApproveReject(obj.id)}
+                      onClick={() => this.handlePendReject(obj.id)}
                     >
                       <Icon type="check-circle" style={{ fontSize: "25px" }} />
-                    </Button>
+                    </Button> */}
                   </Col>
                 </Row>
               </Card>

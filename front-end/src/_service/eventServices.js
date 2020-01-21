@@ -26,16 +26,15 @@ export const serviceEvent = {
       }
     });
   },
-  approveEventAdminReject: (id,remark) => {
+  pendEventAdminReject: (id,remark) => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.put("/event/approveReject", {
-          eventId: id,
-          // eventRemark: remark
+        res = await axios.put("/event/pendReject", {
+          eventId: id
         });
         resolve(res.data);
-        console.log("approve", res.data);
+        console.log("pending", res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
       }
