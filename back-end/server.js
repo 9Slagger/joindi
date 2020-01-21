@@ -5,8 +5,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 const sequelize = require("./src/dbconfig");
-const databaseLoader = require('./src/databaseLoader')
+const databaseLoader = require("./src/databaseLoader");
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -20,21 +21,36 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    limits: { fileSize: 50 * 1024 * 1024 }
+  })
+);
 app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
-app.use("/customertype", require("./src/routes/customerControllers"));
+app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-app.use("/event", require("./src/routes/eventRouter"))
-app.use("/tag", require("./src/routes/tagRouter"))
+app.use("/event", require("./src/routes/eventRouter"));
+app.use("/tag", require("./src/routes/tagRouter"));
+app.use("/image", require("./src/routes/imageController"));
+app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
+app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
+app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
 (async () => {
   try {
+<<<<<<< HEAD
     await sequelize.sync({ alter: true });
     await databaseLoader()
+=======
+    await sequelize.sync({ force: true ,alter: true });
+    await databaseLoader();
+>>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     app.listen(PORT, () => {
       console.log(`start server on port = ${PORT}`);
     });

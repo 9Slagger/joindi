@@ -18,6 +18,7 @@ const { OrderModel } = require("./OrderModel");
 const { ImageModel } = require("./ImageModel");
 const { EventHasImageModel } = require("./EventHasImageModel");
 const { TicketInOrderHasImageModel } = require("./TicketInOrderHasImageModel");
+const { BookmarkModel } = require("./BookmarkModel");
 
 // relation
 
@@ -74,6 +75,11 @@ TicketInOrderHasImageModel.belongsTo(EventModel, { foreignKey: "ticket_id" });
 EventModel.hasOne(TicketInOrderHasImageModel, {foreignKey: "ticket_id"});
 //
 
+//
+EventModel.belongsToMany(UserModel, { through: BookmarkModel, foreignKey: "user_id" })
+UserModel.belongsToMany(EventModel, { through: BookmarkModel, foreignKey: "event_id" })
+//
+
 module.exports = {
   sequelize,
   UserModel,
@@ -94,5 +100,6 @@ module.exports = {
   ImageModel,
   EventHasImageModel,
   TicketInOrderHasImageModel,
-  OrderModel
+  OrderModel,
+  BookmarkModel
 };

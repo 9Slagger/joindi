@@ -5,7 +5,7 @@ const { hash } = require("../_helper/bcrypt");
 
 module.exports = {
   createUser: async (req, res, next) => {
-    //validate
+    // validate
     if (validate(req.body.email)) {
       return res.status(400).json({
         messages: { title_en: "plese specify email", title_th: "" }
@@ -121,9 +121,7 @@ module.exports = {
           });
         }
       } else if (customerTypeResult.customer_type_code === "02CO") {
-        if (
-          validate(req.body.companyName)
-        ) {
+        if (validate(req.body.companyName)) {
           return res.status(400).json({
             messages: {
               title_en: "plese specify company name",
@@ -167,6 +165,23 @@ module.exports = {
           title_th: "มีบางอย่างผิดพลาด"
         }
       });
+    }
+  },
+  toggleActiveUser: async (req, res, next) => {
+    try {
+      let toggleActiveUser = await db.UserModel.findOne({
+        where: { id: req.body.id }
+      });
+      if (!toggleActiveUser) {
+        res.status(400).send({ message: "User not found" });
+      } else {
+        toggleActiveUser.update({
+          user_active: req.body.userActive //หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
+        });
+        res.status(200).json({ message: "success" });
+      }
+    } catch (error) {
+      res.status(400).send({ message: error.message });
     }
   }
 };
