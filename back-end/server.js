@@ -36,6 +36,8 @@ app.use("/signin", require("./src/routes/authticationRouter"));
 app.use("/event", require("./src/routes/eventRouter"));
 app.use("/tag", require("./src/routes/tagRouter"));
 app.use("/image", require("./src/routes/imageController"));
+app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
+app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
