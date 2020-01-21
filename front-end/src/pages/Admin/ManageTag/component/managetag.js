@@ -156,7 +156,14 @@ export default class ManageTag extends Component {
                 okText="Add Tag"
                 //footer={null}
               >
-                <Input placeholder="Enter Tag"></Input>
+                <Row style={{ paddingBottom: "10px" }}>
+                  Tag Name (English) :
+                  <Input placeholder="Enter Tag Name (English)"></Input>
+                </Row>
+                <Row>
+                  ชื่อแท็ก (ภาษาไทย) :
+                  <Input placeholder="กรุณากรอกชื่อแท็ก (ภาษาไทย)"></Input>
+                </Row>
               </Modal>
             </Col>
           </Row>
