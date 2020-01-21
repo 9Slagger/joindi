@@ -26,13 +26,12 @@ app.use("/user", require("./src/routes/userRouter"));
 app.use("/role", require("./src/routes/roleRouter"));
 app.use("/customertype", require("./src/routes/customerControllers"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-<<<<<<< HEAD
-app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
-app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
-=======
+
+// app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
+// app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
+
 app.use("/event", require("./src/routes/eventRouter"))
 app.use("/tag", require("./src/routes/tagRouter"))
->>>>>>> a38be0a6b5d28216a94b472ea46f697a96b4e162
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
