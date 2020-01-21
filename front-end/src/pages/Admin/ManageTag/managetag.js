@@ -14,7 +14,6 @@ import {
 import AdminLayout from "../../../common/AdminLayout";
 const { Column } = Table;
 
-const { Search } = Input;
 
 const data = [];
 for (let i = 0; i < 100; i++) {

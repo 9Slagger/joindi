@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
-import { Upload, Icon,  Row, Col,  Form, Input } from "antd";
+import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import "./StyleComponents/infoEventStyle.css";
+import Axios from "axios";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -9,16 +11,45 @@ class InfoEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileList: []
+      fileList: [],
+      tagList: [],
+      dateTimeInInterger:""
     };
   }
 
-  handleChange(value) {
-    console.log(`selected ${value}`);
+  componentDidMount() {
+    Axios.get("http://localhost:8085/tag").then(result => {
+      this.setState({ tagList: result.data });
+    });
   }
+  handleChange = value => {
+    // console.log(`selected ${value}`);
+    // this.setState({ addTag: `${value}` });
+    this.props.handleGetAddTag(value)
+  };
+
+  handleOnChangeEventName = e => {
+    this.props.handleGetEventName(e);
+  };
+  handleOnChangeCreaterName = e => {
+    this.props.handleGetCreaterName(e);
+  };
+  handleOnChangeDate = async(dateValue,dateValueArray) => {
+    await this.setState({dateTimeInInterger:dateValue.map(data => data._d.getTime())})
+    await this.props.handleGetDate(this.state.dateTimeInInterger);
+  };
+  handleOnChangeLatitude = e => {
+    this.props.handleGetLatitude(e)
+  };
+  handleOnChangeLongitude = e => {
+    this.props.handleGetLongitude(e)
+  }
+  
 
   render() {
     const { fileList } = this.state;
+    console.log(this.state);
+
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -46,42 +77,52 @@ class InfoEvents extends Component {
       </div>
     );
 
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-      children.push(
-        <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-      );
-    }
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form>
+      <Form className="decorationForm">
         <Row>
           {/* ---------------------Photo Upload----------------------- */}
-          <Col span={8}>
-            <Row>
-              <Upload
-                {...props}
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                //   beforeUpload={beforeUpload}
-                onChange={this.handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
+          <Col xs={24} md={24} xl={10}>
+            <Row type="flex" justify="center">
+              <Col>
+                <Upload
+                  {...props}
+                  name="avatar"
+                  listType="picture-card"
+                  className="avatar-uploader"
+                  showUploadList={false}
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  //   beforeUpload={beforeUpload}
+                  onChange={this.handleChange}
+                >
+                  {imageUrl ? (
+                    <img
+                      src={imageUrl}
+                      alt="avatar"
+                      style={{ width: "100%" }}
+                    />
+                  ) : (
+                    uploadButton
+                  )}
+                </Upload>
+              </Col>
             </Row>
           </Col>
           {/* --------------------------Info Events------------------------------- */}
-          <Col span={16}>
+          <Col
+            className="infoPadding"
+            xs={24}
+            md={24}
+            xl={14}
+            style={{ marginTop: "20px" }}
+          >
             <Row>
-              <Col span={4}>Event Name:</Col>
-              <Col span={20}>
+              <Col xs={24} md={8} xl={6}>
+                <h5 style={{ marginTop: "6px", color: "white" }}>
+                  Event Name:
+                </h5>
+              </Col>
+              <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("eventname", {
                     rules: [
@@ -90,13 +131,26 @@ class InfoEvents extends Component {
                         message: "Please put Event name!"
                       }
                     ]
-                  })(<Input placeholder="Event name" />)}
+                  })(
+                    <Input
+                      onChange={e =>
+                        this.handleOnChangeEventName(e.target.value)
+                      }
+                      style={{ width: "100%" }}
+                      className="inputDecolation"
+                      placeholder="Event name"
+                    />
+                  )}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>Creater name:</Col>
-              <Col span={20}>
+              <Col xs={24} md={8} xl={6}>
+                <h5 style={{ marginTop: "6px", color: "white" }}>
+                  Creater name :
+                </h5>
+              </Col>
+              <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("creatername", {
                     rules: [
@@ -105,15 +159,25 @@ class InfoEvents extends Component {
                         message: "Please put Creater name!"
                       }
                     ]
-                  })(<Input placeholder="Creater name" />)}
+                  })(
+                    <Input
+                      onChange={e =>
+                        this.handleOnChangeCreaterName(e.target.value)
+                      }
+                      style={{ width: "100%" }}
+                      placeholder="Creater name"
+                    />
+                  )}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>
-                <Icon type="calendar" /> Date:
+              <Col xs={24} md={8} xl={6}>
+                <h5 style={{ marginTop: "6px", color: "white" }}>
+                  <Icon type="calendar" /> Date :{" "}
+                </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("date", {
                     rules: [
@@ -122,33 +186,74 @@ class InfoEvents extends Component {
                         message: "Please put Date!"
                       }
                     ]
-                  })(<RangePicker format="DD-MM-YYYY" />)}
+                  })(
+                    <RangePicker
+                      onChange={(dateValue, dateValueArray) =>
+                        this.handleOnChangeDate(dateValue,dateValueArray)
+                      }
+                      format="DD-MM-YYYY"
+                    />
+                  )}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
-              <Col span={4}>
-                <Icon type="compass" /> Location:
+              <Col xs={24} md={8} xl={6}>
+                <h5 style={{ marginTop: "6px", color: "white" }}>
+                  <Icon type="compass" /> Location :{" "}
+                </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={6} xl={6}>
                 <Form.Item>
-                  {getFieldDecorator("location", {
+                  {getFieldDecorator("latitudeLocation", {
                     rules: [
                       {
                         required: true,
-                        message: "Please put Location!"
+                        message: "Please put Latitude Location!"
                       }
                     ]
-                  })(<Input placeholder="Location" />)}
+                  })(
+                    <Input
+                      type="number"
+                      onChange={e =>
+                        this.handleOnChangeLatitude(e.target.value)
+                      }
+                      style={{ width: "100%" }}
+                      placeholder="Latitude (Ex 13.756331)"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={6} xl={6}>
+                <Form.Item>
+                  {getFieldDecorator("longitudeLocation", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please put Longitude Location!"
+                      }
+                    ]
+                  })(
+                    <Input
+                      type="number"
+                      onChange={e =>
+                        this.handleOnChangeLongitude(e.target.value)
+                      }
+                      style={{ width: "100%" }}
+                      placeholder="Longitude (Ex 1.501762)"
+                    />
+                  )}
                 </Form.Item>
               </Col>
             </Row>
 
             <Row>
-              <Col span={4}>
-                <Icon type="tags" /> Tags:
+              <Col xs={24} md={8} xl={6}>
+                <h5 style={{ marginTop: "6px", color: "white" }}>
+                  <Icon type="tags" /> Tags :{" "}
+                </h5>
               </Col>
-              <Col span={20}>
+              <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("addtags", {
                     rules: [
@@ -162,10 +267,18 @@ class InfoEvents extends Component {
                       mode="multiple"
                       style={{ width: "100%" }}
                       placeholder="Please select"
-                      defaultValue={["a10", "c12"]}
-                      // onChange={handleChange}
+                      
+                      onChange={this.handleChange}
                     >
-                      {children}
+                      {this.state.tagList.map(tagListData => (
+                        <Option
+                        key={tagListData.id}
+                          value={tagListData.id}
+                          label={tagListData.tag_name_en}
+                        >
+                          <span>{tagListData.tag_name_en}</span>
+                        </Option>
+                      ))}
                     </Select>
                   )}
                 </Form.Item>

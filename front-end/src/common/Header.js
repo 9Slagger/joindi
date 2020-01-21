@@ -1,46 +1,113 @@
 import React from "react";
+import Fuse from "fuse.js";
 import {
   Menu,
   Icon,
   Row,
   Col,
   Dropdown,
-  Modal,
-  Button,
   Input,
-  Divider,
-  Form
+  Form,
+  Button,
+  Drawer
 } from "antd";
 import "../css/Header.css";
+import Login from "./Login";
+import Signup from "./Signup";
+import { connect } from "react-redux";
+import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
 
-const menu = (
-  <Menu>
-    <Menu.Item> Hot </Menu.Item>
-    <SubMenu title="Tag ">
-      <Menu.Item key="beauty"> Beauty </Menu.Item>
-      <Menu.Item key="book"> Book </Menu.Item>
-      <Menu.Item key="business"> Business </Menu.Item>
-      <Menu.Item key="comedy"> Comedy </Menu.Item>
-      <Menu.Item key="concert"> Concert </Menu.Item>
-      <Menu.Item key="education"> Education </Menu.Item>
-      <Menu.Item key="esport"> E - sport </Menu.Item>
-      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-      <Menu.Item key="health"> Health </Menu.Item>
-      <Menu.Item key="seemore"> See More... </Menu.Item>
-    </SubMenu>{" "}
-  </Menu>
-);
-
 class Header extends React.Component {
   state = {
     loading: false,
+    visibleDrawer: false,
     visibleSignUp: false,
     visibleLogIn: false,
-    isDirty: false
+    isDirty: false,
+    mobileScreen: false,
+    searchList: [],
+
+    data: [
+      {
+        id: 1,
+        eventName: "วิ่งไล่ลุง",
+        catagory: {
+          id: 1,
+          catagory_name: "Popular"
+        },
+        tag: [
+          {
+            id: 1,
+            tag_name: "Coding"
+          },
+          {
+            id: 2,
+            tag_name: "Run"
+          }
+        ]
+      },
+      {
+        id: 1,
+        eventName: "เดินเชียร์ลุง",
+        catagory: {
+          id: 1,
+          catagory_name: "Hot"
+        },
+        tag: [
+          {
+            id: 3,
+            tag_name: "Walk"
+          }
+        ]
+      }
+    ]
+  };
+
+  componentDidMount = () => {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  };
+  resize = () => {
+    let isMobileScreen = window.innerWidth <= 1100;
+    if (isMobileScreen !== this.state.mobileScreen) {
+      this.setState({
+        mobileScreen: isMobileScreen
+      });
+    }
+  };
+
+  showDrawer = () => {
+    this.setState({
+      visibleDrawer: true
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visibleDrawer: false
+    });
+  };
+
+  handleClickTag(e) {
+    console.log("click : ", e);
+  }
+
+  handleSearch = e => {
+    const fuse = new Fuse(this.state.data, {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: ["eventName", "catagory_name"]
+    });
+    this.setState({ searchList: fuse.search(e) });
+    console.log("search : ", this.state.searchList);
   };
 
   showModalSignUp = () => {
@@ -111,286 +178,188 @@ class Header extends React.Component {
     callback();
   };
 
-  handleSubmitSignUp = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
-  handleSubmitLogIn = e => {
-    console.log(e);
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
+  handleClickLogout = () => {
+    this.props.signout();
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { visible } = this.state;
-
+    const { Authentication } = this.props;
+    console.log(this.state.mobileScreen);
     return (
-      <Row className="header" type="flex" justify="space-around" align="middle">
-        <Col span={3}>
-          <img
-            src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
-            alt="join-DI-logo1"
-            style={{
-              height: "50px",
-              width: "auto"
-            }}
-          />
-        </Col>
-        <Col span={1}> </Col>
-        <Col span={2}>
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <a className="dropDownHeader" href="#">
-              Events &nbsp; <Icon type="down" />
-            </a>
-          </Dropdown>
-        </Col>
-        <Col span={10}>
-          <Search
-            placeholder="input search text"
-            onSearch={value => console.log(value)}
-            style={{
-              width: 500
-            }}
-          />
-        </Col>
-        <Col span={8}>
-          <Row className="loginandsignin" type="flex" justify="end">
-            <Col className="login">
-              <Link onClick={this.showModalLogIn} className="buttonHeader">
-                Log in
-              </Link>
-              <Modal
-                visible={this.state.visibleLogIn}
-                // title="Log in"
-                onOk={this.handleOkLogIn}
-                onCancel={this.handleCancelLogIn}
-                footer={null}
+      <div>
+        <Row
+          className="header"
+          type="flex"
+          justify="space-around"
+          align="middle"
+        >
+          <Col md={2} lg={2} xl={3} className="colLogo">
+            <Link to="/">
+              <img
+                src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
+                alt="join-DI-logo1"
+                className="logo"
+              />
+            </Link>
+          </Col>
+          <Col xs={0} md={0} lg={0} xl={3}>
+            <Row type="flex" justify="center">
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClickTag}
+                    className="dropDownHeader"
+                  >
+                    <Menu.Item key="popular"> Popular</Menu.Item>
+                    <Menu.Item key="recommendbyjoindi">
+                      {" "}
+                      Recommend By JoinDi
+                    </Menu.Item>
+                    <Menu.Item key="recommendforyou">
+                      {" "}
+                      Recommend For You
+                    </Menu.Item>
+                    <SubMenu title="Tag">
+                      <Menu.Item key="beauty"> Beauty </Menu.Item>
+                      <Menu.Item key="book"> Book </Menu.Item>
+                      <Menu.Item key="business"> Business </Menu.Item>
+                      <Menu.Item key="comedy"> Comedy </Menu.Item>
+                      <Menu.Item key="concert"> Concert </Menu.Item>
+                      <Menu.Item key="education"> Education </Menu.Item>
+                      <Menu.Item key="esport"> E - sport </Menu.Item>
+                      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
+                      <Menu.Item key="health"> Health </Menu.Item>
+                      <Menu.Item key="seemore"> See More... </Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                }
+                trigger={["click"]}
               >
-                <p> Log in</p>
-                <Divider />
-                <Form onSubmit={this.handleSubmitLogIn}>
-                  <Row>
-                    <Form.Item label="E-mail">
-                      {getFieldDecorator("email", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your username!"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Password">
-                      {getFieldDecorator("password", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your Password!"
-                          }
-                        ]
-                      })(<Input.Password />)}
-                    </Form.Item>
-                    <Form.Item>
-                      <Row type="flex" justify="center">
-                        <Button type="primary" htmlType="submit">
-                          Log in
-                        </Button>
-                      </Row>
-                    </Form.Item>
-                  </Row>
-                </Form>
-              </Modal>
-            </Col>
-            <Col className="signup">
-              <Link onClick={this.showModalSignUp} className="buttonHeader">
-                Sign in
-              </Link>
-              <Modal
-                visible={this.state.visibleSignUp}
-                // title="Log in"
-                onOk={this.handleOkSignUp}
-                onCancel={this.handleCancelSignUp}
-                footer={null}
+                <Button type="link" className="dropDownHeader">
+                  Events &nbsp; <Icon type="caret-down" />
+                </Button>
+              </Dropdown>
+            </Row>
+          </Col>
+          <Col xs={12} md={12} lg={12} xl={10}>
+            <Search
+              placeholder="input search text"
+              onSearch={this.handleSearch}
+              className="inputSearch"
+            />
+          </Col>
+
+          <Col xs={3} md={3} lg={3} xl={0}>
+            <Row type="flex" justify="end">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Hamburger_icon_white.svg/768px-Hamburger_icon_white.svg.png"
+                alt=""
+                className="buttonDrawer"
+                onClick={this.showDrawer}
+              />
+              <Drawer
+                placement="right"
+                closable={false}
+                onClose={this.onClose}
+                visible={this.state.visibleDrawer}
               >
-                <p> Sign Up</p>
-                <Divider />
-                <Form onSubmit={this.handleSubmitSignUp}>
-                  <Row>
-                    <Form.Item label="Phone Number">
-                      {getFieldDecorator("phoneNumber", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input phone number"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
+                {Authentication.item && Authentication.item.isAuthenticated ? (
+                  <Menu mode="inline">
+                    <SubMenu title={Authentication.item.email}>
+                      <Menu.Item key="profile">Profile</Menu.Item>
+                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                      <Menu.Item key="myevents">My Events</Menu.Item>
+                      <Menu.Item key="joinevents">Join Events</Menu.Item>
+                      <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                        {" "}
+                        Logout
+                      </Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                ) : (
+                  <div className="logInAndSignUp-drawer">
+                    <Login />
+                    <Signup />
+                  </div>
+                )}
 
-                    <Form.Item label="Password">
-                      {getFieldDecorator("password", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input password"
-                          },
-                          {
-                            validator: this.compareToSecondPassword
-                          }
-                        ]
-                      })(<Input.Password />)}
-                    </Form.Item>
-                    <Form.Item label="Confirm password">
-                      {getFieldDecorator("confirm", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "please confirm password"
-                          },
-                          {
-                            validator: this.compareToFirstPassword
-                          }
-                        ]
-                      })(<Input.Password onBlur={this.handleDirtyBlur} />)}
-                    </Form.Item>
+                <Row>
+                  <Menu onClick={this.handleClickTag} mode="inline">
+                    <SubMenu title="Events">
+                      <Menu.Item key="popular"> Popular</Menu.Item>
+                      <Menu.Item key="recommendbyjoindi">
+                        {" "}
+                        Recommend By JoinDi
+                      </Menu.Item>
+                      <Menu.Item key="recommendforyou">
+                        {" "}
+                        Recommend For You
+                      </Menu.Item>
+                      <SubMenu title="Tag">
+                        <Menu.Item key="beauty"> Beauty </Menu.Item>
+                        <Menu.Item key="book"> Book </Menu.Item>
+                        <Menu.Item key="business"> Business </Menu.Item>
+                        <Menu.Item key="comedy"> Comedy </Menu.Item>
+                        <Menu.Item key="concert"> Concert </Menu.Item>
+                        <Menu.Item key="education"> Education </Menu.Item>
+                        <Menu.Item key="esport"> E - sport </Menu.Item>
+                        <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
+                        <Menu.Item key="health"> Health </Menu.Item>
+                        <Menu.Item key="seemore"> See More... </Menu.Item>
+                      </SubMenu>
+                    </SubMenu>
+                  </Menu>
+                </Row>
+              </Drawer>
+            </Row>
+          </Col>
 
-                    <Form.Item label="Phone Number">
-                      {getFieldDecorator("phoneNumber", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input phone number"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="First Name (English)">
-                      {getFieldDecorator("firstNameEn", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input first name english"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="First Name (Thai)">
-                      {getFieldDecorator("firstNameTh", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input first name thai"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Last Name (English)">
-                      {getFieldDecorator("lastNameEng", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input last name english"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Last Name (Thai)">
-                      {getFieldDecorator("lastNameTh", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input last name thai"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Company Name (English)">
-                      {getFieldDecorator("companyNameEn", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input company name english"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Company Name (Thai)">
-                      {getFieldDecorator("companyNameTh", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input company name thai"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Company Address (English)">
-                      {getFieldDecorator("companyAddressEn", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input company address english"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Company Address (Thai)">
-                      {getFieldDecorator("companyAddressTh", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input company address thai"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-
-                    <Form.Item label="Birthday">
-                      {getFieldDecorator("birthday", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input cyour birthday"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-                  </Row>
-
-                  <Row type="flex" justify="center">
-                    <Form.Item>
-                      <Button block type="primary" htmlType="submit">
-                        Sign Up
-                      </Button>
-                    </Form.Item>
-                  </Row>
-                </Form>
-              </Modal>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+          <Col xs={0} md={0} lg={0} xl={7}>
+            <Row type="flex" justify="end">
+              {Authentication.item && Authentication.item.isAuthenticated ? (
+                <Dropdown
+                  overlay={
+                    <Menu className="dropDownUser">
+                      <Menu.Item key="profile">Profile</Menu.Item>
+                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                      <Menu.Item key="myevents">My Events</Menu.Item>
+                      <Menu.Item key="joinevents">Join Events</Menu.Item>
+                      <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
+                        {" "}
+                        Logout
+                      </Menu.Item>
+                    </Menu>
+                  }
+                  trigger={["click"]}
+                >
+                  <Button type="link" className="dropDownHeader">
+                    Hi {Authentication.item.email} &nbsp;
+                    <Icon type="caret-down" className="sizeIconDropdown" />
+                  </Button>
+                </Dropdown>
+              ) : (
+                <div className="logInAndSignUp-nav">
+                  <Login />
+                  <Signup />
+                </div>
+              )}
+            </Row>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
 
-export default Form.create()(Header);
+const mapStateToProps = ({ Authentication }) => ({
+  Authentication
+});
+
+const mapDispatchToProps = { signout };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form.create()(Header));

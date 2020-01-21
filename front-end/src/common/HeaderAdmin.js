@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Menu, Dropdown, Button } from "antd";
+import { Row, Col, Icon, Menu, Dropdown } from "antd";
 import "../css/HeaderAdmin.css";
-
-const menu = (
-  <Menu>
-    <Menu.Item key="1">
-      <Icon type="logout" />
-      Logout
-    </Menu.Item>
-  </Menu>
-);
+import { connect } from "react-redux";
+import { signout } from "../redux/actions";
+import Login from "./Login";
+import Signup from "./Signup";
 
 export class HeaderAdmin extends Component {
+  handleClickLogout = () => {
+    this.props.signout();
+  };
   render() {
+    const { Authentication } = this.props;
     return (
       <Row className="headerBox" type="flex" align="middle">
         <Col span={4}>
@@ -28,16 +27,28 @@ export class HeaderAdmin extends Component {
         <Col span={13}></Col>
         <Col span={3}>
           <Row type="flex" justify="end" align="middle">
-            <Dropdown
-              overlay={menu}
-              // onVisibleChange={this.handleVisibleChange}
-              // visible={this.state.visible}
-              size="large"
-            >
-              <p className="ant-dropdown-link" href="#">
-                Admin <Icon type="down" />
-              </p>
-            </Dropdown>
+            {Authentication.item && Authentication.item.isAuthenticated ? (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="1" onClick={this.handleClickLogout}>
+                      <Icon type="logout" />
+                      Logout
+                    </Menu.Item>
+                  </Menu>
+                }
+                size="large"
+              >
+                <p className="ant-dropdown-link" href="#">
+                  Admin <Icon type="down" />
+                </p>
+              </Dropdown>
+            ) : (
+              <>
+                <Login />
+                <Signup />
+              </>
+            )}
           </Row>
         </Col>
       </Row>
@@ -45,4 +56,10 @@ export class HeaderAdmin extends Component {
   }
 }
 
-export default HeaderAdmin;
+const mapStateToProps = ({ Authentication }) => ({
+  Authentication
+});
+
+const mapDispatchToProps = { signout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderAdmin);

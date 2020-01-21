@@ -8,15 +8,15 @@ const getToken = obj => {
   })
 }
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]
+const verify = (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
   if (_.isEmpty(token)) {
-    return res.status(403).send({ messages: ['no token provided.'] })
+    return next()
   }
   jwt.verify(token, secretKey, (error, decoded) => {
     if (!_.isEmpty(error)) {
       return res
-        .status(400)
+        .status(401)
         .send({ messages: ['Failed to authenticate token.'] })
     } else {
       req.user = {}
@@ -28,4 +28,70 @@ const verifyToken = (req, res, next) => {
   })
 }
 
-module.exports = { getToken, verifyToken }
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
+  if (_.isEmpty(token)) {
+    return res.status(403).send({ messages: ['no token provided.'] })
+  }
+  jwt.verify(token, secretKey, (error, decoded) => {
+    if (!_.isEmpty(error)) {
+      return res
+        .status(401)
+        .send({ messages: ['Failed to authenticate token.'] })
+    } else {
+      req.user = {}
+      req.user.id = decoded.id
+      req.user.email = decoded.email
+      req.user.role = decoded.role
+      next()
+    }
+  })
+}
+
+const verifyAdmin = (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
+  if (_.isEmpty(token)) {
+    return res.status(403).send({ messages: ['no token provided.'] })
+  }
+  jwt.verify(token, secretKey, (error, decoded) => {
+    if (!_.isEmpty(error)) {
+      return res
+        .status(401)
+        .send({ messages: ['Failed to authenticate token.'] })
+    } else {
+      req.user = {}
+      req.user.id = decoded.id
+      req.user.email = decoded.email
+      req.user.role = decoded.role
+      if(decoded.role.role_code !== "01ADM") {
+        return res.status(403).json({messages: {title_en: "no permission", title_th: "ไม่มีสิทธิ์ในการเข้าถึง"}})
+      }
+      next()
+    }
+  })
+}
+
+const verifyCustomer = (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]
+  if (_.isEmpty(token)) {
+    return res.status(403).send({ messages: ['no token provided.'] })
+  }
+  jwt.verify(token, secretKey, (error, decoded) => {
+    if (!_.isEmpty(error)) {
+      return res
+        .status(401)
+        .send({ messages: ['Failed to authenticate token.'] })
+    } else {
+      req.user = {}
+      req.user.id = decoded.id
+      req.user.email = decoded.email
+      req.user.role = decoded.role
+      if(decoded.role.role_code !== "02CUS") {
+        return res.status(403).json({messages: {title_en: "no permission", title_th: "ไม่มีสิทธิ์ในการเข้าถึง"}})
+      }
+      next()
+    }
+  })
+}
+
+module.exports = { getToken, verify, verifyToken, verifyAdmin, verifyCustomer }
