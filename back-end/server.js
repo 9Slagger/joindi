@@ -41,6 +41,7 @@ app.use(
   "/update-approvepayment",
   require("./src/routes/updateApprovePaymentRouter")
 );
+app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
