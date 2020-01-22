@@ -17,7 +17,7 @@ import Signup from "./Signup";
 import { connect } from "react-redux";
 import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
-import { serviceCategorie } from "../_service";
+import { serviceCategorie, serviceEvent } from "../_service";
 import selectLang from "../_helper/selectLang";
 
 const { SubMenu } = Menu;
@@ -85,13 +85,10 @@ class Header extends React.Component {
     }
   };
 
-  resize = () => {
-    let isMobileScreen = window.innerWidth <= 1100;
-    if (isMobileScreen !== this.state.mobileScreen) {
-      this.setState({
-        mobileScreen: isMobileScreen
-      });
-    }
+  getCategorieAndEvent = async () => {
+    try {
+      const res = await serviceEvent.getCategorieAndEvent();
+    } catch (error) {}
   };
 
   showDrawer = () => {
