@@ -333,7 +333,7 @@ class Header extends React.Component {
                     </Menu>
                   </>
                 ) : (
-                  <div className="logInAndSignUp-drawer">
+                  <div className="logInAndSignUp-drawer" >
                     <Login />
                     <Signup />
                   </div>
