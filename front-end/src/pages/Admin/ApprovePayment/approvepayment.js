@@ -100,7 +100,9 @@ class ApprovePayment extends Component {
 
   async showData(){
     const result = await Axios.get("http://localhost:8085/ticket/admin/getticketinOrder");
-      let temp = result.data.map((item) => {
+      console.log(result);
+      
+    let temp = result.data.map((item) => {
         return {
           id: item.id,
           ticket_title: item.ticket.ticket_title,
