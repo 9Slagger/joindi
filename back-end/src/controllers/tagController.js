@@ -5,12 +5,10 @@ module.exports = {
   getTag: async (req, res, next) => {
     try {
       const resultTag = await db.EventTagModel.findAll({});
-      res
-        .status(200)
-        .json({
-          result: resultTag,
-          messages: { title_en: "get tag success", title_th: "" }
-        });
+      res.status(200).json({
+        result: resultTag,
+        messages: { title_en: "get tag success", title_th: "" }
+      });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -25,7 +23,8 @@ module.exports = {
         res.status(400).send({ message: "Tag not found" });
       } else {
         toggleActiveTag.update({
-          tag_active: req.body.tagActive //หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
+          tag_active: req.body.tagActive
+          // หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
         });
         res.status(200).json({ message: "success" });
       }

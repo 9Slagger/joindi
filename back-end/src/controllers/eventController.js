@@ -59,7 +59,7 @@ module.exports = {
     };
     try {
       eventStatusResult = await db.EventStatusModel.findOne({
-        where: { status_code: "02AP" },
+        where: { status_code: "02AD" },
         raw: true
       });
     } catch (error) {

@@ -16,4 +16,3 @@ TicketInOrderModel.init(
 );
 
 module.exports = { TicketInOrderModel };
-
