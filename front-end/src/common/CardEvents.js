@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../css/CardEvents.css";
 import { Card, Avatar, Typography, Icon, Row, Col } from "antd";
+import { Link } from "react-router-dom";
 const { Text, Paragraph } = Typography;
 
 class CardEvents extends Component {
@@ -9,6 +10,7 @@ class CardEvents extends Component {
     const { event } = this.props;
     return (
       <Card className="card-events">
+        <Link to={`/eventdetail/${1}`}>
         <Avatar shape="square" size={150} className="avatar-events" />
         <Col>
           <Row>
@@ -27,6 +29,7 @@ class CardEvents extends Component {
             </Col>
           </Row>
         </Col>
+        </Link>
       </Card>
     );
   }

@@ -47,6 +47,10 @@ export default class EventDetail extends Component {
     });
   };
 
+  hangleBuyTicket = id => async () => {
+    // TODO: call api if success go to page checkout if fail alert buy ticket fail
+  }
+
   render() {
     return (
       <Row className="event-detail">
@@ -161,7 +165,7 @@ export default class EventDetail extends Component {
                     </Col>
                     <Col span={2}>
                       <Row type="flex" justify="end" align="middle">
-                        <Button type="primary">Buy Ticket</Button>
+                        <Button type="primary" onClick={this.hangleBuyTicket(1)}>Buy Ticket</Button>
                       </Row>
                     </Col>
                   </Row>

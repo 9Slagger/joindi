@@ -9,7 +9,9 @@ import {
   Input,
   Form,
   Button,
-  Drawer
+  Drawer,
+  Divider,
+  Badge
 } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
@@ -19,6 +21,7 @@ import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
 import { serviceCategorie } from "../_service";
 import selectLang from "../_helper/selectLang";
+import { TAG } from "../_constants";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
@@ -239,7 +242,7 @@ class Header extends React.Component {
                         )}
                       </Menu.Item>
                     ))}
-                    <SubMenu title="Tag">
+                    <SubMenu title={TAG}>
                       <Menu.Item key="beauty"> Beauty </Menu.Item>
                       <Menu.Item key="book"> Book </Menu.Item>
                       <Menu.Item key="business"> Business </Menu.Item>
@@ -249,7 +252,10 @@ class Header extends React.Component {
                       <Menu.Item key="esport"> E - sport </Menu.Item>
                       <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
                       <Menu.Item key="health"> Health </Menu.Item>
-                      <Menu.Item key="seemore"> See More... </Menu.Item>
+                      <Menu.Item key="seemore">
+                        {" "}
+                        <Link to="/tagevents">See More...</Link>{" "}
+                      </Menu.Item>
                     </SubMenu>
                   </Menu>
                 }
@@ -284,19 +290,53 @@ class Header extends React.Component {
                 visible={this.state.visibleDrawer}
               >
                 {Authentication.item && Authentication.item.isAuthenticated ? (
-                  <Menu mode="inline">
-                    <SubMenu title={Authentication.item.email}>
-                      <Menu.Item key="profile">Profile</Menu.Item>
-                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                      <Menu.Item key="myevents">My Events</Menu.Item>
-                      <Menu.Item key="joinevents">Join Events</Menu.Item>
-                      <Menu.Item key="wishlist">Wish List</Menu.Item>
-                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
-                        {" "}
-                        Logout
-                      </Menu.Item>
-                    </SubMenu>
-                  </Menu>
+                  <>
+                    {Authentication.item.role.role_code === "01ADM" ? (
+                      <>
+                        <Menu mode="inline">
+                          <Menu.Item>
+                            <Badge count={15}>
+                              <Icon type="snippets" />
+                            </Badge>
+                          </Menu.Item>
+                          <Menu.Item key="profile">
+                            <Link to="/admin">Management</Link>
+                          </Menu.Item>
+                        </Menu>
+                        <Divider type="vertical" />
+                      </>
+                    ) : Authentication.item.role.role_code === "02CUS" ? (
+                      <>
+                        <Menu mode="inline">
+                          <Menu.Item>
+                            <Badge count={15}>
+                              <Icon type="bell" />
+                            </Badge>
+                          </Menu.Item>
+                          <Menu.Item key="profile">
+                            <Link to="/">My Events</Link>
+                          </Menu.Item>
+                        </Menu>
+                        <Divider type="vertical" />
+                      </>
+                    ) : null}
+                    <Menu mode="inline">
+                      <SubMenu title={Authentication.item.email}>
+                        <Menu.Item key="profile">Profile</Menu.Item>
+                        <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                        <Menu.Item key="myevents">My Events</Menu.Item>
+                        <Menu.Item key="joinevents">Join Events</Menu.Item>
+                        <Menu.Item key="wishlist">Wish List</Menu.Item>
+                        <Menu.Item
+                          key="logout"
+                          onClick={this.handleClickLogout}
+                        >
+                          {" "}
+                          Logout
+                        </Menu.Item>
+                      </SubMenu>
+                    </Menu>
+                  </>
                 ) : (
                   <div className="logInAndSignUp-drawer">
                     <Login />
@@ -326,7 +366,10 @@ class Header extends React.Component {
                         <Menu.Item key="esport"> E - sport </Menu.Item>
                         <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
                         <Menu.Item key="health"> Health </Menu.Item>
-                        <Menu.Item key="seemore"> See More... </Menu.Item>
+                        <Menu.Item key="seemore">
+                          {" "}
+                          <Link to="/tagevents">See More...</Link>{" "}
+                        </Menu.Item>
                       </SubMenu>
                     </SubMenu>
                   </Menu>
@@ -338,27 +381,55 @@ class Header extends React.Component {
           <Col xs={0} md={0} lg={0} xl={7}>
             <Row type="flex" justify="end">
               {Authentication.item && Authentication.item.isAuthenticated ? (
-                <Dropdown
-                  overlay={
-                    <Menu className="dropDownUser">
-                      <Menu.Item key="profile">Profile</Menu.Item>
-                      <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                      <Menu.Item key="myevents">My Events</Menu.Item>
-                      <Menu.Item key="joinevents">Join Events</Menu.Item>
-                      <Menu.Item key="wishlist">Wish List</Menu.Item>
-                      <Menu.Item key="logout" onClick={this.handleClickLogout}>
-                        {" "}
-                        Logout
-                      </Menu.Item>
-                    </Menu>
-                  }
-                  trigger={["click"]}
-                >
-                  <Button type="link" className="dropDownHeader">
-                    Hi {Authentication.item.email} &nbsp;
-                    <Icon type="caret-down" className="sizeIconDropdown" />
-                  </Button>
-                </Dropdown>
+                <>
+                  {Authentication.item.role.role_code === "01ADM" ? (
+                    <>
+                      <Badge count={15}>
+                        <Icon type="snippets" />
+                      </Badge>
+                      <Divider type="vertical" />
+                      <Button type="link" className="dropDownHeader">
+                        <Link to="/admin">Management</Link>
+                      </Button>
+                      <Divider type="vertical" />
+                    </>
+                  ) : Authentication.item.role.role_code === "02CUS" ? (
+                    <>
+                      <Badge count={15}>
+                        <Icon type="bell" />
+                      </Badge>
+                      <Divider type="vertical" />
+                      <Button type="link" className="dropDownHeader">
+                        <Link to="/">My Events</Link>
+                      </Button>
+                      <Divider type="vertical" />
+                    </>
+                  ) : null}
+                  <Dropdown
+                    overlay={
+                      <Menu className="dropDownUser">
+                        <Menu.Item key="profile">Profile</Menu.Item>
+                        <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                        <Menu.Item key="myevents">My Events</Menu.Item>
+                        <Menu.Item key="joinevents">Join Events</Menu.Item>
+                        <Menu.Item key="wishlist">Wish List</Menu.Item>
+                        <Menu.Item
+                          key="logout"
+                          onClick={this.handleClickLogout}
+                        >
+                          {" "}
+                          Logout
+                        </Menu.Item>
+                      </Menu>
+                    }
+                    trigger={["click"]}
+                  >
+                    <Button type="link" className="dropDownHeader">
+                      Hi {Authentication.item.email} &nbsp;
+                      <Icon type="caret-down" className="sizeIconDropdown" />
+                    </Button>
+                  </Dropdown>
+                </>
               ) : (
                 <div className="logInAndSignUp-nav">
                   <Login />
