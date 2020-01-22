@@ -4,7 +4,7 @@ import { createBrowserHistory as createHistory } from "history";
 import { connect } from "react-redux";
 import HomePage from "../pages/Home";
 import AdminPage from "../pages/Admin/Payment/waiting";
-import ManageTag from "../pages/Admin/ManageTag/managetag";
+import ManageTag from "../pages/Admin/ManageTag";
 import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment";
 import TagEvents from "../pages/TagEvents";
 import AboutPage from "../pages/About";
@@ -13,10 +13,14 @@ import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
 import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
-import PopularEvents from "../pages/PopularEvents";
+import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
+<<<<<<< HEAD
 import ApproveEvent from "../pages/Admin/ApproveEvent"
 import UpdateEvent from "../pages/Admin/UpdateEvent"
+=======
+import ApproveEvent from "../pages/Admin/ApproveEvent";
+>>>>>>> 3dd35018283ac6cdea5d00a17bf4b13a33a3ddf9
 export const history = createHistory();
 
 const Routers = props => {
@@ -37,7 +41,7 @@ const Routers = props => {
         <Route exact path="/updateevent" component={UpdateEvent}/>
         <Route exact path="/approvepayment" component={ApprovePayment} />
         <Route exact path="/eventdetail" component={EventDetail} />
-        <Route exact path="/popularevents" component={PopularEvents} />
+        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
       </Switch>
     </Router>
   );

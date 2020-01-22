@@ -5,17 +5,22 @@ module.exports = {
   getTag: async (req, res, next) => {
     try {
       const resultTag = await db.EventTagModel.findAll({});
-      res
-        .status(200)
-        .json({
-          result: resultTag,
-          messages: { title_en: "get tag success", title_th: "" }
-        });
+      res.status(200).json({
+        result: resultTag,
+        messages: {
+          title_en: "get tags success",
+          title_th: ""
+        }
+      });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({
+        messages: {
+          title_en: "get tags fail",
+          title_th: ""
+        }
+      });
     }
   },
-
   toggleActiveTag: async (req, res, next) => {
     try {
       let toggleActiveTag = await db.EventTagModel.findOne({
@@ -25,7 +30,7 @@ module.exports = {
         res.status(400).send({ message: "Tag not found" });
       } else {
         toggleActiveTag.update({
-          tag_active: req.body.tagActive //หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
+          tag_active: req.body.tagActive // หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
         });
         res.status(200).json({ message: "success" });
       }
