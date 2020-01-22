@@ -49,13 +49,18 @@ EventModel.init(
       }
     },
     event_content: {
-      type: DataTypes.STRING(14500),
+      type: DataTypes.STRING(10000),
       allowNull: false,
       validate: {
         notEmpty: false
       }
-<<<<<<< HEAD
-=======
+    },
+    event_remark: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: false
+      }
     },
     event_remark_reject: {
       type: DataTypes.STRING,
@@ -63,7 +68,6 @@ EventModel.init(
       validate: {
         notEmpty: false
       }
->>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
     }
   },
   { sequelize, modelName: "event" }
