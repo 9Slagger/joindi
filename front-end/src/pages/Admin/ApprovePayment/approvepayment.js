@@ -55,7 +55,7 @@ class ApprovePayment extends Component {
 
   approvePayment=(id)=>{
     const str = null;
-    Axios.post(`http://localhost:8085/update-approvepayment/${id}/2/${str}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/2/${str}`).then(res => {
       });
   }
 
@@ -71,7 +71,7 @@ class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    Axios.post(`http://localhost:8085/update-approvepayment/${id}/3/${remark}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/3/${remark}`).then(res => {
       this.setState({
         remark: "",
         visible: false
@@ -99,13 +99,13 @@ class ApprovePayment extends Component {
   };
 
   async showData(){
-    const result = await Axios.get("http://localhost:8085/approvepayment");
+    const result = await Axios.get("http://localhost:8085/ticket/admin/ticketinorder");
       let temp = result.data.map((item) => {
         return {
           id: item.id,
-          event_name: item.event_name,
-          event_remark_reject: item.event_remark_reject,
-          event_status_id: item.event_status_id
+          ticket_title: item.ticket.ticket_title,
+          ticket_in_order_remark_reject: item.ticket_in_order_remark_reject,
+          ticket_in_order_status_id: item.ticket_in_order_status_id
         }
       });
       this.setState({ data: temp }, ()=>{});
@@ -120,13 +120,13 @@ class ApprovePayment extends Component {
   };
 
 
-  render() {
-    
+  render() { 
+    // console.log(this.state.data)
     const contentListNoTitle = {
       Waiting: ( 
-        this.state.data.filter(item => item.event_status_id === 1).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 1).map((obj)=>{
           // console.log('test')
-          // console.log(obj.id)
+          console.log(obj.ticket_title)
           return(
             <div>
                <Card
@@ -138,12 +138,12 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col span={10} style={{textAlign:'left'}}>{obj.event_name}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
                   <Col span={4} style={{textAlign:'right'}}>
                   <Button
                     style={{ border: "none", color: "#345586" }}
                     shape="circle"
-                    onClick={()=>this.handleApprove(`${obj.id}`)}
+                    onClick={()=>this.handleApprove(obj.id)}
                   >
                     <Icon type="check-circle" style={{ fontSize: "25px" }} />
                   </Button>
@@ -164,7 +164,7 @@ class ApprovePayment extends Component {
         
       ),
       Approved: ( 
-        this.state.data.filter(item => item.event_status_id === 2).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 2).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -177,25 +177,15 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col span={20} style={{textAlign:'left'}}>{obj.event_name}</Col>
-                  <Col span={4} style={{textAlign:'right'}}>
-                    <Button
-                      style={{ border: "none", color: "#8D021F" }}
-                      shape="circle"
-                      onClick={()=>this.modalDelete(obj.id)}
-                    >
-                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
-                    </Button>
-                  </Col>
+                  <Col span={20} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
                 </Row>
               </Card><br/>
             </div>
           );
         })
-        
       ),
       Rejected: ( 
-        this.state.data.filter(item => item.event_status_id === 3).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 3).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -208,17 +198,8 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col span={10} style={{textAlign:'left'}}>{obj.event_name}</Col>
-                  <Col span={10} style={{textAlign:'left'}}>{obj.event_remark_reject}</Col>
-                  <Col span={4} style={{textAlign:'right'}}>
-                  <Button
-                    style={{ border: "none", color: "#345586" }}
-                    shape="circle"
-                    onClick={()=>this.handleApprove(`${obj.id}`)}
-                  >
-                    <Icon type="check-circle" style={{ fontSize: "25px" }} />
-                  </Button>
-                  </Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_in_order_remark_reject}</Col>
                 </Row>
               </Card><br/>
             </div>

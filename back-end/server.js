@@ -34,21 +34,23 @@ app.use("/role", require("./src/routes/roleRouter"));
 app.use("/categorie", require("./src/routes/categoriesRouter"));
 app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
-app.use("/event", require("./src/routes/eventRouter"));
-app.use("/eventhascategories", require("./src/routes/eventHasCategoriesRouter"));
-app.use("/tag", require("./src/routes/tagRouter"));
+
+app.use("/event", require("./src/routes/eventRouter"))
+app.use("/tag", require("./src/routes/tagRouter"))
+
 app.use("/image", require("./src/routes/imageController"));
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+>>>>>>> 082dc299fb89e78557f9175ffc7df381d4d4b0c2
 
 app.use("/ticket", require("./src/routes/ticketRouter"))
 
-=======
-app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
-app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
+<<<<<<< HEAD
 >>>>>>> 7a8f7a769abf86ddd521a7d618e5bb5b4596e450
 =======
 >>>>>>> 3ce1c47422638de023a395864fb6193e551e3206
@@ -63,6 +65,16 @@ app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 =======
 >>>>>>> 9ffc9b592f5b1de7e8c4da14ad43916d2fc1636d
 >>>>>>> 3ce1c47422638de023a395864fb6193e551e3206
+=======
+
+
+app.use("/event", require("./src/routes/eventRouter"));
+app.use("/eventhascategories", require("./src/routes/eventHasCategoriesRouter"));
+app.use("/tag", require("./src/routes/tagRouter"));
+app.use("/image", require("./src/routes/imageController"));
+
+app.use("/bookmark", require("./src/routes/bookmarkRouter"));
+>>>>>>> 082dc299fb89e78557f9175ffc7df381d4d4b0c2
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
