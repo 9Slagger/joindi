@@ -44,7 +44,6 @@ app.use("/ticket", require("./src/routes/ticketRouter"))
 
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 
-
 app.use("/event", require("./src/routes/eventRouter"));
 app.use("/eventhascategories", require("./src/routes/eventHasCategoriesRouter"));
 app.use("/tag", require("./src/routes/tagRouter"));
