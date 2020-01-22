@@ -47,6 +47,15 @@
   width: 100% !important;
 }
 
+.iconNav{
+  color: #ffffff !important;
+  font-size: 30px;
+}
+
+.colDropdownUser{
+  margin-left:20%;
+}
+
 .logo {
   height: 50px;
   width: auto;
