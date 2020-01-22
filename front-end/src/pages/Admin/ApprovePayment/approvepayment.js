@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Card, Icon, Row, Col, Button, Input,Modal } from "antd";
+import Axios from "axios";
 import "antd/dist/antd.css";
 import "./index.css";
 import AdminLayout from "../../../common/AdminLayout";
 const { TextArea,Search } = Input;
 const { confirm } = Modal;
-
 
 const tabListNoTitle = [
   {
@@ -36,53 +36,17 @@ const tabListNoTitle = [
     )
   }
 ];
-
-
-export default class ApprovePayment extends Component {
-  state = {
-    key: "tab1",
-    noTitleKey: "app",
-    visible: false,
-    id: '',
-    remark: '',
-    theData: [
-      {
-        id:'1',
-        name: 'จ่ายค่ากิจกรรมดูหนังนะจ้ะ',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'2',
-        name: 'จ่ายเงินค่ากิจกรรมร้องเพลงที่ตู้คาราโอเกะ',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'3',
-        name: 'จ่ายเงินค่ากิจกรรมไปจ่ายชาบูชิ โปรโมชั่นมา 4 จ่าย 3',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'4',
-        name: 'จ่ายเงินค่ากิจกรรมไปกินไอติมที่ท่าน้ำนนท์',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'5',
-        name: 'จ่ายเงินค่ากิจกรรมไปออกกำลังกายเพื่อสุขภาพที่ดี',
-        remark:'',
-        status:'1'
-      },
-      {
-        id:'6',
-        name: 'จ่ายเงินค่ากิจกรรมวิ่งสู้ฟัดเพื่อลดความอ้วนนะจ้ะ',
-        remark:'',
-        status:'1'
-      },
-    ],
+class ApprovePayment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: "tab1",
+      noTitleKey: "app",
+      visible: false,
+      id: '',
+      remark: '',
+      data:[]
+    }
   };
   
   onTabChange = (key, type) => {
@@ -90,10 +54,9 @@ export default class ApprovePayment extends Component {
   };
 
   approvePayment=(id)=>{
-    var theData = [...this.state.theData];
-    var index = theData.findIndex(obj => obj.id === id);
-    theData[index].status = '2';
-    this.setState({theData});
+    const str = null;
+    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/2/${str}`).then(res => {
+      });
   }
 
   handleApprove = (id) => {
@@ -108,17 +71,19 @@ export default class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    var theData = [...this.state.theData];
-    var index = theData.findIndex(obj => obj.id === id);
-    theData[index].status = '3';
-    theData[index].remark = remark;
-    this.setState({
-      theData,
-      visible: false
-    });
+    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/3/${remark}`).then(res => {
+      this.setState({
+        remark: "",
+        visible: false
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    
   }
 
   modalDelete = (id) => {
+    console.log(id)
     this.setState({
       id: id
     })
@@ -133,11 +98,35 @@ export default class ApprovePayment extends Component {
     this.setState({ remark: e.target.value });
   };
 
-  render() {
+  async showData(){
+    const result = await Axios.get("http://localhost:8085/ticket/admin/getticketinOrder");
+      let temp = result.data.map((item) => {
+        return {
+          id: item.id,
+          ticket_title: item.ticket.ticket_title,
+          ticket_remark_reject: item.ticket_remark_reject,
+          ticket_in_order_status_id: item.ticket_in_order_status_id
+        }
+      });
+      this.setState({ data: temp }, ()=>{});
+  }
+
+  componentDidMount = async () => {
+    this.showData()
+    setInterval(
+      ()=>this.showData(), 
+      2000
+    )
+  };
+
+
+  render() { 
+    // console.log(this.state.data)
     const contentListNoTitle = {
       Waiting: ( 
-        this.state.theData.filter(item => item.status === '1').map((obj)=>{
-          // console.log(obj)
+        this.state.data.filter(item => item.ticket_in_order_status_id === 1).map((obj)=>{
+          // console.log('test')
+          console.log(obj.ticket_title)
           return(
             <div>
                <Card
@@ -149,12 +138,12 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
-                  <Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
+                  <Col span={4} style={{textAlign:'right'}}>
                   <Button
                     style={{ border: "none", color: "#345586" }}
                     shape="circle"
-                    onClick={()=>this.handleApprove(`${obj.id}`)}
+                    onClick={()=>this.handleApprove(obj.id)}
                   >
                     <Icon type="check-circle" style={{ fontSize: "25px" }} />
                   </Button>
@@ -175,7 +164,7 @@ export default class ApprovePayment extends Component {
         
       ),
       Approved: ( 
-        this.state.theData.filter(item => item.status === '2').map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 2).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -188,26 +177,15 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
-                  <Col>
-                  &nbsp;&nbsp;
-                  <Button
-                    style={{ border: "none", color: "#8D021F" }}
-                    shape="circle"
-                    onClick={()=>this.modalDelete(obj.id)}
-                  >
-                    <Icon type="close-circle" style={{ fontSize: "25px" }} />
-                  </Button>
-                  </Col>
+                  <Col span={20} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
                 </Row>
               </Card><br/>
             </div>
           );
         })
-        
       ),
       Rejected: ( 
-        this.state.theData.filter(item => item.status === '3').map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 3).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -220,8 +198,8 @@ export default class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col>{obj.name}</Col>
-                  <Col>{obj.remark}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_remark_reject}</Col>
                 </Row>
               </Card><br/>
             </div>
@@ -230,7 +208,9 @@ export default class ApprovePayment extends Component {
         
       ),
     };
-    const { visible, value } = this.state;
+    const { visible, 
+      // value
+    } = this.state;
     this.showModal = () => {
       this.setState({
         visible: true
@@ -246,6 +226,7 @@ export default class ApprovePayment extends Component {
             width: "100%",
             textAlign: "center"
           }}
+          
           tabList={tabListNoTitle}
           activeTabKey={this.state.noTitleKey}
           onTabChange={key => {
@@ -254,20 +235,21 @@ export default class ApprovePayment extends Component {
         >
           <Search
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            onSearch={value => {}}
             style={{ width: "70vh" }}
           />
           <br />
           <br />
           {contentListNoTitle[this.state.noTitleKey]}
         </Card>
-
+{/* part Model Delete Item */}
         <Modal visible={visible} footer={null} onCancel={this.handleCancel}>
           <Row>
             <span className="head-modal-approve-payment">Reject</span>
             <hr />
             <br />
             <TextArea
+              value={this.state.remark}
               onChange={(e)=>this.onChangeRemark(e)}
               placeholder="Controlled autosize"
               autoSize={{ minRows: 3, maxRows: 5 }}
@@ -293,3 +275,5 @@ export default class ApprovePayment extends Component {
     );
   }
 }
+
+export default (ApprovePayment)

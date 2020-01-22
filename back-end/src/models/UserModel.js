@@ -28,6 +28,13 @@ UserModel.init(
       validate: {
         notEmpty: true
       }
+    },
+    user_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   },
   { sequelize, modelName: "user" }

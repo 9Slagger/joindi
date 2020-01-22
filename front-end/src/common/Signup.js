@@ -115,7 +115,6 @@ class Signup extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { customerTypeList, customerTypeId } = this.state;
-    console.log(this.state);
     let showIndividualFeild = false,
       showCompanyFeild = false;
     if (customerTypeList.length) {
@@ -136,7 +135,7 @@ class Signup extends Component {
           onClick={this.showModalSignUp}
           className="buttonHeader"
         >
-          Sign in
+          Sign up
         </Button>
         <Modal
           visible={this.state.visibleSignUp}
