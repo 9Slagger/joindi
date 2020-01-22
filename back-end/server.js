@@ -41,8 +41,6 @@ app.use("/image", require("./src/routes/imageController"));
 
 app.use("/ticket", require("./src/routes/ticketRouter"))
 
-app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
-app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 
 app.use((req, res, next) => {
