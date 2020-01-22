@@ -34,7 +34,7 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
-        <Route exact path="/eventdetail" component={EventDetail} />
+        <Route exact path="/eventdetail/:eventId" component={EventDetail} />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
       </Switch>
     </Router>
