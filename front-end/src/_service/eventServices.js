@@ -1,6 +1,17 @@
 import axios from "../_helper/axios";
 
 export const serviceEvent = {
+  getCategorieAndEvents: categorieId => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get(`/event/categorie/${categorieId}`);
+        resolve(res.data);
+      } catch (error) {
+        if (error.status < 500) reject(error.response.data);
+      }
+    });
+  },
   getEventAdmin: () => {
     return new Promise(async (resolve, reject) => {
       let res;
@@ -12,7 +23,7 @@ export const serviceEvent = {
       }
     });
   },
-  approveEventAdminWait: (id) => {
+  approveEventAdminWait: id => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
@@ -26,7 +37,7 @@ export const serviceEvent = {
       }
     });
   },
-  pendEventAdminReject: (id,remark) => {
+  pendEventAdminReject: (id, remark) => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
@@ -40,7 +51,7 @@ export const serviceEvent = {
       }
     });
   },
-  rejectEventAdmin: (id,remark) => {
+  rejectEventAdmin: (id, remark) => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
@@ -48,7 +59,7 @@ export const serviceEvent = {
           eventId: id,
           eventRemark: remark
         });
-        console.log('eventId', id, 'eventRemark', remark)
+        console.log("eventId", id, "eventRemark", remark);
         resolve(res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);

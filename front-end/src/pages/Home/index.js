@@ -5,7 +5,7 @@ import CardEvents from "../../common/CardEvents";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <CardEvents />
       </DefaultLayout>
     );

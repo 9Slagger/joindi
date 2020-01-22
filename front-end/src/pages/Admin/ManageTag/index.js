@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import AdminLayout from "../../../common/AdminLayout";
-import ApproveEvent from "./component/ApproveEvent";
-import './indexApprove.css'
+import ManageTag from "./component/managetag";
 
 export default class index extends Component {
   render() {
     return (
       <AdminLayout>
-        <ApproveEvent className="layout"/>
+        <ManageTag />
       </AdminLayout>
     );
   }

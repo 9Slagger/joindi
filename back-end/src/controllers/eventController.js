@@ -63,23 +63,23 @@ module.exports = {
         raw: true
       });
     } catch (error) {
-      console.log("eventDetailResult🟢", eventDetailResult);
+      console.log("🔴", error);
     }
+    console.log("eventStatusResult🟢", eventStatusResult);
     try {
       eventDetailResult = await db.EventModel.findOne({
         where: { id: req.params.eventId },
         include: [
-          getIncludeBookmarkModel(),
           {
-            model: db.EventStatusModel,
-            where: { event_status_id: eventStatusResult.id }
+            model: db.EventStatusModel
+            // where: { event_status_id: eventStatusResult.id }
           },
           { model: db.TicketModel },
           { model: db.EventCategoryModel },
           { model: db.EventTagModel }
         ]
       });
-      console.log("eventDetailResult🟢", eventDetailResult);
+      // console.log("eventDetailResult🟢", eventDetailResult);
       res.status(200).json({
         result: eventDetailResult,
         messages: { title_en: "get event detail success", title_th: "" }
