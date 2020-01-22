@@ -50,7 +50,49 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   },
-  getEvents: async (req, res, next) => {
+  getEventDetail: async (req, res, next) => {
+    let eventDetailResult, eventStatusResult;
+    const getIncludeBookmarkModel = () => {
+      if (req.user) {
+        return { model: db.BookmarkModel, where: { user_id: req.user.id } };
+      }
+    };
+    try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
+    } catch (error) {
+      console.log("🔴", error);
+    }
+    console.log("eventStatusResult🟢", eventStatusResult);
+    try {
+      eventDetailResult = await db.EventModel.findOne({
+        where: { id: req.params.eventId },
+        include: [
+          {
+            model: db.EventStatusModel
+            // where: { event_status_id: eventStatusResult.id }
+          },
+          { model: db.TicketModel },
+          { model: db.EventCategoryModel },
+          { model: db.EventTagModel }
+        ]
+      });
+      // console.log("eventDetailResult🟢", eventDetailResult);
+      res.status(200).json({
+        result: eventDetailResult,
+        messages: { title_en: "get event detail success", title_th: "" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(400).json({
+        result: eventDetailResult,
+        messages: { title_en: "get event detail fail", title_th: "" }
+      });
+    }
+  },
+  getEventApprove: async (req, res, next) => {
     let eventResult;
     try {
       eventResult = await db.EventStatusModel.findAll({
@@ -113,6 +155,198 @@ module.exports = {
           title_th: ""
         }
       });
+    }
+  },
+  approveEventFromWait: async (req, res, next) => {
+    let eventTarget, eventStatusApproveResult, eventStatusPendingApproveResult;
+    try {
+      eventStatusApproveResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "approve event fail 1",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      eventStatusPendingApproveResult = await db.EventStatusModel.findOne({
+        where: { status_code: "01PA" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "approve event fail | Type status pending",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      console.log("id", req.body.eventId);
+      eventTarget = await db.EventModel.findOne({
+        where: {
+          id: req.body.eventId,
+          event_status_id: eventStatusPendingApproveResult.id
+        }
+      });
+      await eventTarget.update({
+        event_status_id: eventStatusApproveResult.id
+      });
+      res.status(200).json({
+        messages: {
+          title_en: "approve event success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("error", error);
+      res.status(200).json({
+        messages: {
+          title_en: "approve event fail 3",
+          title_th: ""
+        }
+      });
+    }
+  },
+  pendEventFromReject: async (req, res, next) => {
+    let eventTarget, eventStatusApproveResult, eventStatusPendingApproveResult;
+    try {
+      eventStatusApproveResult = await db.EventStatusModel.findOne({
+        where: { status_code: "01PA" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "pending event fail 1",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      eventStatusPendingApproveResult = await db.EventStatusModel.findOne({
+        where: { status_code: "03RJ" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "pending event fail",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      console.log("id", req.body.eventId);
+      eventTarget = await db.EventModel.findOne({
+        where: {
+          id: req.body.eventId,
+          event_status_id: eventStatusPendingApproveResult.id
+        }
+      });
+      await eventTarget.update({
+        event_status_id: eventStatusApproveResult.id
+      });
+      res.status(200).json({
+        messages: {
+          title_en: "pending event success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("error", error);
+      res.status(200).json({
+        messages: {
+          title_en: "pending event fail 3",
+          title_th: ""
+        }
+      });
+    }
+  },
+  rejectEvent: async (req, res, next) => {
+    let eventTarget, eventStatusRejectResult, eventStatusPendingRejectResult;
+    try {
+      eventStatusRejectResult = await db.EventStatusModel.findOne({
+        where: { status_code: "03RJ" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "reject event fail 1",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      eventStatusPendingRejectResult = await db.EventStatusModel.findOne({
+        where: { status_code: "01PA" }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      return res.status(400).json({
+        messages: {
+          title_en: "reject event fail 2",
+          title_th: ""
+        }
+      });
+    }
+    try {
+      // console.log("id", req.body.eventId, "remark", req.body.eventRemark);
+      eventTarget = await db.EventModel.findOne({
+        where: {
+          id: req.body.eventId,
+          event_status_id: eventStatusPendingRejectResult.id
+        }
+      });
+      console.log("req.body.eventId", req.body.eventId);
+
+      // console.log({
+      //   id: req.body.eventId,
+      //   event_status_id: eventStatusRejectResult.id,
+      //   event_remark: req.body.eventRemark,
+      //   eventTarget: eventTarget
+      // });
+
+      await eventTarget.update({
+        event_status_id: eventStatusRejectResult.id,
+        event_remark: req.body.eventRemark
+      });
+      res.status(200).json({
+        messages: {
+          title_en: "reject event success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        messages: {
+          title_en: "reject event fail 3",
+          title_th: ""
+        }
+      });
+    }
+  },
+  getCategorieAndEvent: async (req, res, next) => {
+    let categorieAndEventResult;
+    try {
+      categorieAndEventResult = await db.EventCategoryModel.findOne({
+        where: { id: req.params.categorieId },
+        include: [{ model: db.EventModel }]
+      });
+      return res.status(200).json({
+        result: categorieAndEventResult,
+        messages: { title_en: "get categorie and event success", title_th: "" }
+      });
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
   }
 };

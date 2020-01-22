@@ -21,7 +21,7 @@ module.exports = {
         .update(
           {
             ticket_in_order_status_id: req.params.status,
-            ticket_remark_reject: req.params.remark
+            ticket_in_order_remark_reject: req.params.remark
           },
           { where: { id: req.params.id } }
         )

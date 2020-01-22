@@ -27,7 +27,7 @@ export default class TagEvents extends Component {
   }
 
   render() {
-    console.log(this.state.tagList);
+    console.log("this.state.tagList", this.state.tagList);
     return (
       <div>
         <Row gutter={[24, 40]} type="flex" justify="center">

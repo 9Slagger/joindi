@@ -55,7 +55,7 @@ class ApprovePayment extends Component {
 
   approvePayment=(id)=>{
     const str = null;
-    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/2/${str}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/2/${str}`).then(res => {
       });
   }
 
@@ -71,7 +71,7 @@ class ApprovePayment extends Component {
   }
 
   handleDelete = (id,remark) => {
-    Axios.post(`http://localhost:8085/ticket/admin/approveticketinOrder/${id}/3/${remark}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/3/${remark}`).then(res => {
       this.setState({
         remark: "",
         visible: false
@@ -99,14 +99,12 @@ class ApprovePayment extends Component {
   };
 
   async showData(){
-    const result = await Axios.get("http://localhost:8085/ticket/admin/getticketinOrder");
-      console.log(result);
-      
-    let temp = result.data.map((item) => {
+    const result = await Axios.get("http://localhost:8085/ticket/admin/ticketinorder");
+      let temp = result.data.map((item) => {
         return {
           id: item.id,
           ticket_title: item.ticket.ticket_title,
-          ticket_remark_reject: item.ticket_remark_reject,
+          ticket_in_order_remark_reject: item.ticket_in_order_remark_reject,
           ticket_in_order_status_id: item.ticket_in_order_status_id
         }
       });
@@ -201,7 +199,7 @@ class ApprovePayment extends Component {
               >
                 <Row type="flex" justify="space-between">
                   <Col span={10} style={{textAlign:'left'}}>{obj.ticket_title}</Col>
-                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_remark_reject}</Col>
+                  <Col span={10} style={{textAlign:'left'}}>{obj.ticket_in_order_remark_reject}</Col>
                 </Row>
               </Card><br/>
             </div>
