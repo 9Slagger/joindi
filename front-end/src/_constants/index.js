@@ -1,6 +1,7 @@
+import selectLang from "../_helper/selectLang";
+
 export const ENDPOINT = "http://localhost:8085";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
-
 export const FAIL = "FAIL";
 export const SUCCESS = "SUCCESS";
 
@@ -31,7 +32,3 @@ export const GRANDTOTAL = selectLang("Grand Total", "ยอดรวมทั้
 
 export const CANCEL_ORDER = selectLang("Cancel Order", "ยกเลิกคำสั่งซื้อ");
 export const CONFIRM_ORDER = selectLang("Confirm Order", "ยืนยันคำสั่งซื้อ");
-
-function selectLang(en, th) {
-  return localStorage.getItem("lang") === "en" ? en : th;
-}

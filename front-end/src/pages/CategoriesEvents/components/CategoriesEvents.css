@@ -1,0 +1,11 @@
+h3 {
+  font-family:"prompt",sans-serif;
+  color: #345586;
+}
+
+
+.bottomCardEvents{
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}

@@ -2,7 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../dbconfig");
 
 class TicketInOrderModel extends Model {}
-  TicketInOrderModel.init(
+TicketInOrderModel.init(
   {
     ticket_quantity: {
       type: DataTypes.STRING,
@@ -17,8 +17,7 @@ class TicketInOrderModel extends Model {}
       validate: {
         notEmpty: false
       }
-    },
-    
+    },  
   },
   { sequelize, modelName: "ticket_in_order" }
 );
