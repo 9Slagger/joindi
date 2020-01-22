@@ -32,7 +32,19 @@ module.exports = {
       //     }
       //   ]
       // });
-      resultInfo = await db.sequelize.query("SELECT * FROM `tickets`");
+      const resultInfo = await db.sequelize.query(
+        ` SELECT * 
+          FROM orders o
+          INNER JOIN ticket_in_orders tio on o.id = tio.order_id
+          INNER JOIN tickets t on t.id = tio.ticket_id = t.id
+          INNER JOIN ticket_in_order_statuses tios on tios.id = tio.ticket_in_order_status_id
+          WHERE o.user_id = $user_id
+        `,
+        {
+          bind: { user_id: req.user.id },
+          type: QueryTypes.SELECT
+        }
+      );
 
       console.log(resultInfo);
       res.status(200).send(resultInfo);
