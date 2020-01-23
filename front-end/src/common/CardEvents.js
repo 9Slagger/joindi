@@ -21,12 +21,17 @@ class CardEvents extends Component {
             <Text strong>{event.event_name}</Text> <br />
           </Row>
           <Row>
-            <Col span={20}>
+            <Col>
               <Paragraph type="secondary">{event.event_address}</Paragraph>
             </Col>
-            <Col span={4}>
-              <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
-            </Col>
+          </Row>
+
+          <Row type="flex" justify="center">
+            <span>
+            {event.event_tags && event.event_tags.map(tag => (
+                      <Text code key={tag.id}>{tag.tag_name_en}&nbsp;</Text>
+                    ))}
+            </span>
           </Row>
         </Col>
         </Link>
