@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Axios from "axios";
+import moment from 'moment';
 
 import {
   Row,
@@ -16,16 +18,47 @@ import "./EventDetail.css";
 const { Option } = Select;
 
 const children = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 1; i < 10; i++) {
   children.push(<Option key={i}>{i}</Option>);
 }
 
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
+class EventDetail extends Component {
+// export default class EventDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      data:[],
+      earlyprice:"",
+      normalprice:""
+    }
+  };
+  
+  handleChangeEarlyPrice = (e) => {
+    // console.log(`selected ${value}`);
+    const earlyprice = Number(
+      this.state.data.map((item)=>(
+        item.ticket_price_early_bird
+      ))*e
+    );
+    this.setState({ 
+      visible: false,
+      earlyprice: earlyprice
+    });
+  }
 
-export default class EventDetail extends Component {
-  state = { visible: false };
+  handleChangeNormalPrice = (e) => {
+    // console.log(`selected ${value}`);
+    const normalprice = Number(
+      this.state.data.map((item)=>(
+        item.ticket_price_normal
+      ))*e
+    );
+    this.setState({ 
+      visible: false,
+      normalprice: normalprice
+    });
+  }
 
   showModal = () => {
     this.setState({
@@ -50,6 +83,56 @@ export default class EventDetail extends Component {
   hangleBuyTicket = id => async () => {
     // TODO: call api if success go to page checkout if fail alert buy ticket fail
   }
+  async showData(){
+    const result = await Axios.get("http://localhost:8085/event/1");
+    console.log(result.data)
+    let temp = result.data.map((item) => {
+
+      const s = moment(`${item.event_date_start}`);
+      const startdate = s.format("DD MMM YYYY")
+      const e = moment(`${item.event_date_end}`);
+      const enddate = e.format("DD MMM YYYY")
+
+      const showalldate = startdate + " - " + enddate;
+      const showeventdate =(startdate==enddate)?startdate:showalldate;
+
+      const starttime = s.format("LT")
+      const endtime = e.format("LT")
+
+      const showeventtime = starttime + " - " + endtime;
+
+      const Discount = Number((item.tickets[0].ticket_price*10)/100)
+
+      const ticketpriceearly = Number((item.tickets[0].ticket_price)-Discount)
+
+      // console.log(item.tickets[0].ticket_price)
+      return {
+        id: item.id,
+        event_name: item.event_name,
+        event_address: item.event_address,
+        event_date: showeventdate,
+        event_time: showeventtime,
+        event_address: item.event_address,
+        event_remark: item.event_remark,
+        event_tags: item.event_tags.tag_name_en,
+        ticket_price_early_bird: ticketpriceearly,
+        ticket_price_normal: item.tickets[0].ticket_price
+      }
+    });
+    this.setState({ 
+      data: temp,
+      earlyprice: temp.map((item)=>item.ticket_price_early_bird),
+      normalprice: temp.map((item)=>item.ticket_price_normal)
+    }, ()=>{console.log(temp)});
+  }
+
+  componentDidMount = async () => {
+    this.showData()
+    // setInterval(
+    //   ()=>this.showData(), 
+    //   200000
+    // )
+  };
 
   render() {
     return (
@@ -64,24 +147,35 @@ export default class EventDetail extends Component {
               />
             </Col>
             <Col className="detail" span={12}>
-              <Row className="event-name">Event Name</Row>
+              <Row className="event-name">{this.state.data.map((obj)=>obj.event_name)}</Row>
               <Row className="event-date">
-                <Icon type="calendar" /> : 12 Dec 2020 &nbsp;
-                <Icon type="hourglass" /> : 10:00 am - 5:00 pm.
+                <Icon type="calendar" /> :&nbsp;
+                {this.state.data.map((obj)=>(
+                  obj.event_date
+                  )
+                )}
               </Row>
               <Row className="event-date">
-                <Icon type="environment" /> Location : Bangna , Bkk
+                <Icon type="hourglass" /> :&nbsp;
+                {this.state.data.map((obj)=>(
+                  obj.event_time
+                  )
+                )}
+              </Row>
+              <Row className="event-date">
+                <Icon type="environment" /> Location :&nbsp;
+                {this.state.data.map((obj)=>(
+                  obj.event_address
+                  )
+                )}
               </Row>
               <Row className="event-date">
                 <Icon type="tags" /> Tags : &nbsp;
                 <Tag color="#345586" style={{ borderColor: "white" }}>
-                  A1
-                </Tag>
-                <Tag color="#345586" style={{ borderColor: "white" }}>
-                  A2
-                </Tag>
-                <Tag color="#345586" style={{ borderColor: "white" }}>
-                  A3
+                {this.state.data.map((obj)=>(
+                  obj.event_tags
+                  )
+                )}
                 </Tag>
               </Row>
             </Col>
@@ -93,11 +187,10 @@ export default class EventDetail extends Component {
             className="event-description"
           >
             <div>
-              DREAMER พร้อมจะมา Let’s BLEND
-              กับเฟสติวัลสุดมันส์ในมหานครในฝันรึยัง !? BLEND 285 Signature
-              presents BANGKOK OF DREAMS 2020 จัดเต็ม 2 Stage ทั้ง Main Stage
-              และ Stage ลับ กับดีเจสาย Techno อีกเพียบ
-              พร้อมโปรดักชั่นสุดประทับใจ
+              {this.state.data.map((obj)=>(
+                obj.event_remark
+                )
+              )}
             </div>
           </Row>
           <Divider />
@@ -128,12 +221,15 @@ export default class EventDetail extends Component {
                 <Col span={24}>
                   <Row type="flex" justify="end" align="middle">
                     <Col span={16}>Early Bird</Col>
-                    <Col span={5}>1,900 Baht</Col>
+                    <Col span={5}>
+                    {this.state.earlyprice}
+                    &nbsp;Baht
+                    </Col>
                     <Col span={2}>
                       <Row>
                         <Select
-                          defaultValue="0"
-                          onChange={handleChange}
+                          defaultValue="1"
+                          onChange={(e)=>this.handleChangeEarlyPrice(e)}
                           style={{ width: "60px" }}
                         >
                           {children}
@@ -144,12 +240,15 @@ export default class EventDetail extends Component {
                   <Divider />
                   <Row type="flex" justify="end" align="middle">
                     <Col span={16}>Normal</Col>
-                    <Col span={5}>2,900 Baht</Col>
+                    <Col span={5}>
+                    {this.state.normalprice}
+                    &nbsp;Baht
+                    </Col>
                     <Col span={2}>
                       <Row>
                         <Select
-                          defaultValue="0"
-                          onChange={handleChange}
+                          defaultValue="1"
+                          onChange={(e)=>this.handleChangeNormalPrice(e)}
                           style={{ width: "60px" }}
                         >
                           {children}
@@ -245,3 +344,5 @@ export default class EventDetail extends Component {
     );
   }
 }
+
+export default (EventDetail)
