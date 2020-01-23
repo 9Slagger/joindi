@@ -56,13 +56,13 @@ export default class index extends Component {
           <Col span={22}>
             <h3>{categoryEvent.category_name_en}</h3>
           </Col>
-          <Col span={22}>
-            <Divider />
-            {categoryEvent.events &&
-              categoryEvent.events.map(event => (
-                <CategoriesEvents event={event} key={event.id} />
-              ))}
-          </Col>
+          <Divider />
+          {categoryEvent.events &&
+            categoryEvent.events.map(event => (
+              <Col xs={24} sm={12} md={12} lg={12} xl={5} key={event.id}>
+                <CategoriesEvents event={event} />
+              </Col>
+            ))}
         </Row>
       </DefaultLayout>
     );

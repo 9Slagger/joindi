@@ -51,12 +51,7 @@ module.exports = {
     }
   },
   getEventDetail: async (req, res, next) => {
-    let eventDetailResult, eventStatusResult;
-    const getIncludeBookmarkModel = () => {
-      if (req.user) {
-        return { model: db.BookmarkModel, where: { user_id: req.user.id } };
-      }
-    };
+    let eventDetailResult, eventStatusResult, bookmarkResult;
     try {
       eventStatusResult = await db.EventStatusModel.findOne({
         where: { status_code: "02AD" },
@@ -65,20 +60,28 @@ module.exports = {
     } catch (error) {
       console.log("🔴", error);
     }
-    console.log("eventStatusResult🟢", eventStatusResult);
+    // console.log("eventStatusResult🟢", eventStatusResult);
     try {
       eventDetailResult = await db.EventModel.findOne({
         where: { id: req.params.eventId },
         include: [
           {
-            model: db.EventStatusModel
-            // where: { event_status_id: eventStatusResult.id }
+            model: db.EventStatusModel,
+            where: { id: eventStatusResult.id }
           },
           { model: db.TicketModel },
           { model: db.EventCategoryModel },
-          { model: db.EventTagModel }
+          { model: db.EventTagModel },
+          {
+            model: db.BookmarkModel,
+            where: { event_id: req.params.eventId }
+          }
         ]
       });
+      eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
+      eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
+        bookmark => bookmark.user_id === req.user.id
+      ).length;
       // console.log("eventDetailResult🟢", eventDetailResult);
       res.status(200).json({
         result: eventDetailResult,
@@ -93,9 +96,9 @@ module.exports = {
     }
   },
   getEventApprove: async (req, res, next) => {
-    let eventResult;
+    let eventResult, bookmarkResult;
     try {
-      eventResult = await db.EventStatusModel.findAll({
+      eventResult = await db.EventStatusModel.findOne({
         where: {
           status_code: "02AD"
         },

@@ -34,16 +34,21 @@ app.use("/role", require("./src/routes/roleRouter"));
 app.use("/categorie", require("./src/routes/categoriesRouter"));
 app.use("/customertype", require("./src/routes/customerRouter"));
 app.use("/signin", require("./src/routes/authticationRouter"));
+
+app.use("/event", require("./src/routes/eventRouter"))
+app.use("/tag", require("./src/routes/tagRouter"))
+
+app.use("/image", require("./src/routes/imageController"));
+
+app.use("/ticket", require("./src/routes/ticketRouter"))
+
+app.use("/bookmark", require("./src/routes/bookmarkRouter"));
+
 app.use("/event", require("./src/routes/eventRouter"));
 app.use("/eventhascategories", require("./src/routes/eventHasCategoriesRouter"));
 app.use("/tag", require("./src/routes/tagRouter"));
 app.use("/image", require("./src/routes/imageController"));
-app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
-app.use(
-  "/update-approvepayment",
-  require("./src/routes/updateApprovePaymentRouter")
-);
-app.use("/update-approvepayment", require("./src/routes/updateApprovePaymentRouter"));
+
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });

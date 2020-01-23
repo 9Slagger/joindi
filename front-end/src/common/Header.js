@@ -1,5 +1,4 @@
 import React from "react";
-import Fuse from "fuse.js";
 import {
   Menu,
   Icon,
@@ -10,7 +9,6 @@ import {
   Form,
   Button,
   Drawer,
-  Divider,
   Badge
 } from "antd";
 import "../css/Header.css";
@@ -19,7 +17,7 @@ import Signup from "./Signup";
 import { connect } from "react-redux";
 import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
-import { serviceCategorie } from "../_service";
+import { serviceCategorie, serviceEvent } from "../_service";
 import selectLang from "../_helper/selectLang";
 import { TAG } from "../_constants";
 
@@ -36,41 +34,8 @@ class Header extends React.Component {
       visibleLogIn: false,
       isDirty: false,
       searchList: [],
-      categorieList: [],
-      data: [
-        {
-          id: 1,
-          eventName: "วิ่งไล่ลุง",
-          catagory: {
-            id: 1,
-            catagory_name: "Popular"
-          },
-          tag: [
-            {
-              id: 1,
-              tag_name: "Coding"
-            },
-            {
-              id: 2,
-              tag_name: "Run"
-            }
-          ]
-        },
-        {
-          id: 1,
-          eventName: "เดินเชียร์ลุง",
-          catagory: {
-            id: 1,
-            catagory_name: "Hot"
-          },
-          tag: [
-            {
-              id: 3,
-              tag_name: "Walk"
-            }
-          ]
-        }
-      ]
+      searchKeyword: "",
+      categorieList: []
     };
   }
 
@@ -88,12 +53,14 @@ class Header extends React.Component {
     }
   };
 
-  resize = () => {
-    let isMobileScreen = window.innerWidth <= 1100;
-    if (isMobileScreen !== this.state.mobileScreen) {
-      this.setState({
-        mobileScreen: isMobileScreen
-      });
+  getCategorieAndEvent = async () => {
+    try {
+      const res = await serviceEvent.getCategorieAndEvent();
+      const searchList = res.result;
+      this.setState({ searchList });
+      console.log(searchList);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -114,17 +81,12 @@ class Header extends React.Component {
   }
 
   handleSearch = e => {
-    const fuse = new Fuse(this.state.data, {
-      shouldSort: true,
-      threshold: 0.6,
-      location: 0,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 1,
-      keys: ["eventName", "catagory_name"]
-    });
-    this.setState({ searchList: fuse.search(e) });
-    console.log("search : ", this.state.searchList);
+    if (e) {
+      this.props.history.push(`/searchevnts?keyword=${encodeURIComponent(e)}`);
+    }
+    else {
+      this.props.history.push("/searchevnts?keyword=");
+    }
   };
 
   showModalSignUp = () => {
@@ -206,6 +168,11 @@ class Header extends React.Component {
   render() {
     const { Authentication } = this.props;
     const { categorieList } = this.state;
+    let keyword =
+      decodeURIComponent(window.location.search.split("keyword=")[1]) !==
+      "undefined"
+        ? decodeURIComponent(window.location.search.split("keyword=")[1])
+        : "";
     return (
       <div>
         <Row
@@ -214,7 +181,7 @@ class Header extends React.Component {
           justify="space-around"
           align="middle"
         >
-          <Col md={2} lg={2} xl={3} className="colLogo">
+          <Col md={2} lg={2} xl={2} className="colLogo">
             <Link to="/">
               <img
                 src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
@@ -267,8 +234,9 @@ class Header extends React.Component {
               </Dropdown>
             </Row>
           </Col>
-          <Col xs={12} md={12} lg={12} xl={10}>
+          <Col xs={12} md={12} lg={12} xl={8}>
             <Search
+              defaultValue={keyword}
               placeholder="input search text"
               onSearch={this.handleSearch}
               className="inputSearch"
@@ -303,7 +271,6 @@ class Header extends React.Component {
                             <Link to="/admin">Management</Link>
                           </Menu.Item>
                         </Menu>
-                        <Divider type="vertical" />
                       </>
                     ) : Authentication.item.role.role_code === "02CUS" ? (
                       <>
@@ -317,7 +284,6 @@ class Header extends React.Component {
                             <Link to="/">My Events</Link>
                           </Menu.Item>
                         </Menu>
-                        <Divider type="vertical" />
                       </>
                     ) : null}
                     <Menu mode="inline">
@@ -379,56 +345,62 @@ class Header extends React.Component {
           </Col>
 
           <Col xs={0} md={0} lg={0} xl={7}>
-            <Row type="flex" justify="end">
+            <Row type="flex">
               {Authentication.item && Authentication.item.isAuthenticated ? (
                 <>
                   {Authentication.item.role.role_code === "01ADM" ? (
                     <>
-                      <Badge count={15}>
-                        <Icon type="snippets" />
-                      </Badge>
-                      <Divider type="vertical" />
-                      <Button type="link" className="dropDownHeader">
-                        <Link to="/admin">Management</Link>
-                      </Button>
-                      <Divider type="vertical" />
+                      <Col span={2}>
+                        <Badge count={15}>
+                          <Icon type="snippets" className="iconNav" />
+                        </Badge>
+                      </Col>
+                      <Col span={2}>
+                        <Button type="link" className="dropDownHeader">
+                          <Link to="/admin">Management</Link>
+                        </Button>
+                      </Col>
                     </>
                   ) : Authentication.item.role.role_code === "02CUS" ? (
                     <>
-                      <Badge count={15}>
-                        <Icon type="bell" />
-                      </Badge>
-                      <Divider type="vertical" />
-                      <Button type="link" className="dropDownHeader">
-                        <Link to="/">My Events</Link>
-                      </Button>
-                      <Divider type="vertical" />
+                      <Col span={2}>
+                        <Badge count={15}>
+                          <Icon type="bell" className="iconNav" />
+                        </Badge>
+                      </Col>
+                      <Col span={2}>
+                        <Button type="link" className="dropDownHeader">
+                          <Link to="/">My Events</Link>
+                        </Button>
+                      </Col>
                     </>
                   ) : null}
-                  <Dropdown
-                    overlay={
-                      <Menu className="dropDownUser">
-                        <Menu.Item key="profile">Profile</Menu.Item>
-                        <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                        <Menu.Item key="myevents">My Events</Menu.Item>
-                        <Menu.Item key="joinevents">Join Events</Menu.Item>
-                        <Menu.Item key="wishlist">Wish List</Menu.Item>
-                        <Menu.Item
-                          key="logout"
-                          onClick={this.handleClickLogout}
-                        >
-                          {" "}
-                          Logout
-                        </Menu.Item>
-                      </Menu>
-                    }
-                    trigger={["click"]}
-                  >
-                    <Button type="link" className="dropDownHeader">
-                      Hi {Authentication.item.email} &nbsp;
-                      <Icon type="caret-down" className="sizeIconDropdown" />
-                    </Button>
-                  </Dropdown>
+                  <Col span={3} className="colDropdownUser">
+                    <Dropdown
+                      overlay={
+                        <Menu className="dropDownUser">
+                          <Menu.Item key="profile">Profile</Menu.Item>
+                          <Menu.Item key="payoders">Pay Orders</Menu.Item>
+                          <Menu.Item key="myevents">My Events</Menu.Item>
+                          <Menu.Item key="joinevents">Join Events</Menu.Item>
+                          <Menu.Item key="wishlist">Wish List</Menu.Item>
+                          <Menu.Item
+                            key="logout"
+                            onClick={this.handleClickLogout}
+                          >
+                            {" "}
+                            Logout
+                          </Menu.Item>
+                        </Menu>
+                      }
+                      trigger={["click"]}
+                    >
+                      <Button type="link" className="dropDownHeader">
+                        Hi {Authentication.item.email}
+                        <Icon type="caret-down" className="sizeIconDropdown" />
+                      </Button>
+                    </Dropdown>
+                  </Col>
                 </>
               ) : (
                 <div className="logInAndSignUp-nav">
