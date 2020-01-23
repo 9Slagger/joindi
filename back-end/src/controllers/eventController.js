@@ -48,7 +48,7 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(400).send({ message: error.message });
-    }
+    } 
   },
   getEventDetail: async (req, res, next) => {
     let eventDetailResult, eventStatusResult;
@@ -67,7 +67,7 @@ module.exports = {
     }
     console.log("eventStatusResult🟢", eventStatusResult);
     try {
-      eventDetailResult = await db.EventModel.findOne({
+      eventDetailResult = await db.EventModel.findAll({
         where: { id: req.params.eventId },
         include: [
           {
@@ -80,14 +80,11 @@ module.exports = {
         ]
       });
       // console.log("eventDetailResult🟢", eventDetailResult);
-      res.status(200).json({
-        result: eventDetailResult,
-        messages: { title_en: "get event detail success", title_th: "" }
-      });
+      res.status(200).send(eventDetailResult)
     } catch (error) {
       console.log("🔴", error);
       res.status(400).json({
-        result: eventDetailResult,
+        eventDetailResult,
         messages: { title_en: "get event detail fail", title_th: "" }
       });
     }
@@ -108,7 +105,7 @@ module.exports = {
             ]
           }
         ]
-      });
+      }); 
       res.status(200).json({
         result: eventResult,
         messages: {
