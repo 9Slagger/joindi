@@ -17,7 +17,7 @@ import Signup from "./Signup";
 import { connect } from "react-redux";
 import { signout } from "../redux/actions";
 import { Link } from "react-router-dom";
-import { serviceCategorie, serviceEvent } from "../_service";
+import { serviceCategorie, serviceEvent, serviceTag } from "../_service";
 import selectLang from "../_helper/selectLang";
 import { TAG } from "../_constants";
 
@@ -35,12 +35,14 @@ class Header extends React.Component {
       isDirty: false,
       searchList: [],
       searchKeyword: "",
-      categorieList: []
+      categorieList: [],
+      tagEventList: []
     };
   }
 
   componentDidMount = () => {
     this.getCategorie();
+    this.getTag();
   };
 
   getCategorie = async () => {
@@ -59,6 +61,19 @@ class Header extends React.Component {
       const searchList = res.result;
       this.setState({ searchList });
       console.log(searchList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getTag = async () => {
+    try {
+      const res = await serviceTag.getTag(
+        this.props.match.params.tagId
+      );
+      const tagEventList = res.result;
+      this.setState({ tagEventList });
+      console.log(tagEventList)
     } catch (error) {
       console.log(error);
     }
@@ -83,8 +98,7 @@ class Header extends React.Component {
   handleSearch = e => {
     if (e) {
       this.props.history.push(`/searchevnts?keyword=${encodeURIComponent(e)}`);
-    }
-    else {
+    } else {
       this.props.history.push("/searchevnts?keyword=");
     }
   };
@@ -165,9 +179,14 @@ class Header extends React.Component {
     this.props.history.push(`/categoriesevents/${id}`);
   };
 
+  toPageSearchTag = id => () => {
+    this.props.history.push(`/searchtag/${id}`);
+  };
+
   render() {
     const { Authentication } = this.props;
     const { categorieList } = this.state;
+    const { tagEventList } = this.state;
     let keyword =
       decodeURIComponent(window.location.search.split("keyword=")[1]) !==
       "undefined"
@@ -210,7 +229,11 @@ class Header extends React.Component {
                       </Menu.Item>
                     ))}
                     <SubMenu title={TAG}>
-                      <Menu.Item key="beauty"> Beauty </Menu.Item>
+                      {tagEventList.map(data => (
+                <Menu.Item key={data.id} onClick={this.toPageSearchTag(data.id)}>{data.tag_name_en}</Menu.Item>
+                      ))}
+                    {/* <Menu.Item key={tagEventList.id}>{tagEventList.tag_name_en}</Menu.Item> */}
+                      {/* <Menu.Item key="beauty"> Beauty </Menu.Item>
                       <Menu.Item key="book"> Book </Menu.Item>
                       <Menu.Item key="business"> Business </Menu.Item>
                       <Menu.Item key="comedy"> Comedy </Menu.Item>
@@ -218,7 +241,7 @@ class Header extends React.Component {
                       <Menu.Item key="education"> Education </Menu.Item>
                       <Menu.Item key="esport"> E - sport </Menu.Item>
                       <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                      <Menu.Item key="health"> Health </Menu.Item>
+                      <Menu.Item key="health"> Health </Menu.Item> */}
                       <Menu.Item key="seemore">
                         {" "}
                         <Link to="/tagevents">See More...</Link>{" "}
@@ -313,15 +336,17 @@ class Header extends React.Component {
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
                     <SubMenu title="Events">
-                      <Menu.Item key="popular"> Popular</Menu.Item>
-                      <Menu.Item key="recommendbyjoindi">
-                        {" "}
-                        Recommend By JoinDi
-                      </Menu.Item>
-                      <Menu.Item key="recommendforyou">
-                        {" "}
-                        Recommend For You
-                      </Menu.Item>
+                      {categorieList.map(data => (
+                        <Menu.Item
+                          key={data.id}
+                          onClick={this.toPageCategorie(data.id)}
+                        >
+                          {selectLang(
+                            data.category_name_en,
+                            data.category_name_th
+                          )}
+                        </Menu.Item>
+                      ))}
                       <SubMenu title="Tag">
                         <Menu.Item key="beauty"> Beauty </Menu.Item>
                         <Menu.Item key="book"> Book </Menu.Item>

@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import "../CategoriesEvents/components/CategoriesEvents.css";
 import DefaultLayout from "../../common/DefaultLayout";
+import { serviceTag } from "../../_service";
+import "./components/SearchTag.css";
 import CarouselEvents from "../../common/CarouselEvents";
-import CategoriesEvents from "./components/CategoriesEvents";
-import { serviceEvent } from "../../_service";
-import { Row, Divider, Col } from "antd";
+import CardEvents from "../../common/CardEvents";
+import { Row, Col, Divider } from "antd";
 
 export default class index extends Component {
   state = {
-    categoryEvent: {
+    tagEvent: {
       id: 0,
-      category_name_en: "",
-      category_name_th: "",
+      tag_name_en: "",
+      tag_name_th: "",
+      tag_active: "",
       createdAt: "",
       updatedAt: "",
       events: []
@@ -19,31 +20,32 @@ export default class index extends Component {
   };
 
   componentDidMount = () => {
-    this.getCategorie();
+    this.getTagAndEvent();
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.match.params.categorieId !== this.props.match.params.categorieId
+      prevProps.match.params.tagId !== this.props.match.params.tagId
     ) {
-      this.getCategorie();
+      this.getTagAndEvent();
     }
   }
 
-  getCategorie = async () => {
+  getTagAndEvent = async () => {
     try {
-      const res = await serviceEvent.getCategorieAndEvents(
-        this.props.match.params.categorieId
+      const res = await serviceTag.getTagAndEvent(
+        this.props.match.params.tagId
       );
-      const categoryEvent = res.result;
-      this.setState({ categoryEvent });
+      const tagEvent = res.result;
+      console.log(res);
+      this.setState({ tagEvent });
+      //console.log({tagEvent})
     } catch (error) {
       console.log(error);
     }
   };
-
   render() {
-    const { categoryEvent } = this.state;
+    const { tagEvent } = this.state;
     return (
       <DefaultLayout {...this.props}>
         <Row>
@@ -52,13 +54,15 @@ export default class index extends Component {
 
         <Row type="flex" justify="center">
           <Col span={22}>
-            <h3>{categoryEvent.category_name_en}</h3>
+            <h3>Search Tag For "{tagEvent.tag_name_en}"</h3>
           </Col>
+
           <Divider />
-          {categoryEvent.events &&
-            categoryEvent.events.map(event => (
+
+          {tagEvent.events &&
+            tagEvent.events.map(event => (
               <Col xs={24} sm={12} md={12} lg={12} xl={5} key={event.id}>
-                <CategoriesEvents event={event} />
+                <CardEvents event={event}/>
               </Col>
             ))}
         </Row>
