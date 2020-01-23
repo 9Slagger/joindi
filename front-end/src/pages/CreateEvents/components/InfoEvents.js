@@ -19,7 +19,7 @@ class InfoEvents extends Component {
 
   componentDidMount() {
     Axios.get("http://localhost:8085/tag").then(result => {
-      this.setState({ tagList: result.data });
+      this.setState({ tagList: result.data.result });
     });
   }
   handleChange = value => {

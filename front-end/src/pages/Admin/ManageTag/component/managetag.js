@@ -1,82 +1,35 @@
 import React, { Component } from "react";
-
-import {
-  Input,
-  Row,
-  Col,
-  Icon,
-  Button,
-  Table,
-  Modal,
-  Form,
-  InputNumber
-} from "antd";
+import { Input, Row, Col, Icon, Button, Table, Modal, Form } from "antd";
+import { serviceTag } from "../../../../_service";
 
 const { Search } = Input;
 
-const columns = [
-  {
-    title: "Tag Name EN",
-    dataIndex: "address",
-    key: "1",
-    width: "100"
-  },
-  {
-    title: "Tag Name TH",
-    dataIndex: "age",
-    key: "age",
-    width: "100"
-  },
-  {
-    title: "Status",
-    dataIndex: "address",
-    key: "1",
-    width: "50"
-  },
-  {
-    title: "Action",
-    key: "operation",
-    width: "100",
-    render: () => (
-      <Row>
-        <Col span={7}>
-          <Button type="primary" shape="circle">
-            <Icon type="edit" />
-          </Button>
-        </Col>
-        <Col span={7}>
-          <Button type="danger" shape="circle">
-            <Icon type="delete" />
-          </Button>
-        </Col>
-      </Row>
-    )
-  }
-];
+class ManageTag extends Component {
+  state = { visible: false, TagNameEn: "", TagNameTh: "" };
 
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `Park no. ${i}`
-  });
-}
+  handleSubmitAddTag = e => {
+    e.preventDefault();
+    const { TagNameEn, TagNameTh } = this.state;
+    this.props.form.validateFields(async (err, values) => {
+      if (!err) {
+        try {
+          let res = await serviceTag.addTag(TagNameEn, TagNameTh);
+          this.props.form.resetFields();
+          alert(res.messages.title_en);
+        } catch (error) {
+          alert(error.messages.title_en);
+        }
+      }
+    });
+  };
 
-export default class ManageTag extends Component {
-  state = { visible: false };
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   showModal = () => {
     this.setState({
       visible: true
-    });
-  };
-
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false
     });
   };
 
@@ -87,46 +40,76 @@ export default class ManageTag extends Component {
     });
   };
 
-  getInput = () => {
-    if (this.props.inputType === "number") {
-      return <InputNumber />;
-    }
-    return <Input />;
-  };
-
-  renderCell = ({ getFieldDecorator }) => {
-    const {
-      editing,
-      dataIndex,
-      title,
-      inputType,
-      record,
-      index,
-      children,
-      ...restProps
-    } = this.props;
-    return (
-      <td {...restProps}>
-        {editing ? (
-          <Form.Item style={{ margin: 0 }}>
-            {getFieldDecorator(dataIndex, {
-              rules: [
-                {
-                  required: true,
-                  message: `Please Input ${title}!`
-                }
-              ],
-              initialValue: record[dataIndex]
-            })(this.getInput())}
-          </Form.Item>
-        ) : (
-          children
-        )}
-      </td>
-    );
+  handleOkAddTag = () => {
+    this.setState({
+      loading: true
+    });
+    this.setState({
+      loading: false,
+      visibleSignUp: false
+    });
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
+
+    const columnTag = [
+      {
+        title: "Tag Name EN",
+        dataIndex: "TagNameEn"
+      },
+      {
+        title: "Tag Name TH",
+        dataIndex: "TagNameTh"
+      },
+      {
+        title: "Status",
+        dataIndex: "TagActive"
+      },
+      {
+        title: "Action",
+        key: "operation",
+        render: () => (
+          <Row>
+            <Col span={7}>
+              <Button type="primary" shape="circle">
+                <Icon type="edit" />
+              </Button>
+            </Col>
+            <Col span={7}>
+              <Button type="danger" shape="circle">
+                <Icon type="delete" />
+              </Button>
+            </Col>
+          </Row>
+        )
+      }
+    ];
+
+    // const dataTag = this.state.getTags.map(getTags => {
+    //   return {
+    //     TagNameEn: serviceTag.getTags.TagNameEn,
+    //     TagNameTh: serviceTag.getTags.TagNameTh
+    //     // TagActive: {
+    //     //   if (serviceTag.tag_active == 1) {
+    //     //   return  TagActive: "Active"
+    //     // }else {
+    //     //   return  TagActive: "InActive"
+    //     // }
+    //     // }
+    //   };
+    // });
+
+    // const data = [];
+    // for (let i = 0; i < 100; i++) {
+    //   data.push({
+    //     key: i,
+    //     name: `Edrward ${i}`,
+    //     age: 32,
+    //     address: `Park no. ${i}`
+    //   });
+    // }
+
     return (
       <Row type="flex" justify="center">
         <Col>
@@ -141,7 +124,7 @@ export default class ManageTag extends Component {
             }}
           >
             <Col style={{ padding: "10px" }}>
-              <Icon type="tag" />
+              <Icon type="tags" />
             </Col>
             <Col>
               <div>Tag List</div>
@@ -167,23 +150,64 @@ export default class ManageTag extends Component {
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
                 okText="Add Tag"
-                //footer={null}
+                footer={null}
               >
-                <Row style={{ paddingBottom: "10px" }}>
-                  Tag Name (English) :
-                  <Input placeholder="Enter Tag Name (English)"></Input>
-                </Row>
-                <Row>
-                  ชื่อแท็ก (ภาษาไทย) :
-                  <Input placeholder="กรุณากรอกชื่อแท็ก (ภาษาไทย)"></Input>
-                </Row>
+                <Form onSubmit={this.handleSubmitAddTag}>
+                  <Row style={{ paddingBottom: "10px" }}>
+                    Tag Name (English) :
+                    <Form.Item>
+                      {getFieldDecorator("TagNameEn", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please Enter Tag Name (English)"
+                          }
+                        ]
+                      })(
+                        <Input
+                          placeholder="Enter Tag Name (English)"
+                          name="TagNameEn"
+                          onChange={this.handleChange}
+                        />
+                      )}
+                    </Form.Item>
+                  </Row>
+
+                  <Row style={{ paddingBottom: "10px" }}>
+                    ชื่อแท็ก (ภาษาไทย) :
+                    <Form.Item>
+                      {getFieldDecorator("TagNameTh", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "กรุณากรอกชื่อแท็ก (ภาษาไทย)"
+                          }
+                        ]
+                      })(
+                        <Input
+                          placeholder="กรอกชื่อแท็ก (ภาษาไทย)"
+                          name="TagNameTh"
+                          onChange={this.handleChange}
+                        />
+                      )}
+                    </Form.Item>
+                  </Row>
+
+                  <Form.Item>
+                    <Row type="flex" justify="end">
+                      <Button type="primary" htmlType="submit">
+                        Add Tag
+                      </Button>
+                    </Row>
+                  </Form.Item>
+                </Form>
               </Modal>
             </Col>
           </Row>
           <Row style={{ padding: "10px" }}>
             <Table
-              columns={columns}
-              dataSource={data}
+              columns={columnTag}
+              //dataSource={dataTag}
               scroll={{ x: 800, y: 300 }}
             />
           </Row>
@@ -192,3 +216,5 @@ export default class ManageTag extends Component {
     );
   }
 }
+
+export default Form.create()(ManageTag);

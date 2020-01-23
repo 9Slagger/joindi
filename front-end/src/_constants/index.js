@@ -32,3 +32,5 @@ export const GRANDTOTAL = selectLang("Grand Total", "ยอดรวมทั้
 
 export const CANCEL_ORDER = selectLang("Cancel Order", "ยกเลิกคำสั่งซื้อ");
 export const CONFIRM_ORDER = selectLang("Confirm Order", "ยืนยันคำสั่งซื้อ");
+
+export const TAG = selectLang("Tag", "แท็ก");
