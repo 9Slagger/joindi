@@ -14,7 +14,6 @@ const { QueryTypes } = require("sequelize");
 
 module.exports = {
   findAll: async (req, res, next) => {
-    console.log(req.user);
     let resultInfo;
     try {
       // resultInfo = await db[modelName].findAll({
@@ -33,15 +32,21 @@ module.exports = {
       //   ]
       // });
       const resultInfo = await db.sequelize.query(
-        ` SELECT * 
+        ` SELECT t.id as "ticket_id", t.ticket_title, t.ticket_detail, t.ticket_total_quantity, t.ticket_remaining_quantity, t.ticket_price,
+            tios.id as "ticket_in_order_status_id", tios.status_code, 
+            tio.id as "ticket_in_order_id", tio.ticket_quantity,
+            e.event_name
           FROM orders o
           INNER JOIN ticket_in_orders tio on o.id = tio.order_id
           INNER JOIN tickets t on t.id = tio.ticket_id = t.id
           INNER JOIN ticket_in_order_statuses tios on tios.id = tio.ticket_in_order_status_id
-          WHERE o.user_id = $user_id
+          LEFT JOIN ticket_in_order_has_images tiohi on tiohi.ticket_in_order_id = tio.id
+          INNER JOIN events e on e.id = t.event_id
+          LEFT JOIN event_has_images ehi on ehi.event_id = e.id
+          WHERE o.user_id = $user_id and tios.status_code = $status_code
         `,
         {
-          bind: { user_id: req.user.id },
+          bind: { user_id: req.user.id, status_code: req.params.status },
           type: QueryTypes.SELECT
         }
       );

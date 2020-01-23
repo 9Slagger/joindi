@@ -1,8 +1,11 @@
-.avatarEvents {
-  position: absolute;
-  left: 70px;
-  top: 70px;
-  z-index: 1;
- font-size: 100px
+h3 {
+  font-family:"prompt",sans-serif;
+  color: #345586;
 }
 
+
+.bottomCardEvents{
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}

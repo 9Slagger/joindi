@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
 
+import { withRouter } from "react-router-dom";
+
 import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Confirm.css";
 
-export default class ConfirmSuccess extends Component {
+class Confirm extends Component {
   state = {};
+
+  goToCompletePage = () => {
+    this.props.history.push({
+      pathname: `/complete`,
+      search: ``
+    });
+  };
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -75,7 +84,7 @@ export default class ConfirmSuccess extends Component {
 
         <Row className="mt-4">
           <Col span={24} className="text-right">
-            <Button href="/complete" type="primary">
+            <Button onClick={() => this.goToCompletePage()} type="primary">
               Complete
             </Button>
           </Col>
@@ -84,3 +93,5 @@ export default class ConfirmSuccess extends Component {
     );
   }
 }
+
+export default withRouter(Confirm);

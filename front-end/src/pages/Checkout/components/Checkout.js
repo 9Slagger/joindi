@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Row, Col, Table } from "antd";
 
+import { withRouter } from "react-router-dom";
+
 import Axios from "../../../_helper/axios";
 
 import _ from "lodash";
@@ -10,40 +12,21 @@ import * as constants from "../../../_constants";
 import "antd/dist/antd.css";
 import "./Checkout.css";
 
-const totalColumns = [
-  {
-    title: "Event name",
-    dataIndex: "event_name",
-    key: "event_name"
-    // render: text => <a>{text}</a>
-  },
-  {
-    title: "Ticket",
-    dataIndex: "ticket",
-    key: "ticket"
-  },
-  {
-    title: "Price x Amount",
-    dataIndex: "price_amount",
-    key: "price_amount"
-  }
-];
-
 const reviewOrderSummaryColumns = [
   {
     title: "Ticket",
-    dataIndex: "ticket",
-    key: "ticket"
+    dataIndex: "ticket_title",
+    key: "ticket_title"
   },
   {
     title: "Price",
-    dataIndex: "price",
-    key: "price"
+    dataIndex: "ticket_price",
+    key: "ticket_price"
   },
   {
     title: "Quantity",
-    dataIndex: "amount",
-    key: "amount"
+    dataIndex: "ticket_quantity",
+    key: "ticket_quantity"
   },
   {
     title: "Subtotal",
@@ -52,77 +35,43 @@ const reviewOrderSummaryColumns = [
   }
 ];
 
-export default class Checkout extends Component {
-  state = {
-    ticketLists: []
-  };
+class Checkout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ticketLists: []
+    };
+  }
 
   componentDidMount = async () => {
     await this.getTicketInOrderDatas();
     console.log(this.state);
   };
 
-  getTicketDatas = () => {
-    this.setState({
-      ticketLists: [
-        {
-          key: "1",
-          event_name: "Event",
-          ticket: "Early Bird",
-          price: 1000,
-          amount: 1,
-          price_amount: `1000 x 1`,
-          subtotal: 1000 * 1
-        },
-        {
-          key: "2",
-          event_name: "Event 2",
-          ticket: "Normal",
-          price: 1500,
-          amount: 2,
-          price_amount: `1500 x 2`,
-          subtotal: 1500 * 2
-        }
-      ]
+  goToPayPage = ticket_in_order_id => {
+    Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+      ticket_in_order_status_id: 2
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    this.props.history.push({
+      pathname: `/pay/`,
+      search: `?ticket_in_order_id=${ticket_in_order_id}`
     });
   };
 
   getTicketInOrderDatas = async () => {
-    await Axios.get(`/ticketInOrder`)
+    await Axios.get(`/ticketInOrder/checkout`)
       .then(res => {
-        let temp = [],
-          datas = res.data;
-        console.log(datas);
-
-        // if (!_.isEmpty(datas)) {
-        //   datas.forEach((data, idx) => {
-        //     temp[idx] = {};
-        //     temp[idx].key = idx + 1;
-        //     temp[idx].ticket_quantity = data.ticket_quantity;
-        //     temp[idx].ticket_id = data.ticket_id;
-        //     temp[idx].ticket_in_order_status_id =
-        //       data.ticket_in_order_status_id;
-        //     temp[idx].order_id = data.order_id;
-        //     if (!_.isEmpty(data) && _.has(data, "ticket")) {
-        //       temp[idx].ticket_title = data.ticket.ticket_title;
-        //       temp[idx].ticket_title = data.ticket.ticket_detail;
-        //       temp[idx].ticket_note = data.ticket.ticket_note;
-        //       temp[idx].ticket_total_quantity =
-        //         data.ticket.ticket_total_quantity;
-        //       temp[idx].ticket_remaining_quantity =
-        //         data.ticket.ticket_remaining_quantity;
-        //       temp[idx].ticket_price = data.ticket.ticket_price;
-        //       temp[idx].ticket_manufacturing_date =
-        //         data.ticket.ticket_manufacturing_date;
-        //       temp[idx].ticket_expiry_date = data.ticket.ticket_expiry_date;
-        //       temp[idx].event_id = data.ticket.event_id;
-        //     }
-        //   });
-        // }
-
-        this.setState({ ticketLists: temp });
+        this.setState({ ticketLists: res.data });
       })
       .catch(err => {
+        console.log("xxx");
         console.error(err);
       });
   };
@@ -177,25 +126,61 @@ export default class Checkout extends Component {
       <span className="ml-5">{constants.COUNTDOWN_TEXT}</span>
     </div>
   );
+
   renderTotal = () => (
     <div id="total-div" className="mt-4">
       <h3 className="p-2">Total</h3>
-      <Table
-        columns={totalColumns}
-        dataSource={this.state.ticketLists}
-        pagination={false}
-      />
+      <Row className="total-header-row font-weight-bold">
+        <Col span={12}>Event</Col>
+        <Col span={6}>Ticket Amount</Col>
+        <Col span={6}></Col>
+      </Row>
+      {this.state.ticketLists.map((item, idx) => {
+        let ticket_in_order_id = item.ticket_in_order_id;
+        return (
+          <Row key={idx} className="total-header-body">
+            <Col span={12}>
+              <Row span={24}>
+                <Col span={24 / 2}>
+                  <img className="" src="https://picsum.photos/100" alt="" />
+                </Col>
+                <Col>
+                  <p className="mt-2">{item.event_name}</p>
+                  <p>{item.ticket_title}</p>
+                </Col>
+              </Row>
+            </Col>
+            <Col span={6}>{item.ticket_price * item.ticket_quantity}</Col>
+            <Col span={6}>
+              <Button
+                type="primary"
+                onClick={() => this.goToPayPage(ticket_in_order_id)}
+              >
+                Confrim Order
+              </Button>
+            </Col>
+          </Row>
+        );
+      })}
     </div>
   );
+
   renderReviewOrderSummary = () => {
     let reviewOrderSummaryDatas = this.state.ticketLists.slice(
       0,
       this.state.ticketLists.length
     );
+
+    let sum = 0;
+    this.state.ticketLists.forEach(obj => {
+      // console.log(obj.ticket_price * obj.ticket_quantity);
+      sum += obj.ticket_price * obj.ticket_quantity;
+    });
+
     reviewOrderSummaryDatas.push({
-      key: "3",
-      amount: "Grand Total",
-      subtotal: 4000
+      key: reviewOrderSummaryDatas.length + 1,
+      ticket_quantity: "Grand Total",
+      subtotal: sum
     });
     return (
       <div id="review-order-summary-div" className="mt-4">
@@ -208,25 +193,17 @@ export default class Checkout extends Component {
       </div>
     );
   };
+
   render() {
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
-        {this.renderReviewOrderSummary()}
-
-        <Row className="mt-4 mb-3">
-          <Col span={24 / 2}>
-            <Button type="danger">Cancel Order</Button>
-          </Col>
-          <Col span={24 / 2} className="text-right">
-            <Button href="/pay" type="primary">
-              Confirm Order
-            </Button>
-          </Col>
-        </Row>
+        {/* {this.renderReviewOrderSummary()} */}
       </section>
     );
   }
 }
+
+export default withRouter(Checkout);

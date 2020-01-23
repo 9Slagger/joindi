@@ -2,7 +2,7 @@ const db = require("../models");
 const _ = require("lodash");
 
 const modelName = "TicketInOrderHasImageModel";
-const arrayOfFields = ["image_id", "ticket_id"];
+const arrayOfFields = ["image_id", "ticket_in_order_id"];
 
 module.exports = {
   findAll: async (req, res, next) => {

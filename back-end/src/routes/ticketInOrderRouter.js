@@ -8,7 +8,7 @@ const {
 } = require("../controllers/ticketInOrderController");
 const { verifyCustomer } = require("../_helper/jwt");
 
-router.get("/", verifyCustomer, findAll);
+router.get("/:status", verifyCustomer, findAll);
 router.post("/", verifyCustomer, create);
 router.put("/:id", update);
 router.delete("/:id", del);
