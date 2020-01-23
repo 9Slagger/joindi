@@ -1,26 +1,13 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
-<<<<<<< HEAD
 
-import { withRouter } from "react-router-dom";
-
-=======
-import {Link} from "react-router-dom"
->>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
 // import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
-import "./Complete.css";
+import "./Confirm.css";
 
-class Complete extends Component {
+export default class Confirm extends Component {
   state = {};
-
-  goToHome = () => {
-    this.props.history.push({
-      pathname: `/`,
-      search: ``
-    });
-  };
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -46,7 +33,10 @@ class Complete extends Component {
           </h2>
         </Col>
         <Col span={3}>
-          <Button type="primary"> 3 </Button>
+          <Button type="primary" className="active">
+            {" "}
+            3{" "}
+          </Button>
           <p>Confirm</p>
         </Col>
         <Col span={3}>
@@ -56,44 +46,33 @@ class Complete extends Component {
           </h2>
         </Col>
         <Col span={3}>
-          <Button type="primary" className="active">
-            {" "}
-            4{" "}
-          </Button>
+          <Button type="primary"> 4 </Button>
           <p>Complete</p>
         </Col>
       </Row>
     </div>
   );
 
-  renderComplete = () => (
-    <div id="complete-div" className="mt-4">
-      <div className="text-center p-5">
-        <p className="display-3 m-5">Get Ticket Completed</p>
+  renderConfirmPayment = () => (
+    <div id="confirm-payment-div" className="mt-4">
+      <h3 className="p-2">Confirm Payment</h3>
+      <div>
+        <Row className="text-center p-5">
+          <Col span={12}>กำลังอยู่ในขั้นตอนการยืนยันการชำระเงิน</Col>
+          <Col span={12}>
+            <Button type="default">Processing</Button>
+          </Col>
+        </Row>
       </div>
     </div>
   );
 
   render() {
     return (
-      <section id="complete-section" className="container mt-4">
+      <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
-        {this.renderComplete()}
-
-        <Row className="mt-4 mb-3">
-          <Col span={24} className="text-center">
-<<<<<<< HEAD
-            <Button onClick={() => this.goToHome()} type="primary">
-              Home
-            </Button>
-=======
-            <Button type="primary"><Link to="/">Home</Link></Button>
->>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
-          </Col>
-        </Row>
+        {this.renderConfirmPayment()}
       </section>
     );
   }
 }
-
-export default withRouter(Complete);

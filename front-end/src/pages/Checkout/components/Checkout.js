@@ -1,45 +1,32 @@
 import React, { Component } from "react";
 import { Button, Row, Col, Table } from "antd";
 
+import { withRouter } from "react-router-dom";
+
+import Axios from "../../../_helper/axios";
+
+import _ from "lodash";
+
 import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Checkout.css";
 
-const totalColumns = [
-  {
-    title: "Event name",
-    dataIndex: "event_name",
-    key: "event_name"
-    // render: text => <a>{text}</a>
-  },
-  {
-    title: "Ticket",
-    dataIndex: "ticket",
-    key: "ticket"
-  },
-  {
-    title: "Price x Amount",
-    dataIndex: "price_amount",
-    key: "price_amount"
-  }
-];
-
 const reviewOrderSummaryColumns = [
   {
     title: "Ticket",
-    dataIndex: "ticket",
-    key: "ticket"
+    dataIndex: "ticket_title",
+    key: "ticket_title"
   },
   {
     title: "Price",
-    dataIndex: "price",
-    key: "price"
+    dataIndex: "ticket_price",
+    key: "ticket_price"
   },
   {
     title: "Quantity",
-    dataIndex: "amount",
-    key: "amount"
+    dataIndex: "ticket_quantity",
+    key: "ticket_quantity"
   },
   {
     title: "Subtotal",
@@ -48,28 +35,45 @@ const reviewOrderSummaryColumns = [
   }
 ];
 
-export default class Checkout extends Component {
-  state = {
-    ticketLists: [
-      {
-        key: "1",
-        event_name: "Event",
-        ticket: "Early Bird",
-        price: 1000,
-        amount: 1,
-        price_amount: `1000 x 1`,
-        subtotal: 1000 * 1
-      },
-      {
-        key: "2",
-        event_name: "Event 2",
-        ticket: "Normal",
-        price: 1500,
-        amount: 2,
-        price_amount: `1500 x 2`,
-        subtotal: 1500 * 2
-      }
-    ]
+class Checkout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ticketLists: []
+    };
+  }
+
+  componentDidMount = async () => {
+    await this.getTicketInOrderDatas();
+    console.log(this.state);
+  };
+
+  goToPayPage = ticket_in_order_id => {
+    Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+      ticket_in_order_status_id: 2
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    this.props.history.push({
+      pathname: `/pay/`,
+      search: `?ticket_in_order_id=${ticket_in_order_id}`
+    });
+  };
+
+  getTicketInOrderDatas = async () => {
+    await Axios.get(`/ticketInOrder/checkout`)
+      .then(res => {
+        this.setState({ ticketLists: res.data });
+      })
+      .catch(err => {
+        console.log("xxx");
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
@@ -122,25 +126,61 @@ export default class Checkout extends Component {
       <span className="ml-5">{constants.COUNTDOWN_TEXT}</span>
     </div>
   );
+
   renderTotal = () => (
     <div id="total-div" className="mt-4">
       <h3 className="p-2">Total</h3>
-      <Table
-        columns={totalColumns}
-        dataSource={this.state.ticketLists}
-        pagination={false}
-      />
+      <Row className="total-header-row font-weight-bold">
+        <Col span={12}>Event</Col>
+        <Col span={6}>Ticket Amount</Col>
+        <Col span={6}></Col>
+      </Row>
+      {this.state.ticketLists.map((item, idx) => {
+        let ticket_in_order_id = item.ticket_in_order_id;
+        return (
+          <Row key={idx} className="total-header-body">
+            <Col span={12}>
+              <Row span={24}>
+                <Col span={24 / 2}>
+                  <img className="" src="https://picsum.photos/100" alt="" />
+                </Col>
+                <Col>
+                  <p className="mt-2">{item.event_name}</p>
+                  <p>{item.ticket_title}</p>
+                </Col>
+              </Row>
+            </Col>
+            <Col span={6}>{item.ticket_price * item.ticket_quantity}</Col>
+            <Col span={6}>
+              <Button
+                type="primary"
+                onClick={() => this.goToPayPage(ticket_in_order_id)}
+              >
+                Confrim Order
+              </Button>
+            </Col>
+          </Row>
+        );
+      })}
     </div>
   );
+
   renderReviewOrderSummary = () => {
     let reviewOrderSummaryDatas = this.state.ticketLists.slice(
       0,
       this.state.ticketLists.length
     );
+
+    let sum = 0;
+    this.state.ticketLists.forEach(obj => {
+      // console.log(obj.ticket_price * obj.ticket_quantity);
+      sum += obj.ticket_price * obj.ticket_quantity;
+    });
+
     reviewOrderSummaryDatas.push({
-      key: "3",
-      amount: "Grand Total",
-      subtotal: 4000
+      key: reviewOrderSummaryDatas.length + 1,
+      ticket_quantity: "Grand Total",
+      subtotal: sum
     });
     return (
       <div id="review-order-summary-div" className="mt-4">
@@ -154,17 +194,22 @@ export default class Checkout extends Component {
     );
   };
 
+<<<<<<< HEAD
+=======
   toPayPage = ticketInOrderId => () => {
     // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
   }
 
+>>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
   render() {
-    console.log(this.state);
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
-        {this.renderConuntDown()}
+        {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
+<<<<<<< HEAD
+        {/* {this.renderReviewOrderSummary()} */}
+=======
         {this.renderReviewOrderSummary()}
 
         <Row className="mt-4">
@@ -175,7 +220,10 @@ export default class Checkout extends Component {
             <Button type="primary" onClick={this.toPayPage}>Confirm Order</Button>
           </Col>
         </Row>
+>>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
       </section>
     );
   }
 }
+
+export default withRouter(Checkout);
