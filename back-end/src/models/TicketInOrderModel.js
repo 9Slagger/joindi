@@ -10,6 +10,13 @@ TicketInOrderModel.init(
       validate: {
         notEmpty: false
       }
+    },
+    ticket_in_order_remark_reject: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false
+      }
     }
   },
   { sequelize, modelName: "ticket_in_order" }

@@ -78,5 +78,17 @@ export const serviceEvent = {
         if (error.status < 500) reject(error.response.data);
       }
     });
+  },
+  getEventApprove: () => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get("/event/statusapprove");
+        resolve(res.data);
+      } catch (error) {
+        if (error.status < 500) reject(error.response.data);
+      }
+    });
+
   }
 };
