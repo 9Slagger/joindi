@@ -47,6 +47,19 @@
   width: 100% !important;
 }
 
+.iconNav{
+  color: #ffffff !important;
+  font-size: 30px;
+}
+
+.logInAndSignUp-nav{
+  margin-left: 50%;
+}
+
+.colDropdownUser{
+  margin-left:20%;
+}
+
 .logo {
   height: 50px;
   width: auto;
@@ -77,6 +90,7 @@
   .logInAndSignUp-nav {
     display: none;
   }
+
 
   .logInAndSignUp-drawer span {
     color: rgba(0, 0, 0, 0.65) !important;

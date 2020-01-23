@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../css/CardEvents.css";
 import { Card, Avatar, Typography, Icon, Row, Col } from "antd";
+import { Link } from "react-router-dom";
 const { Text, Paragraph } = Typography;
 
 class CardEvents extends Component {
@@ -9,6 +10,7 @@ class CardEvents extends Component {
     const { event } = this.props;
     return (
       <Card className="card-events">
+        <Link to={`/eventdetail/${1}`}>
         <Avatar shape="square" size={150} className="avatar-events" />
         <Col>
           <Row>
@@ -19,14 +21,20 @@ class CardEvents extends Component {
             <Text strong>{event.event_name}</Text> <br />
           </Row>
           <Row>
-            <Col span={20}>
+            <Col>
               <Paragraph type="secondary">{event.event_address}</Paragraph>
             </Col>
-            <Col span={4}>
-              <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
-            </Col>
+          </Row>
+
+          <Row type="flex" justify="center">
+            <span>
+            {event.event_tags && event.event_tags.map(tag => (
+                      <Text code key={tag.id}>{tag.tag_name_en}&nbsp;</Text>
+                    ))}
+            </span>
           </Row>
         </Col>
+        </Link>
       </Card>
     );
   }

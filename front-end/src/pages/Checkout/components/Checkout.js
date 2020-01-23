@@ -153,6 +153,11 @@ export default class Checkout extends Component {
       </div>
     );
   };
+
+  toPayPage = ticketInOrderId => () => {
+    // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -167,7 +172,7 @@ export default class Checkout extends Component {
             <Button type="danger">Cancel Order</Button>
           </Col>
           <Col span={24 / 2} className="text-right">
-            <Button type="primary">Confirm Order</Button>
+            <Button type="primary" onClick={this.toPayPage}>Confirm Order</Button>
           </Col>
         </Row>
       </section>
