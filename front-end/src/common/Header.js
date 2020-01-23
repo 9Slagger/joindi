@@ -1,5 +1,4 @@
 import React from "react";
-import Fuse from "fuse.js";
 import {
   Menu,
   Icon,
@@ -10,7 +9,6 @@ import {
   Form,
   Button,
   Drawer,
-  Divider,
   Badge
 } from "antd";
 import "../css/Header.css";
@@ -36,41 +34,8 @@ class Header extends React.Component {
       visibleLogIn: false,
       isDirty: false,
       searchList: [],
-      categorieList: [],
-      data: [
-        {
-          id: 1,
-          eventName: "วิ่งไล่ลุง",
-          catagory: {
-            id: 1,
-            catagory_name: "Popular"
-          },
-          tag: [
-            {
-              id: 1,
-              tag_name: "Coding"
-            },
-            {
-              id: 2,
-              tag_name: "Run"
-            }
-          ]
-        },
-        {
-          id: 1,
-          eventName: "เดินเชียร์ลุง",
-          catagory: {
-            id: 1,
-            catagory_name: "Hot"
-          },
-          tag: [
-            {
-              id: 3,
-              tag_name: "Walk"
-            }
-          ]
-        }
-      ]
+      searchKeyword: "",
+      categorieList: []
     };
   }
 
@@ -91,7 +56,12 @@ class Header extends React.Component {
   getCategorieAndEvent = async () => {
     try {
       const res = await serviceEvent.getCategorieAndEvent();
-    } catch (error) {}
+      const searchList = res.result;
+      this.setState({ searchList });
+      console.log(searchList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   showDrawer = () => {
@@ -111,17 +81,12 @@ class Header extends React.Component {
   }
 
   handleSearch = e => {
-    const fuse = new Fuse(this.state.data, {
-      shouldSort: true,
-      threshold: 0.6,
-      location: 0,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 1,
-      keys: ["eventName", "catagory_name"]
-    });
-    this.setState({ searchList: fuse.search(e) });
-    console.log("search : ", this.state.searchList);
+    if (e) {
+      this.props.history.push(`/searchevnts?keyword=${encodeURIComponent(e)}`);
+    }
+    else {
+      this.props.history.push("/searchevnts?keyword=");
+    }
   };
 
   showModalSignUp = () => {
@@ -203,6 +168,11 @@ class Header extends React.Component {
   render() {
     const { Authentication } = this.props;
     const { categorieList } = this.state;
+    let keyword =
+      decodeURIComponent(window.location.search.split("keyword=")[1]) !==
+      "undefined"
+        ? decodeURIComponent(window.location.search.split("keyword=")[1])
+        : "";
     return (
       <div>
         <Row
@@ -266,6 +236,7 @@ class Header extends React.Component {
           </Col>
           <Col xs={12} md={12} lg={12} xl={8}>
             <Search
+              defaultValue={keyword}
               placeholder="input search text"
               onSearch={this.handleSearch}
               className="inputSearch"
@@ -333,7 +304,7 @@ class Header extends React.Component {
                     </Menu>
                   </>
                 ) : (
-                  <div className="logInAndSignUp-drawer" >
+                  <div className="logInAndSignUp-drawer">
                     <Login />
                     <Signup />
                   </div>

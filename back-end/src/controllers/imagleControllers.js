@@ -57,9 +57,10 @@ module.exports = {
         }
         try {
           await transaction.commit();
-          res
-            .status(201)
-            .json({ messages: { title_en: "file uploaded", title_th: "" } });
+          res.status(201).json({
+            result: imageResult,
+            messages: { title_en: "file uploaded", title_th: "" }
+          });
         } catch (error) {
           res.status(400).send({
             messages: { title_en: "someting is wrong", title_th: "" }

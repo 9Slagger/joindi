@@ -1,13 +1,4 @@
-.total-header-row {
-  background-color: #bcbabe;
-  padding: 1rem;
-}
-
-.total-header-body {
-  padding: 1rem;
-}
-
-#countdown-div {
+#bank-account-div > div {
   background-color: #bcbabe;
 }
 

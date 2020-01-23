@@ -1,0 +1,11 @@
+.selectSortBy{
+  width:120px
+}
+
+
+.textSearchResult{
+  font-family:"Prompt", sans-serif;
+  color: #345886 !important;
+  font-size: 2.5vw;
+  margin-bottom: 0;
+}
