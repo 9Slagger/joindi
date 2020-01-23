@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Modal, Col, Row, Input, Table, Icon } from "antd";
+import { serviceEvent } from "../../../../_service/eventServices";
 import TextArea from "antd/lib/input/TextArea";
 import Column from "antd/lib/table/Column";
 import "./StyleComponents/OrganizedBy.css";
@@ -9,8 +10,29 @@ class OrganizedBy extends Component {
     visible: false,
     organizedData: [],
     name: "",
-    description: ""
+    description: "",
+    evenList: [],
+    organizeContact: []
   };
+
+  componentDidMount() {
+    this.getEventDetail();
+  }
+
+  async getEventDetail() {
+    try {
+      let eventList = await serviceEvent.getEventDetail();
+      eventList = eventList.result;
+      this.setState({ eventList });
+      this.setState({ organizeContact: eventList.organized_contacts })
+      // console.log("organizeContact", this.state.organizeContact);
+      // let organizedData = this.state.organizeContact;
+      this.setState({ organizedData: this.state.organizeContact });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   showModal = () => {
     this.setState({
       visible: true
@@ -36,6 +58,7 @@ class OrganizedBy extends Component {
         this.props.form.resetFields();
         console.log(this.state.organizedData);
       }
+      console.log("data", datas);
     });
   };
 
@@ -98,22 +121,13 @@ class OrganizedBy extends Component {
             key="action"
             render={(text, data, index) => (
               <>
-                <Button
-                  
-                  onClick={this.swapOrganizedData(index, true)}
-                >
+                <Button onClick={this.swapOrganizedData(index, true)}>
                   <Icon type="up" />
                 </Button>
-                <Button
-                  onClick={this.swapOrganizedData(index, false)}
-                  
-                >
+                <Button onClick={this.swapOrganizedData(index, false)}>
                   <Icon type="down" />
                 </Button>
-                <Button
-                  onClick={this.deleteOrganizedData(index)}
-                  
-                >
+                <Button onClick={this.deleteOrganizedData(index)}>
                   <Icon type="delete" />
                 </Button>
               </>

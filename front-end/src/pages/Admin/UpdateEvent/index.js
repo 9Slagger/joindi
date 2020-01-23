@@ -1,34 +1,35 @@
 import React, { Component } from "react";
+import { Row, Col, Button } from "antd";
 import DefaultLayout from "../../../common/DefaultLayout";
 import InfoEvents from "./components/InfoEvents";
 import Ticket from "./components/Ticket";
 import OrganizedBy from "./components/OrganizedBy";
-import { Row, Col, Button } from "antd";
 import RichText from "./components/RichText";
+import Axios from "axios"
+
 import "./CreateEventsStyle.css";
-import Axios from "axios";
 
 export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       eventName: "",
-      createrName: "",
+      address: "",
       date: "",
       latitudeLocation: "",
       longitudeLocation: "",
       addTag: [],
       richText: "",
       ticketList: [],
-      organizedList: []
+      organizedList: [],
     };
   }
 
   handleGetEventName = value => {
     this.setState({ eventName: value });
   };
-  handleGetCreaterName = value => {
-    this.setState({ createrName: value });
+  handleGetAddress = value => {
+    this.setState({ address: value });
   };
   handleGetDate = value => {
     this.setState({ date: value });
@@ -75,9 +76,9 @@ export default class index extends Component {
   };
 
   render() {
-    console.log("❗️❗️❗️", this.state.date[0]);
-    console.log("✅", this.state);
-    
+    // console.log("❗️❗️❗️", this.state.date[0]);
+    // console.log("✅", this.state);
+
     return (
       <DefaultLayout>
         <div className="outerBox">
@@ -102,7 +103,7 @@ export default class index extends Component {
           </Row>
           <Row>
             <Col span={24} style={{ textAlign: "right" }}>
-              <Button style={{ margin: "10px 10px" }}>Back</Button>
+              {/* <Button style={{ margin: "10px 10px" }}>Back</Button> */}
               <Button
                 onClick={this.handleCreateEvent}
                 style={{ margin: "10px 10px" }}

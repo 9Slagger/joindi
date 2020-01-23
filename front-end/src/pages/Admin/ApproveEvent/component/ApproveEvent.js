@@ -186,23 +186,22 @@ export default class ApproveEvent extends Component {
                   <Col>
                     <Button
                       style={{
-                        border: "none",
-                        color: "#BCBABE"
+                        border: "2px solid #C4C4C4",
+                        color: "#C4C4C4"
                       }}
                       shape="circle"
                     >
-                      <Icon type="tool" style={{ fontSize: "25px" }} />
+                      <Icon type="tool" style={{ fontSize: "20px" }} />
                     </Button>
-                  </Col>
-                  <Col>
+                    &nbsp;
                     <Button
                       style={{
-                        border: "none",
+                        border: "2px solid #8D021F",
                         color: "#8D021F"
                       }}
                       shape="circle"
                     >
-                      <Icon type="delete" style={{ fontSize: "25px" }} />
+                      <Icon type="delete" style={{ fontSize: "20px" }} />
                     </Button>
                   </Col>
                 </Row>

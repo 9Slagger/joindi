@@ -76,7 +76,8 @@ module.exports = {
           },
           { model: db.TicketModel },
           { model: db.EventCategoryModel },
-          { model: db.EventTagModel }
+          { model: db.EventTagModel },
+          { model: db.OrganizedContactModel }
         ]
       });
       // console.log("eventDetailResult🟢", eventDetailResult);

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
 import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import { serviceTag } from "../../../../_service/tagServices";
+import { serviceEvent } from "../../../../_service/eventServices";
 import "./StyleComponents/infoEventStyle.css";
-import Axios from "axios";
+import moment from "moment";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -13,19 +15,65 @@ class InfoEvents extends Component {
     this.state = {
       fileList: [],
       tagList: [],
-      dateTimeInInterger:""
+      dateTimeInInterger: "",
+      getTagList: [],
+      eventList: [],
+      // Set state
+      EventName: "",
+      Address: "",
+      LatitudeLocation: "",
+      LongitudeLocation: "",
+      DateStart: "",
+      DateEnd: "",
+      Tag: []
     };
   }
 
   componentDidMount() {
-    Axios.get("http://localhost:8085/tag").then(result => {
-      this.setState({ tagList: result.data });
-    });
+    this.getTagAdmin();
+    this.getEventDetail();
   }
+
+  async getTagAdmin() {
+    try {
+      let getTagList = await serviceTag.getTag();
+      getTagList = getTagList.result;
+      // console.log("getTagList", getTagList);
+      this.setState({ getTagList });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async getEventDetail() {
+    try {
+      let eventList = await serviceEvent.getEventDetail();
+      eventList = eventList.result;
+      // console.log("eventList", eventList);
+      this.setState({ eventList });
+      this.setState({ EventName: eventList.event_name });
+      this.setState({ Address: eventList.event_address });
+      this.setState({ LatitudeLocation: eventList.event_latitude_map });
+      this.setState({ LongitudeLocation: eventList.event_longitude_map });
+      this.setState({ DateStart: eventList.event_date_start });
+      this.setState({ DateEnd: eventList.event_date_end });
+      // console.log("date", moment(eventList.event_date_start).format("DD-MM-YYYY"), moment(eventList.event_date_end));
+      let tag_EN = eventList.event_tags.map(obj => obj.tag_name_en);
+      // let tag_TH = eventList.event_tags.map(obj => obj.tag_name_th);
+      this.setState({ Tag: tag_EN });
+      // this.setState({ getEventContent: eventList.event_content });
+      let ticket_EN = eventList.event_tags.map(obj => obj.tag_name_en);
+      // let ticket_TH = eventList.event_tags.map(obj => obj.tag_name_th);
+      this.setState({ Ticket: ticket_EN });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   handleChange = value => {
     // console.log(`selected ${value}`);
     // this.setState({ addTag: `${value}` });
-    this.props.handleGetAddTag(value)
+    this.props.handleGetAddTag(value);
   };
 
   handleOnChangeEventName = e => {
@@ -34,21 +82,25 @@ class InfoEvents extends Component {
   handleOnChangeCreaterName = e => {
     this.props.handleGetCreaterName(e);
   };
-  handleOnChangeDate = async(dateValue,dateValueArray) => {
-    await this.setState({dateTimeInInterger:dateValue.map(data => data._d.getTime())})
+  handleOnChangeDate = async (dateValue, dateValueArray) => {
+    await this.setState({
+      dateTimeInInterger: dateValue.map(data => data._d.getTime())
+    });
     await this.props.handleGetDate(this.state.dateTimeInInterger);
+    console.log("dateTimeInInterger", this.state.dateTimeInInterger);
+    
   };
   handleOnChangeLatitude = e => {
-    this.props.handleGetLatitude(e)
+    this.props.handleGetLatitude(e);
   };
   handleOnChangeLongitude = e => {
-    this.props.handleGetLongitude(e)
-  }
-  
+    this.props.handleGetLongitude(e);
+  };
 
   render() {
     const { fileList } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
+    const dateFormat = "DD-MM-YYYY";
 
     const props = {
       onRemove: file => {
@@ -125,6 +177,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("eventname", {
+                    initialValue: this.state.EventName,
                     rules: [
                       {
                         required: true,
@@ -146,17 +199,16 @@ class InfoEvents extends Component {
             </Row>
             <Row>
               <Col xs={24} md={8} xl={6}>
-                <h5 style={{ marginTop: "6px", color: "white" }}>
-                  Creater name :
-                </h5>
+                <h5 style={{ marginTop: "6px", color: "white" }}>Address :</h5>
               </Col>
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
-                  {getFieldDecorator("creatername", {
+                  {getFieldDecorator("address", {
+                    initialValue: this.state.Address,
                     rules: [
                       {
                         required: true,
-                        message: "Please put Creater name!"
+                        message: "Please put address!"
                       }
                     ]
                   })(
@@ -165,7 +217,7 @@ class InfoEvents extends Component {
                         this.handleOnChangeCreaterName(e.target.value)
                       }
                       style={{ width: "100%" }}
-                      placeholder="Creater name"
+                      placeholder="Address"
                     />
                   )}
                 </Form.Item>
@@ -180,6 +232,20 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("date", {
+                    initialValue: [
+                      moment(
+                        moment(parseInt(this.state.DateStart)).format(
+                          dateFormat
+                        ),
+                        dateFormat
+                      ),
+                      moment(
+                        moment(parseInt(this.state.DateStart)).format(
+                          dateFormat
+                        ),
+                        dateFormat
+                      )
+                    ],
                     rules: [
                       {
                         required: true,
@@ -189,7 +255,7 @@ class InfoEvents extends Component {
                   })(
                     <RangePicker
                       onChange={(dateValue, dateValueArray) =>
-                        this.handleOnChangeDate(dateValue,dateValueArray)
+                        this.handleOnChangeDate(dateValue, dateValueArray)
                       }
                       format="DD-MM-YYYY"
                     />
@@ -206,6 +272,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={6} xl={6}>
                 <Form.Item>
                   {getFieldDecorator("latitudeLocation", {
+                    initialValue: this.state.LatitudeLocation,
                     rules: [
                       {
                         required: true,
@@ -227,6 +294,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={6} xl={6}>
                 <Form.Item>
                   {getFieldDecorator("longitudeLocation", {
+                    initialValue: this.state.LongitudeLocation,
                     rules: [
                       {
                         required: true,
@@ -256,6 +324,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("addtags", {
+                    initialValue: this.state.Tag,
                     rules: [
                       {
                         required: true,
@@ -267,12 +336,11 @@ class InfoEvents extends Component {
                       mode="multiple"
                       style={{ width: "100%" }}
                       placeholder="Please select"
-                      
                       onChange={this.handleChange}
                     >
                       {this.state.tagList.map(tagListData => (
                         <Option
-                        key={tagListData.id}
+                          key={tagListData.id}
                           value={tagListData.id}
                           label={tagListData.tag_name_en}
                         >
