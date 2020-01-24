@@ -194,22 +194,17 @@ class Checkout extends Component {
     );
   };
 
-<<<<<<< HEAD
-=======
   toPayPage = ticketInOrderId => () => {
     // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
   }
 
->>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
   render() {
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
-<<<<<<< HEAD
         {/* {this.renderReviewOrderSummary()} */}
-=======
         {this.renderReviewOrderSummary()}
 
         <Row className="mt-4">
@@ -220,7 +215,6 @@ class Checkout extends Component {
             <Button type="primary" onClick={this.toPayPage}>Confirm Order</Button>
           </Col>
         </Row>
->>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
       </section>
     );
   }
