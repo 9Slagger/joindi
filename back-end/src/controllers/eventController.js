@@ -48,10 +48,15 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(400).send({ message: error.message });
-    } 
+    }
   },
   getEventDetail: async (req, res, next) => {
-    let eventDetailResult, eventStatusResult, bookmarkResult;
+    let eventDetailResult, eventStatusResult;
+    const getIncludeBookmarkModel = () => {
+      if (req.user) {
+        return { model: db.BookmarkModel, where: { user_id: req.user.id } };
+      }
+    };
     try {
       eventStatusResult = await db.EventStatusModel.findOne({
         where: { status_code: "02AD" },
@@ -60,38 +65,34 @@ module.exports = {
     } catch (error) {
       console.log("🔴", error);
     }
-    // console.log("eventStatusResult🟢", eventStatusResult);
+    console.log("eventStatusResult🟢", eventStatusResult);
     try {
-      eventDetailResult = await db.EventModel.findAll({
+      eventDetailResult = await db.EventModel.findOne({
         where: { id: req.params.eventId },
         include: [
           {
-            model: db.EventStatusModel,
-            where: { id: eventStatusResult.id }
+            model: db.EventStatusModel
+            // where: { event_status_id: eventStatusResult.id }
           },
           { model: db.TicketModel },
           { model: db.EventCategoryModel },
-          { model: db.EventTagModel },
-          {
-            model: db.BookmarkModel,
-            where: { event_id: req.params.eventId }
-          }
+          { model: db.EventTagModel }
         ]
       });
-      eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
-      eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
-        bookmark => bookmark.user_id === req.user.id
-      ).length;
       // console.log("eventDetailResult🟢", eventDetailResult);
-      res.status(200).send(eventDetailResult)
+      res.status(200).json({
+        result: eventDetailResult,
+        messages: { title_en: "get event detail success", title_th: "" }
+      });
     } catch (error) {
       console.log("🔴", error);
       res.status(400).json({
-        eventDetailResult,
+        result: eventDetailResult,
         messages: { title_en: "get event detail fail", title_th: "" }
       });
     }
   },
+
   getEventApprove: async (req, res, next) => {
     let eventResult, bookmarkResult;
     try {
@@ -108,7 +109,7 @@ module.exports = {
             ]
           }
         ]
-      }); 
+      });
       res.status(200).json({
         result: eventResult,
         messages: {
