@@ -349,37 +349,5 @@ module.exports = {
         .status(400)
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
-  },
-  updateEvent: async (req, res, next) => {
-    let eventTarget, resultInfo;
-    try {
-      eventTarget = await db.EventModel.findOne({
-        where: { id: req.params.eventId }
-      });
-      resultInfo = await eventTarget.update(
-        {
-          event_name: req.body.event_name,
-          event_address: req.body.event_address,
-          event_latitude_map: req.body.event_latitude_map,
-          event_longitude_map: req.body.event_longitude_map,
-          event_date_start: req.body.event_date_start,
-          event_date_end: req.body.event_date_end,
-          event_content: req.body.event_content,
-          tickets: req.body.ticketsList,
-          organized_contacts: req.body.organizedList
-        },
-        {
-          include: [db.TicketModel, db.OrganizedContactModel]
-        }
-      );
-    } catch (error) {
-      console.log("🔴", error);
-      return res.status(400).json({
-        messages: {
-          title_en: "update event fail",
-          title_th: ""
-        }
-      });
-    }
   }
 };
