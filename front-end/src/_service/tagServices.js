@@ -5,11 +5,24 @@ export const serviceTag = {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.get("/tag",);
+        res = await axios.get("/tag");
         resolve(res.data);
       } catch (error) {
-        if(error.status  < 500)
-        reject(error.response.data);
+        if (error.status < 500) reject(error.response.data);
+      }
+    });
+  },
+  addTag: (tagNameEn, tagNameTh) => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.post("/tag", {
+          tagNameEn,
+          tagNameTh
+        });
+        resolve(res.data);
+      } catch (error) {
+        if (error.status < 500) reject(error.response.data);
       }
     });
   }
