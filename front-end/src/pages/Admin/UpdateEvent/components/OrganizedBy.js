@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Form, Button, Modal, Col, Row, Input, Table, Icon } from "antd";
-import { serviceEvent } from "../../../../_service/eventServices";
 import TextArea from "antd/lib/input/TextArea";
 import Column from "antd/lib/table/Column";
 import "./StyleComponents/OrganizedBy.css";
@@ -11,27 +10,8 @@ class OrganizedBy extends Component {
     organizedData: [],
     name: "",
     description: "",
-    evenList: [],
-    organizeContact: []
+    organizedList: []
   };
-
-  componentDidMount() {
-    this.getEventDetail();
-  }
-
-  async getEventDetail() {
-    try {
-      let eventList = await serviceEvent.getEventDetail();
-      eventList = eventList.result;
-      this.setState({ eventList });
-      this.setState({ organizeContact: eventList.organized_contacts })
-      // console.log("organizeContact", this.state.organizeContact);
-      // let organizedData = this.state.organizeContact;
-      this.setState({ organizedData: this.state.organizeContact });
-    } catch (error) {
-      console.log("error", error);
-    }
-  }
 
   showModal = () => {
     this.setState({
@@ -70,7 +50,7 @@ class OrganizedBy extends Component {
   };
 
   swapOrganizedData = (index, isUpperCase) => () => {
-    let organizedData = JSON.parse(JSON.stringify(this.state.organizedData));
+    let organizedData = JSON.parse(JSON.stringify(this.props.organizedList));
     if (isUpperCase && index !== 0) {
       let temp = JSON.parse(JSON.stringify(organizedData[index]));
       organizedData[index] = organizedData[index - 1];
@@ -80,20 +60,24 @@ class OrganizedBy extends Component {
       organizedData[index] = organizedData[index + 1];
       organizedData[index + 1] = temp;
     }
-    this.setState({ organizedData });
+    console.log("😒😒😒", organizedData);
+    // this.setState({ organizedData });
+    this.props.handleGetOrganized(organizedData);
   };
 
   deleteOrganizedData = indexTarget => () => {
-    this.setState({
-      organizedData: this.state.organizedData.filter(
-        (item, index) => indexTarget !== index
-      )
-    });
+    // console.log(
+    //   "😒😒😒",
+    //   this.props.organizedList.filter((item, index) => index !== indexTarget)
+    // );
+    this.props.handleGetOrganized(
+      this.props.organizedList.filter((item, index) => index !== indexTarget)
+    );
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const dataOrganizedTable = this.state.organizedData;
+    const dataOrganizedTable = this.props.organizedList;
     return (
       <div className="organizedBox">
         <Row>

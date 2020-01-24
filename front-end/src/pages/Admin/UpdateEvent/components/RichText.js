@@ -2,44 +2,42 @@ import React, { Component } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { serviceEvent } from "../../../../_service/eventServices";
 import "./StyleComponents/RichTextStyle.css";
-import { Row } from 'antd'
+import { Row } from "antd";
 
 export default class RichText extends Component {
   state = {
     editorData: [],
-    eventList: [],
-    content: ""
-  };
-  handleGetRichText = e => {
-    console.log("Content was updated:", e.target.getContent());
-    this.props.handleGetRichText(e.target.getContent())
+    richText: ""
   };
 
   componentDidMount() {
-    this.getEventDetail();
+    this.setState({
+      richText: this.props.richText
+    });
   }
 
-  async getEventDetail() {
-    try {
-      let eventList = await serviceEvent.getEventDetail();
-      eventList = eventList.result;
-      this.setState({ eventList });
-      this.setState({ content: eventList.event_content });
-      // console.log("content", eventList.event_content);
-      
-    } catch (error) {
-      console.log("error", error);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      this.setState({
+        richText: this.props.richText
+      });
     }
   }
 
+  handleGetRichText = e => {
+    console.log("Content was updated:", e.target.getContent());
+    this.props.handleGetRichText(e.target.getContent());
+  };
+
   render() {
+    const { richText } = this.state;
     return (
       <div className="richTextBox">
         <h3 style={{ textAlign: "center" }}>Event Description</h3>
         <Row type="flex" justify="center">
           <Editor
             apiKey="7g24t1aop3vqrvu8euvt9sba0lt1u87ns1rr50urwq231dae"
-            initialValue= {this.state.content}
+            initialValue= {richText}
             init={{
               height: 400,
               width: "90%",

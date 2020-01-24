@@ -39,42 +39,39 @@ class Ticket extends Component {
     ticket: []
   };
 
-  componentDidMount() {
-    this.getEventDetail();
-  }
 
-  async getEventDetail() {
-    try {
-      const dateFormat = "DD-MM-YYYY";
-      let eventList = await serviceEvent.getEventDetail();
-      eventList = eventList.result;
-      // this.setState({ eventList });
-      // console.log('evenList',eventList);
-      this.setState({ ticket: eventList.tickets });
-      // console.log("ticket", eventList.tickets);
-      // let ticketList = this.state.ticket;
-      let ticketList = this.state.ticket.map(obj => ({
-        ticket_title: obj.ticket_title,
-        ticket_detail: obj.ticket_detail,
-        ticket_note: obj.ticket_note,
-        ticket_total_quantity: obj.ticket_total_quantity,
-        ticket_remaining_quantity: obj.ticket_remaining_quantity,
-        ticket_price: obj.ticket_price,
-        ticket_manufacturing_date: obj.ticket_manufacturing_date,
-        ticket_expiry_date: obj.ticket_expiry_date,
-        ticketToShowStart: moment(
-          parseInt(obj.ticket_manufacturing_date)
-        ).format(dateFormat),
-        ticketToShowEnd: moment(parseInt(obj.ticket_expiry_date)).format(
-          dateFormat
-        )
-      }));
-      this.setState({ ticketList });
-      // console.log("ticketList", ticketList);
-    } catch (error) {
-      console.log("error", error);
-    }
-  }
+  // async getEventDetail() {
+  //   try {
+  //     const dateFormat = "DD-MM-YYYY";
+  //     let eventList = await serviceEvent.getEventDetail();
+  //     eventList = eventList.result;
+  //     // this.setState({ eventList });
+  //     // console.log('evenList',eventList);
+  //     this.setState({ ticket: eventList.tickets });
+  //     // console.log("ticket", eventList.tickets);
+  //     // let ticketList = this.state.ticket;
+  //     let ticketList = this.state.ticket.map(obj => ({
+  //       ticket_title: obj.ticket_title,
+  //       ticket_detail: obj.ticket_detail,
+  //       ticket_note: obj.ticket_note,
+  //       ticket_total_quantity: obj.ticket_total_quantity,
+  //       ticket_remaining_quantity: obj.ticket_remaining_quantity,
+  //       ticket_price: obj.ticket_price,
+  //       ticket_manufacturing_date: obj.ticket_manufacturing_date,
+  //       ticket_expiry_date: obj.ticket_expiry_date,
+  //       ticketToShowStart: moment(
+  //         parseInt(obj.ticket_manufacturing_date)
+  //       ).format(dateFormat),
+  //       ticketToShowEnd: moment(parseInt(obj.ticket_expiry_date)).format(
+  //         dateFormat
+  //       )
+  //     }));
+  //     this.setState({ ticketList });
+  //     // console.log("ticketList", ticketList);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // }
 
   showModal = () => {
     this.setState({
@@ -166,17 +163,14 @@ class Ticket extends Component {
   };
 
   deleteTicket = indexTarget => () => {
-    this.setState({
-      ticketList: this.state.ticketList.filter(
-        (item, index) => indexTarget !== index
-      )
-    });
+    // console.log("😒😒😒", indexTarget);
+    this.props.handleGetTicket(this.props.ticketList.filter((item, index) => index !== indexTarget));
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
     const label = "Free Event";
-    const dataTicketTable = this.state.ticketList;
+    const dataTicketTable = this.props.ticketList;
 
     return (
       <div className="ticketBox">

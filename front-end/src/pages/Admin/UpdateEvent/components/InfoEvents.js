@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
 import { Upload, Icon, Row, Col, Form, Input } from "antd";
-import { serviceTag } from "../../../../_service/tagServices";
-import { serviceEvent } from "../../../../_service/eventServices";
 import "./StyleComponents/infoEventStyle.css";
 import moment from "moment";
 
@@ -16,57 +14,42 @@ class InfoEvents extends Component {
       fileList: [],
       tagList: [],
       dateTimeInInterger: "",
-      getTagList: [],
-      eventList: [],
+      // getTagList: [],
+      // eventList: [],
       // Set state
-      EventName: "",
-      Address: "",
-      LatitudeLocation: "",
-      LongitudeLocation: "",
-      DateStart: "",
-      DateEnd: "",
-      Tag: []
+      eventName: "",
+      address: "",
+      latitudeLocation: "",
+      longitudeLocation: "",
+      dateStart: "",
+      dateEnd: "",
+      addTag: []
     };
   }
 
   componentDidMount() {
-    this.getTagAdmin();
-    this.getEventDetail();
+    this.setState({
+      eventName: this.props.eventName,
+      address: this.props.address,
+      dateStart: this.props.dateStart,
+      dateEnd: this.props.dateEnd,
+      latitudeLocation: this.props.latitudeLocation,
+      longitudeLocation: this.props.longitudeLocation,
+      addTag: this.props.addTag
+    });
   }
 
-  async getTagAdmin() {
-    try {
-      let getTagList = await serviceTag.getTag();
-      getTagList = getTagList.result;
-      // console.log("getTagList", getTagList);
-      this.setState({ getTagList });
-    } catch (error) {
-      console.log("error", error);
-    }
-  }
-
-  async getEventDetail() {
-    try {
-      let eventList = await serviceEvent.getEventDetail();
-      eventList = eventList.result;
-      // console.log("eventList", eventList);
-      this.setState({ eventList });
-      this.setState({ EventName: eventList.event_name });
-      this.setState({ Address: eventList.event_address });
-      this.setState({ LatitudeLocation: eventList.event_latitude_map });
-      this.setState({ LongitudeLocation: eventList.event_longitude_map });
-      this.setState({ DateStart: eventList.event_date_start });
-      this.setState({ DateEnd: eventList.event_date_end });
-      // console.log("date", moment(eventList.event_date_start).format("DD-MM-YYYY"), moment(eventList.event_date_end));
-      let tag_EN = eventList.event_tags.map(obj => obj.tag_name_en);
-      // let tag_TH = eventList.event_tags.map(obj => obj.tag_name_th);
-      this.setState({ Tag: tag_EN });
-      // this.setState({ getEventContent: eventList.event_content });
-      let ticket_EN = eventList.event_tags.map(obj => obj.tag_name_en);
-      // let ticket_TH = eventList.event_tags.map(obj => obj.tag_name_th);
-      this.setState({ Ticket: ticket_EN });
-    } catch (error) {
-      console.log("error", error);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      this.setState({
+        eventName: this.props.eventName,
+        address: this.props.address,
+        dateStart: this.props.dateStart,
+        dateEnd: this.props.dateEnd,
+        latitudeLocation: this.props.latitudeLocation,
+        longitudeLocation: this.props.longitudeLocation,
+        addTag: this.props.addTag
+      });
     }
   }
 
@@ -79,8 +62,8 @@ class InfoEvents extends Component {
   handleOnChangeEventName = e => {
     this.props.handleGetEventName(e);
   };
-  handleOnChangeCreaterName = e => {
-    this.props.handleGetCreaterName(e);
+  handleOnChangeAddress = e => {
+    this.props.handleGetAddress(e);
   };
   handleOnChangeDate = async (dateValue, dateValueArray) => {
     await this.setState({
@@ -88,7 +71,6 @@ class InfoEvents extends Component {
     });
     await this.props.handleGetDate(this.state.dateTimeInInterger);
     console.log("dateTimeInInterger", this.state.dateTimeInInterger);
-    
   };
   handleOnChangeLatitude = e => {
     this.props.handleGetLatitude(e);
@@ -98,10 +80,17 @@ class InfoEvents extends Component {
   };
 
   render() {
-    const { fileList } = this.state;
-    // console.log(this.state);
+    const {
+      eventName,
+      address,
+      latitudeLocation,
+      longitudeLocation,
+      addTag,
+      dateStart,
+      dateEnd,
+      fileList
+    } = this.state;
     const dateFormat = "DD-MM-YYYY";
-
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -177,7 +166,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("eventname", {
-                    initialValue: this.state.EventName,
+                    initialValue: eventName,
                     rules: [
                       {
                         required: true,
@@ -204,7 +193,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("address", {
-                    initialValue: this.state.Address,
+                    initialValue: address,
                     rules: [
                       {
                         required: true,
@@ -213,9 +202,7 @@ class InfoEvents extends Component {
                     ]
                   })(
                     <Input
-                      onChange={e =>
-                        this.handleOnChangeCreaterName(e.target.value)
-                      }
+                      onChange={e => this.handleOnChangeAddress(e.target.value)}
                       style={{ width: "100%" }}
                       placeholder="Address"
                     />
@@ -234,15 +221,11 @@ class InfoEvents extends Component {
                   {getFieldDecorator("date", {
                     initialValue: [
                       moment(
-                        moment(parseInt(this.state.DateStart)).format(
-                          dateFormat
-                        ),
+                        moment(parseInt(dateStart)).format(dateFormat),
                         dateFormat
                       ),
                       moment(
-                        moment(parseInt(this.state.DateStart)).format(
-                          dateFormat
-                        ),
+                        moment(parseInt(dateEnd)).format(dateFormat),
                         dateFormat
                       )
                     ],
@@ -272,7 +255,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={6} xl={6}>
                 <Form.Item>
                   {getFieldDecorator("latitudeLocation", {
-                    initialValue: this.state.LatitudeLocation,
+                    initialValue: latitudeLocation,
                     rules: [
                       {
                         required: true,
@@ -294,7 +277,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={6} xl={6}>
                 <Form.Item>
                   {getFieldDecorator("longitudeLocation", {
-                    initialValue: this.state.LongitudeLocation,
+                    initialValue: longitudeLocation,
                     rules: [
                       {
                         required: true,
@@ -324,7 +307,7 @@ class InfoEvents extends Component {
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
                   {getFieldDecorator("addtags", {
-                    initialValue: this.state.Tag,
+                    // initialValue: addTag,
                     rules: [
                       {
                         required: true,
@@ -338,7 +321,7 @@ class InfoEvents extends Component {
                       placeholder="Please select"
                       onChange={this.handleChange}
                     >
-                      {this.state.tagList.map(tagListData => (
+                      {this.props.tagList.map(tagListData => (
                         <Option
                           key={tagListData.id}
                           value={tagListData.id}
