@@ -43,6 +43,18 @@ module.exports = {
         });
       });
 
+      resultInfo = JSON.parse(JSON.stringify(resultInfo));
+      let eventHasImageResult;
+      try {
+        eventHasImageResult = await db.EventHasImageModel.create({
+          image_id: req.body.imageId,
+          event_id: resultInfo.id
+        });
+      } catch (error) {
+        return res.status(400).send({ message: error.message });
+      }
+      resultInfo.event_has_image = eventHasImageResult;
+
       resultHasTag = await db.EventHasTagModel.bulkCreate(event_has_tag_list);
       res.status(200).send(resultInfo);
     } catch (error) {
