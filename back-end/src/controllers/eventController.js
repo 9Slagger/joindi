@@ -95,7 +95,7 @@ module.exports = {
   getEventApprove: async (req, res, next) => {
     let eventResult;
     try {
-      eventResult = await db.EventStatusModel.findOne({
+      eventResult = await db.EventStatusModel.findone({
         where: {
           status_code: "02AD"
         },
