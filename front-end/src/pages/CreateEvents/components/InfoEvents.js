@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DatePicker, Select } from "antd";
+import { DatePicker, Select, Modal } from "antd";
 import { Upload, Icon, Row, Col, Form, Input } from "antd";
 import "./StyleComponents/infoEventStyle.css";
 import Axios from "axios";
@@ -7,13 +7,25 @@ import Axios from "axios";
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
 class InfoEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileList: [],
+      imageInfo: [],
       tagList: [],
-      dateTimeInInterger:""
+      dateTimeInInterger: "",
+      previewVisible: false,
+      previewImage: "",
+      fileList: []
     };
   }
 
@@ -22,10 +34,10 @@ class InfoEvents extends Component {
       this.setState({ tagList: result.data.result });
     });
   }
-  handleChange = value => {
-    // console.log(`selected ${value}`);
-    // this.setState({ addTag: `${value}` });
-    this.props.handleGetAddTag(value)
+
+  handleChangeImageInfo = e => {
+    this.setState({ fileList: e.fileList });
+    this.props.handleGetImageInfo(e);
   };
 
   handleOnChangeEventName = e => {
@@ -34,40 +46,50 @@ class InfoEvents extends Component {
   handleOnChangeCreaterName = e => {
     this.props.handleGetCreaterName(e);
   };
-  handleOnChangeDate = async(dateValue,dateValueArray) => {
-    await this.setState({dateTimeInInterger:dateValue.map(data => data._d.getTime())})
+  handleOnChangeDate = async (dateValue, dateValueArray) => {
+    await this.setState({
+      dateTimeInInterger: dateValue.map(data => data._d.getTime())
+    });
     await this.props.handleGetDate(this.state.dateTimeInInterger);
   };
   handleOnChangeLatitude = e => {
-    this.props.handleGetLatitude(e)
+    this.props.handleGetLatitude(e);
   };
   handleOnChangeLongitude = e => {
-    this.props.handleGetLongitude(e)
-  }
-  
+    this.props.handleGetLongitude(e);
+  };
+  handleCancel = () => this.setState({ previewVisible: false });
+
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true
+    });
+  };
 
   render() {
-    const { fileList } = this.state;
-    console.log(this.state);
+    const { imageInfo } = this.state;
+    // console.log(this.state);
 
     const props = {
       onRemove: file => {
         this.setState(state => {
-          const index = state.fileList.indexOf(file);
-          const newFileList = state.fileList.slice();
-          newFileList.splice(index, 1);
           return {
-            fileList: newFileList
+            imageInfo: null
           };
         });
       },
       beforeUpload: file => {
         this.setState(state => ({
-          fileList: [...state.fileList, file]
+          imageInfo: file
         }));
         return false;
       },
-      fileList
+      imageInfo
     };
     const { imageUrl } = this.state;
     const uploadButton = (
@@ -78,6 +100,9 @@ class InfoEvents extends Component {
     );
 
     const { getFieldDecorator } = this.props.form;
+
+    const { previewVisible, previewImage, fileList } = this.state;
+
     return (
       <Form className="decorationForm">
         <Row>
@@ -90,21 +115,24 @@ class InfoEvents extends Component {
                   name="avatar"
                   listType="picture-card"
                   className="avatar-uploader"
-                  showUploadList={false}
+                  showUploadList={true}
+                  fileList={fileList}
+                  onPreview={this.handlePreview}
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   //   beforeUpload={beforeUpload}
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeImageInfo}
                 >
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      style={{ width: "100%" }}
-                    />
-                  ) : (
-                    uploadButton
-                  )}
+                  {fileList.length >= 1 ? null : uploadButton}
+                 
                 </Upload>
+                <Modal
+          visible={previewVisible}
+          footer={null}
+          onCancel={this.handleCancel}
+          
+        >
+          <img alt="avatar" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
               </Col>
             </Row>
           </Col>
@@ -189,7 +217,7 @@ class InfoEvents extends Component {
                   })(
                     <RangePicker
                       onChange={(dateValue, dateValueArray) =>
-                        this.handleOnChangeDate(dateValue,dateValueArray)
+                        this.handleOnChangeDate(dateValue, dateValueArray)
                       }
                       format="DD-MM-YYYY"
                     />
@@ -267,12 +295,11 @@ class InfoEvents extends Component {
                       mode="multiple"
                       style={{ width: "100%" }}
                       placeholder="Please select"
-                      
                       onChange={this.handleChange}
                     >
                       {this.state.tagList.map(tagListData => (
                         <Option
-                        key={tagListData.id}
+                          key={tagListData.id}
                           value={tagListData.id}
                           label={tagListData.tag_name_en}
                         >
