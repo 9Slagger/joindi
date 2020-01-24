@@ -102,6 +102,9 @@ class EventDetail extends Component {
           ticket_total_quantity: item.ticket_total_quantity,
           ticket_remaining_quantity: item.ticket_remaining_quantity,
           ticket_price: item.ticket_price
+        })),
+        eventtag: result.data.result.event_tags.map(item => ({
+          ticket_price: item.ticket_price
         }))
       };
     };
