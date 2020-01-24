@@ -5,6 +5,22 @@
 }
 
 .carouselEvents{
-margin: 20px 5% 50px 5%
+  /* margin: 2% 5% 5% 5% */
+  background-color:black !important;
+  margin-bottom:40px;
+
+  /* height:400px; */
 }
 
+
+@media only screen and (max-width: 600px) {
+  .carouselEvents{
+    height:200px
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .carouselEvents{
+    height:50px
+  }
+}

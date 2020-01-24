@@ -24,9 +24,7 @@ export default class index extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.match.params.tagId !== this.props.match.params.tagId
-    ) {
+    if (prevProps.match.params.tagId !== this.props.match.params.tagId) {
       this.getTagAndEvent();
     }
   }
@@ -39,7 +37,6 @@ export default class index extends Component {
       const tagEvent = res.result;
       console.log(res);
       this.setState({ tagEvent });
-      //console.log({tagEvent})
     } catch (error) {
       console.log(error);
     }
@@ -53,16 +50,17 @@ export default class index extends Component {
         </Row>
 
         <Row type="flex" justify="center">
-          <Col span={22}>
-            <h3>Search Tag For "{tagEvent.tag_name_en}"</h3>
+          <Col xs={24} sm={24} md={24} lg={22} xl={22}>
+            <h3 className="textSearchTag">Search Tag For "{tagEvent.tag_name_en}"</h3>
           </Col>
 
           <Divider />
-
+        </Row>
+        <Row type="flex" justify="center">
           {tagEvent.events &&
             tagEvent.events.map(event => (
-              <Col xs={24} sm={12} md={12} lg={12} xl={5} key={event.id}>
-                <CardEvents event={event}/>
+              <Col xs={24} sm={12} md={10} lg={8} xl={5} key={event.id}>
+                <CardEvents event={event} />
               </Col>
             ))}
         </Row>

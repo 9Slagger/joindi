@@ -45,6 +45,7 @@ class Header extends React.Component {
     this.getTag();
   };
 
+
   getCategorie = async () => {
     try {
       const res = await serviceCategorie.getCategorie();
@@ -68,12 +69,10 @@ class Header extends React.Component {
 
   getTag = async () => {
     try {
-      const res = await serviceTag.getTag(
-        this.props.match.params.tagId
-      );
+      const res = await serviceTag.getTag(this.props.match.params.tagId);
       const tagEventList = res.result;
       this.setState({ tagEventList });
-      console.log(tagEventList)
+      console.log(tagEventList);
     } catch (error) {
       console.log(error);
     }
@@ -230,18 +229,13 @@ class Header extends React.Component {
                     ))}
                     <SubMenu title={TAG}>
                       {tagEventList.map(data => (
-                <Menu.Item key={data.id} onClick={this.toPageSearchTag(data.id)}>{data.tag_name_en}</Menu.Item>
+                        <Menu.Item
+                          key={data.id}
+                          onClick={this.toPageSearchTag(data.id)}
+                        >
+                          {data.tag_name_en}
+                        </Menu.Item>
                       ))}
-                    {/* <Menu.Item key={tagEventList.id}>{tagEventList.tag_name_en}</Menu.Item> */}
-                      {/* <Menu.Item key="beauty"> Beauty </Menu.Item>
-                      <Menu.Item key="book"> Book </Menu.Item>
-                      <Menu.Item key="business"> Business </Menu.Item>
-                      <Menu.Item key="comedy"> Comedy </Menu.Item>
-                      <Menu.Item key="concert"> Concert </Menu.Item>
-                      <Menu.Item key="education"> Education </Menu.Item>
-                      <Menu.Item key="esport"> E - sport </Menu.Item>
-                      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                      <Menu.Item key="health"> Health </Menu.Item> */}
                       <Menu.Item key="seemore">
                         {" "}
                         <Link to="/tagevents">See More...</Link>{" "}
@@ -348,15 +342,14 @@ class Header extends React.Component {
                         </Menu.Item>
                       ))}
                       <SubMenu title="Tag">
-                        <Menu.Item key="beauty"> Beauty </Menu.Item>
-                        <Menu.Item key="book"> Book </Menu.Item>
-                        <Menu.Item key="business"> Business </Menu.Item>
-                        <Menu.Item key="comedy"> Comedy </Menu.Item>
-                        <Menu.Item key="concert"> Concert </Menu.Item>
-                        <Menu.Item key="education"> Education </Menu.Item>
-                        <Menu.Item key="esport"> E - sport </Menu.Item>
-                        <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                        <Menu.Item key="health"> Health </Menu.Item>
+                        {tagEventList.map(data => (
+                          <Menu.Item
+                            key={data.id}
+                            onClick={this.toPageSearchTag(data.id)}
+                          >
+                            {data.tag_name_en}
+                          </Menu.Item>
+                        ))}
                         <Menu.Item key="seemore">
                           {" "}
                           <Link to="/tagevents">See More...</Link>{" "}

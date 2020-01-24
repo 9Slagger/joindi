@@ -6,6 +6,7 @@ import Fuse from "fuse.js";
 import CardEvents from "../../common/CardEvents";
 import { Row, Col, Divider, Select, Card } from "antd";
 import selectLang from "../../_helper/selectLang";
+import _ from "lodash";
 const { Option } = Select;
 
 export default class index extends Component {
@@ -38,11 +39,17 @@ export default class index extends Component {
   render() {
     const { eventStatusApprove } = this.state;
     let keyword;
-    if (decodeURIComponent(window.location.search.split("keyword=").length > 1)) {
+    if (
+      decodeURIComponent(window.location.search.split("keyword=").length > 1)
+    ) {
       keyword = decodeURIComponent(window.location.search.split("keyword=")[1]);
     }
-    let eventFilter = eventStatusApprove.events;
-    if (eventStatusApprove.events && keyword.length !== 0) {
+    let eventFilter = eventStatusApprove && eventStatusApprove.events
+    if (
+      eventStatusApprove &&
+      eventStatusApprove.events &&
+      keyword.length !== 0
+    ) {
       const fuse = new Fuse(eventStatusApprove.events, {
         shouldSort: true,
         threshold: 0.6,
