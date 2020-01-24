@@ -9,7 +9,8 @@ import {
   Form,
   Button,
   Drawer,
-  Badge
+  Badge,
+  Divider
 } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
@@ -44,7 +45,6 @@ class Header extends React.Component {
     this.getCategorie();
     this.getTag();
   };
-
 
   getCategorie = async () => {
     try {
@@ -273,6 +273,7 @@ class Header extends React.Component {
                 closable={false}
                 onClose={this.onClose}
                 visible={this.state.visibleDrawer}
+                width={300}
               >
                 {Authentication.item && Authentication.item.isAuthenticated ? (
                   <>
@@ -329,6 +330,7 @@ class Header extends React.Component {
 
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
+                    <Menu.Item key="changelanguage">EN</Menu.Item>
                     <SubMenu title="Events">
                       {categorieList.map(data => (
                         <Menu.Item
@@ -402,6 +404,7 @@ class Header extends React.Component {
                           <Menu.Item key="myevents">My Events</Menu.Item>
                           <Menu.Item key="joinevents">Join Events</Menu.Item>
                           <Menu.Item key="wishlist">Wish List</Menu.Item>
+                          <Menu.Item key="changelanguage">EN</Menu.Item>
                           <Menu.Item
                             key="logout"
                             onClick={this.handleClickLogout}
@@ -422,6 +425,9 @@ class Header extends React.Component {
                 </>
               ) : (
                 <div className="logInAndSignUp-nav">
+                  <Button type="link" className="changeLanguage">
+                    EN
+                  </Button>
                   <Login />
                   <Signup />
                 </div>

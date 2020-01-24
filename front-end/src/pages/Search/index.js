@@ -4,7 +4,7 @@ import "./components/Search.css";
 import { serviceEvent } from "../../_service";
 import Fuse from "fuse.js";
 import CardEvents from "../../common/CardEvents";
-import { Row, Col, Divider, Select, Card } from "antd";
+import { Row, Col, Divider, Select } from "antd";
 import selectLang from "../../_helper/selectLang";
 import _ from "lodash";
 const { Option } = Select;
@@ -27,6 +27,7 @@ export default class index extends Component {
       const res = await serviceEvent.getEventApprove();
       eventStatusApprove = res.result;
       this.setState({ eventStatusApprove });
+      console.log(eventStatusApprove)
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +39,8 @@ export default class index extends Component {
 
   render() {
     const { eventStatusApprove } = this.state;
+    console.count("debug")
+    console.log(this.state)
     let keyword;
     if (
       decodeURIComponent(window.location.search.split("keyword=").length > 1)

@@ -50,16 +50,17 @@ export default class index extends Component {
         </Row>
 
         <Row type="flex" justify="center">
-          <Col xs={24} sm={24} md={24} lg={22} xl={22}>
-            <h3 className="textSearchTag">Search Tag For "{tagEvent.tag_name_en}"</h3>
+          <Col span={22}>
+            <h3 className="textSearchTag">
+              Search Tag For "{tagEvent.tag_name_en}"
+            </h3>
+            <Divider />
           </Col>
-
-          <Divider />
         </Row>
         <Row type="flex" justify="center">
           {tagEvent.events &&
             tagEvent.events.map(event => (
-              <Col xs={24} sm={12} md={10} lg={8} xl={5} key={event.id}>
+              <Col xs={24} sm={12} md={10} lg={8} xl={5} key={event.id} className="colCardEvent">
                 <CardEvents event={event} />
               </Col>
             ))}
