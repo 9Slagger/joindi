@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Input, Row, Col, Icon, Button, Table, Modal, Form } from "antd";
 import { serviceTag } from "../../../../_service";
+import Axios from "axios";
+import Column from "antd/lib/table/Column";
 
 const { Search } = Input;
 
 class ManageTag extends Component {
-  state = { visible: false, TagNameEn: "", TagNameTh: "" };
+  state = { visible: false, TagNameEn: "", TagNameTh: "", tagList: [] };
 
   handleSubmitAddTag = e => {
     e.preventDefault();
@@ -50,41 +52,67 @@ class ManageTag extends Component {
     });
   };
 
+  fetchdata = () => {
+    Axios.get("http://localhost:8085/tag").then(result => {
+      this.setState({ tagList: result.data.result });
+    });
+  }
+
+  componentDidMount() {
+    this.fetchdata()
+  }
+
+  handleToggleTagStatus = (data) => () => {
+    console.log(data)
+    Axios.put("http://localhost:8085/tag",{ 
+      id: data.id,
+      tagActive: !data.tag_active
+    })
+    .then(result => {
+      this.fetchdata()
+      console.log(result.data)
+    })
+    .catch(error =>{
+      console.log(error.message)
+    })
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    const dataTag = this.state.tagList;
 
-    const columnTag = [
-      {
-        title: "Tag Name EN",
-        dataIndex: "TagNameEn"
-      },
-      {
-        title: "Tag Name TH",
-        dataIndex: "TagNameTh"
-      },
-      {
-        title: "Status",
-        dataIndex: "TagActive"
-      },
-      {
-        title: "Action",
-        key: "operation",
-        render: () => (
-          <Row>
-            <Col span={7}>
-              <Button type="primary" shape="circle">
-                <Icon type="edit" />
-              </Button>
-            </Col>
-            <Col span={7}>
-              <Button type="danger" shape="circle">
-                <Icon type="delete" />
-              </Button>
-            </Col>
-          </Row>
-        )
-      }
-    ];
+    // const columnTag = [
+    //   {
+    //     title: "Tag Name EN",
+    //     dataIndex: "TagNameEn"
+    //   },
+    //   {
+    //     title: "Tag Name TH",
+    //     dataIndex: "TagNameTh"
+    //   },
+    //   {
+    //     title: "Status",
+    //     dataIndex: "TagActive"
+    //   },
+    //   {
+    //     title: "Action",
+    //     key: "operation",
+    //     render: () => (
+    // <Row>
+    //   <Col span={7}>
+    // <Button type="primary" shape="circle">
+    //   <Icon type="edit" />
+    // </Button>
+    //   </Col>
+    //   <Col span={7}>
+    // <Button type="danger" shape="circle">
+    //   <Icon type="delete" />
+    // </Button>
+    //   </Col>
+    // </Row>
+    //     )
+    //   }
+    // ];
 
     // const dataTag = this.state.getTags.map(getTags => {
     //   return {
@@ -99,16 +127,6 @@ class ManageTag extends Component {
     //     // }
     //   };
     // });
-
-    // const data = [];
-    // for (let i = 0; i < 100; i++) {
-    //   data.push({
-    //     key: i,
-    //     name: `Edrward ${i}`,
-    //     age: 32,
-    //     address: `Park no. ${i}`
-    //   });
-    // }
 
     return (
       <Row type="flex" justify="center">
@@ -206,10 +224,48 @@ class ManageTag extends Component {
           </Row>
           <Row style={{ padding: "10px" }}>
             <Table
-              columns={columnTag}
-              //dataSource={dataTag}
+              // columns={columnTag}
+              dataSource={dataTag}
               scroll={{ x: 800, y: 300 }}
-            />
+            >
+              <Column
+                title="Tag Name EN"
+                dataIndex="tag_name_en"
+                key="Tag-Name-EN"
+              />
+              <Column
+                title="Tag Name TH"
+                dataIndex="tag_name_th"
+                key="Tag-Name-TH"
+              />
+              <Column
+                title="Status"
+                dataIndex="tag_active"
+                key="status"
+                render={(text, data, index) => (
+                  <>{data.tag_active ? "Active" : "In-Active"}</>
+                )}
+              />
+              <Column
+                title="Action"
+                key="action"
+                dataIndex="tag_active"
+                render={(text, data, index) => (
+                  <>
+                    <Button type="primary" shape="circle"
+                    // onClick={this.swapOrganizedData(index, true)}
+                    >
+                      <Icon type="edit" />
+                    </Button>
+                    <Button type="danger" shape="circle"
+                    onClick={this.handleToggleTagStatus(data)}
+                    >
+                      <Icon type="delete" />
+                    </Button>
+                  </>
+                )}
+              />
+            </Table>
           </Row>
         </Col>
       </Row>
