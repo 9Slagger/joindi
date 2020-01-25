@@ -20,6 +20,9 @@ import Search from "../pages/Search";
 import UserProfile from "../pages/User/UserProfile";
 import SearchTag from "../pages/SearchTag";
 import JoinEvent from "../pages/User/JoinEvent";
+import MyEvent from "../pages/User/MyEvent";
+import MyOrders from "../pages/User/MyOrder";
+import Bookmark from "../pages/User/Bookmark";
 export const history = createHistory();
 
 const Routers = props => {
@@ -48,6 +51,9 @@ const Routers = props => {
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
         <Route exact path="/joinevent" component={JoinEvent} />
+        <Route exact path="/myevent" component={MyEvent} />
+        <Route exact path="/myorder" component={MyOrders} />
+        <Route exact path="/bookmark" component={Bookmark} />
       </Switch>
     </Router>
   );
