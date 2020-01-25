@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
 
-import * as constants from "../../../_constants";
+// import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
-import "./Confirm.css";
+import "./Complete.css";
 
-export default class ConfirmSuccess extends Component {
+export default class Complete extends Component {
   state = {};
 
   renderProcess = () => (
@@ -33,10 +33,7 @@ export default class ConfirmSuccess extends Component {
           </h2>
         </Col>
         <Col span={3}>
-          <Button type="primary" className="active">
-            {" "}
-            3{" "}
-          </Button>
+          <Button type="primary"> 3 </Button>
           <p>Confirm</p>
         </Col>
         <Col span={3}>
@@ -46,36 +43,33 @@ export default class ConfirmSuccess extends Component {
           </h2>
         </Col>
         <Col span={3}>
-          <Button type="primary"> 4 </Button>
+          <Button type="primary" className="active">
+            {" "}
+            4{" "}
+          </Button>
           <p>Complete</p>
         </Col>
       </Row>
     </div>
   );
 
-  renderConfirmPayment = () => (
-    <div id="confirm-payment-div" className="mt-4">
-      <h3 className="p-2">Confirm Payment</h3>
-      <div>
-        <Row className="text-center p-5">
-          <Col span={12}>กำลังอยู่ในขั้นตอนการยืนยันการชำระเงิน</Col>
-          <Col span={12}>
-            <Button type="default">Confirm Success</Button>
-          </Col>
-        </Row>
+  renderComplete = () => (
+    <div id="complete-div" className="mt-4">
+      <div className="text-center p-5">
+        <p className="display-3 m-5">Get Ticket Completed</p>
       </div>
     </div>
   );
 
   render() {
     return (
-      <section id="checkout-section" className="container mt-4">
+      <section id="complete-section" className="container mt-4">
         {this.renderProcess()}
-        {this.renderConfirmPayment()}
+        {this.renderComplete()}
 
         <Row className="mt-4">
-          <Col span={24} className="text-right">
-            <Button type="primary">Complete</Button>
+          <Col span={24} className="text-center">
+            <Button type="primary">Home</Button>
           </Col>
         </Row>
       </section>

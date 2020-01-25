@@ -18,6 +18,9 @@ import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent"
 import UpdateEvent from "../pages/Admin/UpdateEvent"
 import Search from "../pages/Search"
+import UserProfile from "../pages/User/UserProfile";
+import SearchTag from "../pages/SearchTag";
+import JoinEvent from "../pages/User/JoinEvent";
 export const history = createHistory();
 
 const Routers = props => {
@@ -38,8 +41,15 @@ const Routers = props => {
         <Route exact path="/updateevent" component={UpdateEvent}/>
         <Route exact path="/approvepayment" component={ApprovePayment} />
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
-        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
+        <Route
+          exact
+          path="/categoriesevents/:categorieId"
+          component={CategoriesEvents}
+        />
         <Route exact path="/searchevnts" component={Search} />
+        <Route exact path="/userprofile" component={UserProfile} />
+        <Route exact path="/searchtag/:tagId" component={SearchTag} />
+        <Route exact path="/joinevent" component={JoinEvent} />
       </Switch>
     </Router>
   );

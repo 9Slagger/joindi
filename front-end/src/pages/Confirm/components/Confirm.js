@@ -1,13 +1,22 @@
-import React, { Component } from "react";
-import { Button, Row, Col } from "antd";
+import React, { Component } from  "react";
+import { Button, Row, Col } from  "antd";
 
-// import * as constants from "../../../_constants";
+import { withRouter } from "react-router-dom";
+
+import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Confirm.css";
 
-export default class Confirm extends Component {
+class Confirm extends Component {
   state = {};
+
+  goToCompletePage = () => {
+    this.props.history.push({
+      pathname: `/complete`,
+      search: ``
+    });
+  };
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -60,7 +69,7 @@ export default class Confirm extends Component {
         <Row className="text-center p-5">
           <Col span={12}>กำลังอยู่ในขั้นตอนการยืนยันการชำระเงิน</Col>
           <Col span={12}>
-            <Button type="default">Processing</Button>
+            <Button type="default">Confirm Success</Button>
           </Col>
         </Row>
       </div>
@@ -72,7 +81,17 @@ export default class Confirm extends Component {
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {this.renderConfirmPayment()}
+
+        <Row className="mt-4">
+          <Col span={24} className="text-right">
+            <Button onClick={() => this.goToCompletePage()} type="primary">
+              Complete
+            </Button>
+          </Col>
+        </Row>
       </section>
     );
   }
 }
+
+export default withRouter(Confirm);
