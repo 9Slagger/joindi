@@ -19,6 +19,7 @@ import ApproveEvent from "../pages/Admin/ApproveEvent";
 import Search from "../pages/Search";
 import UserProfile from "../pages/User/UserProfile";
 import SearchTag from "../pages/SearchTag";
+import JoinEvent from "../pages/User/JoinEvent";
 export const history = createHistory();
 
 const Routers = props => {
@@ -46,6 +47,7 @@ const Routers = props => {
         <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
+        <Route exact path="/joinevent" component={JoinEvent} />
       </Switch>
     </Router>
   );

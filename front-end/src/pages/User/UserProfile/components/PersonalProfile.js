@@ -59,20 +59,28 @@ export default class PersonalProfile extends Component {
                     </Row>
                   </Col>
                 </Row>
+
                 <Row
                   className="UserData"
                   type="flex"
                   justify="left"
                   style={{ paddingLeft: "75px" }}
                 >
-                  <Col className="UserData">
-                    <Row>Mobile No. :</Row>
+                  <Col className="UserData" span={15}>
+                    <Row>E-mail. :</Row>
                     <Row>
                       <Input></Input>
                     </Row>
                   </Col>
-                  <Col className="UserData">
-                    <Row>E-mail :</Row>
+                </Row>
+                <Row
+                  className="UserData"
+                  type="flex"
+                  justify="left"
+                  style={{ paddingLeft: "75px" }}
+                >
+                  <Col className="UserData" span={10}>
+                    <Row>Mobile No. :</Row>
                     <Row>
                       <Input></Input>
                     </Row>
