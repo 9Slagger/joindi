@@ -119,7 +119,8 @@ module.exports = {
             model: db.EventModel,
             include: [
               { model: db.EventTagModel },
-              { model: db.EventCategoryModel }
+              { model: db.EventCategoryModel },
+              { model: db.TicketModel }
             ]
           }
         ]

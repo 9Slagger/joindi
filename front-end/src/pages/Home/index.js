@@ -56,6 +56,8 @@ export default class index extends Component {
 
   render() {
     const { getDataFail, eventCatagorieList, eventList } = this.state;
+    console.log("eventList", eventList)
+    // const freeEventList = eventList.filter(event =>  ({}))
     return (
       <DefaultLayout {...this.props}>
         {!getDataFail ? (
