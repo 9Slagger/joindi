@@ -59,7 +59,6 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   },
-<<<<<<< HEAD
   getTagAndEvent: async (req, res, next) => {
     let tagAndEventResult;
     try {
@@ -75,7 +74,8 @@ module.exports = {
       return res
         .status(400)
         .json({ messages: { title_en: "something is wrong", title_th: "" } });
-=======
+    }
+  },
   addTag: async (req, res, next) => {
     try {
       const resultTag = await db.EventTagModel.create({
@@ -98,7 +98,6 @@ module.exports = {
           title_th: ""
         }
       });
->>>>>>> 09ddcd41d1f05d5fd99d1b2beed1389be02f4f01
     }
   }
 };
