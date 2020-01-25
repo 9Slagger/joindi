@@ -25,7 +25,7 @@ const Routers = props => {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/tagevents" component={TagEvents} />
+        {/* <Route exact path="/tagevents" component={TagEvents} /> */}
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
@@ -36,8 +36,18 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
+        <Route exact path="/eventdetail" component={EventDetail} />
+        <Route
+          exact
+          path="/categoriesevents/:categorieId"
+          component={CategoriesEvents}
+        />
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
-        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
+        <Route
+          exact
+          path="/categoriesevents/:categorieId"
+          component={CategoriesEvents}
+        />
         <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
 

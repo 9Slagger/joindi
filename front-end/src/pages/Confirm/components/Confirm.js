@@ -1,13 +1,55 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
 
-// import * as constants from "../../../_constants";
+import Axios from "../../../_helper/axios";
+
+import { withRouter } from "react-router-dom";
+
+import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Confirm.css";
 
-export default class Confirm extends Component {
+class Confirm extends Component {
   state = {};
+
+  componentDidMount = async () => {
+    // console.log(this.props.location.search);
+    // let ticket_in_order_id = "";
+    // try {
+    //   let res = this.props.location.search.split("=");
+    //   ticket_in_order_id = res[1];
+    //   await this.getTicketInOrderDatas(ticket_in_order_id);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
+
+  goToCompletePage = ticket_in_order_id => {
+    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+    //   ticket_in_order_status_id: 4
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+    this.props.history.push({
+      pathname: `/complete`,
+      search: ``
+    });
+  };
+
+  getTicketInOrderDatas = async ticket_in_order_id => {
+    await Axios.get(`/ticketInOrder/wait_for_approve/${ticket_in_order_id}`)
+      .then(res => {
+        this.setState({ ticketLists: res.data });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -60,7 +102,7 @@ export default class Confirm extends Component {
         <Row className="text-center p-5">
           <Col span={12}>กำลังอยู่ในขั้นตอนการยืนยันการชำระเงิน</Col>
           <Col span={12}>
-            <Button type="default">Processing</Button>
+            <Button type="default">Confirm Success</Button>
           </Col>
         </Row>
       </div>
@@ -72,7 +114,17 @@ export default class Confirm extends Component {
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {this.renderConfirmPayment()}
+
+        <Row className="mt-4">
+          <Col span={24} className="text-right">
+            <Button onClick={() => this.goToCompletePage()} type="primary">
+              Complete
+            </Button>
+          </Col>
+        </Row>
       </section>
     );
   }
 }
+
+export default withRouter(Confirm);
