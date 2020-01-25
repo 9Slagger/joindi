@@ -1,6 +1,6 @@
-import React from "react";
+import React from  "react";
 import "../css/Content.css"
-import { Layout } from "antd";
+import { Layout } from  "antd";
 export default function Content(props) {
   return (
     <Layout.Content className="layoutContent">

@@ -1,6 +1,6 @@
-import React from 'react'
-import Fuse from 'fuse.js';
-import { Input, Card } from 'antd';
+import React from  'react'
+import Fuse from  'fuse.js';
+import { Input, Card } from  'antd';
 const { Search } = Input;
 
 

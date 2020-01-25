@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Row, Col, Icon, Menu, Dropdown } from "antd";
+import React, { Component } from  "react";
+import { Row, Col, Icon, Menu, Dropdown } from  "antd";
 import "../css/HeaderAdmin.css";
-import { connect } from "react-redux";
-import { signout } from "../redux/actions";
-import Login from "./Login";
-import Signup from "./Signup";
+import { connect } from  "react-redux";
+import { signout } from  "../redux/actions";
+import Login from  "./Login";
+import Signup from  "./Signup";
 
 export class HeaderAdmin extends Component {
   handleClickLogout = () => {

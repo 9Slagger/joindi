@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Row, Col, Icon } from "antd";
+import React, { Component } from  "react";
+import { Row, Col, Icon } from  "antd";
 import "../css/Footer.css";
-import { Link } from "react-router-dom";
+import { Link } from  "react-router-dom";
 
 export class Footer extends Component {
   render() {
