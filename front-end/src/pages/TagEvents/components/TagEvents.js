@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import "./TagEvents.css";
-import { Row, Col, Card } from "antd";
-import { serviceTag } from "../../../_service";
+import { Row, Col, Card } from  "antd";
+import { serviceTag } from  "../../../_service";
 
 export default class TagEvents extends Component {
   constructor(props) {

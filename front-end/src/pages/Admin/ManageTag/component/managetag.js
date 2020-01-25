@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 
 import {
   Input,
@@ -10,7 +10,7 @@ import {
   Modal,
   Form,
   InputNumber
-} from "antd";
+} from  "antd";
 
 const { Search } = Input;
 

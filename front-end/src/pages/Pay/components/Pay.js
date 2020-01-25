@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import { Button, Row, Col, Table, Upload, Icon,
   // message
-} from "antd";
+} from  "antd";
 
-// import * as constants from "../../../_constants";
+// import * as constants from  "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Pay.css";

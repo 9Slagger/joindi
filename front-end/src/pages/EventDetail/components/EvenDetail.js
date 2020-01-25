@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 
 import {
   Row,
@@ -10,7 +10,7 @@ import {
   Button,
   Select,
   Modal
-} from "antd";
+} from  "antd";
 import "./EventDetail.css";
 
 const { Option } = Select;

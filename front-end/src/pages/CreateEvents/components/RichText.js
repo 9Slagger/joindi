@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import React, { Component } from  "react";
+import { Editor } from  "@tinymce/tinymce-react";
 import "./StyleComponents/RichTextStyle.css";
-import { Row } from 'antd'
+import { Row } from  'antd'
 
 export default class RichText extends Component {
   state = {

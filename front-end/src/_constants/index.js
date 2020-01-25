@@ -1,4 +1,4 @@
-import selectLang from "../_helper/selectLang";
+import selectLang from  "../_helper/selectLang";
 
 export const ENDPOINT = "http://localhost:8085";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";

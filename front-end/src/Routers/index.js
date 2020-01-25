@@ -1,23 +1,23 @@
-import React from "react";
-import { Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory as createHistory } from "history";
-import { connect } from "react-redux";
-import HomePage from "../pages/Home";
-import AdminPage from "../pages/Admin/Payment/waiting";
-import ManageTag from "../pages/Admin/ManageTag";
-import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment";
-import TagEvents from "../pages/TagEvents";
-import AboutPage from "../pages/About";
-import CheckoutPage from "../pages/Checkout";
-import PayPage from "../pages/Pay";
-import ConfirmPage from "../pages/Confirm";
-import CompletePage from "../pages/Complete";
-import CreateEvents from "../pages/CreateEvents";
-import CategoriesEvents from "../pages/CategoriesEvents";
-import EventDetail from "../pages/EventDetail";
-import ApproveEvent from "../pages/Admin/ApproveEvent";
-import Search from "../pages/Search"
-import SearchTag from "../pages/SearchTag"
+import React from  "react";
+import { Router, Switch, Route } from  "react-router-dom";
+import { createBrowserHistory as createHistory } from  "history";
+import { connect } from  "react-redux";
+import HomePage from  "../pages/Home";
+import AdminPage from  "../pages/Admin/Payment/waiting";
+import ManageTag from  "../pages/Admin/ManageTag";
+import ApprovePayment from  "../pages/Admin/ApprovePayment/approvepayment";
+import TagEvents from  "../pages/TagEvents";
+import AboutPage from  "../pages/About";
+import CheckoutPage from  "../pages/Checkout";
+import PayPage from  "../pages/Pay";
+import ConfirmPage from  "../pages/Confirm";
+import CompletePage from  "../pages/Complete";
+import CreateEvents from  "../pages/CreateEvents";
+import CategoriesEvents from  "../pages/CategoriesEvents";
+import EventDetail from  "../pages/EventDetail";
+import ApproveEvent from  "../pages/Admin/ApproveEvent";
+import Search from  "../pages/Search"
+import SearchTag from  "../pages/SearchTag"
 export const history = createHistory();
 
 const Routers = props => {

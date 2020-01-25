@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Button, Row, Col } from "antd";
-import {Link} from "react-router-dom"
-// import * as constants from "../../../_constants";
+import React, { Component } from  "react";
+import { Button, Row, Col } from  "antd";
+import {Link} from  "react-router-dom"
+// import * as constants from  "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Complete.css";

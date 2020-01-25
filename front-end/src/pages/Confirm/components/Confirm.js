@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Button, Row, Col } from "antd";
+import React, { Component } from  "react";
+import { Button, Row, Col } from  "antd";
 
-// import * as constants from "../../../_constants";
+// import * as constants from  "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Confirm.css";
