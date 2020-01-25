@@ -1,6 +1,6 @@
 import React, { Component } from  "react";
 import DefaultLayout from  "../../common/DefaultLayout";
-import TagEvents from  "./components/TagEvents";
+import TagEvents from  "../../common/TagEvents";
 import CarouselEvents from  "../../common/CarouselEvents";
 import { Row, Divider, Col } from  "antd";
 
