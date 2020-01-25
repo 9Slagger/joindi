@@ -1,10 +1,10 @@
-import React, { Component } from  "react";
-import DefaultLayout from  "../../common/DefaultLayout";
-import { serviceTag } from  "../../_service";
+import React, { Component } from "react";
+import DefaultLayout from "../../common/DefaultLayout";
+import { serviceTag } from "../../_service";
 import "./components/SearchTag.css";
-import CarouselEvents from  "../../common/CarouselEvents";
-import CardEvents from  "../../common/CardEvents";
-import { Row, Col, Divider } from  "antd";
+import CarouselEvents from "../../common/CarouselEvents";
+import CardEvents from "../../common/CardEvents";
+import { Row, Col, Divider } from "antd";
 
 export default class index extends Component {
   state = {
@@ -35,10 +35,10 @@ export default class index extends Component {
         this.props.match.params.tagId
       );
       const tagEvent = res.result;
-      console.log(res);
+      // console.log("🧨🧨");
       this.setState({ tagEvent });
     } catch (error) {
-      console.log(error);
+      console.log("🧨🧨",error);
     }
   };
   render() {
@@ -69,4 +69,3 @@ export default class index extends Component {
     );
   }
 }
-
