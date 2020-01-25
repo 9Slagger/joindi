@@ -76,6 +76,16 @@ export const serviceEvent = {
         if (error.response.status < 500) reject(error.response.data);
       }
     });
-
+  },
+  getEventCatagorieList: () => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get("/event/categorie");
+        resolve(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
   }
 };
