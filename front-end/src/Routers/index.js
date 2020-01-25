@@ -16,7 +16,7 @@ import CreateEvents from "../pages/CreateEvents";
 import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
-import Search from "../pages/Search"
+import Search from "../pages/Search";
 export const history = createHistory();
 
 const Routers = props => {
@@ -35,18 +35,19 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
-<<<<<<< HEAD
         <Route exact path="/eventdetail" component={EventDetail} />
         <Route
           exact
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
-=======
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
-        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
+        <Route
+          exact
+          path="/categoriesevents/:categorieId"
+          component={CategoriesEvents}
+        />
         <Route exact path="/searchevnts" component={Search} />
->>>>>>> dcdd37aa32d5d36789845541f678abd07eba7613
       </Switch>
     </Router>
   );

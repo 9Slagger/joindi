@@ -38,7 +38,7 @@ app.use("/signin", require("./src/routes/authticationRouter"));
 app.use("/event", require("./src/routes/eventRouter"));
 app.use("/tag", require("./src/routes/tagRouter"));
 
-app.use("/image", require("./src/routes/imageController"));
+app.use("/image", require("./src/routes/imageRouter"));
 
 app.use("/ticket", require("./src/routes/ticketRouter"));
 
@@ -50,7 +50,6 @@ app.use(
   require("./src/routes/eventHasCategoriesRouter")
 );
 app.use("/tag", require("./src/routes/tagRouter"));
-app.use("/image", require("./src/routes/imageController"));
 // app.use("/approvepayment", require("./src/routes/approvePaymentRouter"));
 // app.use(
 //   "/update-approvepayment",
@@ -58,7 +57,7 @@ app.use("/image", require("./src/routes/imageController"));
 // );
 
 app.use("/bookmark", require("./src/routes/bookmarkRouter"));
-app.use("/ticket", require("./src/routes/ticketRouter"));
+// app.use("/ticket", require("./src/routes/ticketRouter"));
 app.use(
   "/ticketInOrderStatus",
   require("./src/routes/ticketInOrderStatusRouter")
@@ -68,7 +67,6 @@ app.use(
   "/ticketInOrderHasImage",
   require("./src/routes/ticketInOrderHasImageRouter")
 );
-app.use("/image", require("./src/routes/imageRouter"));
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
