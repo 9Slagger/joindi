@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import {
   Button,
   Modal,
@@ -10,8 +10,8 @@ import {
   DatePicker,
   Table,
   Icon
-} from "antd";
-import Column from "antd/lib/table/Column";
+} from  "antd";
+import Column from  "antd/lib/table/Column";
 import "./StyleComponents/ticketDecoration.css";
 
 const { RangePicker } = DatePicker;

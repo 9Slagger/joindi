@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Row, Col, Modal, Button, Input, Divider, Form, Radio } from "antd";
-import { serviceCustomerType, serviceUser } from "../_service";
-import selectLang from "../_helper/selectLang";
-import Notification from "../common/Notification";
+import React, { Component } from  "react";
+import { Row, Col, Modal, Button, Input, Divider, Form, Radio } from  "antd";
+import { serviceCustomerType, serviceUser } from  "../_service";
+import selectLang from  "../_helper/selectLang";
+import Notification from  "../common/Notification";
 class Signup extends Component {
   constructor(props) {
     super(props);

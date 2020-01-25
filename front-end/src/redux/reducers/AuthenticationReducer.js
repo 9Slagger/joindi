@@ -1,6 +1,6 @@
-import { authConstants } from "../actions/type";
-import { SUCCESS, FAIL } from "../../_constants";
-import jwtDecode from "jwt-decode";
+import { authConstants } from  "../actions/type";
+import { SUCCESS, FAIL } from  "../../_constants";
+import jwtDecode from  "jwt-decode";
 
 const initialState = {
   item: {

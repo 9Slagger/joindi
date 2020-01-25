@@ -1,3 +1,16 @@
+.payment-header-row {
+  background-color: #bcbabe;
+  padding: 1rem;
+}
+
+.payment-header-body {
+  padding: 1rem;
+}
+
+.payment-footer-summary {
+  padding: 1rem;
+}
+
 #bank-account-div > div {
   background-color: #bcbabe;
 }

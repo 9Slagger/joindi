@@ -1,4 +1,4 @@
-import React from "react";
+import React from  "react";
 import {
   Menu,
   Icon,
@@ -9,19 +9,20 @@ import {
   Form,
   Button,
   Drawer,
-  Badge
-} from "antd";
+  Badge,
+  Divider
+} from  "antd";
 import "../css/Header.css";
-import Login from "./Login";
-import Signup from "./Signup";
-import { connect } from "react-redux";
-import { signout, clearMessages } from "../redux/actions";
-import { Link } from "react-router-dom";
-import _ from "lodash";
-import { serviceCategorie, serviceEvent } from "../_service";
-import selectLang from "../_helper/selectLang";
-import { TAG } from "../_constants";
-import Notification from "../common/Notification";
+import Login from  "./Login";
+import Signup from  "./Signup";
+import { connect } from  "react-redux";
+import { signout, clearMessages } from  "../redux/actions";
+import _ from  "lodash";
+import { Link } from  "react-router-dom";
+import { serviceCategorie, serviceEvent, serviceTag } from  "../_service";
+import selectLang from  "../_helper/selectLang";
+import { TAG } from  "../_constants";
+import Notification from  "../common/Notification";
 
 const { SubMenu } = Menu;
 const { Search } = Input;

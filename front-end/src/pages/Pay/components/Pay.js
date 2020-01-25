@@ -1,72 +1,54 @@
 import React, { Component } from "react";
-import { Button, Row, Col, Table, Upload, Icon,
-  // message
-} from "antd";
 
-// import * as constants from "../../../_constants";
+import { Button, Row, Col } from "antd";
+
+import { withRouter } from "react-router-dom";
+
+import Axios from "../../../_helper/axios";
+
+import UploadForm from "./UploadForm";
+
+// import * as constants from  "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Pay.css";
 
-const totalColumns = [
-  {
-    title: "Event name",
-    dataIndex: "event_name",
-    key: "event_name"
-    // render: text => <a>{text}</a>
-  },
-  {
-    title: "Ticket",
-    dataIndex: "ticket",
-    key: "ticket"
-  },
-  {
-    title: "Price x Amount",
-    dataIndex: "price_amount",
-    key: "price_amount"
+class Pay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ticketLists: []
+    };
   }
-];
 
-// const props = {
-//   name: "file",
-//   action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-//   headers: {
-//     authorization: "authorization-text"
-//   },
-//   onChange(info) {
-//     if (info.file.status !== "uploading") {
-//       console.log(info.file, info.fileList);
-//     }
-//     if (info.file.status === "done") {
-//       message.success(`${info.file.name} file uploaded successfully`);
-//     } else if (info.file.status === "error") {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   }
-// };
+  componentDidMount = () => {
+    this.getTicketInOrderDatas();
+  };
 
-export default class Pay extends Component {
-  state = {
-    ticketLists: [
-      {
-        key: "1",
-        event_name: "Event",
-        ticket: "Early Bird",
-        price: 1000,
-        amount: 1,
-        price_amount: `1000 x 1`,
-        subtotal: 1000 * 1
-      },
-      {
-        key: "2",
-        event_name: "Event 2",
-        ticket: "Normal",
-        price: 1500,
-        amount: 2,
-        price_amount: `1500 x 2`,
-        subtotal: 1500 * 2
-      }
-    ]
+  goToConfirmPage = ticket_in_order_id => {
+    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+    //   ticket_in_order_status_id: 3
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+    this.props.history.push({
+      pathname: `/confirm`,
+      search: ``
+    });
+  };
+
+  getTicketInOrderDatas = async () => {
+    await Axios.get(`/ticketInOrder/wait_for_payment`)
+      .then(res => {
+        this.setState({ ticketLists: res.data });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
@@ -113,16 +95,47 @@ export default class Pay extends Component {
     </div>
   );
 
-  renderPayment = () => (
-    <div id="total-div" className="mt-4">
-      <h3 className="p-2">Payment</h3>
-      <Table
-        columns={totalColumns}
-        dataSource={this.state.ticketLists}
-        pagination={false}
-      />
-    </div>
-  );
+  renderPayment = () => {
+    let summary = 0;
+    this.state.ticketLists.forEach((item, idx) => {
+      summary += item.ticket_price * item.ticket_quantity;
+    });
+
+    return (
+      <div id="total-div" className="mt-4">
+        <h3 className="p-2">Payment</h3>
+        <Row className="payment-header-row font-weight-bold">
+          <Col span={12}>Event</Col>
+          <Col span={6}>Ticket</Col>
+          <Col span={6}>Price x Amount</Col>
+        </Row>
+        {this.state.ticketLists.map((item, idx) => {
+          return (
+            <Row key={idx} className="payment-header-body">
+              <Col span={12}>
+                <p>{item.event_name}</p>
+              </Col>
+              <Col span={6}>{item.ticket_title}</Col>
+              <Col span={6}>
+                {item.ticket_price} x {item.ticket_quantity}
+                {" = "}
+                {item.ticket_price * item.ticket_quantity}
+              </Col>
+            </Row>
+          );
+        })}
+        <Row className="payment-footer-summary">
+          <Col span={12}></Col>
+          <Col span={6} className="font-weight-bold">
+            Summary
+          </Col>
+          <Col span={6} className="font-weight-bold">
+            {summary}
+          </Col>
+        </Row>
+      </div>
+    );
+  };
   renderBankAccount = () => {
     return (
       <div id="bank-account-div" className="mt-4">
@@ -149,17 +162,14 @@ export default class Pay extends Component {
   };
 
   renderUploadPaymentSlip = props => (
-    <div id="upload-payment-slip-div" className="border mt-4 p-3">
-      <Upload {...props}>
-        <Button>
-          <Icon type="upload" /> Click to Upload
-        </Button>
-      </Upload>
+    <div id="upload-payment-slip-div" className="text-center border mt-4 p-3">
+      <UploadForm />
     </div>
   );
 
   render() {
     console.log(this.state);
+    let ticket_in_order_id = this.state.ticketLists;
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
@@ -167,9 +177,9 @@ export default class Pay extends Component {
         {this.renderBankAccount()}
         {this.renderUploadPaymentSlip()}
 
-        <Row className="mt-4">
+        <Row className="mt-4 mb-3">
           <Col span={24} className="text-right">
-            <Button type="primary">
+            <Button onClick={() => this.goToConfirmPage()} type="primary">
               <i className="far fa-check-square mr-2"></i>Confirm
             </Button>
           </Col>
@@ -178,3 +188,5 @@ export default class Pay extends Component {
     );
   }
 }
+
+export default withRouter(Pay);

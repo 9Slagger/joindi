@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { DatePicker, Select } from "antd";
-import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import React, { Component } from  "react";
+import { DatePicker, Select } from  "antd";
+import { Upload, Icon, Row, Col, Form, Input } from  "antd";
 import "./StyleComponents/infoEventStyle.css";
-import Axios from "axios";
+import Axios from  "axios";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
