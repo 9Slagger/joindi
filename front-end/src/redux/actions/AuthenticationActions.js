@@ -1,7 +1,7 @@
-import { authConstants } from "./type";
-import { serviceAuth } from "../../_service";
-// import { getProductInMyCart } from "../actions/CartActions";
-// import { history } from "../routers";
+import { authConstants } from  "./type";
+import { serviceAuth } from  "../../_service";
+// import { getProductInMyCart } from  "../actions/CartActions";
+// import { history } from  "../routers";
 
 export const clearMessages = () => {
   return dispatch => {

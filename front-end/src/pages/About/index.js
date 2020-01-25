@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
-import Product from "./components/Product.js";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
+import Product from  "./components/Product.js";
 export default class index extends Component {
   render() {
     return (

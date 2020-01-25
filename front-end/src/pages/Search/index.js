@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
 import "./components/Search.css";
 import { serviceEvent } from "../../_service";
 import Fuse from "fuse.js";
