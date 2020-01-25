@@ -4,7 +4,7 @@ import Product from "./components/Product.js";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout>
         <h1>this is about page</h1>
         <Product />
       </DefaultLayout>

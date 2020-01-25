@@ -79,7 +79,7 @@ export default class index extends Component {
     console.log("✅", this.state);
     
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout>
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents

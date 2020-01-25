@@ -8,16 +8,16 @@ export default class CategoriesEvents extends Component {
     return (
       <div>
         <Row type="flex" justify="center">
-          {/* <Col
+          <Col
             className="bottomCardEvents"
             xs={24}
             sm={16}
             md={12}
             lg={10}
             xl={6}
-          > */}
+          >
             <CardEvents event={this.props.event} />
-          {/* </Col> */}
+          </Col>
         </Row>
       </div>
     );

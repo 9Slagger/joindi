@@ -6,7 +6,7 @@ import Complete from "./components/Complete.js";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout>
         <Complete />
       </DefaultLayout>
     );

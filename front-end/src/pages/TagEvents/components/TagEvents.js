@@ -26,17 +26,16 @@ export default class TagEvents extends Component {
     }
   }
 
-
   render() {
-    // console.log("this.state.tagList", this.state.tagList);
+    console.log("this.state.tagList", this.state.tagList);
     return (
       <div>
         <Row gutter={[24, 40]} type="flex" justify="center">
-          {this.state.tagList.map(tagevent => (
-            <Col xs={24} sm={12} md={12} lg={12} xl={5} key={tagevent.id} id='xx'>
+          {this.state.tagList.map(tagevents => (
+            <Col xs={24} sm={12} md={12} lg={12} xl={5}>
               <Card className="cardTagEvents" hoverable>
-                <p className="textTagEvents">{tagevent.tag_name_en}</p>
-                <p className="textTagEvents">{tagevent.tag_name_th}</p>
+                <p className="textTagEvents">{tagevents.tag_name_en}</p>
+                <p className="textTagEvents">{tagevents.tag_name_th}</p>
               </Card>
             </Col>
           ))}

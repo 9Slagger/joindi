@@ -1,8 +1,8 @@
 .layoutContent{
-  background-color: #FFFFFF;
+  backgroundColor: #FFFFFF;
   min-height: 78vh !important;
   margin-top: 30px;
-  margin-left: 10%;
+  margin-left: 100px;
   margin-bottom: 30px;
-  margin-right: 10%;
+  margin-right: 100px;
 }

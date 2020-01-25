@@ -37,22 +37,5 @@ module.exports = {
     } catch (error) {
       res.status(400).send({ message: error.message });
     }
-  },
-  getTagAndEvent: async (req, res, next) => {
-    let tagAndEventResult;
-    try {
-      tagAndEventResult = await db.EventTagModel.findOne({
-        where: { id: req.params.tagId },
-        include: [{ model: db.EventModel }]
-      });
-      return res.status(200).json({
-        result: tagAndEventResult,
-        messages: { title_en: "get tag and event success", title_th: "" }
-      });
-    } catch (error) {
-      return res
-        .status(400)
-        .json({ messages: { title_en: "something is wrong", title_th: "" } });
-    }
   }
 };

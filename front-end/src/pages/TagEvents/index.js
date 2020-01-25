@@ -7,7 +7,7 @@ import { Row, Divider, Col } from "antd";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout>
         <Row>
           <CarouselEvents />
         </Row>
