@@ -6,7 +6,7 @@ import Confirm from  "./components/Confirm.js";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <Confirm />
       </DefaultLayout>
     );

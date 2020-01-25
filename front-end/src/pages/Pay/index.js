@@ -6,7 +6,7 @@ import Pay from  "./components/Pay.js";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <Pay />
       </DefaultLayout>
     );

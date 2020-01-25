@@ -98,7 +98,7 @@ export default class index extends Component {
     console.log("♨️",this.state.imageInfo.file )
     
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents
