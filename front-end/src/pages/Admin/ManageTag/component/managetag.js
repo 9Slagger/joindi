@@ -53,80 +53,33 @@ class ManageTag extends Component {
   };
 
   fetchdata = () => {
-    Axios.get("http://localhost:8085/tag").then(result => {
+    Axios.get("http://localhost:8085/tag/manage").then(result => {
       this.setState({ tagList: result.data.result });
     });
-  }
+  };
 
   componentDidMount() {
-    this.fetchdata()
+    this.fetchdata();
   }
 
-  handleToggleTagStatus = (data) => () => {
-    console.log(data)
-    Axios.put("http://localhost:8085/tag",{ 
+  handleToggleTagStatus = data => () => {
+    console.log(data);
+    Axios.put("http://localhost:8085/tag", {
       id: data.id,
       tagActive: !data.tag_active
     })
-    .then(result => {
-      this.fetchdata()
-      console.log(result.data)
-    })
-    .catch(error =>{
-      console.log(error.message)
-    })
-  }
+      .then(result => {
+        this.fetchdata();
+        console.log(result.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
     const dataTag = this.state.tagList;
-
-    // const columnTag = [
-    //   {
-    //     title: "Tag Name EN",
-    //     dataIndex: "TagNameEn"
-    //   },
-    //   {
-    //     title: "Tag Name TH",
-    //     dataIndex: "TagNameTh"
-    //   },
-    //   {
-    //     title: "Status",
-    //     dataIndex: "TagActive"
-    //   },
-    //   {
-    //     title: "Action",
-    //     key: "operation",
-    //     render: () => (
-    // <Row>
-    //   <Col span={7}>
-    // <Button type="primary" shape="circle">
-    //   <Icon type="edit" />
-    // </Button>
-    //   </Col>
-    //   <Col span={7}>
-    // <Button type="danger" shape="circle">
-    //   <Icon type="delete" />
-    // </Button>
-    //   </Col>
-    // </Row>
-    //     )
-    //   }
-    // ];
-
-    // const dataTag = this.state.getTags.map(getTags => {
-    //   return {
-    //     TagNameEn: serviceTag.getTags.TagNameEn,
-    //     TagNameTh: serviceTag.getTags.TagNameTh
-    //     // TagActive: {
-    //     //   if (serviceTag.tag_active == 1) {
-    //     //   return  TagActive: "Active"
-    //     // }else {
-    //     //   return  TagActive: "InActive"
-    //     // }
-    //     // }
-    //   };
-    // });
 
     return (
       <Row type="flex" justify="center">
@@ -252,15 +205,12 @@ class ManageTag extends Component {
                 dataIndex="tag_active"
                 render={(text, data, index) => (
                   <>
-                    <Button type="primary" shape="circle"
-                    // onClick={this.swapOrganizedData(index, true)}
+                    <Button
+                      type="danger"
+                      shape="circle"
+                      onClick={this.handleToggleTagStatus(data)}
                     >
-                      <Icon type="edit" />
-                    </Button>
-                    <Button type="danger" shape="circle"
-                    onClick={this.handleToggleTagStatus(data)}
-                    >
-                      <Icon type="delete" />
+                      <Icon type="swap" />
                     </Button>
                   </>
                 )}
