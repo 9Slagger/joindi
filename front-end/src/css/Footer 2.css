@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt&display=swap');
+
+
+.footer {
+    background-color: #345586 !important;
+    color: #fff;
+    font-family: 'Prompt', sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    min-height: 15vh;
+    max-height: 15vh;
+}
+
+.LinkFooter a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.RightFooter {
+    display: flex;
+    justify-content: right;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.RightFooter a {
+    color: #fff;
+}

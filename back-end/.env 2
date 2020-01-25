@@ -1,0 +1,11 @@
+NODE_ENV=development
+PORT=8085
+SECRET_KEY=key1234
+DATABASE_SCHEMA=joindi
+DATABASE_ID=root
+DATABASE_PASSWORD=0814074095
+DATABASE_HOST=localhost
+DATABASE_TYPE=mysql
+DATABASE_FORCE=FALSE
+API_KEY=**************************
+API_URL=**************************
