@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import DefaultLayout from "../../common/DefaultLayout";
-import CardEvents from "../../common/CardEvents";
-import { serviceEvent, serviceTag } from "../../_service";
+import { serviceEvent } from "../../_service";
 import Notification from "../../common/Notification";
 import selectLang from "../../_helper/selectLang";
+import { Row, Col } from "antd";
+import TagEvents from "../../common/TagEvents";
+import CarouselEvents from "../../common/CarouselEvents";
+import ScrolEvents from "./components/ScrolEvents";
 
 export default class index extends Component {
   constructor(props) {
@@ -11,10 +14,8 @@ export default class index extends Component {
     this.state = {
       eventCatagorieList: [],
       eventList: [],
-      TagList: [],
       loadEventCatagorieList: false,
       loadEventListStatus: false,
-      loadTagListStatus: false,
       getDataFail: false
     };
   }
@@ -22,7 +23,6 @@ export default class index extends Component {
   componentDidMount() {
     this.getEvents();
     this.getEventCatagorieList();
-    this.getTagList();
   }
 
   async getEventCatagorieList() {
@@ -39,19 +39,6 @@ export default class index extends Component {
     }
   }
 
-  async getTagList() {
-    this.setState({ loadTagListStatus: true });
-    try {
-      const res = await serviceTag.getTag();
-      const TagList = res.result;
-      this.setState({ TagList, loadTagListStatus: false });
-    } catch (error) {
-      this.setState({ loadTagListStatus: false, getDataFail: true });
-      Notification(
-        selectLang(error.messages.title_en, error.messages.title_th)
-      );
-    }
-  }
 
   async getEvents() {
     this.setState({ loadEventListStatus: true });
@@ -68,15 +55,47 @@ export default class index extends Component {
   }
 
   render() {
-    console.log(this.state);
-    const { getDataFail } = this.state;
-    console.log(getDataFail ? "load data fail" : "load data success");
+    const { getDataFail, eventCatagorieList, eventList } = this.state;
     return (
       <DefaultLayout {...this.props}>
-        <pre>
-          <code>{JSON.stringify(this.state)}</code>
-        </pre>
-        <CardEvents />
+        {!getDataFail ? (
+          <Row>
+            <Col>
+              <CarouselEvents />
+            </Col>
+            <Col>
+              {eventCatagorieList.map(catagorie => (
+                <ScrolEvents
+                  key={catagorie.id}
+                  eventList={catagorie.events}
+                  title={{
+                    titleEn: catagorie.category_name_en,
+                    titleTh: catagorie.category_name_th
+                  }}
+                />
+              ))}
+            </Col>
+            <ScrolEvents
+              eventList={eventList}
+              title={{
+                titleEn: "New Events",
+                titleTh: "กิจกรรม ที่เพิ่งสร้าง"
+              }}
+            />
+            <ScrolEvents
+              eventList={eventList}
+              title={{
+                titleEn: "Free Events",
+                titleTh: "กิจกรรม ที่ไม่เสียค่าใช้จ่าย"
+              }}
+            />
+            <Col style={{ paddingTop: "2rem", paddingBottom: "1rem" }}>
+              <TagEvents />
+            </Col>
+          </Row>
+        ) : (
+          <h1>Load Data Fail</h1>
+        )}
       </DefaultLayout>
     );
   }

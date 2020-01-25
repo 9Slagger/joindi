@@ -10,7 +10,7 @@ class CardEvents extends Component {
     const { event } = this.props;
     return (
       <Card className="card-events">
-        <Link to={`/eventdetail/${1}`}>
+        <Link to={`/eventdetail/${event.id}`}>
         <Avatar shape="square" size={150} className="avatar-events" />
         <Col>
           <Row>
