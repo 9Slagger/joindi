@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import "../css/CardEvents.css";
-import { Card, Avatar, Typography, Icon, Row, Col } from "antd";
-import { Link } from "react-router-dom";
+import { Card, Avatar, Typography, Icon, Row, Col } from  "antd";
+import { Link } from  "react-router-dom";
 const { Text, Paragraph } = Typography;
 
 class CardEvents extends Component {

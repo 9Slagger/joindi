@@ -1,8 +1,18 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Icon, Button, Table, Modal, Form } from "antd";
 import { serviceTag } from "../../../../_service";
 import Axios from "axios";
 import Column from "antd/lib/table/Column";
+
+import {
+  Input,
+  Row,
+  Col,
+  Icon,
+  Button,
+  Table,
+  Modal,
+  Form
+} from  "antd";
 
 const { Search } = Input;
 

@@ -1,6 +1,6 @@
-import axios from "axios";
-import { ENDPOINT } from "../_constants";
-import { getToken } from "../_helper/localStorage";
+import axios from  "axios";
+import { ENDPOINT } from  "../_constants";
+import { getToken } from  "../_helper/localStorage";
 
 axios.defaults.baseURL = ENDPOINT;
 axios.interceptors.request.use(config => {

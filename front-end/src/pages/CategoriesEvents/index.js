@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import "../CategoriesEvents/components/CategoriesEvents.css";
-import DefaultLayout from "../../common/DefaultLayout";
-import CarouselEvents from "../../common/CarouselEvents";
-import CategoriesEvents from "./components/CategoriesEvents";
-import { serviceEvent } from "../../_service";
-import { Row, Divider, Col } from "antd";
+import DefaultLayout from  "../../common/DefaultLayout";
+import CarouselEvents from  "../../common/CarouselEvents";
+import CategoriesEvents from  "./components/CategoriesEvents";
+import { serviceEvent } from  "../../_service";
+import { Row, Divider, Col } from  "antd";
 
 export default class index extends Component {
   state = {
