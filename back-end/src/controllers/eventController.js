@@ -352,7 +352,14 @@ module.exports = {
     try {
       categorieAndEventResult = await db.EventCategoryModel.findOne({
         where: { id: req.params.categorieId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            include: [
+              { model: db.EventStatusModel, where: { status_code: "02AD" } }
+            ]
+          }
+        ]
       });
       return res.status(200).json({
         result: categorieAndEventResult,

@@ -9,16 +9,17 @@ import {
   Form,
   Button,
   Drawer,
-  Badge
+  Badge,
+  Divider
 } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
 import Signup from "./Signup";
 import { connect } from "react-redux";
 import { signout, clearMessages } from "../redux/actions";
-import { Link } from "react-router-dom";
 import _ from "lodash";
-import { serviceCategorie, serviceEvent } from "../_service";
+import { Link } from "react-router-dom";
+import { serviceCategorie, serviceEvent, serviceTag } from "../_service";
 import selectLang from "../_helper/selectLang";
 import { TAG } from "../_constants";
 import Notification from "../common/Notification";
@@ -37,12 +38,14 @@ class Header extends React.Component {
       isDirty: false,
       searchList: [],
       searchKeyword: "",
-      categorieList: []
+      categorieList: [],
+      tagEventList: []
     };
   }
 
   componentDidMount = () => {
     this.getCategorie();
+    this.getTag();
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -76,6 +79,17 @@ class Header extends React.Component {
       const searchList = res.result;
       this.setState({ searchList });
       console.log(searchList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getTag = async () => {
+    try {
+      const res = await serviceTag.getTag(this.props.match.params.tagId);
+      const tagEventList = res.result;
+      this.setState({ tagEventList });
+      console.log(tagEventList);
     } catch (error) {
       console.log(error);
     }
@@ -181,9 +195,14 @@ class Header extends React.Component {
     this.props.history.push(`/categoriesevents/${id}`);
   };
 
+  toPageSearchTag = id => () => {
+    this.props.history.push(`/searchtag/${id}`);
+  };
+
   render() {
     const { Authentication } = this.props;
     const { categorieList } = this.state;
+    const { tagEventList } = this.state;
     let keyword =
       decodeURIComponent(window.location.search.split("keyword=")[1]) !==
       "undefined"
@@ -226,15 +245,14 @@ class Header extends React.Component {
                       </Menu.Item>
                     ))}
                     <SubMenu title={TAG}>
-                      <Menu.Item key="beauty"> Beauty </Menu.Item>
-                      <Menu.Item key="book"> Book </Menu.Item>
-                      <Menu.Item key="business"> Business </Menu.Item>
-                      <Menu.Item key="comedy"> Comedy </Menu.Item>
-                      <Menu.Item key="concert"> Concert </Menu.Item>
-                      <Menu.Item key="education"> Education </Menu.Item>
-                      <Menu.Item key="esport"> E - sport </Menu.Item>
-                      <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                      <Menu.Item key="health"> Health </Menu.Item>
+                      {tagEventList.map(data => (
+                        <Menu.Item
+                          key={data.id}
+                          onClick={this.toPageSearchTag(data.id)}
+                        >
+                          {data.tag_name_en}
+                        </Menu.Item>
+                      ))}
                       <Menu.Item key="seemore">
                         {" "}
                         <Link to="/tagevents">See More...</Link>{" "}
@@ -272,6 +290,7 @@ class Header extends React.Component {
                 closable={false}
                 onClose={this.onClose}
                 visible={this.state.visibleDrawer}
+                width={300}
               >
                 {Authentication.item && Authentication.item.isAuthenticated ? (
                   <>
@@ -328,26 +347,28 @@ class Header extends React.Component {
 
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
+                    <Menu.Item key="changelanguage">EN</Menu.Item>
                     <SubMenu title="Events">
-                      <Menu.Item key="popular"> Popular</Menu.Item>
-                      <Menu.Item key="recommendbyjoindi">
-                        {" "}
-                        Recommend By JoinDi
-                      </Menu.Item>
-                      <Menu.Item key="recommendforyou">
-                        {" "}
-                        Recommend For You
-                      </Menu.Item>
+                      {categorieList.map(data => (
+                        <Menu.Item
+                          key={data.id}
+                          onClick={this.toPageCategorie(data.id)}
+                        >
+                          {selectLang(
+                            data.category_name_en,
+                            data.category_name_th
+                          )}
+                        </Menu.Item>
+                      ))}
                       <SubMenu title="Tag">
-                        <Menu.Item key="beauty"> Beauty </Menu.Item>
-                        <Menu.Item key="book"> Book </Menu.Item>
-                        <Menu.Item key="business"> Business </Menu.Item>
-                        <Menu.Item key="comedy"> Comedy </Menu.Item>
-                        <Menu.Item key="concert"> Concert </Menu.Item>
-                        <Menu.Item key="education"> Education </Menu.Item>
-                        <Menu.Item key="esport"> E - sport </Menu.Item>
-                        <Menu.Item key="foodanddring"> Food & Drink </Menu.Item>
-                        <Menu.Item key="health"> Health </Menu.Item>
+                        {tagEventList.map(data => (
+                          <Menu.Item
+                            key={data.id}
+                            onClick={this.toPageSearchTag(data.id)}
+                          >
+                            {data.tag_name_en}
+                          </Menu.Item>
+                        ))}
                         <Menu.Item key="seemore">
                           {" "}
                           <Link to="/tagevents">See More...</Link>{" "}
@@ -400,6 +421,7 @@ class Header extends React.Component {
                           <Menu.Item key="myevents">My Events</Menu.Item>
                           <Menu.Item key="joinevents">Join Events</Menu.Item>
                           <Menu.Item key="wishlist">Wish List</Menu.Item>
+                          <Menu.Item key="changelanguage">EN</Menu.Item>
                           <Menu.Item
                             key="logout"
                             onClick={this.handleClickLogout}
@@ -420,6 +442,9 @@ class Header extends React.Component {
                 </>
               ) : (
                 <div className="logInAndSignUp-nav">
+                  <Button type="link" className="changeLanguage">
+                    EN
+                  </Button>
                   <Login />
                   <Signup />
                 </div>
