@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import { Row, Col, Modal, Button, Input, Divider, Form} from "antd";
-import { connect } from "react-redux";
-import { signin } from "../redux/actions";
-
+import React, { Component } from  "react";
+import { Row, Col, Modal, Button, Input, Divider, Form } from  "antd";
+import { connect } from  "react-redux";
+import { signin } from  "../redux/actions";
 
 class Login extends Component {
   constructor(props) {
@@ -34,7 +33,7 @@ class Login extends Component {
         try {
           this.props.signin(email, password);
         } catch (error) {
-          alert(this.props.Authentication.item.messages.title_en)
+          alert(this.props.Authentication.item.messages.title_en);
         }
       }
     });
@@ -93,10 +92,7 @@ class Login extends Component {
               </Form.Item>
               <Form.Item>
                 <Row type="flex" justify="center">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                  >
+                  <Button type="primary" htmlType="submit">
                     Log in
                   </Button>
                 </Row>
@@ -109,7 +105,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = null
+const mapStateToProps = ({ Authentication }) => ({ Authentication });
 
 const mapDispatchToProps = {
   signin

@@ -18,6 +18,7 @@ import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
 import Search from "../pages/Search";
 import UserProfile from "../pages/User/UserProfile";
+import SearchTag from "../pages/SearchTag";
 export const history = createHistory();
 
 const Routers = props => {
@@ -25,7 +26,7 @@ const Routers = props => {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        {/* <Route exact path="/tagevents" component={TagEvents} /> */}
+        <Route exact path="/tagevents" component={TagEvents} />
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
@@ -44,6 +45,7 @@ const Routers = props => {
         />
         <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/userprofile" component={UserProfile} />
+        <Route exact path="/searchtag/:tagId" component={SearchTag} />
       </Switch>
     </Router>
   );

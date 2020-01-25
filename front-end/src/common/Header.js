@@ -1,4 +1,4 @@
-import React from "react";
+import React from  "react";
 import {
   Menu,
   Icon,
@@ -9,17 +9,20 @@ import {
   Form,
   Button,
   Drawer,
-  Badge
-} from "antd";
+  Badge,
+  Divider
+} from  "antd";
 import "../css/Header.css";
-import Login from "./Login";
-import Signup from "./Signup";
-import { connect } from "react-redux";
-import { signout } from "../redux/actions";
-import { Link } from "react-router-dom";
-import { serviceCategorie, serviceEvent } from "../_service";
-import selectLang from "../_helper/selectLang";
-import { TAG } from "../_constants";
+import Login from  "./Login";
+import Signup from  "./Signup";
+import { connect } from  "react-redux";
+import { signout, clearMessages } from  "../redux/actions";
+import _ from  "lodash";
+import { Link } from  "react-router-dom";
+import { serviceCategorie, serviceEvent, serviceTag } from  "../_service";
+import selectLang from  "../_helper/selectLang";
+import { TAG } from  "../_constants";
+import Notification from  "../common/Notification";
 
 const { SubMenu } = Menu;
 const { Search } = Input;
@@ -42,6 +45,21 @@ class Header extends React.Component {
   componentDidMount = () => {
     this.getCategorie();
   };
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (
+      nextProps !== this.props &&
+      !_.isEmpty(nextProps.Authentication.messages)
+    ) {
+      Notification(
+        selectLang(
+          nextProps.Authentication.messages.title_en,
+          nextProps.Authentication.messages.title_th
+        )
+      );
+      this.props.clearMessages();
+    }
+  }
 
   getCategorie = async () => {
     try {
@@ -83,8 +101,7 @@ class Header extends React.Component {
   handleSearch = e => {
     if (e) {
       this.props.history.push(`/searchevnts?keyword=${encodeURIComponent(e)}`);
-    }
-    else {
+    } else {
       this.props.history.push("/searchevnts?keyword=");
     }
   };
@@ -420,7 +437,7 @@ const mapStateToProps = ({ Authentication }) => ({
   Authentication
 });
 
-const mapDispatchToProps = { signout };
+const mapDispatchToProps = { signout, clearMessages };
 
 export default connect(
   mapStateToProps,

@@ -1,4 +1,4 @@
-import axios from "../_helper/axios";
+import axios from  "../_helper/axios";
 
 export const serviceCustomerType = {
   getCustomerType: (email, password) => {

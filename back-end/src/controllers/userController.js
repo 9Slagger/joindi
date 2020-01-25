@@ -80,7 +80,8 @@ module.exports = {
           password: hash(req.body.password),
           phone_number: req.body.phoneNumber,
           role_id: roleResult.id,
-          customer_type_id: customerTypeResult.id
+          customer_type_id: customerTypeResult.id,
+          user_active: true
         },
         { transaction }
       );
@@ -157,7 +158,15 @@ module.exports = {
         }
       });
     } catch (error) {
-      console.log("❌", error);
+      if(error.original.errno === 1062) {
+        return res.status(400).json({
+          messages: {
+            title_en: error.original.message,
+            title_th: error.original.message
+          }
+        });
+      }
+      // console.log("❌", error);
       await transaction.rollback();
       return res.status(400).json({
         messages: {
@@ -176,7 +185,7 @@ module.exports = {
         res.status(400).send({ message: "User not found" });
       } else {
         toggleActiveUser.update({
-          user_active: req.body.userActive //หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
+          user_active: req.body.userActive // หน้าบ้านต้องส่งสถานะมาว่าเป็นtrueหรือfalse
         });
         res.status(200).json({ message: "success" });
       }

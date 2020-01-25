@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import { Row, Col, Modal, Button, Input, Divider, Form, Radio } from "antd";
-import { serviceCustomerType, serviceUser } from "../_service";
-
+import React, { Component } from  "react";
+import { Row, Col, Modal, Button, Input, Divider, Form, Radio } from  "antd";
+import { serviceCustomerType, serviceUser } from  "../_service";
+import selectLang from  "../_helper/selectLang";
+import Notification from  "../common/Notification";
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -83,9 +84,15 @@ class Signup extends Component {
             companyName,
             customerTypeId
           );
-          alert(res.messages.title_en)
+          this.handleCancelSignUp()
+          this.props.form.resetFields();
+          Notification(
+            selectLang(res.messages.title_en, res.messages.title_th), null, 3
+          );
         } catch (error) {
-          alert(error.messages.title_en)
+          Notification(
+            selectLang(error.messages.title_en, error.messages.title_th), null, 3
+          );
         }
       }
     });

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Row,
   Col,
@@ -10,8 +9,9 @@ import {
   Button,
   Select,
   Modal
-} from "antd";
+} from  "antd";
 import "./EventDetail.css";
+import Axios from "axios";
 
 const { Option } = Select;
 
@@ -51,6 +51,17 @@ export default class EventDetail extends Component {
     // TODO: call api if success go to page checkout if fail alert buy ticket fail
   }
 
+  handleBookmark = () => {
+    console.log("✡️",this.props.match.params.eventId)
+    Axios.post('http://localhost:8085/bookmark',{ 
+      event_id : this.props.match.params.eventId
+    }).then(result => {
+      console.log(result.data)
+    }).catch(error => {
+      console.log(error.message)
+    })
+  }
+
   render() {
     return (
       <Row className="event-detail">
@@ -64,7 +75,10 @@ export default class EventDetail extends Component {
               />
             </Col>
             <Col className="detail" span={12}>
-              <Row className="event-name">Event Name</Row>
+              <Row >
+              <Col span={2} style={{fontSize:"30px"}} ><Icon type="book" onClick={this.handleBookmark} /></Col>
+                <Col className="event-name" span={20}>Event Name</Col>
+                </Row>
               <Row className="event-date">
                 <Icon type="calendar" /> : 12 Dec 2020 &nbsp;
                 <Icon type="hourglass" /> : 10:00 am - 5:00 pm.
