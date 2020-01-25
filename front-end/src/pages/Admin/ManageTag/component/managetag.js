@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { serviceTag } from "../../../../_service";
 import Axios from "axios";
 import Column from "antd/lib/table/Column";
+import Notification from "../../../../common/Notification";
 
 import {
   Input,
@@ -27,9 +28,13 @@ class ManageTag extends Component {
         try {
           let res = await serviceTag.addTag(TagNameEn, TagNameTh);
           this.props.form.resetFields();
-          alert(res.messages.title_en);
+          await this.setState({
+            visible: false
+          });
+          await this.fetchdata();
+         Notification(<span><Icon type="check"/> Add Tag Success</span>)
         } catch (error) {
-          alert(error.messages.title_en);
+          Notification(<span><Icon type="close"/> Add Tag Fail</span>)
         }
       }
     });

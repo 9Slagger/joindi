@@ -175,7 +175,7 @@ class InfoEvents extends Component {
             <Row>
               <Col xs={24} md={8} xl={6}>
                 <h5 style={{ marginTop: "6px", color: "white" }}>
-                  Creater name :
+                  Address :
                 </h5>
               </Col>
               <Col xs={24} md={10} xl={12}>
@@ -184,7 +184,7 @@ class InfoEvents extends Component {
                     rules: [
                       {
                         required: true,
-                        message: "Please put Creater name!"
+                        message: "Please put Address!"
                       }
                     ]
                   })(
@@ -193,7 +193,7 @@ class InfoEvents extends Component {
                         this.handleOnChangeCreaterName(e.target.value)
                       }
                       style={{ width: "100%" }}
-                      placeholder="Creater name"
+                      placeholder="Address"
                     />
                   )}
                 </Form.Item>
