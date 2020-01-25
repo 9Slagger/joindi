@@ -6,7 +6,7 @@ export default class CarouselEvents extends Component {
   render() {
     return (
       <div>
-        <Carousel  autoplay className="carouselEvents" style={{backgroundColor:"black", height:"400px"}}>
+        <Carousel  autoplay className="carouselEvents">
           <div>
           <h3 className="text">1</h3>
           </div>

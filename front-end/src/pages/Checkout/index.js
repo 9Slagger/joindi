@@ -6,7 +6,7 @@ import Checkout from "./components/Checkout.js";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <Checkout />
       </DefaultLayout>
     );

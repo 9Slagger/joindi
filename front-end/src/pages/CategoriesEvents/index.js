@@ -20,7 +20,6 @@ export default class index extends Component {
 
   componentDidMount = () => {
     this.getCategorie();
-    console.log("----------------didmount");
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -28,7 +27,6 @@ export default class index extends Component {
       prevProps.match.params.categorieId !== this.props.match.params.categorieId
     ) {
       this.getCategorie();
-      console.log("pokemons state has changed.");
     }
   }
 
@@ -54,12 +52,23 @@ export default class index extends Component {
 
         <Row type="flex" justify="center">
           <Col span={22}>
-            <h3>{categoryEvent.category_name_en}</h3>
+            <h3 className="textCategoryEvent">
+              {categoryEvent.category_name_en}
+            </h3>
+            <Divider />
           </Col>
-          <Divider />
+
           {categoryEvent.events &&
             categoryEvent.events.map(event => (
-              <Col xs={24} sm={12} md={12} lg={12} xl={5} key={event.id}>
+              <Col
+                xs={24}
+                sm={12}
+                md={12}
+                lg={8}
+                xl={5}
+                key={event.id}
+                className="colCategoryEvent"
+              >
                 <CategoriesEvents event={event} />
               </Col>
             ))}
