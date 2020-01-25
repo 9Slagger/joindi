@@ -17,7 +17,7 @@ import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
 import Search from "../pages/Search";
-import UserProfile from "../pages/UserProfile";
+import UserProfile from "../pages/User/UserProfile";
 export const history = createHistory();
 
 const Routers = props => {
