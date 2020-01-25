@@ -5,8 +5,8 @@ import EventDetail from "./components/EvenDetail";
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
-        <EventDetail />
+      <DefaultLayout {...this.props}>
+        <EventDetail {...this.props} />
       </DefaultLayout>
     );
   }
