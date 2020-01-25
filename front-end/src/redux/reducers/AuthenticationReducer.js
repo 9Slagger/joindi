@@ -11,7 +11,7 @@ const initialState = {
     name: "",
     profileImage: ""
   },
-  messages: [],
+  messages: {},
   isFetching: false,
   isFail: false
 };
@@ -23,7 +23,7 @@ const getStatus = Status => {
     case FAIL:
       return { isFetching: false, isFail: true };
     default:
-      return { isFetching: true, isFail: false, messages: [] };
+      return { isFetching: true, isFail: false, messages: {} };
   }
 };
 
@@ -31,13 +31,13 @@ export default function(state = initialState, { type, payload }) {
   switch (type) {
     // clear messages
     case authConstants.CLEAR_MESSAGES_AUTHENTICATION:
-      return { ...state, messages: [] };
+      return { ...state, messages: {} };
 
     // sign in
     case authConstants.SIGNIN_REQUEST:
       return { ...state, ...getStatus() };
     case authConstants.SIGNIN_SUCCESS:
-      console.log("getProductInMyCart")
+      // console.log("getProductInMyCart")
       payload = {
         ...payload,
         result: { ...payload.result, ...jwtDecode(payload.result.token) }

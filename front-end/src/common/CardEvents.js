@@ -6,7 +6,7 @@ const { Text, Paragraph } = Typography;
 
 class CardEvents extends Component {
   render() {
-    console.log(this.props.event);
+    // console.log(this.props.event);
     const { event } = this.props;
     return (
       <Card className="card-events">
