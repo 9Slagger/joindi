@@ -53,8 +53,6 @@ const Routers = props => {
         />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
-
-        <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
         <Route exact path="/joinevent" component={JoinEvent} />
