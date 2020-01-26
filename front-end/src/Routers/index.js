@@ -41,12 +41,17 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
+
+        <Route exact path="/eventdetail" component={EventDetail} />
+
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
+
         <Route
           exact
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
+        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
@@ -54,6 +59,7 @@ const Routers = props => {
         <Route exact path="/myevent" component={MyEvent} />
         <Route exact path="/myorder" component={MyOrders} />
         <Route exact path="/bookmark" component={Bookmark} />
+
       </Switch>
     </Router>
   );
