@@ -201,7 +201,9 @@ class ManageTag extends Component {
                 dataIndex="tag_active"
                 key="status"
                 render={(text, data, index) => (
-                  <>{data.tag_active ? "Active" : "In-Active"}</>
+                  <>{data.tag_active ? <Button type="primary">Active</Button> : <Button type="danger">
+                  In-Active
+                </Button>}</>
                 )}
               />
               <Column
