@@ -41,21 +41,21 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
-<<<<<<< HEAD
+
         <Route exact path="/eventdetail" component={EventDetail} />
-=======
+
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
->>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
+
         <Route
           exact
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
-<<<<<<< HEAD
+
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
-=======
+
         <Route exact path="/searchevnts" component={Search} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
@@ -63,7 +63,7 @@ const Routers = props => {
         <Route exact path="/myevent" component={MyEvent} />
         <Route exact path="/myorder" component={MyOrders} />
         <Route exact path="/bookmark" component={Bookmark} />
->>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
+
       </Switch>
     </Router>
   );

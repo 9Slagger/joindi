@@ -194,10 +194,6 @@ class Checkout extends Component {
     );
   };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
   toPayPage = ticketInOrderId => () => {
     // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
   };
@@ -208,11 +204,11 @@ class Checkout extends Component {
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
-<<<<<<< HEAD
 
-=======
+
+
         {/* {this.renderReviewOrderSummary()} */}
->>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
+
         {this.renderReviewOrderSummary()}
 
         <Row className="mt-4">
@@ -225,10 +221,8 @@ class Checkout extends Component {
             </Button>
           </Col>
         </Row>
-<<<<<<< HEAD
 
-=======
->>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
+
       </section>
     );
   }
