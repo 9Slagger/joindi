@@ -7,9 +7,10 @@ import OrganizedBy from "./components/OrganizedBy";
 import RichText from "./components/RichText";
 import { serviceTag } from "../../../_service/tagServices";
 import { serviceEvent } from "../../../_service/eventServices";
-// import Axios from "axios"
 import moment from "moment";
+import Axios from "axios";
 import "./CreateEventsStyle.css";
+import { ENDPOINT } from "../../../_constants/index";
 
 export default class index extends Component {
   constructor(props) {
@@ -29,21 +30,24 @@ export default class index extends Component {
       dateEnd: "",
       ticket: [],
       organizedList: [],
-      organizeContact: []
+      organizeContact: [],
+      imgUrl: ""
     };
   }
 
   componentDidMount() {
-    console.log("eventId", this.props.match.params.eventId);
+    // console.log("eventId", this.props.match.params.eventId);
     this.getTagAdmin();
     this.getEventDetail();
+    console.log("😂😂😂", this.state.imgUrl);
+    
   }
 
   async getTagAdmin() {
     try {
       let tagList = await serviceTag.getTag();
       tagList = tagList.result;
-      console.log("tagList", tagList);
+      // console.log("tagList", tagList);
       this.setState({ tagList });
     } catch (error) {
       console.log("error", error);
@@ -91,14 +95,21 @@ export default class index extends Component {
           dateFormat
         )
       }));
+      let imgUrl = `${ENDPOINT}/${eventList.event_has_image.image_id}.${eventList.event_has_image.image.filename_extension}`;
+      console.log("😒😒😒 ",imgUrl);
       this.setState({ ticketList: ticketList });
       this.setState({ organizeContact: eventList.organized_contacts });
       this.setState({ organizedList: this.state.organizeContact });
-      console.log("this.state", this.props);
+      this.setState({ imgUrl: imgUrl });
+      // console.log("this.state", this.props);
       
     } catch (error) {
       console.log("error", error);
     }
+  }
+
+  handleGetImageInfo = value => {
+    this.setState({ imageInfo: value });
   }
 
   handleGetEventName = value => {
@@ -140,22 +151,28 @@ export default class index extends Component {
       event_content: this.state.richText,
       ticketsList: this.state.ticketList,
       organizedList: this.state.organizedList,
-      eventList: this.state.addTag
+      eventList: this.state.addTag,
+      imgUrl: this.state.imgUrl
     };
-    console.log("data", data);
-
-    // Axios.post("/event", data)
-    //   .then(result => {
-    //     console.log(result.data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    // console.log("data", data);
+    let dataImageInfo = new FormData();
+    dataImageInfo.append("image", this.state.imageInfo.file);
+    Axios.post("/image", dataImageInfo, {
+      headers: { "content-type": "multipart/form-data" }
+    })
+      .then(result => {
+        console.log(result.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
   };
 
   render() {
     // console.log("❗️❗️❗️", this.state.date[0]);
     // console.log("✅", this.state);
+    // console.log("♨️", this.state.imageInfo.file);
+
     const {
       eventName,
       address,
@@ -167,7 +184,8 @@ export default class index extends Component {
       dateStart,
       dateEnd,
       organizedList,
-      tagList
+      tagList,
+      imgUrl
     } = this.state;
     // console.log("ticketList | Parent", ticketList);
     
@@ -176,6 +194,7 @@ export default class index extends Component {
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents
+              handleGetImageInfo={this.handleGetImageInfo}
               handleGetEventName={this.handleGetEventName}
               eventName={eventName}
               handleGetAddress={this.handleGetAddress}
@@ -190,6 +209,7 @@ export default class index extends Component {
               handleGetAddTag={this.handleGetAddTag}
               addTag={addTag}
               tagList={tagList}
+              imgUrl={imgUrl}
             />
           </Row>
           <Row>

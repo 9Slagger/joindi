@@ -88,7 +88,15 @@ module.exports = {
             model: db.BookmarkModel,
             where: { event_id: req.params.eventId }
           },
-          { model: db.OrganizedContactModel }
+          { model: db.OrganizedContactModel },
+          {
+            model: db.EventHasImageModel,
+            include: [
+              {
+                model: db.ImageModel
+              }
+            ]
+          }
         ]
       });
       eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
@@ -372,18 +380,14 @@ module.exports = {
       eventCatagorieList = await db.EventCategoryModel.findAll({
         include: [{ model: db.EventModel }]
       });
-      res
-        .status(200)
-        .json({
-          result: eventCatagorieList,
-          messages: { title_en: "get event catagories success", title_th: "" }
-        });
+      res.status(200).json({
+        result: eventCatagorieList,
+        messages: { title_en: "get event catagories success", title_th: "" }
+      });
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          messages: { title_en: "get event catagories fail", title_th: "" }
-        });
+      res.status(400).json({
+        messages: { title_en: "get event catagories fail", title_th: "" }
+      });
     }
   }
 };

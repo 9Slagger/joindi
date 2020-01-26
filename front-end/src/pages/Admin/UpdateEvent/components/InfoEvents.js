@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import { DatePicker, Select } from "antd";
-import { Upload, Icon, Row, Col, Form, Input } from "antd";
+import { Upload, Icon, Row, Col, Form, Input, Modal } from "antd";
 import "./StyleComponents/infoEventStyle.css";
 import moment from "moment";
+import Axios from "axios";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
 class InfoEvents extends Component {
   constructor(props) {
@@ -14,16 +24,14 @@ class InfoEvents extends Component {
       fileList: [],
       tagList: [],
       dateTimeInInterger: "",
-      // getTagList: [],
-      // eventList: [],
-      // Set state
       eventName: "",
       address: "",
       latitudeLocation: "",
       longitudeLocation: "",
       dateStart: "",
       dateEnd: "",
-      addTag: []
+      addTag: [],
+      imgUrl: ""
     };
   }
 
@@ -35,8 +43,10 @@ class InfoEvents extends Component {
       dateEnd: this.props.dateEnd,
       latitudeLocation: this.props.latitudeLocation,
       longitudeLocation: this.props.longitudeLocation,
-      addTag: this.props.addTag
+      addTag: this.props.addTag,
+      imgUrl: this.props.imgUrl
     });
+    console.log(this.props);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,16 +58,22 @@ class InfoEvents extends Component {
         dateEnd: this.props.dateEnd,
         latitudeLocation: this.props.latitudeLocation,
         longitudeLocation: this.props.longitudeLocation,
-        addTag: this.props.addTag
+        addTag: this.props.addTag,
+        imgUrl: this.props.imgUrl
       });
     }
   }
 
-  handleChange = value => {
-    // console.log(`selected ${value}`);
-    // this.setState({ addTag: `${value}` });
-    this.props.handleGetAddTag(value);
+  handleChangeImageInfo = e => {
+    this.setState({ fileList: e.fileList });
+    this.props.handleGetImageInfo(e);
   };
+
+  // handleChange = value => {
+  //   // console.log(`selected ${value}`);
+  //   // this.setState({ addTag: `${value}` });
+  //   this.props.handleGetAddTag(value);
+  // };
 
   handleOnChangeEventName = e => {
     this.props.handleGetEventName(e);
@@ -78,6 +94,18 @@ class InfoEvents extends Component {
   handleOnChangeLongitude = e => {
     this.props.handleGetLongitude(e);
   };
+  handleCancel = () => this.setState({ previewVisible: false });
+
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true
+    });
+  };
 
   render() {
     const {
@@ -85,32 +113,32 @@ class InfoEvents extends Component {
       address,
       latitudeLocation,
       longitudeLocation,
-      addTag,
       dateStart,
       dateEnd,
-      fileList
+      fileList,
+      imageInfo,
+      previewVisible,
+      previewImage,
+      imgUrl
     } = this.state;
     const dateFormat = "DD-MM-YYYY";
     const props = {
       onRemove: file => {
         this.setState(state => {
-          const index = state.fileList.indexOf(file);
-          const newFileList = state.fileList.slice();
-          newFileList.splice(index, 1);
           return {
-            fileList: newFileList
+            imageInfo: null
           };
         });
       },
       beforeUpload: file => {
         this.setState(state => ({
-          fileList: [...state.fileList, file]
+          imageInfo: file
         }));
         return false;
       },
-      fileList
+      imageInfo
     };
-    const { imageUrl } = this.state;
+    // const { imageUrl } = this.state;
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? "loading" : "plus"} />
@@ -131,21 +159,27 @@ class InfoEvents extends Component {
                   name="avatar"
                   listType="picture-card"
                   className="avatar-uploader"
-                  showUploadList={false}
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  showUploadList={true}
                   //   beforeUpload={beforeUpload}
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeImageInfo}
                 >
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      style={{ width: "100%" }}
-                    />
+                  {imgUrl && fileList.length == 0 ? (
+                    <img src={imgUrl} alt="avatar" style={{ width: "100%" }} />
                   ) : (
-                    uploadButton
+                    null
                   )}
                 </Upload>
+                <Modal
+                  visible={previewVisible}
+                  footer={null}
+                  onCancel={this.handleCancel}
+                >
+                  <img
+                    alt="avatar"
+                    style={{ width: "100%" }}
+                    src={previewImage}
+                  />
+                </Modal>
               </Col>
             </Row>
           </Col>
@@ -319,7 +353,7 @@ class InfoEvents extends Component {
                       mode="multiple"
                       style={{ width: "100%" }}
                       placeholder="Please select"
-                      onChange={this.handleChange}
+                      // onChange={this.handleChange}
                     >
                       {this.props.tagList.map(tagListData => (
                         <Option
