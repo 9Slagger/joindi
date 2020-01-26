@@ -23,7 +23,7 @@ export class SiderUser extends Component {
             <Link to="/myorder">
               <span>
                 <Icon type="credit-card" />
-                <span> My Order</span>
+                <span> My Orders</span>
               </span>
             </Link>
           </Menu.Item>
