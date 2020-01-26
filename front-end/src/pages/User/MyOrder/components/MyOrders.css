@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css?family=Prompt&display=swap");
+/* .tableEvent {
+  font-family: "Prompt", sans-serif;
+} */
+.headingTableEvent {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #345586;
+}
+.eventDetail {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #000106;
+}
+.eventStatusDetail {
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: #626265;
+}
+.btn-payment {
+  border: 2px solid #345586;
+  border-radius: 10px;
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #345586;
+}
+.btn-payment:hover {
+  border: 2px solid #345586;
+  background-color: #345586;
+  border-radius: 10px;
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #fff;
+}
+.btn-payment::selection {
+  border: 2px solid #345586 !important;
+  border-radius: 10px;
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #345586 !important;
+}
+.btn-success {
+  border: 2px solid #345586;
+  background-color: #345586;
+  border-radius: 10px;
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #fff;
+}
+.btn-success:hover {
+  border: 2px solid #345586;
+  background-color: #345586;
+  border-radius: 10px;
+  font-family: "Prompt", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #fff;
+}

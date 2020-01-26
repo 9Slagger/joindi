@@ -5,7 +5,7 @@ import JoinEvent from "./components/JoinEvent";
 export default class index extends Component {
   render() {
     return (
-      <UserLayout>
+      <UserLayout {...this.props}> 
         <JoinEvent />
       </UserLayout>
     );

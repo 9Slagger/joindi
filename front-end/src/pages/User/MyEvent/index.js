@@ -5,7 +5,7 @@ import MyEvents from "./components/MyEvents";
 export default class index extends Component {
   render() {
     return (
-      <UserLayout>
+      <UserLayout {...this.props}> 
         <MyEvents />
       </UserLayout>
     );

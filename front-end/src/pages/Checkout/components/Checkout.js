@@ -204,7 +204,11 @@ class Checkout extends Component {
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
+
+
+
         {/* {this.renderReviewOrderSummary()} */}
+
         {this.renderReviewOrderSummary()}
 
         <Row className="mt-4">
@@ -217,6 +221,8 @@ class Checkout extends Component {
             </Button>
           </Col>
         </Row>
+
+
       </section>
     );
   }
