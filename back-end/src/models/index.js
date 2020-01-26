@@ -79,27 +79,25 @@ OrderModel.belongsTo(UserModel, { foreignKey: "user_id" });
 
 // event event_has_image image
 EventHasImageModel.belongsTo(ImageModel, { foreignKey: "image_id" });
-ImageModel.hasOne(EventHasImageModel, {foreignKey: "image_id"});
-EventHasImageModel.belongsTo(EventModel, { foreignKey: "event_has_image_id" });
-EventModel.hasOne(EventHasImageModel, {foreignKey: "event_has_image_id"});
+ImageModel.hasOne(EventHasImageModel, { foreignKey: "image_id" });
+EventHasImageModel.belongsTo(EventModel, { foreignKey: "event_id" });
+EventModel.hasOne(EventHasImageModel, { foreignKey: "event_id" });
 //
 
 // ticket_in_order ticket_in_order_has_image image
 TicketInOrderHasImageModel.belongsTo(ImageModel, { foreignKey: "image_id" });
-ImageModel.hasOne(TicketInOrderHasImageModel, {foreignKey: "image_id"});
-TicketInOrderHasImageModel.belongsTo(EventModel, { foreignKey: "ticket_in_order_id" });
-EventModel.hasOne(TicketInOrderHasImageModel, {foreignKey: "ticket_in_order_id"});
+ImageModel.hasOne(TicketInOrderHasImageModel, { foreignKey: "image_id" });
+TicketInOrderHasImageModel.belongsTo(EventModel, {
+  foreignKey: "ticket_in_order_id"
+});
+EventModel.hasOne(TicketInOrderHasImageModel, {
+  foreignKey: "ticket_in_order_id"
+});
 //
 
 //
-EventModel.belongsToMany(UserModel, {
-  through: BookmarkModel,
-  foreignKey: "user_id"
-});
-UserModel.belongsToMany(EventModel, {
-  through: BookmarkModel,
-  foreignKey: "event_id"
-});
+EventModel.hasMany(BookmarkModel, { foreignKey: "event_id" });
+UserModel.hasMany(BookmarkModel, { foreignKey: "user_id" });
 //
 
 module.exports = {

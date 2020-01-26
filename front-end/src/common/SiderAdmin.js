@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Layout, Icon, Row, Col } from "antd";
+import React, { Component } from  "react";
+import { Layout, Icon, Row, Col } from  "antd";
 import "../css/SiderAdmin.css";
-import { Link } from "react-router-dom";
+import { Link } from  "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -12,36 +12,36 @@ export class SiderAdmin extends Component {
         <Sider className="siderAdmin">
           <Col>
             <Row>
-            <Link to="/approveevent">
-              <br />
-              <Icon
-                type="project"
-                style={{ fontSize: "60px", color: "#345586" }}
-              />
-              <br />
-              <span>Event</span>
+              <Link to="/approveevent">
+                <br />
+                <Icon
+                  type="project"
+                  style={{ fontSize: "60px", color: "#345586" }}
+                />
+                <br />
+                <span>Event</span>
               </Link>
             </Row>
             <Row>
-            <Link to="/">
-              <br />
-              <Icon
-                type="user"
-                style={{ fontSize: "60px", color: "#345586" }}
-              />
-              <br />
-              <span>User</span>
-            </Link>
+              <Link to="/">
+                <br />
+                <Icon
+                  type="user"
+                  style={{ fontSize: "60px", color: "#345586" }}
+                />
+                <br />
+                <span>User</span>
+              </Link>
             </Row>
             <Row>
-            <Link to="/approvepayment">
-              <br />
-              <Icon
-                type="wallet"
-                style={{ fontSize: "60px", color: "#345586" }}
-              />
-              <br />
-              <span>Payment</span>
+              <Link to="/approvepayment">
+                <br />
+                <Icon
+                  type="wallet"
+                  style={{ fontSize: "60px", color: "#345586" }}
+                />
+                <br />
+                <span>Payment</span>
               </Link>
             </Row>
             <Row>

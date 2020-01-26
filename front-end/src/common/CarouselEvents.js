@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import "../css/CarouselEvents.css"
-import { Carousel } from "antd";
+import { Carousel } from  "antd";
 
 export default class CarouselEvents extends Component {
   render() {

@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
-import TagEvents from "./components/TagEvents";
-import CarouselEvents from "../../common/CarouselEvents";
-import { Row, Divider, Col } from "antd";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
+import TagEvents from  "../../common/TagEvents";
+import CarouselEvents from  "../../common/CarouselEvents";
+import { Row, Divider, Col } from  "antd";
 
 export default class index extends Component {
   render() {
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <Row>
           <CarouselEvents />
         </Row>

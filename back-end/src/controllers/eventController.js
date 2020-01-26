@@ -43,6 +43,18 @@ module.exports = {
         });
       });
 
+      resultInfo = JSON.parse(JSON.stringify(resultInfo));
+      let eventHasImageResult;
+      try {
+        eventHasImageResult = await db.EventHasImageModel.create({
+          image_id: req.body.imageId,
+          event_id: resultInfo.id
+        });
+      } catch (error) {
+        return res.status(400).send({ message: error.message });
+      }
+      resultInfo.event_has_image = eventHasImageResult;
+
       resultHasTag = await db.EventHasTagModel.bulkCreate(event_has_tag_list);
       res.status(200).send(resultInfo);
     } catch (error) {
@@ -51,12 +63,7 @@ module.exports = {
     }
   },
   getEventDetail: async (req, res, next) => {
-    let eventDetailResult, eventStatusResult;
-    const getIncludeBookmarkModel = () => {
-      if (req.user) {
-        return { model: db.BookmarkModel, where: { user_id: req.user.id } };
-      }
-    };
+    let eventDetailResult, eventStatusResult, bookmarkResult;
     try {
       eventStatusResult = await db.EventStatusModel.findOne({
         where: { status_code: "02AD" },
@@ -65,21 +72,29 @@ module.exports = {
     } catch (error) {
       console.log("🔴", error);
     }
-    console.log("eventStatusResult🟢", eventStatusResult);
+    // console.log("eventStatusResult🟢", eventStatusResult);
     try {
       eventDetailResult = await db.EventModel.findOne({
         where: { id: req.params.eventId },
         include: [
           {
-            model: db.EventStatusModel
-            // where: { event_status_id: eventStatusResult.id }
+            model: db.EventStatusModel,
+            where: { id: eventStatusResult.id }
           },
           { model: db.TicketModel },
           { model: db.EventCategoryModel },
           { model: db.EventTagModel },
+          {
+            model: db.BookmarkModel,
+            where: { event_id: req.params.eventId }
+          },
           { model: db.OrganizedContactModel }
         ]
       });
+      eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
+      eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
+        bookmark => bookmark.user_id === req.user.id
+      ).length;
       // console.log("eventDetailResult🟢", eventDetailResult);
       res.status(200).json({
         result: eventDetailResult,
@@ -94,7 +109,7 @@ module.exports = {
     }
   },
   getEventApprove: async (req, res, next) => {
-    let eventResult;
+    let eventResult, bookmarkResult;
     try {
       eventResult = await db.EventStatusModel.findOne({
         where: {
@@ -348,6 +363,26 @@ module.exports = {
       return res
         .status(400)
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
+    }
+  },
+  getEventCatagorieList: async (req, res, next) => {
+    let eventCatagorieList;
+    try {
+      eventCatagorieList = await db.EventCategoryModel.findAll({
+        include: [{ model: db.EventModel }]
+      });
+      res
+        .status(200)
+        .json({
+          result: eventCatagorieList,
+          messages: { title_en: "get event catagories success", title_th: "" }
+        });
+    } catch (error) {
+      res
+        .status(400)
+        .json({
+          messages: { title_en: "get event catagories fail", title_th: "" }
+        });
     }
   }
 };

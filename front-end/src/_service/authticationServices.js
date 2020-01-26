@@ -1,5 +1,5 @@
-import axios from "../_helper/axios";
-import { setToken, removeToken } from "../_helper/localStorage";
+import axios from  "../_helper/axios";
+import { setToken, removeToken } from  "../_helper/localStorage";
 
 export const serviceAuth = {
   signin: (email, password) => {
@@ -10,13 +10,18 @@ export const serviceAuth = {
         setToken(JSON.stringify(res.data.result.token));
         resolve(res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
   signout: () =>
     new Promise(async (resolve, reject) => {
       removeToken();
-      resolve({ messages: ["signout success"] });
+      resolve({
+        messages: {
+          title_en: "signout success",
+          title_th: ""
+        }
+      });
     })
 };

@@ -34,6 +34,7 @@ export default class index extends Component {
   }
 
   componentDidMount() {
+    console.log("eventId", this.props.match.params.eventId);
     this.getTagAdmin();
     this.getEventDetail();
   }
@@ -50,9 +51,12 @@ export default class index extends Component {
   }
 
   async getEventDetail() {
+    
     try {
       const dateFormat = "DD-MM-YYYY";
-      let eventList = await serviceEvent.getEventDetail();
+      let eventList = await serviceEvent.getEventDetail(
+        this.props.match.params.eventId
+      );
       eventList = eventList.result;
       this.setState({ eventList });
       this.setState({ eventName: eventList.event_name });
@@ -90,6 +94,8 @@ export default class index extends Component {
       this.setState({ ticketList: ticketList });
       this.setState({ organizeContact: eventList.organized_contacts });
       this.setState({ organizedList: this.state.organizeContact });
+      console.log("this.state", this.props);
+      
     } catch (error) {
       console.log("error", error);
     }
