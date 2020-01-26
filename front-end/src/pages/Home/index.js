@@ -13,6 +13,7 @@ export default class index extends Component {
     super(props);
     this.state = {
       eventCatagorieList: [],
+      freeEventList: [],
       eventList: [],
       loadEventCatagorieList: false,
       loadEventListStatus: false,
@@ -45,7 +46,11 @@ export default class index extends Component {
     try {
       const res = await serviceEvent.getEventApprove();
       const eventList = res.result.events;
-      this.setState({ eventList, loadEventListStatus: false });
+      const freeEventList = res.result.events.filter(
+        event =>
+          event.tickets.filter(ticket => ticket.ticket_price === 0).length !== 0
+      )
+      this.setState({ eventList, freeEventList, loadEventListStatus: false });
     } catch (error) {
       this.setState({ loadEventListStatus: false, getDataFail: true });
       Notification(
@@ -55,9 +60,7 @@ export default class index extends Component {
   }
 
   render() {
-    const { getDataFail, eventCatagorieList, eventList } = this.state;
-    console.log("eventList", eventList)
-    // const freeEventList = eventList.filter(event =>  ({}))
+    const { getDataFail, eventCatagorieList, eventList, freeEventList } = this.state;
     return (
       <DefaultLayout {...this.props}>
         {!getDataFail ? (
@@ -85,7 +88,7 @@ export default class index extends Component {
               }}
             />
             <ScrolEvents
-              eventList={eventList}
+              eventList={freeEventList}
               title={{
                 titleEn: "Free Events",
                 titleTh: "กิจกรรม ที่ไม่เสียค่าใช้จ่าย"
