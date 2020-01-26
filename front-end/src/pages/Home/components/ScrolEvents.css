@@ -1,17 +1,14 @@
-div.scrollmenu {
-  background-color: #333;
-  overflow: auto;
+.scrollmenu {
+  overflow-x: scroll;
   white-space: nowrap;
+  width: 100%;
+  float: left;
 }
 
-div.scrollmenu a {
+.scrollmenu .card-scrollmenu {
   display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px;
-  text-decoration: none;
 }
 
-div.scrollmenu a:hover {
-  background-color: #777;
+.card-scrollmenu{
+  margin-right: 2rem;
 }

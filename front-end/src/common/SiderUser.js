@@ -12,7 +12,7 @@ export class SiderUser extends Component {
       <Sider className="siderUser">
         <Menu mode="inline" size="large">
           <Menu.Item key="1">
-            <Link to="/">
+            <Link to="/userprofile">
               <span>
                 <Icon type="user" />
                 <span> Profile</span>
@@ -20,10 +20,10 @@ export class SiderUser extends Component {
             </Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/">
+            <Link to="/myorder">
               <span>
                 <Icon type="credit-card" />
-                <span> Pay Order</span>
+                <span> My Order</span>
               </span>
             </Link>
           </Menu.Item>
@@ -32,19 +32,19 @@ export class SiderUser extends Component {
             title={
               <span>
                 <Icon type="calendar" />
-                <span> Event</span>
+                <span> Events</span>
               </span>
             }
           >
             <Menu.Item key="3">
-              <Link to="/">My Events</Link>
+              <Link to="/myevent">My Events</Link>
             </Menu.Item>
             <Menu.Item key="4">
-              <Link to="/">Join Event</Link>
+              <Link to="/joinevent">Join Events</Link>
             </Menu.Item>
           </SubMenu>
           <Menu.Item key="5">
-            <Link to="/">
+            <Link to="/bookmark">
               <span>
                 <Icon type="book" />
                 <span> Bookmark</span>
