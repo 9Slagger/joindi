@@ -51,8 +51,6 @@ const Routers = props => {
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
-
-        <Route exact path="/eventdetail/:eventId" component={EventDetail} />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
 
