@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
+
+import { withRouter } from "react-router-dom";
+
 import {Link} from "react-router-dom"
 // import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Complete.css";
 
-export default class Complete extends Component {
+class Complete extends Component {
   state = {};
+
+  goToHome = () => {
+    this.props.history.push({
+      pathname: `/`,
+      search: ``
+    });
+  };
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -67,12 +77,28 @@ export default class Complete extends Component {
         {this.renderProcess()}
         {this.renderComplete()}
 
-        <Row className="mt-4">
+        <Row className="mt-4 mb-3">
           <Col span={24} className="text-center">
+
+
+            <Button onClick={() => this.goToHome()} type="primary">
+              Home
+            </Button>
+
             <Button type="primary"><Link to="/">Home</Link></Button>
+
+
+            <Button onClick={() => this.goToHome()} type="primary">
+              Home
+            </Button>
+            <Button type="primary">
+              <Link to="/">Home</Link>
+            </Button>
           </Col>
         </Row>
       </section>
     );
   }
 }
+
+export default withRouter(Complete);

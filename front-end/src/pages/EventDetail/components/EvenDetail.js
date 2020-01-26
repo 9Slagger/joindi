@@ -9,7 +9,7 @@ import {
   Button,
   Select,
   Modal
-} from "antd";
+} from  "antd";
 import "./EventDetail.css";
 import Axios from "axios";
 

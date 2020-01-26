@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Card, Icon, Row, Col, Button, Input,Modal } from "antd";
-import Axios from "axios";
+import React, { Component } from  "react";
+import { Card, Icon, Row, Col, Button, Input,Modal } from  "antd";
+import Axios from  "axios";
 import "antd/dist/antd.css";
 import "./index.css";
-import AdminLayout from "../../../common/AdminLayout";
+import AdminLayout from  "../../../common/AdminLayout";
 const { TextArea,Search } = Input;
 const { confirm } = Modal;
 
@@ -34,7 +34,7 @@ const tabListNoTitle = [
         Rejected
       </span>
     )
-  }
+  } 
 ];
 class ApprovePayment extends Component {
   constructor(props) {
@@ -45,7 +45,8 @@ class ApprovePayment extends Component {
       visible: false,
       id: '',
       remark: '',
-      data:[]
+      data:[
+      ]
     }
   };
   

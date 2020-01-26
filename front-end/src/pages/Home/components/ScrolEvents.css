@@ -1,0 +1,14 @@
+.scrollmenu {
+  overflow-x: scroll;
+  white-space: nowrap;
+  width: 100%;
+  float: left;
+}
+
+.scrollmenu .card-scrollmenu {
+  display: inline-block;
+}
+
+.card-scrollmenu{
+  margin-right: 2rem;
+}

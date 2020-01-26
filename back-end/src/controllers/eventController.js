@@ -119,7 +119,8 @@ module.exports = {
             model: db.EventModel,
             include: [
               { model: db.EventTagModel },
-              { model: db.EventCategoryModel }
+              { model: db.EventCategoryModel },
+              { model: db.TicketModel }
             ]
           }
         ]
@@ -362,6 +363,26 @@ module.exports = {
       return res
         .status(400)
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
+    }
+  },
+  getEventCatagorieList: async (req, res, next) => {
+    let eventCatagorieList;
+    try {
+      eventCatagorieList = await db.EventCategoryModel.findAll({
+        include: [{ model: db.EventModel }]
+      });
+      res
+        .status(200)
+        .json({
+          result: eventCatagorieList,
+          messages: { title_en: "get event catagories success", title_th: "" }
+        });
+    } catch (error) {
+      res
+        .status(400)
+        .json({
+          messages: { title_en: "get event catagories fail", title_th: "" }
+        });
     }
   }
 };

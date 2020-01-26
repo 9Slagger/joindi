@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
-import InfoEvents from "./components/InfoEvents";
-import Ticket from "./components/Ticket";
-import OrganizedBy from "./components/OrganizedBy";
-import { Row, Col, Button } from "antd";
-import RichText from "./components/RichText";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
+import InfoEvents from  "./components/InfoEvents";
+import Ticket from  "./components/Ticket";
+import OrganizedBy from  "./components/OrganizedBy";
+import { Row, Col, Button } from  "antd";
+import RichText from  "./components/RichText";
 import "./CreateEventsStyle.css";
-import Axios from "axios";
+import Axios from  "axios";
 
 export default class index extends Component {
   constructor(props) {
@@ -98,7 +98,7 @@ export default class index extends Component {
     console.log("♨️",this.state.imageInfo.file )
     
     return (
-      <DefaultLayout>
+      <DefaultLayout {...this.props}>
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents
