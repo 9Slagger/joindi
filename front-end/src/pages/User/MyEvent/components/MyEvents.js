@@ -113,22 +113,22 @@ export default class MyEvents extends Component {
           </Col>
         )
       },
-      {
-        title: "Time",
-        dataIndex: "date",
-        key: "time",
-        render: date => (
-          <Col type="flex" align="center">
-            {/* <Button className="btn-paymentStatus">test</Button> */}
-            <Row>
-              <p className="evenDetail">
-                {moment(parseInt(date.dateStart)).format("LT")} -{" "}
-                {moment(parseInt(date.dateEnd)).format("LT")}
-              </p>
-            </Row>
-          </Col>
-        )
-      }
+      // {
+      //   title: "Time",
+      //   dataIndex: "date",
+      //   key: "time",
+      //   render: date => (
+      //     <Col type="flex" align="center">
+      //       {/* <Button className="btn-paymentStatus">test</Button> */}
+      //       <Row>
+      //         <p className="evenDetail">
+      //           {moment(parseInt(date.dateStart)).format("LT")} -{" "}
+      //           {moment(parseInt(date.dateEnd)).format("LT")}
+      //         </p>
+      //       </Row>
+      //     </Col>
+      //   )
+      // }
     ];
 
     return (
@@ -138,7 +138,7 @@ export default class MyEvents extends Component {
           dataSource={data}
           onChange={this.handleChange}
           className="tableEvent"
-          scroll={{ x: 1200, y: 500 }}
+          scroll={{ x: 0, y: 500 }}
         />
         <Row type="flex" justify="center">
           <Link to="/createevents"><Button className="buttonAddNewEvents">Add New Events<Icon type="plus-circle" /></Button></Link>

@@ -32,7 +32,7 @@ export class SiderUser extends Component {
             title={
               <span>
                 <Icon type="calendar" />
-                <span> Events</span>
+                <span> My Activity</span>
               </span>
             }
           >

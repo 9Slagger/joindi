@@ -5,3 +5,10 @@
 .colTextBookmark{
   margin:40px 0;
 }
+
+.colCardEventBookmark{
+  margin:0 1%;
+  display: flex;
+  justify-content: center;
+
+}
