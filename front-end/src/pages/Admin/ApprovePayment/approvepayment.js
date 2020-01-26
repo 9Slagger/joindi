@@ -34,7 +34,7 @@ const tabListNoTitle = [
         Rejected
       </span>
     )
-  }
+  } 
 ];
 class ApprovePayment extends Component {
   constructor(props) {
@@ -45,7 +45,8 @@ class ApprovePayment extends Component {
       visible: false,
       id: '',
       remark: '',
-      data:[]
+      data:[
+      ]
     }
   };
   

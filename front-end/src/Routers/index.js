@@ -18,6 +18,7 @@ import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent"
 import UpdateEvent from "../pages/Admin/UpdateEvent"
 import Search from "../pages/Search"
+import ManageUser from "../pages/Admin/ManageUser/index"
 import UserProfile from "../pages/User/UserProfile";
 import SearchTag from "../pages/SearchTag";
 import JoinEvent from "../pages/User/JoinEvent";
@@ -43,19 +44,26 @@ const Routers = props => {
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/updateevent" component={UpdateEvent}/>
         <Route exact path="/approvepayment" component={ApprovePayment} />
+
+        <Route exact path="/eventdetail" component={EventDetail} />
+
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
+
         <Route
           exact
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
+        <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
+        <Route exact path="/manageuser" component={ManageUser} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
         <Route exact path="/joinevent" component={JoinEvent} />
         <Route exact path="/myevent" component={MyEvent} />
         <Route exact path="/myorder" component={MyOrders} />
         <Route exact path="/bookmark" component={Bookmark} />
+
       </Switch>
     </Router>
   );
