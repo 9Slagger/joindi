@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, Row, Col, Table } from "antd";
+import React, { Component } from  "react";
+import { Button, Row, Col, Table } from  "antd";
 
 import { withRouter } from "react-router-dom";
 
@@ -194,10 +194,13 @@ class Checkout extends Component {
     );
   };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
   toPayPage = ticketInOrderId => () => {
     // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
-  }
+  };
 
   render() {
     return (
@@ -205,7 +208,11 @@ class Checkout extends Component {
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
+<<<<<<< HEAD
 
+=======
+        {/* {this.renderReviewOrderSummary()} */}
+>>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
         {this.renderReviewOrderSummary()}
 
         <Row className="mt-4">
@@ -213,10 +220,15 @@ class Checkout extends Component {
             <Button type="danger">Cancel Order</Button>
           </Col>
           <Col span={24 / 2} className="text-right">
-            <Button type="primary" onClick={this.toPayPage}>Confirm Order</Button>
+            <Button type="primary" onClick={this.toPayPage}>
+              Confirm Order
+            </Button>
           </Col>
         </Row>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
       </section>
     );
   }

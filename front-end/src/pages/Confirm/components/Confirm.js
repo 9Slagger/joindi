@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, Row, Col } from "antd";
+import React, { Component } from  "react";
+import { Button, Row, Col } from  "antd";
 
 import { withRouter } from "react-router-dom";
 

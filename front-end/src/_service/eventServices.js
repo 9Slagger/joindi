@@ -1,4 +1,4 @@
-import axios from "../_helper/axios";
+import axios from  "../_helper/axios";
 
 export const serviceEvent = {
   getCategorieAndEvents: categorieId => {
@@ -8,7 +8,7 @@ export const serviceEvent = {
         res = await axios.get(`/event/categorie/${categorieId}`);
         resolve(res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -19,7 +19,7 @@ export const serviceEvent = {
         res = await axios.get("/event/admin");
         resolve(res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -33,7 +33,7 @@ export const serviceEvent = {
         resolve(res.data);
         console.log("approve", res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -47,7 +47,7 @@ export const serviceEvent = {
         resolve(res.data);
         console.log("pending", res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -62,7 +62,7 @@ export const serviceEvent = {
         console.log("eventId", id, "eventRemark", remark);
         resolve(res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -73,9 +73,19 @@ export const serviceEvent = {
         res = await axios.get("/event/statusapprove");
         resolve(res.data);
       } catch (error) {
-        if (error.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
-
+  },
+  getEventCatagorieList: () => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get("/event/categorie");
+        resolve(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
   }
 };

@@ -1,9 +1,9 @@
-import React from "react";
-import { Layout } from "antd";
-import HeaderAdmin from "./HeaderAdmin";
-import Content from "./Content";
-import Footer from "./Footer";
-import SiderAdmin from "./SiderAdmin";
+import React from  "react";
+import { Layout } from  "antd";
+import HeaderAdmin from  "./HeaderAdmin";
+import Content from  "./Content";
+import Footer from  "./Footer";
+import SiderAdmin from  "./SiderAdmin";
 
 export default props => {
   return (

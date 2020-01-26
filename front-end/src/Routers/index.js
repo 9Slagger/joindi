@@ -16,7 +16,13 @@ import CreateEvents from "../pages/CreateEvents";
 import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
-import Search from "../pages/Search"
+import Search from "../pages/Search";
+import UserProfile from "../pages/User/UserProfile";
+import SearchTag from "../pages/SearchTag";
+import JoinEvent from "../pages/User/JoinEvent";
+import MyEvent from "../pages/User/MyEvent";
+import MyOrders from "../pages/User/MyOrder";
+import Bookmark from "../pages/User/Bookmark";
 export const history = createHistory();
 
 const Routers = props => {
@@ -24,7 +30,7 @@ const Routers = props => {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        {/* <Route exact path="/tagevents" component={TagEvents} /> */}
+        <Route exact path="/tagevents" component={TagEvents} />
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
@@ -35,15 +41,29 @@ const Routers = props => {
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />
+<<<<<<< HEAD
         <Route exact path="/eventdetail" component={EventDetail} />
+=======
+        <Route exact path="/eventdetail/:eventId" component={EventDetail} />
+>>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
         <Route
           exact
           path="/categoriesevents/:categorieId"
           component={CategoriesEvents}
         />
+<<<<<<< HEAD
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
+=======
+        <Route exact path="/searchevnts" component={Search} />
+        <Route exact path="/userprofile" component={UserProfile} />
+        <Route exact path="/searchtag/:tagId" component={SearchTag} />
+        <Route exact path="/joinevent" component={JoinEvent} />
+        <Route exact path="/myevent" component={MyEvent} />
+        <Route exact path="/myorder" component={MyOrders} />
+        <Route exact path="/bookmark" component={Bookmark} />
+>>>>>>> 06c96ef13ffbfc91e2ac6216080050fa3bf87466
       </Switch>
     </Router>
   );
