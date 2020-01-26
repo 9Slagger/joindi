@@ -41,4 +41,3 @@ UserModel.init(
 );
 
 module.exports = { UserModel };
-

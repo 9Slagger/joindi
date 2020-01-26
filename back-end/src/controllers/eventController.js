@@ -87,6 +87,15 @@ module.exports = {
           {
             model: db.BookmarkModel,
             where: { event_id: req.params.eventId }
+          },
+          { model: db.OrganizedContactModel },
+          {
+            model: db.EventHasImageModel,
+            include: [
+              {
+                model: db.ImageModel
+              }
+            ]
           }
         ]
       });
@@ -319,7 +328,7 @@ module.exports = {
           event_status_id: eventStatusPendingRejectResult.id
         }
       });
-      console.log("req.body.eventId", req.body.eventId);
+      // console.log("req.body.eventId", req.body.eventId);
 
       // console.log({
       //   id: req.body.eventId,
