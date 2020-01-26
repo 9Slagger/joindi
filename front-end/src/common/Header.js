@@ -320,11 +320,11 @@ class Header extends React.Component {
                     ) : null}
                     <Menu mode="inline">
                       <SubMenu title={Authentication.item.email}>
-                        <Menu.Item key="profile">Profile</Menu.Item>
-                        <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                        <Menu.Item key="myevents">My Events</Menu.Item>
-                        <Menu.Item key="joinevents">Join Events</Menu.Item>
-                        <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
+                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
+                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
+                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
+                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
                         <Menu.Item
                           key="logout"
                           onClick={this.handleClickLogout}
@@ -432,11 +432,11 @@ class Header extends React.Component {
                     <Dropdown
                       overlay={
                         <Menu className="dropDownUser">
-                          <Menu.Item key="profile">Profile</Menu.Item>
-                          <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                          <Menu.Item key="myevents">My Events</Menu.Item>
-                          <Menu.Item key="joinevents">Join Events</Menu.Item>
-                          <Menu.Item key="wishlist">Wish List</Menu.Item>
+                          <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
+                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
+                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
+                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
+                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
                           <Menu.Item key="changelanguage">
                             Language: EN
                           </Menu.Item>
