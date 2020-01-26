@@ -5,7 +5,7 @@ module.exports = {
   getTag: async (req, res, next) => {
     try {
       const resultTag = await db.EventTagModel.findAll({
-        where: { tag_active: true },
+        where: { tag_active: true }
       });
       res.status(200).json({
         result: resultTag,
@@ -60,11 +60,25 @@ module.exports = {
     }
   },
   getTagAndEvent: async (req, res, next) => {
-    let tagAndEventResult;
+    let tagAndEventResult, eventStatusResult;
+    try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" }
+      });
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ messages: { title_en: "something is wrong", title_th: "" } });
+    }
     try {
       tagAndEventResult = await db.EventTagModel.findOne({
         where: { id: req.params.tagId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       return res.status(200).json({
         result: tagAndEventResult,
