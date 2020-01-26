@@ -5,7 +5,7 @@ import MyOrders from "./components/MyOrders";
 export default class index extends Component {
   render() {
     return (
-      <UserLayout>
+      <UserLayout {...this.props}> 
         <MyOrders />
       </UserLayout>
     );
