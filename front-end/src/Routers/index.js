@@ -16,7 +16,8 @@ import CreateEvents from "../pages/CreateEvents";
 import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
 import ApproveEvent from "../pages/Admin/ApproveEvent";
-import Search from "../pages/Search";
+import Search from "../pages/Search"
+import ManageUser from "../pages/Admin/ManageUser/index"
 import UserProfile from "../pages/User/UserProfile";
 import SearchTag from "../pages/SearchTag";
 import JoinEvent from "../pages/User/JoinEvent";
@@ -53,6 +54,7 @@ const Routers = props => {
         />
         <Route exact path="/categoriesevents/:categorieId" component={CategoriesEvents} />
         <Route exact path="/searchevnts" component={Search} />
+        <Route exact path="/manageuser" component={ManageUser} />
         <Route exact path="/userprofile" component={UserProfile} />
         <Route exact path="/searchtag/:tagId" component={SearchTag} />
         <Route exact path="/joinevent" component={JoinEvent} />
