@@ -104,7 +104,9 @@ class EventDetail extends Component {
           ticket_price: item.ticket_price
         })),
         eventtag: result.data.result.event_tags.map(item => ({
-          ticket_price: item.ticket_price
+          tag_name_en: item.tag_name_en,
+          tag_name_th: item.tag_name_th,
+          tag_active: item.tag_active
         }))
       };
     };
@@ -115,16 +117,16 @@ class EventDetail extends Component {
 
   componentDidMount = async () => {
     this.showData();
-    // setInterval(
-    //   ()=>this.showData(),
-    //   200000
-    // )
+    setInterval(
+      ()=>this.showData(),
+      200000
+    )
   };
 
   render() {
     console.log(this.state.data);
     const { data } = this.state;
-    console.log(data.ticket);
+    // console.log(data.ticket);
     return (
       <Row className="event-detail">
         <Col span={24}>
@@ -153,14 +155,22 @@ class EventDetail extends Component {
               </Row> 
               <Row className="event-date">
                 <Icon type="tags" /> Tags: &nbsp; 
-                <Tag
-                  color="#345586"
-                  style={{
-                    borderColor: "white"
-                  }}
-                >
-                  {this.state.data.event_tags} 
-                </Tag> 
+                {this.state.data.eventtag
+                  ? this.state.data.eventtag.map((item, index) => {
+                      return (
+                        <Tag
+                          key={index}
+                          color="#345586"
+                          style={{
+                            borderColor: "white"
+                          }}
+                        >
+                          {item.tag_name_en}
+                        </Tag>
+                      );
+                    })
+                  : ""} 
+                 
               </Row> 
             </Col> 
           </Row> 
