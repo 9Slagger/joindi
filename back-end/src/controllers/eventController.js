@@ -475,5 +475,37 @@ module.exports = {
       transaction.rollback();
       return res.status(400);
     }
+  },
+  getMyEvents: async (req, res, next) => {
+    let eventResult, bookmarkResult;
+    try {
+      eventResult = await db.EventModel.findAll({
+        where: {
+          user_id: req.user.id
+        },
+        include: [
+          {
+            model: db.EventStatusModel,
+            attributes: ["status_name_en"]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get events success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "xxxxxx",
+          title_th: ""
+        }
+      });
+    }
   }
 };

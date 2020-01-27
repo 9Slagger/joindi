@@ -5,6 +5,9 @@ import { Link } from  "react-router-dom";
 import "./MyEvents.css";
 import { Table, Divider, Tag, Icon, Row, Col, Button } from "antd";
 import moment from "moment";
+import Axios from "axios";
+import { serviceEvent, serviceTag } from "../../../../_service";
+
 
 
 const data = [
@@ -38,7 +41,15 @@ const data = [
 ];
 export default class MyEvents extends Component {
   state = {
-    filteredInfo: null
+    filteredInfo: null,
+    myEvent:[]
+  };
+
+  fetchdata = () => {
+    Axios.get("http://localhost:8085/event/myevents").then(result => {
+      // console.log(result)
+    this.setState({ myEvent: result.data.result });
+    });
   };
 
   handleChange = (pagination, filters) => {
@@ -47,6 +58,11 @@ export default class MyEvents extends Component {
       filteredInfo: filters
     });
   };
+
+  componentDidMount() {
+    this.fetchdata();
+  }
+
 
   clearFilters = () => {
     this.setState({ filteredInfo: null });
@@ -58,13 +74,16 @@ export default class MyEvents extends Component {
     });
   };
   render() {
+    console.log("👍",this.state.myEvent)
     let { filteredInfo } = this.state;
     filteredInfo = filteredInfo || {};
+    
 
     const columns = [
       {
         title: "My Events",
         dataIndex: "name",
+        width:"300px",
         key: "name",
         render: text => (
           <Row
@@ -96,6 +115,7 @@ export default class MyEvents extends Component {
       {
         title: "Date",
         dataIndex: "date",
+        width:"150px",
         key: "date",
         render: (date, recode, index) => (
           <Col
@@ -112,23 +132,33 @@ export default class MyEvents extends Component {
             </Row>
           </Col>
         )
-      },
-      // {
-      //   title: "Time",
-      //   dataIndex: "date",
-      //   key: "time",
-      //   render: date => (
-      //     <Col type="flex" align="center">
-      //       {/* <Button className="btn-paymentStatus">test</Button> */}
-      //       <Row>
-      //         <p className="evenDetail">
-      //           {moment(parseInt(date.dateStart)).format("LT")} -{" "}
-      //           {moment(parseInt(date.dateEnd)).format("LT")}
-      //         </p>
-      //       </Row>
-      //     </Col>
-      //   )
-      // }
+      },{
+        title: "User Join Event",
+        dataIndex: "userjoin",
+        width:"150px",
+        key: "userjoin",
+        render: (date, recode, index) => (
+          <Col>
+            <Row>
+              <Button>xxxx</Button>
+            </Row>
+          </Col>
+        )
+      },{
+        title: "Status",
+        dataIndex: "status",
+        width:"100px",
+        key: "status",
+        render: (date, recode, index) => (
+          <Col
+          // style={{ width: "250px" }}
+          >
+            <Row>
+              <Tag  color="blue">Approve</Tag>
+            </Row>
+          </Col>
+        )
+      }
     ];
 
     return (

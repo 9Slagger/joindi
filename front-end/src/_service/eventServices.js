@@ -100,5 +100,16 @@ export const serviceEvent = {
         if (error.response.status < 500) reject(error.response.data);
       }
     });
+  },
+  getMyEvents: () => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get("/event/myevents");
+        resolve(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
   }
 };
