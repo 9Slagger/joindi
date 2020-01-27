@@ -16,16 +16,24 @@ export default class index extends Component {
       createdAt: "",
       updatedAt: "",
       events: []
-    }
+    },
+    closeDrawer: false
   };
 
   componentDidMount = () => {
     this.getTagAndEvent();
   };
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.tagId !== this.props.match.params.tagId) {
+      this.setState({ closeDrawer: true })
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.tagId !== this.props.match.params.tagId) {
       this.getTagAndEvent();
+      this.setState({ closeDrawer: false })
     }
   }
 
@@ -42,9 +50,9 @@ export default class index extends Component {
     }
   };
   render() {
-    const { tagEvent } = this.state;
+    const { tagEvent, closeDrawer } = this.state;
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout {...this.props} closeDrawer={closeDrawer}>
         <Row>
           <CarouselEvents />
         </Row>
