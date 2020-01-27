@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { Button, Row, Col } from "antd";
-
-import { withRouter } from "react-router-dom";
-
-<<<<<<< HEAD
-=======
-import {Link} from "react-router-dom"
->>>>>>> 6aca75e20d4554eeea63a32fad1438592929ee2f
+import { withRouter, Link } from "react-router-dom";
 // import * as constants from "../../../_constants";
-
 import "antd/dist/antd.css";
 import "./Complete.css";
 
