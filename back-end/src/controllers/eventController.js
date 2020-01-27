@@ -366,10 +366,19 @@ module.exports = {
     }
   },
   getEventCatagorieList: async (req, res, next) => {
-    let eventCatagorieList;
+    let eventCatagorieList, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       eventCatagorieList = await db.EventCategoryModel.findAll({
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       res.status(200).json({
         result: eventCatagorieList,
