@@ -358,11 +358,20 @@ module.exports = {
     }
   },
   getCategorieAndEvent: async (req, res, next) => {
-    let categorieAndEventResult;
+    let categorieAndEventResult, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       categorieAndEventResult = await db.EventCategoryModel.findOne({
         where: { id: req.params.categorieId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       return res.status(200).json({
         result: categorieAndEventResult,
@@ -375,10 +384,19 @@ module.exports = {
     }
   },
   getEventCatagorieList: async (req, res, next) => {
-    let eventCatagorieList;
+    let eventCatagorieList, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       eventCatagorieList = await db.EventCategoryModel.findAll({
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       res.status(200).json({
         result: eventCatagorieList,

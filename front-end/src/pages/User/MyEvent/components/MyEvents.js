@@ -77,6 +77,7 @@ export default class MyEvents extends Component {
     console.log("👍",this.state.myEvent)
     let { filteredInfo } = this.state;
     filteredInfo = filteredInfo || {};
+    let dataMyEvent = this.state.myEvent;
     
 
     const columns = [
