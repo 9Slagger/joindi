@@ -3,7 +3,10 @@ import { Button, Row, Col } from "antd";
 
 import { withRouter } from "react-router-dom";
 
+<<<<<<< HEAD
+=======
 import {Link} from "react-router-dom"
+>>>>>>> 6aca75e20d4554eeea63a32fad1438592929ee2f
 // import * as constants from "../../../_constants";
 
 import "antd/dist/antd.css";
@@ -79,20 +82,8 @@ class Complete extends Component {
 
         <Row className="mt-4 mb-3">
           <Col span={24} className="text-center">
-
-
             <Button onClick={() => this.goToHome()} type="primary">
               Home
-            </Button>
-
-            <Button type="primary"><Link to="/">Home</Link></Button>
-
-
-            <Button onClick={() => this.goToHome()} type="primary">
-              Home
-            </Button>
-            <Button type="primary">
-              <Link to="/">Home</Link>
             </Button>
           </Col>
         </Row>

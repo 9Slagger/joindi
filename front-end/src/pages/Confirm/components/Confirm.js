@@ -1,6 +1,8 @@
 import React, { Component } from  "react";
 import { Button, Row, Col } from  "antd";
 
+import Axios from "../../../_helper/axios";
+
 import { withRouter } from "react-router-dom";
 
 import * as constants from "../../../_constants";
@@ -11,11 +13,42 @@ import "./Confirm.css";
 class Confirm extends Component {
   state = {};
 
-  goToCompletePage = () => {
+  componentDidMount = async () => {
+    // console.log(this.props.location.search);
+    // let ticket_in_order_id = "";
+    // try {
+    //   let res = this.props.location.search.split("=");
+    //   ticket_in_order_id = res[1];
+    //   await this.getTicketInOrderDatas(ticket_in_order_id);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
+
+  goToCompletePage = ticket_in_order_id => {
+    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+    //   ticket_in_order_status_id: 4
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
     this.props.history.push({
       pathname: `/complete`,
       search: ``
     });
+  };
+
+  getTicketInOrderDatas = async ticket_in_order_id => {
+    await Axios.get(`/ticketInOrder/wait_for_approve/${ticket_in_order_id}`)
+      .then(res => {
+        this.setState({ ticketLists: res.data });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
