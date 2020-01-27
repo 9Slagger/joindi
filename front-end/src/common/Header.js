@@ -412,9 +412,8 @@ class Header extends React.Component {
                         <Dropdown
                           overlay={
                             <Menu className="dropDownUser">
-                              <Menu.Item key="myevents">My Events</Menu.Item>
-                              <Menu.Item key="joinevents">
-                                Join Events
+                              <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
+                              <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link>
                               </Menu.Item>
                             </Menu>
                           }

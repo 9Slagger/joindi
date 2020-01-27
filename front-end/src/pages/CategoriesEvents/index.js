@@ -65,12 +65,12 @@ export default class index extends Component {
         <Row type="flex" justify="center">
           <Col span={22}>
             <h3 className="textCategoryEvent">
-              {categoryEvent.category_name_en}
+             {categoryEvent && categoryEvent.category_name_en}
             </h3>
             <Divider />
           </Col>
 
-          {categoryEvent.events &&
+          {categoryEvent && categoryEvent.events &&
             categoryEvent.events.map(event => (
               <Col
                 xs={24}
