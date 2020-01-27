@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 
 import Axios from "../../../_helper/axios";
 
+import _ from "lodash";
+
 import UploadForm from "./UploadForm";
 
 // import * as constants from  "../../../_constants";
@@ -17,12 +19,23 @@ class Pay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ticketLists: []
+      ticketLists: [],
+      uploadDatas: []
     };
+
+    this.callBackDatas.bind(this);
   }
 
-  componentDidMount = () => {
-    this.getTicketInOrderDatas();
+  componentDidMount = async () => {
+    // console.log(this.props.location.search);
+    let ticket_in_order_id = "";
+    try {
+      let res = this.props.location.search.split("=");
+      ticket_in_order_id = res[1];
+      await this.getTicketInOrderDatas(ticket_in_order_id);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   goToConfirmPage = ticket_in_order_id => {
@@ -37,18 +50,40 @@ class Pay extends Component {
     //   });
     this.props.history.push({
       pathname: `/confirm`,
-      search: ``
+      search: `?ticket_in_order_id=${ticket_in_order_id}`
     });
   };
 
-  getTicketInOrderDatas = async () => {
-    await Axios.get(`/ticketInOrder/wait_for_payment`)
+  getTicketInOrderDatas = async ticket_in_order_id => {
+    await Axios.get(`/ticketInOrder/wait_for_payment/${ticket_in_order_id}`)
       .then(res => {
         this.setState({ ticketLists: res.data });
       })
       .catch(err => {
         console.error(err);
       });
+  };
+
+  callBackDatas = async datas => {
+    // console.log("callBack");
+    // console.log(datas);
+    await this.setState({
+      ticketLists: this.state.ticketLists,
+      uploadDatas: datas
+    });
+    // console.log(this.state);
+
+    //table: ticket_order_has_image, images
+    //Insert image datas
+    if (!_.isEmpty(datas[0])) {
+      Axios.post(`/image`, datas[0])
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
   };
 
   renderProcess = () => (
@@ -163,7 +198,7 @@ class Pay extends Component {
 
   renderUploadPaymentSlip = props => (
     <div id="upload-payment-slip-div" className="text-center border mt-4 p-3">
-      <UploadForm />
+      <UploadForm sendDataToParent={this.callBackDatas} />
     </div>
   );
 

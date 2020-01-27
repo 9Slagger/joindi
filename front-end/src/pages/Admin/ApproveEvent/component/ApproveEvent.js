@@ -183,18 +183,27 @@ export default class ApproveEvent extends Component {
                   <Col onClick={this.handleContent}>
                     <span className="link-event">{obj.event_name}</span>
                   </Col>
-                  {/* <Col>
+                  <Col>
                     <Button
                       style={{
-                        border: "none",
+                        border: "2px solid #C4C4C4",
+                        color: "#C4C4C4"
+                      }}
+                      shape="circle"
+                    >
+                      <Icon type="tool" style={{ fontSize: "20px" }} />
+                    </Button>
+                    &nbsp;
+                    <Button
+                      style={{
+                        border: "2px solid #8D021F",
                         color: "#8D021F"
                       }}
                       shape="circle"
-                      onClick={() => this.showModal(obj.id)}
                     >
-                      <Icon type="close-circle" style={{ fontSize: "25px" }} />
+                      <Icon type="delete" style={{ fontSize: "20px" }} />
                     </Button>
-                  </Col> */}
+                  </Col>
                 </Row>
               </Card>
               <br />

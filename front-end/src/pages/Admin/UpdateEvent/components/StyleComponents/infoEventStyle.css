@@ -1,0 +1,22 @@
+.avatar-uploader > .ant-upload {
+  margin-top: 60px;
+  width: 200px!important;
+  height: 200px!important;
+}
+.decorationForm{
+  font-family: 'Prompt', sans-serif;
+}
+
+@media screen and (max-width: 1200px) {
+  h5{
+    margin-left: 50px;
+  }
+}
+@media screen and (max-width: 768px) {
+  h5{
+    margin-left: 0px;
+  }
+  .infoPadding{
+    padding: 20px 50px;
+  }
+}
