@@ -37,6 +37,7 @@ export default class index extends Component {
       const res = await serviceEvent.getCategorieAndEvents(
         this.props.match.params.categorieId
       );
+      console.log("res.result", res.result)
       const categoryEvent = res.result;
       this.setState({ categoryEvent });
     } catch (error) {
