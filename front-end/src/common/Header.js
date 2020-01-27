@@ -315,19 +315,16 @@ class Header extends React.Component {
                               <Icon type="bell" />
                             </Badge>
                           </Menu.Item>
-                          <Menu.Item key="profile">
-                            <Link to="/">My Events</Link>
-                          </Menu.Item>
                         </Menu>
                       </>
                     ) : null}
                     <Menu mode="inline">
                       <SubMenu title={Authentication.item.email}>
-                        <Menu.Item key="profile">Profile</Menu.Item>
-                        <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                        <Menu.Item key="myevents">My Events</Menu.Item>
-                        <Menu.Item key="joinevents">Join Events</Menu.Item>
-                        <Menu.Item key="wishlist">Wish List</Menu.Item>
+                      <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
+                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
+                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
+                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
+                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
                         <Menu.Item
                           key="logout"
                           onClick={this.handleClickLogout}
@@ -347,7 +344,7 @@ class Header extends React.Component {
 
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
-                    <Menu.Item key="changelanguage">EN</Menu.Item>
+                    <Menu.Item key="changelanguage">Language: EN</Menu.Item>
                     <SubMenu title="Events">
                       {categorieList.map(data => (
                         <Menu.Item
@@ -400,15 +397,34 @@ class Header extends React.Component {
                     </>
                   ) : Authentication.item.role.role_code === "02CUS" ? (
                     <>
-                      <Col span={2}>
+                      <Col span={1} className="colIconNav">
                         <Badge count={15}>
                           <Icon type="bell" className="iconNav" />
                         </Badge>
                       </Col>
-                      <Col span={2}>
-                        <Button type="link" className="dropDownHeader">
+                      <Col span={3}>
+                        {/* <Button type="link" className="dropDownHeader">
                           <Link to="/">My Events</Link>
-                        </Button>
+                        </Button> */}
+                        <Dropdown
+                          overlay={
+                            <Menu className="dropDownUser">
+                              <Menu.Item key="myevents">My Events</Menu.Item>
+                              <Menu.Item key="joinevents">
+                                Join Events
+                              </Menu.Item>
+                            </Menu>
+                          }
+                          trigger={["click"]}
+                        >
+                          <Button type="link" className="dropDownHeader">
+                            My Activity{" "}
+                            <Icon
+                              type="caret-down"
+                              className="sizeIconDropdown"
+                            />
+                          </Button>
+                        </Dropdown>
                       </Col>
                     </>
                   ) : null}
@@ -416,12 +432,14 @@ class Header extends React.Component {
                     <Dropdown
                       overlay={
                         <Menu className="dropDownUser">
-                          <Menu.Item key="profile">Profile</Menu.Item>
-                          <Menu.Item key="payoders">Pay Orders</Menu.Item>
-                          <Menu.Item key="myevents">My Events</Menu.Item>
-                          <Menu.Item key="joinevents">Join Events</Menu.Item>
-                          <Menu.Item key="wishlist">Wish List</Menu.Item>
-                          <Menu.Item key="changelanguage">EN</Menu.Item>
+                          <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
+                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
+                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
+                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
+                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
+                          <Menu.Item key="changelanguage">
+                            Language: EN
+                          </Menu.Item>
                           <Menu.Item
                             key="logout"
                             onClick={this.handleClickLogout}
@@ -443,7 +461,7 @@ class Header extends React.Component {
               ) : (
                 <div className="logInAndSignUp-nav">
                   <Button type="link" className="changeLanguage">
-                    EN
+                    Language: EN
                   </Button>
                   <Login />
                   <Signup />

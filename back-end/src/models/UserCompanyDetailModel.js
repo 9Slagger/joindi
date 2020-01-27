@@ -18,10 +18,9 @@ UserCompanyDetailModel.init(
       validate: {
         notEmpty: true
       }
-    },
+    }
   },
   { sequelize, modelName: "user_company_detail" }
 );
 
 module.exports = { UserCompanyDetailModel };
-

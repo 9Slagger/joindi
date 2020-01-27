@@ -4,6 +4,27 @@ const _ = require("lodash");
 module.exports = {
   getTag: async (req, res, next) => {
     try {
+      const resultTag = await db.EventTagModel.findAll({
+        where: { tag_active: true }
+      });
+      res.status(200).json({
+        result: resultTag,
+        messages: {
+          title_en: "get tags success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      res.status(400).json({
+        messages: {
+          title_en: "get tags fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  getManageTag: async (req, res, next) => {
+    try {
       const resultTag = await db.EventTagModel.findAll({});
       res.status(200).json({
         result: resultTag,
@@ -39,11 +60,25 @@ module.exports = {
     }
   },
   getTagAndEvent: async (req, res, next) => {
-    let tagAndEventResult;
+    let tagAndEventResult, eventStatusResult;
+    try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" }
+      });
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ messages: { title_en: "something is wrong", title_th: "" } });
+    }
     try {
       tagAndEventResult = await db.EventTagModel.findOne({
         where: { id: req.params.tagId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       return res.status(200).json({
         result: tagAndEventResult,
@@ -53,6 +88,30 @@ module.exports = {
       return res
         .status(400)
         .json({ messages: { title_en: "something is wrong", title_th: "" } });
+    }
+  },
+  addTag: async (req, res, next) => {
+    try {
+      const resultTag = await db.EventTagModel.create({
+        tag_name_en: req.body.tagNameEn,
+        tag_name_th: req.body.tagNameTh,
+        tag_active: true
+      });
+      res.status(200).json({
+        result: resultTag,
+        messages: {
+          title_en: "add tag success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        messages: {
+          title_en: "add tag fail",
+          title_th: ""
+        }
+      });
     }
   }
 };

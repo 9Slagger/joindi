@@ -7,6 +7,14 @@
   font-family: 'Prompt', sans-serif;
 }
 
+.ant-upload-list-item.ant-upload-list-item-undefined.ant-upload-list-item-list-type-picture-card{
+  /* margin-top: 60px; */
+  height: 198px;
+  width: 198px;
+  position: absolute;
+  top: 70px;
+  left: -60px;
+}
 @media screen and (max-width: 1200px) {
   h5{
     margin-left: 50px;

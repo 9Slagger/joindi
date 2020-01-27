@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
 import "./components/Search.css";
 import { serviceEvent } from "../../_service";
 import Fuse from "fuse.js";
 import CardEvents from "../../common/CardEvents";
-import { Row, Col, Divider, Select } from "antd";
+import { Row, Col, Divider, Select, Card } from "antd";
 import selectLang from "../../_helper/selectLang";
-import _ from "lodash";
 const { Option } = Select;
 
 export default class index extends Component {

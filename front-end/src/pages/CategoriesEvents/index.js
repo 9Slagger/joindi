@@ -20,6 +20,7 @@ export default class index extends Component {
 
   componentDidMount = () => {
     this.getCategorie();
+    console.log("----------------didmount");
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -27,6 +28,7 @@ export default class index extends Component {
       prevProps.match.params.categorieId !== this.props.match.params.categorieId
     ) {
       this.getCategorie();
+      console.log("pokemons state has changed.");
     }
   }
 

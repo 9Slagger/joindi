@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Form, Button, Modal, Col, Row, Input, Table, Icon } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import Column from "antd/lib/table/Column";
+import React, { Component } from  "react";
+import { Form, Button, Modal, Col, Row, Input, Table, Icon } from  "antd";
+import TextArea from  "antd/lib/input/TextArea";
+import Column from  "antd/lib/table/Column";
 import "./StyleComponents/OrganizedBy.css";
 
 class OrganizedBy extends Component {

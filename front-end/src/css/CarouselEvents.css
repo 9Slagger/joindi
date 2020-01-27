@@ -5,11 +5,8 @@
 }
 
 .carouselEvents{
-  /* margin: 2% 5% 5% 5% */
   background-color:black !important;
   margin-bottom:40px;
-
-  /* height:400px; */
 }
 
 
@@ -24,3 +21,4 @@
     height:50px
   }
 }
+

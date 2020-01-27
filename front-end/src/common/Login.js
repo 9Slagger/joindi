@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Row, Col, Modal, Button, Input, Divider, Form } from "antd";
-import { connect } from "react-redux";
-import { signin } from "../redux/actions";
+import React, { Component } from  "react";
+import { Row, Col, Modal, Button, Input, Divider, Form } from  "antd";
+import { connect } from  "react-redux";
+import { signin } from  "../redux/actions";
 
 class Login extends Component {
   constructor(props) {

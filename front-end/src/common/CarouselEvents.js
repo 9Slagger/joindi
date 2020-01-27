@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from  "react";
 import "../css/CarouselEvents.css"
-import { Carousel } from "antd";
+import { Carousel } from  "antd";
 
 export default class CarouselEvents extends Component {
   render() {
     return (
       <div>
-        <Carousel  autoplay className="carouselEvents">
+        <Carousel  autoplay className="carouselEvents" style={{backgroundColor:"black", height:"400px"}}>
           <div>
           <h3 className="text">1</h3>
           </div>

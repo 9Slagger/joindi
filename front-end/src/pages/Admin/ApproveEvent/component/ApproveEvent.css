@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Prompt&display=swap");
 
+.layoutContent .ant-layout-content .approveEvent {
+margin: 0;
+}
+
 .sub-header-admin {
   font-family: "Prompt", sans-serif;
   font-weight: bold;

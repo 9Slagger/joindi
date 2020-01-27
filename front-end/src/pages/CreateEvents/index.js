@@ -1,17 +1,18 @@
-import React, { Component } from "react";
-import DefaultLayout from "../../common/DefaultLayout";
-import InfoEvents from "./components/InfoEvents";
-import Ticket from "./components/Ticket";
-import OrganizedBy from "./components/OrganizedBy";
-import { Row, Col, Button } from "antd";
-import RichText from "./components/RichText";
+import React, { Component } from  "react";
+import DefaultLayout from  "../../common/DefaultLayout";
+import InfoEvents from  "./components/InfoEvents";
+import Ticket from  "./components/Ticket";
+import OrganizedBy from  "./components/OrganizedBy";
+import { Row, Col, Button } from  "antd";
+import RichText from  "./components/RichText";
 import "./CreateEventsStyle.css";
-import Axios from "axios";
+import Axios from  "axios";
 
 export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      imageInfo:[],
       eventName: "",
       createrName: "",
       date: "",
@@ -20,8 +21,13 @@ export default class index extends Component {
       addTag: [],
       richText: "",
       ticketList: [],
-      organizedList: []
+      organizedList: [],
+      
     };
+  }
+
+  handleGetImageInfo = value => {
+    this.setState({ imageInfo: value });
   }
 
   handleGetEventName = value => {
@@ -52,7 +58,7 @@ export default class index extends Component {
     this.setState({ organizedList: value });
   };
 
-  handleCreateEvent = () => {
+  handleCreateEvent  = () => {
     let data = {
       event_name: this.state.eventName,
       event_address: this.state.createrName,
@@ -65,6 +71,18 @@ export default class index extends Component {
       organizedList: this.state.organizedList,
       eventList: this.state.addTag
     };
+    let dataImageInfo = new FormData();
+    dataImageInfo.append('image',this.state.imageInfo.file)
+    Axios.post("/image", dataImageInfo,{
+      headers:{'content-type':'multipart/form-data'}
+    })
+      .then(result => {
+        console.log(result.data)
+      })
+      .catch(error =>{
+        console.log(error.message)
+      })
+
     Axios.post("/event", data)
       .then(result => {
         console.log(result.data);
@@ -75,14 +93,16 @@ export default class index extends Component {
   };
 
   render() {
-    console.log("❗️❗️❗️", this.state.date[0]);
+    console.log("❗️❗️44444❗️", this.state.date[0]);
     console.log("✅", this.state);
+    console.log("♨️",this.state.imageInfo.file )
     
     return (
       <DefaultLayout {...this.props}>
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents
+            handleGetImageInfo={this.handleGetImageInfo}
               handleGetEventName={this.handleGetEventName}
               handleGetCreaterName={this.handleGetCreaterName}
               handleGetDate={this.handleGetDate}

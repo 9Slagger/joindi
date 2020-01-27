@@ -35,10 +35,10 @@ export default class index extends Component {
         this.props.match.params.tagId
       );
       const tagEvent = res.result;
-      console.log(res);
+      // console.log("🧨🧨");
       this.setState({ tagEvent });
     } catch (error) {
-      console.log(error);
+      console.log("🧨🧨",error);
     }
   };
   render() {

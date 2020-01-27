@@ -10,7 +10,7 @@ import _ from "lodash";
 
 import UploadForm from "./UploadForm";
 
-// import * as constants from "../../../_constants";
+// import * as constants from  "../../../_constants";
 
 import "antd/dist/antd.css";
 import "./Pay.css";
