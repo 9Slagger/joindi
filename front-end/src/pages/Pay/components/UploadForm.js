@@ -24,7 +24,9 @@ class Demo extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        this.props.sendDataToParent(values.dragger);
+        let data = new FormData();
+        data.append("image", values.dragger[0].originFileObj);
+        this.props.sendDataToParent(data);
       }
     });
   };
@@ -50,7 +52,7 @@ class Demo extends React.Component {
             valuePropName: "fileList",
             getValueFromEvent: this.normFile
           })(
-            <Upload.Dragger name="files" action="/upload.do" accept="image/*">
+            <Upload.Dragger name="files" accept="image/*">
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
               </p>
