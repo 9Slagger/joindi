@@ -192,5 +192,35 @@ module.exports = {
     } catch (error) {
       res.status(400).send({ message: error.message });
     }
+  },
+  getUser: async (req, res, next) => {
+    try {
+      const resultUser = await db.UserModel.findAll(
+        {include: [
+          {
+            model: db.UserIndividualDetailModel,
+            attributes: [
+              "id",
+              "first_name",
+              "last_name",
+            ]
+          }]
+        })
+      res.status(200).json({
+        result: resultUser,
+        messages: {
+          title_en: "get User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "get User fail",
+          title_th: ""
+        }
+      });
+    }
   }
 };

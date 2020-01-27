@@ -1,5 +1,5 @@
-import React, { Component } from  "react";
-import { Button, Row, Col, Table } from  "antd";
+import React, { Component } from "react";
+import { Button, Row, Col, Table } from "antd";
 
 import { withRouter } from "react-router-dom";
 
@@ -60,7 +60,7 @@ class Checkout extends Component {
       });
 
     this.props.history.push({
-      pathname: `/pay/`,
+      pathname: `/pay`,
       search: `?ticket_in_order_id=${ticket_in_order_id}`
     });
   };
@@ -92,7 +92,7 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 2 </Button>
           <p>Pay</p>
         </Col>
@@ -102,19 +102,9 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 3 </Button>
           <p>Confirm</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={3}>
-          <Button type="primary"> 4 </Button>
-          <p>Complete</p>
         </Col>
       </Row>
     </div>
@@ -194,35 +184,13 @@ class Checkout extends Component {
     );
   };
 
-  toPayPage = ticketInOrderId => () => {
-    // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
-  };
-
   render() {
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
         {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
-
-
-
         {/* {this.renderReviewOrderSummary()} */}
-
-        {this.renderReviewOrderSummary()}
-
-        <Row className="mt-4">
-          <Col span={24 / 2}>
-            <Button type="danger">Cancel Order</Button>
-          </Col>
-          <Col span={24 / 2} className="text-right">
-            <Button type="primary" onClick={this.toPayPage}>
-              Confirm Order
-            </Button>
-          </Col>
-        </Row>
-
-
       </section>
     );
   }

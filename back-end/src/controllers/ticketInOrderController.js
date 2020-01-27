@@ -2,15 +2,14 @@ const db = require("../models");
 const _ = require("lodash");
 const sequelize = require("sequelize");
 
+const { QueryTypes } = require("sequelize");
 const modelName = "TicketInOrderModel";
 const arrayOfFields = [
   "ticket_quantity",
-  "ticket_id",
   "ticket_in_order_status_id",
+  "ticket_id",
   "order_id"
 ];
-
-const { QueryTypes } = require("sequelize");
 
 module.exports = {
   findAll: async (req, res, next) => {
@@ -44,9 +43,14 @@ module.exports = {
           INNER JOIN events e on e.id = t.event_id
           LEFT JOIN event_has_images ehi on ehi.event_id = e.id
           WHERE o.user_id = $user_id and tios.status_code = $status_code
+            and tio.id = $ticket_in_order_id
         `,
         {
-          bind: { user_id: req.user.id, status_code: req.params.status },
+          bind: {
+            user_id: req.user.id,
+            ticket_in_order_id: req.params.ticket_in_order_id,
+            status_code: req.params.status
+          },
           type: QueryTypes.SELECT
         }
       );

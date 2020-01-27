@@ -33,4 +33,3 @@ RoleModel.init(
 );
 
 module.exports = { RoleModel };
-

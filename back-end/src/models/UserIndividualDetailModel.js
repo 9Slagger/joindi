@@ -30,4 +30,3 @@ UserIndividualDetailModel.init(
 );
 
 module.exports = { UserIndividualDetailModel };
-
