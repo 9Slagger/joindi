@@ -20,7 +20,8 @@ class Pay extends Component {
     super(props);
     this.state = {
       ticketLists: [],
-      uploadDatas: []
+      ticket_in_order_id: null,
+      isUploaded: false
     };
 
     this.callBackDatas.bind(this);
@@ -39,51 +40,84 @@ class Pay extends Component {
   };
 
   goToConfirmPage = ticket_in_order_id => {
-    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
-    //   ticket_in_order_status_id: 3
-    // })
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
-    this.props.history.push({
-      pathname: `/confirm`,
-      search: `?ticket_in_order_id=${ticket_in_order_id}`
-    });
-  };
+    console.log(ticket_in_order_id);
 
-  getTicketInOrderDatas = async ticket_in_order_id => {
-    await Axios.get(`/ticketInOrder/wait_for_payment/${ticket_in_order_id}`)
-      .then(res => {
-        this.setState({ ticketLists: res.data });
+    // console.log(this.state.isUploaded);
+
+    if (this.state.isUploaded) {
+      Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+        ticket_in_order_status_id: 3
       })
-      .catch(err => {
-        console.error(err);
-      });
-  };
-
-  callBackDatas = async datas => {
-    // console.log("callBack");
-    // console.log(datas);
-    await this.setState({
-      ticketLists: this.state.ticketLists,
-      uploadDatas: datas
-    });
-    // console.log(this.state);
-
-    //table: ticket_order_has_image, images
-    //Insert image datas
-    if (!_.isEmpty(datas[0])) {
-      Axios.post(`/image`, datas[0])
         .then(res => {
           console.log(res);
         })
         .catch(err => {
           console.error(err);
         });
+      this.props.history.push({
+        pathname: `/confirm`,
+        search: `?ticket_in_order_id=${ticket_in_order_id}`
+      });
+    } else {
+      alert("Please upload payslip first.");
     }
+  };
+
+  getTicketInOrderDatas = async ticket_in_order_id => {
+    let res;
+    try {
+      res = await Axios.get(
+        `/ticketInOrder/wait_for_payment/${ticket_in_order_id}`
+      );
+      this.setState({
+        ticketLists: res.data,
+        ticket_in_order_id: ticket_in_order_id
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  callBackDatas = async datas => {
+    // console.log("callBack");
+    // console.log(datas);
+    await this.setState({
+      ticketLists: this.state.ticketLists
+    });
+    // console.log(this.state);
+
+    // console.log("google");
+
+    //table: ticket_order_has_image, images
+    //Insert image datas
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+
+    // if (!_.isEmpty(datas[0])) {
+    Axios.post(`/image`, datas, config)
+      .then(res => {
+        Axios.post(`/ticketInOrderHasImage`, {
+          ticket_in_order_id: this.state.ticket_in_order_id,
+          image_id: res.data.id
+        })
+          .then(res => {
+            console.log(res);
+            this.setState({
+              ticketLists: this.state.ticketLists,
+              isUploaded: true
+            });
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    // }
   };
 
   renderProcess = () => (
@@ -99,7 +133,7 @@ class Pay extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary" className="active">
             {" "}
             2{" "}
@@ -112,19 +146,9 @@ class Pay extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 3 </Button>
           <p>Confirm</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={3}>
-          <Button type="primary"> 4 </Button>
-          <p>Complete</p>
         </Col>
       </Row>
     </div>
@@ -171,6 +195,7 @@ class Pay extends Component {
       </div>
     );
   };
+
   renderBankAccount = () => {
     return (
       <div id="bank-account-div" className="mt-4">
@@ -204,7 +229,7 @@ class Pay extends Component {
 
   render() {
     console.log(this.state);
-    let ticket_in_order_id = this.state.ticketLists;
+    let ticket_in_order_id = this.state.ticket_in_order_id;
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
@@ -214,7 +239,10 @@ class Pay extends Component {
 
         <Row className="mt-4 mb-3">
           <Col span={24} className="text-right">
-            <Button onClick={() => this.goToConfirmPage()} type="primary">
+            <Button
+              onClick={() => this.goToConfirmPage(ticket_in_order_id)}
+              type="primary"
+            >
               <i className="far fa-check-square mr-2"></i>Confirm
             </Button>
           </Col>
