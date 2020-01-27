@@ -373,6 +373,11 @@ module.exports = {
           }
         ]
       });
+      if (_.isEmpty(categorieAndEventResult)) {
+        categorieAndEventResult = await db.EventCategoryModel.findOne({
+          where: { id: req.params.categorieId }
+        });
+      }
       return res.status(200).json({
         result: categorieAndEventResult,
         messages: { title_en: "get categorie and event success", title_th: "" }
@@ -383,6 +388,7 @@ module.exports = {
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
   },
+  // FIXME: delete me
   getEventCatagorieList: async (req, res, next) => {
     let eventCatagorieList, eventStatusResult;
     try {
@@ -408,6 +414,7 @@ module.exports = {
       });
     }
   },
+  // FIXME: delete me
   updateEvent: async (req, res, next) => {
     let transaction,
       targetEvent,
