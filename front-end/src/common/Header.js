@@ -49,6 +49,9 @@ class Header extends React.Component {
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.closeDrawer) {
+      this.onClose()
+    }
     if (
       nextProps !== this.props &&
       !_.isEmpty(nextProps.Authentication.messages)

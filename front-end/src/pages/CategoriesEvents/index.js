@@ -14,8 +14,9 @@ export default class index extends Component {
       category_name_th: "",
       createdAt: "",
       updatedAt: "",
-      events: []
-    }
+      events: [],
+    },
+    closeDrawer: false
   };
 
   componentDidMount = () => {
@@ -23,11 +24,18 @@ export default class index extends Component {
     console.log("----------------didmount");
   };
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.categorieId !== this.props.match.params.categorieId) {
+      this.setState({ closeDrawer: true })
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.match.params.categorieId !== this.props.match.params.categorieId
     ) {
       this.getCategorie();
+      this.setState({ closeDrawer: false })
       console.log("pokemons state has changed.");
     }
   }
@@ -45,9 +53,10 @@ export default class index extends Component {
   };
 
   render() {
-    const { categoryEvent } = this.state;
+    const { categoryEvent, closeDrawer } = this.state;
+    console.log(categoryEvent);
     return (
-      <DefaultLayout {...this.props}>
+      <DefaultLayout {...this.props} closeDrawer={closeDrawer}>
         <Row>
           <CarouselEvents />
         </Row>
