@@ -7,7 +7,7 @@ import Footer from  "./Footer";
 export default props => {
   return (
     <Layout>
-      <Header {...props} />
+      <Header {...props} closeDrawer={props.closeDrawer} />
       <Content>{props.children}</Content>
       <Footer />
     </Layout>
