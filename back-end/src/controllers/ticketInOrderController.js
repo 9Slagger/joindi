@@ -30,7 +30,7 @@ module.exports = {
             e.event_name
           FROM orders o
           INNER JOIN ticket_in_orders tio on o.id = tio.order_id
-          INNER JOIN tickets t on t.id = tio.ticket_id = t.id
+          INNER JOIN tickets t on t.id = tio.ticket_id
           INNER JOIN ticket_in_order_statuses tios on tios.id = tio.ticket_in_order_status_id
           LEFT JOIN ticket_in_order_has_images tiohi on tiohi.ticket_in_order_id = tio.id
           INNER JOIN events e on e.id = t.event_id
@@ -97,6 +97,38 @@ module.exports = {
       });
       console.log(resultInfo);
       res.status(200).send(`${modelName} id: ${req.params.id} deleted.`);
+    } catch (error) {
+      console.error(error.message);
+      res.status(400).send({ message: error.message });
+    }
+  },
+  findAllTicketWithWaitStatus: async (req, res, next) => {
+    let resultInfo;
+    try {
+      const resultInfo = await db.sequelize.query(
+        ` SELECT t.id as "ticket_id", t.ticket_title, t.ticket_detail, t.ticket_total_quantity, t.ticket_remaining_quantity, t.ticket_price,
+            tios.id as "ticket_in_order_status_id", tios.status_code, 
+            tio.id as "ticket_in_order_id", tio.ticket_quantity,
+            e.event_name
+          FROM orders o
+          INNER JOIN ticket_in_orders tio on o.id = tio.order_id
+          INNER JOIN tickets t on t.id = tio.ticket_id
+          INNER JOIN ticket_in_order_statuses tios on tios.id = tio.ticket_in_order_status_id
+          LEFT JOIN ticket_in_order_has_images tiohi on tiohi.ticket_in_order_id = tio.id
+          INNER JOIN events e on e.id = t.event_id
+          LEFT JOIN event_has_images ehi on ehi.event_id = e.id
+          WHERE o.user_id = $user_id and (tios.status_code = "wait_for_payment" OR tios.status_code = "wait_for_approve" or tios.status_code = "complete")
+        `,
+        {
+          bind: {
+            user_id: req.user.id
+          },
+          type: QueryTypes.SELECT
+        }
+      );
+
+      console.log(resultInfo);
+      res.status(200).send(resultInfo);
     } catch (error) {
       console.error(error.message);
       res.status(400).send({ message: error.message });
