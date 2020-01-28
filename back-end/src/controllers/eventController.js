@@ -532,5 +532,44 @@ module.exports = {
         }
       });
     }
+  },
+  getUserJoinEvent: async (req, res, next) => {
+    let userJoinEventResult;
+    try {
+      userJoinEventResult = await db.EventModel.findAll({
+        where: {
+          user_id: req.user.id,
+          id: req.params.eventId
+        },
+        include: [{
+          model: db.TicketModel,
+          include: [{
+            model: db.TicketInOrderModel,
+            include: [{
+              model: db.OrderModel
+            },
+            {
+              model: db.TicketInOrderStatusModel
+            }]
+          }]
+        }]
+      });
+      res.status(200).json({
+        result: userJoinEventResult,
+        messages: {
+          title_en: "get user join event success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: userJoinEventResult,
+        messages: {
+          title_en: "get user join event fail",
+          title_th: ""
+        }
+      });
+    }
   }
 };
