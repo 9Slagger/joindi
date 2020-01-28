@@ -70,7 +70,7 @@ class EventDetail extends Component {
   };
   async showData() {
     const result = await Axios.get("http://localhost:8085/event/1");
-
+// test
     let temp = () => {
       const s = moment(`${result.data.result.event_date_start}`);
       const startdate = s.format("DD MMM YYYY");
