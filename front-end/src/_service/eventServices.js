@@ -1,4 +1,4 @@
-import axios from  "../_helper/axios";
+import axios from "../_helper/axios";
 
 export const serviceEvent = {
   getCategorieAndEvents: categorieId => {
@@ -18,7 +18,7 @@ export const serviceEvent = {
       try {
         res = await axios.get(`/event/${eventId}`);
         resolve(res.data);
-        console.log('res.data', res.data)
+        console.log("res.data", res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
       }
@@ -106,6 +106,20 @@ export const serviceEvent = {
       let res;
       try {
         res = await axios.get("/event/myevents");
+        resolve(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
+  },
+  updateEvent: (eventId, body) => {
+    return new Promise(async (resolve, reject) => {
+      console.log("eventId", eventId);
+      console.log("body", body);
+      let res;
+      try {
+        res = await axios.put(`/event/${eventId}`, body);
+        console.log("res", res);
         resolve(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);

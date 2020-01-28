@@ -277,6 +277,7 @@ class InfoEvents extends Component {
                       format="DD-MM-YYYY"
                     />
                   )}
+                  {/* {console.log("😊😊😊",parseInt(dateStart),parseInt(dateEnd))} */}
                 </Form.Item>
               </Col>
             </Row>

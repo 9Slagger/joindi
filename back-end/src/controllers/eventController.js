@@ -85,8 +85,8 @@ module.exports = {
           { model: db.EventCategoryModel },
           { model: db.EventTagModel },
           {
-            model: db.BookmarkModel,
-            where: { event_id: req.params.eventId }
+            model: db.BookmarkModel
+            // where: { event_id: req.params.eventId }
           },
           { model: db.OrganizedContactModel },
           {
@@ -100,10 +100,13 @@ module.exports = {
         ]
       });
       eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
-      eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
-        bookmark => bookmark.user_id === req.user.id
-      ).length;
-      // console.log("eventDetailResult🟢", eventDetailResult);
+      if (!_.isEmpty(eventDetailResult.bookmarks)) {
+        eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
+          bookmark => bookmark.user_id === req.user.id
+        ).length;
+      } else {
+        eventDetailResult.bookmarks = false;
+      }
       res.status(200).json({
         result: eventDetailResult,
         messages: { title_en: "get event detail success", title_th: "" }
