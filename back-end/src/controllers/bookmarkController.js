@@ -41,5 +41,41 @@ module.exports = {
         });
       }
     }
+  },
+  getBookmark: async (req, res, next) => {
+    let bookmarkResult;
+    try {
+      bookmarkResult = await db.BookmarkModel.findAll({
+        where: {
+          user_id: req.user.id
+        },
+        include: [
+          {
+            model: db.EventModel,
+            attributes: ["event_name", "event_address", "event_date_start"],
+            include: [{
+              model: db.EventTagModel,
+              attributes: ["tag_name_en", "tag_name_th"]
+            }]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: bookmarkResult,
+        messages: {
+          title_en: "get my bookmark success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: bookmarkResult,
+        messages: {
+          title_en: "get my bookmark fail",
+          title_th: ""
+        }
+      });
+    }
   }
 };

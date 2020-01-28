@@ -518,7 +518,7 @@ module.exports = {
       res.status(200).json({
         result: eventResult,
         messages: {
-          title_en: "get events success",
+          title_en: "get my events success",
           title_th: ""
         }
       });
@@ -527,7 +527,7 @@ module.exports = {
       res.status(200).json({
         result: eventResult,
         messages: {
-          title_en: "xxxxxx",
+          title_en: "get my events fail",
           title_th: ""
         }
       });
