@@ -43,8 +43,21 @@ export const serviceUser = {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.put("/user/edituserprofile", userNewData);
+        res = await axios.put("/user/updateuserindividual", userNewData);
         resolve(res.data);
+        console.log(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
+  },
+  updateUser: newEmailAndPhoneNumber => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.put("/user/updateuser", newEmailAndPhoneNumber);
+        resolve(res.data);
+        console.log(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }

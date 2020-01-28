@@ -29,9 +29,9 @@ class PersonalProfile extends Component {
   getUserDetail = async () => {
     try {
       const res = await serviceUser.getUserDetail();
-      console.log("res.result", res.result);
+      // console.log("res.result", res.result);
       const detailUser = res.result;
-      console.log("detailUser", detailUser);
+      // console.log("detailUser", detailUser);
       this.props.form.setFieldsValue({
         first_name: detailUser.user_individual_detail.first_name,
         last_name: detailUser.user_individual_detail.last_name,
@@ -80,8 +80,10 @@ class PersonalProfile extends Component {
         console.log(err);
         if (!err) {
           console.log("Received values of form: ", values);
-          values.birthday = values.birthday.getTime();
+          values.birthday = values.birthday.toDate().getTime();
+          console.log(values);
           serviceUser.updateUserDetailIndividual(values);
+          serviceUser.updateUser(values);
         }
       }
     );
@@ -89,15 +91,6 @@ class PersonalProfile extends Component {
   render() {
     const { detailUser } = this.state;
     const { getFieldDecorator, setFieldsValue } = this.props.form;
-
-    // this.props.form.setFieldsValue({
-    //   first_name: "xxx",
-    //   last_name: "yyy",
-    //   birthday: "1578985914618",
-    //   email: "xxxx@gmail.com",
-    //   phone_number: "1234567890"
-    // });
-
     return (
       <Col className="profile">
         <Row className="Profile" type="flex" justify="center">
@@ -113,7 +106,7 @@ class PersonalProfile extends Component {
               ></Avatar>
             </Row>
             <Row className="Link" type="flex" justify="center">
-              <Link onClick={this.showModal}>Change Password</Link>
+              {/* <Link onClick={this.showModal}>Change Password</Link> */}
               <Modal
                 title="Change Password"
                 visible={this.state.visible}
@@ -203,12 +196,7 @@ class PersonalProfile extends Component {
             </Row>
             <Row type="flex" justify="center">
               <Col span={20}>
-                <Row
-                  className="UserData"
-                  type="flex"
-                  justify="left"
-                  style={{ paddingLeft: "75px" }}
-                >
+                <Row className="UserData" type="flex" justify="center">
                   <Form onSubmit={this.handleSubmitEditProfile}>
                     <Form.Item label="First Name">
                       {getFieldDecorator("first_name", {
@@ -238,18 +226,7 @@ class PersonalProfile extends Component {
                             message: "Please input your birthday"
                           }
                         ]
-                      })(
-                        <DatePicker
-                          // defaultValue={moment(
-                          //   moment(
-                          //     detailUser.user_individual_detail &&
-                          //       detailUser.user_individual_detail.birthday
-                          //   ).format("DD/MM/YYYY"),
-                          //   dateFormat
-                          // )}
-                          format={dateFormat}
-                        />
-                      )}
+                      })(<DatePicker format={dateFormat} />)}
                     </Form.Item>
 
                     <Form.Item label="E-mail">

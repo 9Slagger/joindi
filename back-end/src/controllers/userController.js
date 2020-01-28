@@ -257,26 +257,82 @@ module.exports = {
     }
   },
   updateUserDetailIndividual: async (req, res, next) => {
-    let obj = {};
-    let obj2 = {};
-    let arrayOfUserDetail = ["first_name", "last_name", "birthday"];
-    arrayOfUserDetail.forEach(item => {
-      obj[item] = req.body[item];
-    });
-
-    let arrayOfUser = ["email", "phone_number"];
-    arrayOfUser.forEach(item => {
-      obj2[item] = req.body[item];
-    });
     try {
-      console.log("obj2", obj2);
-      await db.UserIndividualDetailModel.update(obj, {
-        where: { user_id: req.user.id }
+      const resultUpdateUserIndividual = await db.UserIndividualDetailModel.update(
+        {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          birthday: req.body.birthday
+        },
+        { where: { user_id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateUserIndividual,
+        messages: {
+          title_en: "Update User Individual success",
+          title_th: ""
+        }
       });
-
-      await db.UserModel.update(obj2, { where: { user_id: req.user.id } });
     } catch (error) {
       console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update Company User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateUser: async (req, res, next) => {
+    try {
+      const resultUpdateUser = await db.UserModel.update(
+        {
+          phone_number: req.body.phone_number,
+          email: req.body.email
+        },
+        { where: { id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateUser,
+        messages: {
+          title_en: "Update User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateCompanyUser: async (req, res, next) => {
+    try {
+      const resultUpdateCompanyUser = await db.UserCompanyDetailModel.update(
+        {
+          company_name: req.body.company_name,
+          company_address: req.body.company_address
+        },
+        { where: { user_id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateCompanyUser,
+        messages: {
+          title_en: "Update Company User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update Company User fail",
+          title_th: ""
+        }
+      });
     }
   }
 };
