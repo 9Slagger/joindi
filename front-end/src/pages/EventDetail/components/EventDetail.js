@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
+import {Link} from "react-router-dom"
 
 import {
   Row,
@@ -29,6 +30,7 @@ class EventDetail extends Component {
       children: []
     };
   }
+  
 
   handleChangeEarlyPrice = e => {};
 
@@ -41,14 +43,14 @@ class EventDetail extends Component {
   };
 
   handleOk = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       visible: false
     });
   };
 
   handleCancel = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       visible: false
     });
@@ -66,11 +68,15 @@ class EventDetail extends Component {
   };
 
   hangleBuyTicket = id => async () => {
+    // console.log("value : ")
     // TODO: call api if success go to page checkout if fail alert buy ticket fail
   };
   async showData() {
+    
+    
     const result = await Axios.get("http://localhost:8085/event/1");
-// test
+    
+    // console.log("test"+App)
     let temp = () => {
       const s = moment(`${result.data.result.event_date_start}`);
       const startdate = s.format("DD MMM YYYY");
@@ -124,8 +130,7 @@ class EventDetail extends Component {
   };
 
   render() {
-    console.log(this.state.data);
-    const { data } = this.state;
+    console.dir(this.props,{depth:null});
     // console.log(data.ticket);
     return (
       <Row className="event-detail">
@@ -253,7 +258,9 @@ class EventDetail extends Component {
                           type="primary"
                           onClick={this.hangleBuyTicket(1)}
                         >
-                          Buy Ticket 
+                          <Link to="/checkout">
+                            Buy Ticket 
+                          </Link>
                         </Button> 
                       </Row> 
                     </Col> 
