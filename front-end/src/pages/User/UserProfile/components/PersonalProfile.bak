@@ -31,19 +31,6 @@ class PersonalProfile extends Component {
       const res = await serviceUser.getUserDetail();
       console.log("res.result", res.result);
       const detailUser = res.result;
-      console.log("detailUser", detailUser);
-      this.props.form.setFieldsValue({
-        first_name: detailUser.user_individual_detail.first_name,
-        last_name: detailUser.user_individual_detail.last_name,
-        birthday: moment(
-          moment(parseInt(detailUser.user_individual_detail.birthday)).format(
-            "DD/MM/YYYY"
-          ),
-          dateFormat
-        ),
-        email: detailUser.email,
-        phone_number: detailUser.phone_number
-      });
       this.setState({ detailUser });
     } catch (error) {
       console.log(error);
@@ -74,30 +61,16 @@ class PersonalProfile extends Component {
 
   handleSubmitEditProfile = e => {
     e.preventDefault();
-    this.props.form.validateFields(
-      ["first_name", "last_name", "birthday", "email", "phone_number"],
-      (err, values) => {
-        console.log(err);
-        if (!err) {
-          console.log("Received values of form: ", values);
-          values.birthday = values.birthday.getTime();
-          serviceUser.updateUserDetailIndividual(values);
-        }
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of form: ", values);
+        serviceUser.updateUserDetailIndividual(values);
       }
-    );
+    });
   };
   render() {
     const { detailUser } = this.state;
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
-
-    // this.props.form.setFieldsValue({
-    //   first_name: "xxx",
-    //   last_name: "yyy",
-    //   birthday: "1578985914618",
-    //   email: "xxxx@gmail.com",
-    //   phone_number: "1234567890"
-    // });
-
+    const { getFieldDecorator } = this.props.form;
     return (
       <Col className="profile">
         <Row className="Profile" type="flex" justify="center">
@@ -240,13 +213,13 @@ class PersonalProfile extends Component {
                         ]
                       })(
                         <DatePicker
-                          // defaultValue={moment(
-                          //   moment(
-                          //     detailUser.user_individual_detail &&
-                          //       detailUser.user_individual_detail.birthday
-                          //   ).format("DD/MM/YYYY"),
-                          //   dateFormat
-                          // )}
+                          defaultValue={moment(
+                            moment(
+                              detailUser.user_individual_detail &&
+                                detailUser.user_individual_detail.birthday
+                            ).format("DD/MM/YYYY"),
+                            dateFormat
+                          )}
                           format={dateFormat}
                         />
                       )}
@@ -275,35 +248,136 @@ class PersonalProfile extends Component {
                             message: "Please input your phone number"
                           }
                         ]
-                      })(
-                        <Input value={detailUser && detailUser.phone_number} />
-                      )}
+                      })(<Input />)}
                     </Form.Item>
 
                     <Form.Item>
-                      <Row
-                        className="UserData"
-                        type="flex"
-                        justify="center"
-                        style={{ paddingTop: "40px" }}
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
                       >
-                        <Col style={{ padding: "10px" }}>
-                          <Button type="danger" style={{ width: "200px" }}>
-                            Cancle
-                          </Button>
-                        </Col>
-                        <Col style={{ padding: "10px" }}>
-                          <Button
-                            type="primary"
-                            htmlType="submit"
-                            style={{ width: "200px" }}
-                          >
-                            Save
-                          </Button>
-                        </Col>
-                      </Row>
+                        Log in
+                      </Button>
                     </Form.Item>
                   </Form>
+
+                  <Col
+                    className="UserData"
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={10}
+                    xl={10}
+                  >
+                    <Row>Firstname :</Row>
+                    <Row>
+                      <Input
+                        value={
+                          detailUser.user_individual_detail &&
+                          detailUser.user_individual_detail.first_name
+                        }
+                      />
+                    </Row>
+                  </Col>
+                  <Col
+                    className="UserData"
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={10}
+                    xl={10}
+                  >
+                    <Row>Lastname :</Row>
+                    <Row>
+                      <Input
+                        value={
+                          detailUser.user_individual_detail &&
+                          detailUser.user_individual_detail.last_name
+                        }
+                      />
+                    </Row>
+                  </Col>
+                </Row>
+                <Row
+                  className="UserData"
+                  type="flex"
+                  justify="left"
+                  style={{ paddingLeft: "75px" }}
+                >
+                  <Col className="UserData">
+                    <Row>Birthday (Day/Month/Year) :</Row>
+                    <Row>
+                      <DatePicker
+                        defaultValue={moment(
+                          moment(
+                            detailUser.user_individual_detail &&
+                              detailUser.user_individual_detail.birthday
+                          ).format("DD/MM/YYYY"),
+                          dateFormat
+                        )}
+                        format={dateFormat}
+                      />
+                    </Row>
+                  </Col>
+                </Row>
+                <Row
+                  className="UserData"
+                  type="flex"
+                  justify="left"
+                  style={{ paddingLeft: "75px" }}
+                >
+                  <Col
+                    className="UserData"
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={15}
+                    xl={15}
+                  >
+                    <Row>E-mail. :</Row>
+                    <Row>
+                      <Input value={detailUser && detailUser.email} />
+                    </Row>
+                  </Col>
+                </Row>
+                <Row
+                  className="UserData"
+                  type="flex"
+                  justify="left"
+                  style={{ paddingLeft: "75px" }}
+                >
+                  <Col
+                    className="UserData"
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={10}
+                    xl={10}
+                  >
+                    <Row>Phone Number :</Row>
+                    <Row>
+                      <Input value={detailUser && detailUser.phone_number} />
+                    </Row>
+                  </Col>
+                </Row>
+
+                <Row
+                  className="UserData"
+                  type="flex"
+                  justify="center"
+                  style={{ paddingTop: "40px" }}
+                >
+                  <Col style={{ padding: "10px" }}>
+                    <Button type="danger" style={{ width: "200px" }}>
+                      Cancle
+                    </Button>
+                  </Col>
+                  <Col style={{ padding: "10px" }}>
+                    <Button type="primary" style={{ width: "200px" }}>
+                      Save
+                    </Button>
+                  </Col>
                 </Row>
               </Col>
             </Row>

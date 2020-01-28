@@ -1,4 +1,4 @@
-import axios from  "../_helper/axios";
+import axios from "../_helper/axios";
 
 export const serviceUser = {
   createUser: (
@@ -33,6 +33,17 @@ export const serviceUser = {
       let res;
       try {
         res = await axios.get("/user/userdetail");
+        resolve(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
+  },
+  updateUserDetailIndividual: userNewData => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.put("/user/edituserprofile", userNewData);
         resolve(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);

@@ -255,5 +255,28 @@ module.exports = {
         }
       });
     }
+  },
+  updateUserDetailIndividual: async (req, res, next) => {
+    let obj = {};
+    let obj2 = {};
+    let arrayOfUserDetail = ["first_name", "last_name", "birthday"];
+    arrayOfUserDetail.forEach(item => {
+      obj[item] = req.body[item];
+    });
+
+    let arrayOfUser = ["email", "phone_number"];
+    arrayOfUser.forEach(item => {
+      obj2[item] = req.body[item];
+    });
+    try {
+      console.log("obj2", obj2);
+      await db.UserIndividualDetailModel.update(obj, {
+        where: { user_id: req.user.id }
+      });
+
+      await db.UserModel.update(obj2, { where: { user_id: req.user.id } });
+    } catch (error) {
+      console.log("❌", error);
+    }
   }
 };
