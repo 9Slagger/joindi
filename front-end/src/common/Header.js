@@ -50,7 +50,7 @@ class Header extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.closeDrawer) {
-      this.onClose()
+      this.onClose();
     }
     if (
       nextProps !== this.props &&
@@ -322,12 +322,27 @@ class Header extends React.Component {
                       </>
                     ) : null}
                     <Menu mode="inline">
-                      <SubMenu title={Authentication.item.email}>
-                      <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
-                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
-                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
-                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
-                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
+                      <SubMenu
+                        title= {<span>
+                          <Icon type="user" />
+                          <span>{Authentication.item.email}</span>
+                        </span>}
+                      >
+                        <Menu.Item key="profile">
+                          <Link to="/userprofile">Profile</Link>
+                        </Menu.Item>
+                        <Menu.Item key="payoders">
+                          <Link to="/myorder">My Orders</Link>
+                        </Menu.Item>
+                        <Menu.Item key="myevents">
+                          <Link to="/myevent">My Events</Link>
+                        </Menu.Item>
+                        <Menu.Item key="joinevents">
+                          <Link to="/joinevent">Join Events</Link>
+                        </Menu.Item>
+                        <Menu.Item key="bookmark">
+                          <Link to="/bookmark">Bookmark</Link>
+                        </Menu.Item>
                         <Menu.Item
                           key="logout"
                           onClick={this.handleClickLogout}
@@ -347,8 +362,11 @@ class Header extends React.Component {
 
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
-                    <Menu.Item key="changelanguage">Language: EN</Menu.Item>
-                    <SubMenu title="Events">
+                    <Menu.Item key="changelanguage">  <Icon type="global" />Language: EN</Menu.Item>
+                    <SubMenu  title= {<span>
+                          <Icon type="calendar" />
+                          <span>Events</span>
+                        </span>}>
                       {categorieList.map(data => (
                         <Menu.Item
                           key={data.id}
@@ -412,8 +430,11 @@ class Header extends React.Component {
                         <Dropdown
                           overlay={
                             <Menu className="dropDownUser">
-                              <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
-                              <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link>
+                              <Menu.Item key="myevents">
+                                <Link to="/myevent">My Events</Link>
+                              </Menu.Item>
+                              <Menu.Item key="joinevents">
+                                <Link to="/joinevent">Join Events</Link>
                               </Menu.Item>
                             </Menu>
                           }
@@ -434,11 +455,21 @@ class Header extends React.Component {
                     <Dropdown
                       overlay={
                         <Menu className="dropDownUser">
-                          <Menu.Item key="profile"><Link to="/userprofile">Profile</Link></Menu.Item>
-                          <Menu.Item key="payoders"><Link to="/myorder">My Orders</Link></Menu.Item>
-                          <Menu.Item key="myevents"><Link to="/myevent">My Events</Link></Menu.Item>
-                          <Menu.Item key="joinevents"><Link to="/joinevent">Join Events</Link></Menu.Item>
-                          <Menu.Item key="bookmark"><Link to="/bookmark">Bookmark</Link></Menu.Item>
+                          <Menu.Item key="profile">
+                            <Link to="/userprofile">Profile</Link>
+                          </Menu.Item>
+                          <Menu.Item key="payoders">
+                            <Link to="/myorder">My Orders</Link>
+                          </Menu.Item>
+                          <Menu.Item key="myevents">
+                            <Link to="/myevent">My Events</Link>
+                          </Menu.Item>
+                          <Menu.Item key="joinevents">
+                            <Link to="/joinevent">Join Events</Link>
+                          </Menu.Item>
+                          <Menu.Item key="bookmark">
+                            <Link to="/bookmark">Bookmark</Link>
+                          </Menu.Item>
                           <Menu.Item key="changelanguage">
                             Language: EN
                           </Menu.Item>
