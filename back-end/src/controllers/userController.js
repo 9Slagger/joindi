@@ -255,5 +255,57 @@ module.exports = {
         }
       });
     }
+  },
+  updateUser: async (req, res, next) => {
+    try {
+      const resultUpdateUser = await db.UserModel.update(
+        {
+          phone_number: req.body.phone_number,
+          email: req.body.email
+        },
+        { where: { id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateUser,
+        messages: {
+          title_en: "Update User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateCompanyUser: async (req, res, next) => {
+    try {
+      const resultUpdateCompanyUser = await db.UserCompanyDetailModel.update(
+        {
+          company_name: req.body.company_name,
+          company_address: req.body.company_address
+        },
+        { where: { user_id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateCompanyUser,
+        messages: {
+          title_en: "Update Company User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update Company User fail",
+          title_th: ""
+        }
+      });
+    }
   }
 };
