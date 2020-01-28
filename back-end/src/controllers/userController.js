@@ -158,7 +158,7 @@ module.exports = {
         }
       });
     } catch (error) {
-      if(error.original.errno === 1062) {
+      if (error.original.errno === 1062) {
         return res.status(400).json({
           messages: {
             title_en: error.original.message,
@@ -195,17 +195,50 @@ module.exports = {
   },
   getUser: async (req, res, next) => {
     try {
-      const resultUser = await db.UserModel.findAll(
-        {include: [
+      const resultUser = await db.UserModel.findAll({
+        include: [
           {
             model: db.UserIndividualDetailModel,
-            attributes: [
-              "id",
-              "first_name",
-              "last_name",
-            ]
-          }]
-        })
+            attributes: ["id", "first_name", "last_name"]
+          },
+          {
+            model: db.UserCompanyDetailModel,
+            attributes: ["id", "company_name", "company_address"]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: resultUser,
+        messages: {
+          title_en: "get User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "get User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  getUserDetail: async (req, res, next) => {
+    try {
+      const resultUser = await db.UserModel.findOne({
+        where: { id: req.user.id },
+        include: [
+          {
+            model: db.UserIndividualDetailModel,
+            attributes: ["id", "first_name", "last_name", "birthday"]
+          },
+          {
+            model: db.UserCompanyDetailModel,
+            attributes: ["id", "company_name", "company_address"]
+          }
+        ]
+      });
       res.status(200).json({
         result: resultUser,
         messages: {
