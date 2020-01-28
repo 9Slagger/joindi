@@ -358,12 +358,26 @@ module.exports = {
     }
   },
   getCategorieAndEvent: async (req, res, next) => {
-    let categorieAndEventResult;
+    let categorieAndEventResult, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       categorieAndEventResult = await db.EventCategoryModel.findOne({
         where: { id: req.params.categorieId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
+      if (_.isEmpty(categorieAndEventResult)) {
+        categorieAndEventResult = await db.EventCategoryModel.findOne({
+          where: { id: req.params.categorieId }
+        });
+      }
       return res.status(200).json({
         result: categorieAndEventResult,
         messages: { title_en: "get categorie and event success", title_th: "" }
@@ -374,11 +388,21 @@ module.exports = {
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
   },
+  // FIXME: delete me
   getEventCatagorieList: async (req, res, next) => {
-    let eventCatagorieList;
+    let eventCatagorieList, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       eventCatagorieList = await db.EventCategoryModel.findAll({
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       res.status(200).json({
         result: eventCatagorieList,
@@ -390,6 +414,7 @@ module.exports = {
       });
     }
   },
+  // FIXME: delete me
   updateEvent: async (req, res, next) => {
     let transaction,
       targetEvent,

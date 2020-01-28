@@ -4,6 +4,8 @@ const _ = require("lodash");
 const modelName = "ImageModel";
 const arrayOfFields = ["file_size", "filename_extension"];
 
+var fs = require("fs");
+
 module.exports = {
   findAll: async (req, res, next) => {
     let resultInfo;
@@ -21,21 +23,26 @@ module.exports = {
     let resultInfo,
       obj = {};
     try {
-      req.body.originFileObj.mv(
-        `uploads/payslip/${req.body["filename_extension"]}`
-      );
-      console.log(req.body);
+      // req.body.originFileObj.mv(
+      //   `uploads/payslip/${req.body["filename_extension"]}`
+      // );
+      console.log("files", req.files);
 
-      obj.file_size = req.body.size;
-      obj.filename_extension = req.body.uid + req.body.name;
+      let rand = parseInt(Math.random() * 1000000);
 
-      console.log(obj);
+      req.files.image.mv(`uploads/payslips/${rand}_${req.files.image["name"]}`);
+
+      // console.log(req.body);
+
+      obj.file_size = req.files.image.size;
+      obj.filename_extension = `${rand}_${req.files.image["name"]}`;
+
+      // console.log(obj);
 
       //Upload image
-      res.status(200).send("ok");
-      // resultInfo = await db[modelName].create(obj);
-      // console.log(resultInfo);
-      // res.status(200).send(resultInfo);
+      resultInfo = await db[modelName].create(obj);
+      console.log(resultInfo);
+      res.status(200).send(resultInfo);
     } catch (error) {
       console.error(error.message);
       res.status(400).send({ message: error.message });

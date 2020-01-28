@@ -3,6 +3,13 @@ const _ = require("lodash");
 const sequelize = require("sequelize");
 
 const { QueryTypes } = require("sequelize");
+const modelName = "TicketInOrderModel";
+const arrayOfFields = [
+  "ticket_quantity",
+  "ticket_in_order_status_id",
+  "ticket_id",
+  "order_id"
+];
 
 module.exports = {
   findAll: async (req, res, next) => {

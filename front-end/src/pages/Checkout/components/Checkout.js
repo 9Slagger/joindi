@@ -92,7 +92,7 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 2 </Button>
           <p>Pay</p>
         </Col>
@@ -102,19 +102,9 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 3 </Button>
           <p>Confirm</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={3}>
-          <Button type="primary"> 4 </Button>
-          <p>Complete</p>
         </Col>
       </Row>
     </div>
