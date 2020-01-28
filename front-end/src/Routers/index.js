@@ -8,10 +8,8 @@ import ManageTag from "../pages/Admin/ManageTag";
 import ApprovePayment from "../pages/Admin/ApprovePayment/approvepayment";
 import TagEvents from "../pages/TagEvents";
 import AboutPage from "../pages/About";
-import CheckoutPage from "../pages/Checkout";
 import PayPage from "../pages/Pay";
 import ConfirmPage from "../pages/Confirm";
-import CompletePage from "../pages/Complete";
 import CreateEvents from "../pages/CreateEvents";
 import CategoriesEvents from "../pages/CategoriesEvents";
 import EventDetail from "../pages/EventDetail";
@@ -36,10 +34,8 @@ const Routers = props => {
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
-        <Route exact path="/checkout" component={CheckoutPage} />
         <Route exact path="/pay" component={PayPage} />
         <Route exact path="/confirm" component={ConfirmPage} />
-        <Route exact path="/complete" component={CompletePage} />
         <Route exact path="/createevents" component={CreateEvents} />
         <Route exact path="/approveevent" component={ApproveEvent} />
         <Route exact path="/approvepayment" component={ApprovePayment} />

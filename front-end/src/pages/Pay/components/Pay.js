@@ -123,31 +123,21 @@ class Pay extends Component {
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
       <Row className="text-center">
-        <Col offset={1} span={3}>
-          <Button type="primary"> 1 </Button>
-          <p>Checkout</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={4}>
+        <Col offset={6} span={4}>
           <Button type="primary" className="active">
             {" "}
-            2{" "}
+            1{" "}
           </Button>
           <p>Pay</p>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <h2>
             <i className="fas fa-ellipsis-h"></i>
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
         <Col span={4}>
-          <Button type="primary"> 3 </Button>
+          <Button type="primary"> 2 </Button>
           <p>Confirm</p>
         </Col>
       </Row>
@@ -202,16 +192,24 @@ class Pay extends Component {
         <h3 className="p-2">Bank Account</h3>
         <div className="p-5">
           <Row>
-            <Col span={12} className="text-right pr-5">
+            <Col span={12} className="text-right">
               <Row>
-                <Col span={24}>Bank Logo</Col>
+                <Col span={24}>
+                  <img
+                    src="./images/scb.png"
+                    style={{ width: "90px", height: "90px" }}
+                  />
+                </Col>
               </Row>
             </Col>
-            <Col span={12} className="pl-5">
-              <Row>
-                <Col span={24}>{"{Account name : John Doe}"}</Col>
+            <Col span={8} className="">
+              <Row className="bg-white">
+                <Col span={24}>
+                  <p>{"ธนาคาร ไทยพานิชย์"}</p>
+                  <p>{"ชื่อบัญชี นาย จอน โด"}</p>
+                </Col>
               </Row>
-              <Row>
+              <Row className="bg-white">
                 <Col span={24}>{"{XXX-XXXXX-XXX}"}</Col>
               </Row>
             </Col>
