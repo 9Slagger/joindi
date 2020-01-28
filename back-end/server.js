@@ -67,6 +67,8 @@ app.use(
   "/ticketInOrderHasImage",
   require("./src/routes/ticketInOrderHasImageRouter")
 );
+app.use("/order", require("./src/routes/orderRouter"));
+
 app.use((req, res, next) => {
   res.status(404).json({ messages: ["api not found"] });
 });
