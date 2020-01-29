@@ -7,7 +7,7 @@ export default class index extends Component {
   render() {
     return (
       <DefaultLayout {...this.props}>
-        <EventDetail />
+        <EventDetail {...this.props} />
       </DefaultLayout>
     );
   }

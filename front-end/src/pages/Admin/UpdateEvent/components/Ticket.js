@@ -11,10 +11,10 @@ import {
   Table,
   Icon
 } from "antd";
-import { serviceEvent } from "../../../../_service/eventServices";
+// import { serviceEvent } from "../../../../_service/eventServices";
 import Column from "antd/lib/table/Column";
 import "./StyleComponents/ticketDecoration.css";
-import moment from "moment";
+// import moment from "moment";
 
 const { RangePicker } = DatePicker;
 

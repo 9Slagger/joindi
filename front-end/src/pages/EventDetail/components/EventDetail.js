@@ -57,7 +57,7 @@ class EventDetail extends Component {
   renderOptions = (item) => {
     const number_of_tickets = item;
     let array = []
-    for(let i = 1; i<=number_of_tickets; i++){
+    for(let i = 0; i<=number_of_tickets; i++){
       array.push(i)
     }
     return array.map(ent => (
@@ -65,9 +65,15 @@ class EventDetail extends Component {
     ));
   };
 
-  hangleBuyTicket = id => async () => {
-    // TODO: call api if success go to page checkout if fail alert buy ticket fail
+  handleBuyTicket = () => {
+    if (false) {
+      alert("ตั๋วไม่พอกับความต้องการของคุณ")
+    }
+    else {
+      this.props.history.push(`/checkout/${1}/${5}`)
+    }
   };
+
   async showData() {
     const result = await Axios.get("http://localhost:8085/event/1");
 
@@ -227,7 +233,7 @@ class EventDetail extends Component {
                             <Col span={2}>
                               <Row>
                                 <Select
-                                  defaultValue="1"
+                                  defaultValue={0}
                                   onChange={e => this.handleChangeEarlyPrice(e)}
                                   style={{
                                     width: "60px"
@@ -251,9 +257,9 @@ class EventDetail extends Component {
                       <Row type="flex" justify="end" align="middle">
                         <Button
                           type="primary"
-                          onClick={this.hangleBuyTicket(1)}
+                          onClick={this.handleBuyTicket}
                         >
-                          Buy Ticket 
+                          Buy Ticket
                         </Button> 
                       </Row> 
                     </Col> 
