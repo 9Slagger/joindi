@@ -100,12 +100,15 @@ module.exports = {
         ]
       });
       eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
-      if (!_.isEmpty(eventDetailResult.bookmarks)) {
+      if (
+        !_.isEmpty(eventDetailResult) &&
+        !_.isEmpty(eventDetailResult.bookmarks)
+      ) {
         eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
           bookmark => bookmark.user_id === req.user.id
         ).length;
       } else {
-        eventDetailResult.bookmarks = false;
+        // eventDetailResult.bookmarks = false;
       }
       res.status(200).json({
         result: eventDetailResult,
@@ -489,18 +492,24 @@ module.exports = {
           user_id: req.user.id,
           id: req.params.eventId
         },
-        include: [{
-          model: db.TicketModel,
-          include: [{
-            model: db.TicketInOrderModel,
-            include: [{
-              model: db.OrderModel
-            },
-            {
-              model: db.TicketInOrderStatusModel
-            }]
-          }]
-        }]
+        include: [
+          {
+            model: db.TicketModel,
+            include: [
+              {
+                model: db.TicketInOrderModel,
+                include: [
+                  {
+                    model: db.OrderModel
+                  },
+                  {
+                    model: db.TicketInOrderStatusModel
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       });
       res.status(200).json({
         result: userJoinEventResult,

@@ -86,7 +86,7 @@ export const serviceEvent = {
         res = await axios.get("/event/statusapprove");
         resolve(res.data);
       } catch (error) {
-        if (error.response.status < 500) reject(error.response.data);
+        // if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
