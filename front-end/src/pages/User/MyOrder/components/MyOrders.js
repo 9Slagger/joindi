@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./MyOrders.css";
 import { Table, Icon, Row, Col, Button } from "antd";
 import { serviceTicketInOrder } from "../../../../_service/ticketInOrderService";
+import { ENDPOINT } from "../../../../_constants/index";
 
 // const data = [
 //   {
@@ -56,6 +57,7 @@ export default class MyOrders extends Component {
         temp[idx].key = idx + 1;
         temp[idx].ticketId = item.ticket_id;
         temp[idx].myOrder = {
+          img: `${ENDPOINT}/${item.id}.${item.filename_extension}`,
           eventName: item.event_name,
           ticketTitle: item.ticket_title
         };
@@ -103,7 +105,7 @@ export default class MyOrders extends Component {
         render: myOrder => (
           <Row type="flex" justify="start" align="middle">
             <Col style={{ fontSize: "50px", color: "#345586" }}>
-              <Icon type="snippets" />
+              <img src={myOrder.img} alt="Event Poster" style={{ height: "50px", width: "auto" }}/>
             </Col>
             <Col>
               <Row>
