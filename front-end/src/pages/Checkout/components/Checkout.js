@@ -68,7 +68,7 @@ class Checkout extends Component {
   getTicketInOrderDatas = async () => {
     await Axios.get(`/ticketInOrder/checkout`)
       .then(res => {
-        this.setState({ ticketLists: res.data });
+        this.setState({ ticketLists: res.data.result });
       })
       .catch(err => {
         console.log("xxx");
@@ -126,7 +126,7 @@ class Checkout extends Component {
         <Col span={6}></Col>
       </Row>
       {this.state.ticketLists.map((item, idx) => {
-        let ticket_in_order_id = item.ticket_in_order_id;
+        let ticket_in_order_id = item.id;
         return (
           <Row key={idx} className="total-header-body">
             <Col span={12}>
@@ -140,7 +140,9 @@ class Checkout extends Component {
                 </Col>
               </Row>
             </Col>
-            <Col span={6}>{item.ticket_price * item.ticket_quantity}</Col>
+            <Col span={6}>
+              {item.ticket.ticket_price * item.ticket_quantity}
+            </Col>
             <Col span={6}>
               <Button
                 type="primary"

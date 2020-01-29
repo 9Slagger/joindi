@@ -7,8 +7,8 @@ export default class index extends Component {
   render() {
     return (
       <UserLayout {...this.props}>
-        {/* <PersonalProfile /> */}
-        <CompanyProfile />
+        <PersonalProfile />
+        {/* <CompanyProfile /> */}
       </UserLayout>
     );
   }

@@ -1,8 +1,16 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./JoinEvent.css";
-import { Table, Divider, Tag, Icon, Row, Col, Link, Button } from "antd";
+import {
+  Table,
+  // Divider, Tag,
+  Icon,
+  Row,
+  Col,
+  Tag
+  // Link, Button
+} from "antd";
 import moment from "moment";
 import { serviceOrder } from "../../../../_service";
 import Axios from "axios";
@@ -55,7 +63,7 @@ export default class JoinEvent extends Component {
       {
         title: "Join Events",
         dataIndex: "name",
-        width: "300px"
+        width: "250px"
       },
       {
         title: "Ticket",
@@ -71,21 +79,6 @@ export default class JoinEvent extends Component {
             <Row>{moment(parseInt(data)).format("ll")}</Row>
           </Col>
         )
-        // render: (date, recode, index) => (
-        //   <Col
-        //   // style={{ width: "250px" }}
-        //   >
-        //     <Row>
-        //       {/* <h3 className="headingTableEvent">test</h3> */}
-        //       <p className="eventDetail">
-        //         {/* Order expires 10 Jan 2020, 16.35 */}
-        //         {moment(parseInt(date.dateStart)).format("ll")} -{" "}
-        //         {moment(parseInt(date.dateEnd)).format("ll")}
-        //       </p>
-        //       {/* {console.log(moment(parseInt(date.dateStart)).format('ll'))} */}
-        //     </Row>
-        //   </Col>
-        // )
       },
       {
         title: "Date End",
@@ -94,6 +87,18 @@ export default class JoinEvent extends Component {
         render: (data, recode, index) => (
           <Col>
             <Row>{moment(parseInt(data)).format("ll")}</Row>
+          </Col>
+        )
+      },
+      {
+        title: "Status",
+        dataIndex: "status",
+        width: "150px",
+        render: (data, recode, index) => (
+          <Col>
+            <Row>
+              <Tag color="green">{data}</Tag>
+            </Row>
           </Col>
         )
       }
@@ -112,6 +117,9 @@ export default class JoinEvent extends Component {
         }),
         dateend: detail.ticket_in_orders.map(event => {
           return event.ticket.event.event_date_end;
+        }),
+        status: detail.ticket_in_orders.map(status => {
+          return status.ticket_in_order_status.status_name_en;
         })
       };
     });

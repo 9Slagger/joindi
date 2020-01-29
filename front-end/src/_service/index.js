@@ -7,3 +7,5 @@ export * from "./categorieServices";
 export * from "./eventServices";
 export * from "./bookmarkService";
 export * from "./orderService";
+export * from "./ticketServices";
+export * from "./ticketInOrderServices";

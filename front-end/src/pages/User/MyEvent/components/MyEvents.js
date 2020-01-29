@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import { Link } from "react-router-dom";
 import "./MyEvents.css";
-import { Table, Divider, Tag, Icon, Row, Col, Button } from "antd";
-import Column from "antd/lib/table/Column";
+import { Table,
+  // Divider,
+  Tag, Icon, Row, Col, Button } from "antd";
+// import Column from "antd/lib/table/Column";
 import moment from "moment";
 import Axios from "axios";
-import { serviceEvent, serviceTag } from "../../../../_service";
+// import { serviceEvent, serviceTag } from "../../../../_service";
 
 export default class MyEvents extends Component {
   constructor(props) {
@@ -104,9 +106,9 @@ export default class MyEvents extends Component {
         render: (data, recode, index) => (
           <Col>
             <Row>
-              {data == "approved" ? (
+              {data === "approved" ? (
                 <Tag color="green">{data}</Tag>
-              ) : data == "pending approve" ? (
+              ) : data === "pending approve" ? (
                 <Tag color="blue">{data}</Tag>
               ) : (
                 <Tag color="red">{data}</Tag>

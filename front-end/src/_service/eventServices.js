@@ -50,29 +50,29 @@ export const serviceEvent = {
       }
     });
   },
-  pendEventAdminReject: (id, remark) => {
-    return new Promise(async (resolve, reject) => {
-      let res;
-      try {
-        res = await axios.put("/event/pendReject", {
-          eventId: id
-        });
-        resolve(res.data);
-        // console.log("pending", res.data);
-      } catch (error) {
-        if (error.response.status < 500) reject(error.response.data);
-      }
-    });
-  },
+  // pendEventAdminReject: (id, remark) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     let res;
+  //     try {
+  //       res = await axios.put("/event/pendReject", {
+  //         eventId: id
+  //       });
+  //       resolve(res.data);
+  //       console.log("pending", res.data);
+  //     } catch (error) {
+  //       if (error.response.status < 500) reject(error.response.data);
+  //     }
+  //   });
+  // },
   rejectEventAdmin: (id, remark) => {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.put("/event/reject", {
+        res = await axios.put("/event/pendReject", {
           eventId: id,
           eventRemark: remark
         });
-        // console.log("eventId", id, "eventRemark", remark);
+        console.log("eventId", id, "eventRemark", remark);
         resolve(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
@@ -86,7 +86,7 @@ export const serviceEvent = {
         res = await axios.get("/event/statusapprove");
         resolve(res.data);
       } catch (error) {
-        if (error.response.status < 500) reject(error.response.data);
+        // if (error.response.status < 500) reject(error.response.data);
       }
     });
   },

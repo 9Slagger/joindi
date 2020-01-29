@@ -41,6 +41,22 @@ class Confirm extends Component {
     // });
   };
 
+  goToHomePage = ticket_in_order_id => {
+    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+    //   ticket_in_order_status_id: 4
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+    this.props.history.push({
+      pathname: `/`,
+      search: ``
+    });
+  };
+
   getTicketInOrderDatas = async ticket_in_order_id => {
     await Axios.get(`/ticketInOrder/wait_for_approve/${ticket_in_order_id}`)
       .then(res => {
@@ -54,21 +70,11 @@ class Confirm extends Component {
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
       <Row className="text-center">
-        <Col offset={1} span={3}>
+        <Col offset={6} span={4}>
           <Button type="primary"> 1 </Button>
-          <p>Checkout</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={4}>
-          <Button type="primary"> 2 </Button>
           <p>Pay</p>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <h2>
             <i className="fas fa-ellipsis-h"></i>
             <i className="fas fa-ellipsis-h"></i>
@@ -77,7 +83,7 @@ class Confirm extends Component {
         <Col span={4}>
           <Button type="primary" className="active">
             {" "}
-            3{" "}
+            2{" "}
           </Button>
           <p>Confirm</p>
         </Col>
@@ -107,7 +113,7 @@ class Confirm extends Component {
 
         <Row className="mt-4">
           <Col span={24} className="text-right">
-            <Button onClick={() => this.goToCompletePage()} type="primary">
+            <Button onClick={() => this.goToHomePage()} type="primary">
               Complete
             </Button>
           </Col>

@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
   Form,
-  Select,
-  InputNumber,
-  Switch,
-  Radio,
-  Slider,
+  // Select,
+  // InputNumber,
+  // Switch,
+  // Radio,
+  // Slider,
   Button,
   Upload,
   Icon,
-  Rate,
-  Checkbox,
-  Row,
-  Col
+  // Rate,
+  // Checkbox,
+  // Row,
+  // Col
 } from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 class Demo extends React.Component {
   handleSubmit = e => {

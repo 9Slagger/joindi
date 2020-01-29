@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Icon, Button, Table, Modal, Form } from "antd";
-import { serviceTag } from "../../../../_service";
+import { Input, Row, Col, Icon, Button, Table,
+  // Modal,
+  Form } from "antd";
+// import { serviceTag } from "../../../../_service";
 import Axios from "axios";
 import Column from "antd/lib/table/Column";
-import Notification from "../../../../common/Notification";
+// import Notification from "../../../../common/Notification";
 
 const { Search } = Input;
 
@@ -36,7 +38,7 @@ class ManageUser extends Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    // const { getFieldDecorator } = this.props.form;
     const dataUser = this.state.userList;
 
     return (
