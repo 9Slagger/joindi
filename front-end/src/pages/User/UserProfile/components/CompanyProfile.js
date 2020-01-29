@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Row, Col, Avatar, Input, Button, Form, Modal, Icon } from "antd";
+import {
+  Row,
+  Col,
+  Avatar,
+  Input,
+  Button,
+  Form,
+  Modal,
+  Icon,
+  message
+} from "antd";
 import "./Profile.css";
 import { serviceUser } from "../../../../_service";
 import { Link } from "react-router-dom";
@@ -9,7 +19,8 @@ const { TextArea } = Input;
 class CompanyProfile extends Component {
   state = {
     detailUser: {},
-    visible: false
+    visible: false,
+    buttonVisible: false
   };
 
   componentDidMount = () => {
@@ -48,6 +59,18 @@ class CompanyProfile extends Component {
     });
   };
 
+  success = () => {
+    message.success("Update Your Profile Success");
+  };
+
+  handleToggleButton = () => {
+    this.setState({ buttonVisible: true });
+  };
+  handleClickCancle = () => {
+    this.setState({ buttonVisible: false });
+    this.getUserDetail();
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -71,6 +94,9 @@ class CompanyProfile extends Component {
         }
       }
     );
+    this.success();
+    this.handleClickCancle();
+    this.getUserDetail();
   };
 
   render() {
@@ -183,80 +209,93 @@ class CompanyProfile extends Component {
             <Row type="flex" justify="center">
               <Col span={20}>
                 <Row className="UserData" type="flex" justify="center">
-                  <Form onSubmit={this.handleSubmitEditProfile}>
-                    <Form.Item label="Company">
-                      {getFieldDecorator("company_name", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your first name"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Address">
-                      {getFieldDecorator("company_address", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your last name"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
+                  <Col span={15}>
+                    <Form
+                      onSubmit={this.handleSubmitEditProfile}
+                      onChange={this.handleToggleButton}
+                    >
+                      <Form.Item label="Company">
+                        {getFieldDecorator("company_name", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your first name"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Address">
+                        {getFieldDecorator("company_address", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your last name"
+                            }
+                          ]
+                        })(<TextArea autosize={{ minRows: 3, maxRows: 5 }} />)}
+                      </Form.Item>
 
-                    <Form.Item label="E-mail">
-                      {getFieldDecorator("email", {
-                        rules: [
-                          {
-                            type: "email",
-                            message: "The input is not valid E-mail!"
-                          },
-                          {
-                            required: true,
-                            message: "Please input your email"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
+                      <Form.Item label="E-mail">
+                        {getFieldDecorator("email", {
+                          rules: [
+                            {
+                              type: "email",
+                              message: "The input is not valid E-mail!"
+                            },
+                            {
+                              required: true,
+                              message: "Please input your email"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
 
-                    <Form.Item label="Phone Number">
-                      {getFieldDecorator("phone_number", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your phone number"
-                          }
-                        ]
-                      })(
-                        <Input value={detailUser && detailUser.phone_number} />
-                      )}
-                    </Form.Item>
+                      <Form.Item label="Phone Number">
+                        {getFieldDecorator("phone_number", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your phone number"
+                            }
+                          ]
+                        })(
+                          <Input
+                            value={detailUser && detailUser.phone_number}
+                          />
+                        )}
+                      </Form.Item>
 
-                    <Form.Item>
-                      <Row
-                        className="UserData"
-                        type="flex"
-                        justify="center"
-                        style={{ paddingTop: "40px" }}
-                      >
-                        <Col style={{ padding: "10px" }}>
-                          <Button type="danger" style={{ width: "200px" }}>
-                            Cancle
-                          </Button>
-                        </Col>
-                        <Col style={{ padding: "10px" }}>
-                          <Button
-                            type="primary"
-                            htmlType="submit"
-                            style={{ width: "200px" }}
+                      {this.state.buttonVisible ? (
+                        <Form.Item>
+                          <Row
+                            className="UserData"
+                            type="flex"
+                            justify="center"
+                            style={{ paddingTop: "40px" }}
                           >
-                            Save
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Form.Item>
-                  </Form>
+                            <Col style={{ padding: "10px" }}>
+                              <Button
+                                type="danger"
+                                style={{ width: "200px" }}
+                                onClick={this.handleClickCancle}
+                              >
+                                Cancle
+                              </Button>
+                            </Col>
+                            <Col style={{ padding: "10px" }}>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "200px" }}
+                              >
+                                Save
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form.Item>
+                      ) : null}
+                    </Form>
+                  </Col>
                 </Row>
               </Col>
             </Row>
