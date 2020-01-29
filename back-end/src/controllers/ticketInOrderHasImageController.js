@@ -25,10 +25,7 @@ module.exports = {
       });
       console.log("obj", obj);
 
-      resultInfo = await db[modelName].create({
-        image_id: 36,
-        ticket_in_order_id: 15
-      });
+      resultInfo = await db[modelName].create(obj);
       console.log(resultInfo);
       res.status(200).send(resultInfo);
     } catch (error) {

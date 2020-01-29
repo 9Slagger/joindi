@@ -87,10 +87,10 @@ EventModel.hasOne(EventHasImageModel, { foreignKey: "event_id" });
 // ticket_in_order ticket_in_order_has_image image
 TicketInOrderHasImageModel.belongsTo(ImageModel, { foreignKey: "image_id" });
 ImageModel.hasOne(TicketInOrderHasImageModel, { foreignKey: "image_id" });
-TicketInOrderHasImageModel.belongsTo(EventModel, {
+TicketInOrderHasImageModel.belongsTo(TicketInOrderModel, {
   foreignKey: "ticket_in_order_id"
 });
-EventModel.hasOne(TicketInOrderHasImageModel, {
+TicketInOrderModel.hasOne(TicketInOrderHasImageModel, {
   foreignKey: "ticket_in_order_id"
 });
 //
