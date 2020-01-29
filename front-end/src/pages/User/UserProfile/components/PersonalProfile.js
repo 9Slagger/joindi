@@ -8,7 +8,8 @@ import {
   DatePicker,
   Modal,
   Form,
-  Icon
+  Icon,
+  message
 } from "antd";
 import "./Profile.css";
 import { serviceUser } from "../../../../_service";
@@ -19,7 +20,8 @@ const dateFormat = "DD/MM/YYYY";
 class PersonalProfile extends Component {
   state = {
     detailUser: {},
-    visible: false
+    visible: false,
+    buttonVisible: false
   };
 
   componentDidMount = () => {
@@ -63,6 +65,10 @@ class PersonalProfile extends Component {
     });
   };
 
+  success = () => {
+    message.success("Update Your Profile Success");
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -70,6 +76,14 @@ class PersonalProfile extends Component {
         console.log("Received values of form: ", values);
       }
     });
+  };
+
+  handleToggleButton = () => {
+    this.setState({ buttonVisible: true });
+  };
+  handleClickCancle = () => {
+    this.setState({ buttonVisible: false });
+    this.getUserDetail();
   };
 
   handleSubmitEditProfile = e => {
@@ -87,6 +101,9 @@ class PersonalProfile extends Component {
         }
       }
     );
+    this.success();
+    this.handleClickCancle();
+    this.getUserDetail();
   };
   render() {
     const { detailUser } = this.state;
@@ -199,90 +216,103 @@ class PersonalProfile extends Component {
             <Row type="flex" justify="center">
               <Col span={20}>
                 <Row className="UserData" type="flex" justify="center">
-                  <Form onSubmit={this.handleSubmitEditProfile}>
-                    <Form.Item label="First Name">
-                      {getFieldDecorator("first_name", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your first name"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Last Name">
-                      {getFieldDecorator("last_name", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your last name"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Birthday">
-                      {getFieldDecorator("birthday", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your birthday"
-                          }
-                        ]
-                      })(<DatePicker format={dateFormat} />)}
-                    </Form.Item>
+                  <Col span={15}>
+                    <Form
+                      onSubmit={this.handleSubmitEditProfile}
+                      onChange={this.handleToggleButton}
+                    >
+                      <Form.Item label="First Name">
+                        {getFieldDecorator("first_name", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your first name"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Last Name">
+                        {getFieldDecorator("last_name", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your last name"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Birthday">
+                        {getFieldDecorator("birthday", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your birthday"
+                            }
+                          ]
+                        })(<DatePicker format={dateFormat} />)}
+                      </Form.Item>
 
-                    <Form.Item label="E-mail">
-                      {getFieldDecorator("email", {
-                        rules: [
-                          {
-                            type: "email",
-                            message: "The input is not valid E-mail!"
-                          },
-                          {
-                            required: true,
-                            message: "Please input your email"
-                          }
-                        ]
-                      })(<Input />)}
-                    </Form.Item>
+                      <Form.Item label="E-mail">
+                        {getFieldDecorator("email", {
+                          rules: [
+                            {
+                              type: "email",
+                              message: "The input is not valid E-mail!"
+                            },
+                            {
+                              required: true,
+                              message: "Please input your email"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
 
-                    <Form.Item label="Phone Number">
-                      {getFieldDecorator("phone_number", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please input your phone number"
-                          }
-                        ]
-                      })(
-                        <Input value={detailUser && detailUser.phone_number} />
-                      )}
-                    </Form.Item>
+                      <Form.Item label="Phone Number">
+                        {getFieldDecorator("phone_number", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please input your phone number"
+                            }
+                          ]
+                        })(
+                          <Input
+                            value={detailUser && detailUser.phone_number}
+                          />
+                        )}
+                      </Form.Item>
 
-                    <Form.Item>
-                      <Row
-                        className="UserData"
-                        type="flex"
-                        justify="center"
-                        style={{ paddingTop: "40px" }}
-                      >
-                        <Col style={{ padding: "10px" }}>
-                          <Button type="danger" style={{ width: "200px" }}>
-                            Cancle
-                          </Button>
-                        </Col>
-                        <Col style={{ padding: "10px" }}>
-                          <Button
-                            type="primary"
-                            htmlType="submit"
-                            style={{ width: "200px" }}
+                      {this.state.buttonVisible ? (
+                        <Form.Item>
+                          <Row
+                            className="UserData"
+                            type="flex"
+                            justify="center"
+                            style={{ paddingTop: "40px" }}
                           >
-                            Save
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Form.Item>
-                  </Form>
+                            <Col style={{ padding: "10px" }}>
+                              <Button
+                                type="danger"
+                                style={{ width: "200px" }}
+                                onClick={this.handleClickCancle}
+                              >
+                                Cancle
+                              </Button>
+                            </Col>
+                            <Col style={{ padding: "10px" }}>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "200px" }}
+                              >
+                                Save
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form.Item>
+                      ) : null}
+                    </Form>
+                  </Col>
                 </Row>
               </Col>
             </Row>

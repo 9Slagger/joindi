@@ -125,5 +125,17 @@ export const serviceEvent = {
         if (error.response.status < 500) reject(error.response.data);
       }
     });
+  },
+  getUserJoinEvent: eventId => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.get(`/event/userjoinevent/${eventId}`);
+        resolve(res.data);
+        console.log("res.data", res.data);
+      } catch (error) {
+        if (error.status < 500) reject(error.response.data);
+      }
+    });
   }
 };

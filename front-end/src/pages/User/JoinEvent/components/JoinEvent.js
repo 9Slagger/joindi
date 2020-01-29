@@ -2,46 +2,38 @@ import React, { Component } from "react";
 // import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./JoinEvent.css";
-import { Table,
+import {
+  Table,
   // Divider, Tag,
-  Icon, Row, Col,
+  Icon,
+  Row,
+  Col,
+  Tag
   // Link, Button
 } from "antd";
 import moment from "moment";
-
-const data = [
-  {
-    key: "1",
-    name: "name 1",
-    date: {
-      dateStart: "1579157782934",
-      dateEnd: "1582268182934"
-    }
-    // status: "Continue Order"
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    date: {
-      dateStart: "1579157782934",
-      dateEnd: "1582268182934"
-    }
-    // status: "Continue Order"
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    date: {
-      dateStart: "1579157782934",
-      dateEnd: "1582268182934"
-    }
-    // status: "Continue Order"
-  }
-];
+import { serviceOrder } from "../../../../_service";
+import Axios from "axios";
 
 export default class JoinEvent extends Component {
   state = {
-    filteredInfo: null
+    filteredInfo: null,
+    joinEventList: []
+  };
+
+  componentDidMount = () => {
+    this.getJoinEvents();
+  };
+
+  getJoinEvents = async () => {
+    try {
+      const res = await serviceOrder.getJoinEvents();
+      const joinEventList = res.result;
+      console.log(joinEventList);
+      this.setState({ joinEventList });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleChange = (pagination, filters) => {
@@ -63,79 +55,74 @@ export default class JoinEvent extends Component {
   render() {
     let { filteredInfo } = this.state;
     filteredInfo = filteredInfo || {};
+    console.log("result-----", this.state.joinEventList);
+
+    let dataJoinEvent = this.state.joinEventList;
 
     const columns = [
       {
         title: "Join Events",
         dataIndex: "name",
-        width: "300px",
-        key: "name",
-        render: text => (
-          <Row
-            type="flex"
-            justify="start"
-            align="middle"
-            // style={{ width: "550px" }}
-          >
-            <Col
-              style={{
-                fontSize: "50px",
-                color: "#345586",
-                paddingRight: "10px"
-              }}
-            >
-              <Icon type="snippets" />
-            </Col>
-            <Col>
-              {/* <Row type="flex"> */}
-              <h3 className="headingTableEvent">{text}</h3>
-              <p className="eventDetail">
-                This's a detail of event so Lorem ipsum
-              </p>
-              {/* </Row> */}
-            </Col>
-          </Row>
-        )
+        width: "250px"
       },
       {
-        title: "Date",
-        dataIndex: "date",
+        title: "Ticket",
+        dataIndex: "ticket",
+        width: "150px"
+      },
+      {
+        title: "Date Start",
+        dataIndex: "datestart",
         width: "150px",
-        key: "date",
-        render: (date, recode, index) => (
-          <Col
-          // style={{ width: "250px" }}
-          >
-            <Row>
-              {/* <h3 className="headingTableEvent">test</h3> */}
-              <p className="eventDetail">
-                {/* Order expires 10 Jan 2020, 16.35 */}
-                {moment(parseInt(date.dateStart)).format("ll")} -{" "}
-                {moment(parseInt(date.dateEnd)).format("ll")}
-              </p>
-              {/* {console.log(moment(parseInt(date.dateStart)).format('ll'))} */}
-            </Row>
+        render: (data, recode, index) => (
+          <Col>
+            <Row>{moment(parseInt(data)).format("ll")}</Row>
           </Col>
         )
       },
       {
-        title: "Time",
-        dataIndex: "date",
+        title: "Date End",
+        dataIndex: "dateend",
         width: "150px",
-        key: "time",
-        render: date => (
-          <Col type="flex" align="center">
-            {/* <Button className="btn-paymentStatus">test</Button> */}
+        render: (data, recode, index) => (
+          <Col>
+            <Row>{moment(parseInt(data)).format("ll")}</Row>
+          </Col>
+        )
+      },
+      {
+        title: "Status",
+        dataIndex: "status",
+        width: "150px",
+        render: (data, recode, index) => (
+          <Col>
             <Row>
-              <p className="evenDetail">
-                {moment(parseInt(date.dateStart)).format("LT")} -{" "}
-                {moment(parseInt(date.dateEnd)).format("LT")}
-              </p>
+              <Tag color="green">{data}</Tag>
             </Row>
           </Col>
         )
       }
     ];
+
+    const data = dataJoinEvent.map(detail => {
+      return {
+        name: detail.ticket_in_orders.map(event => {
+          return event.ticket.event.event_name;
+        }),
+        ticket: detail.ticket_in_orders.map(ticket => {
+          return ticket.ticket.ticket_title;
+        }),
+        datestart: detail.ticket_in_orders.map(event => {
+          return event.ticket.event.event_date_start;
+        }),
+        dateend: detail.ticket_in_orders.map(event => {
+          return event.ticket.event.event_date_end;
+        }),
+        status: detail.ticket_in_orders.map(status => {
+          return status.ticket_in_order_status.status_name_en;
+        })
+      };
+    });
 
     return (
       <Table

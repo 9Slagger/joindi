@@ -25,6 +25,7 @@ import JoinEvent from "../pages/User/JoinEvent";
 import MyEvent from "../pages/User/MyEvent";
 import MyOrders from "../pages/User/MyOrder";
 import Bookmark from "../pages/User/Bookmark";
+import UserJoinEvent from "../pages/User/MyEvent/components/UserJoinEvent";
 export const history = createHistory();
 
 const Routers = props => {
@@ -63,6 +64,7 @@ const Routers = props => {
         <Route exact path="/myevent" component={MyEvent} />
         <Route exact path="/myorder" component={MyOrders} />
         <Route exact path="/bookmark" component={Bookmark} />
+        <Route exact path="/userjoinevent/:eventId" component={UserJoinEvent} />
       </Switch>
     </Router>
   );

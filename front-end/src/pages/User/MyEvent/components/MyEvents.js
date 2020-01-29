@@ -12,10 +12,13 @@ import Axios from "axios";
 // import { serviceEvent, serviceTag } from "../../../../_service";
 
 export default class MyEvents extends Component {
-  state = {
-    filteredInfo: null,
-    myEvent: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      filteredInfo: null,
+      myEvent: []
+    };
+  }
 
   fetchdata = () => {
     Axios.get("http://localhost:8085/event/myevents").then(result => {
@@ -44,6 +47,11 @@ export default class MyEvents extends Component {
       filteredInfo: null
     });
   };
+
+  toPageUserJoinEvent = id => () => {
+    this.props.history.push(`/userjoinevent/${id}`);
+  };
+
   render() {
     console.log("👍", this.state.myEvent);
     let { filteredInfo } = this.state;
@@ -77,13 +85,16 @@ export default class MyEvents extends Component {
         )
       },
       {
-        title: "User Join Event",
-        dataIndex: "userjoin",
-        width: "130px",
+        title: "Users Join Event",
+        dataIndex: "usersjoinevent",
+        width: "150px",
         render: (data, recode, index) => (
           <Col>
+            {console.log(data)}
             <Row>
-              <Button />
+              <Link to={`/userjoinevent/${data}`}>
+                <Button>Users Join Event</Button>
+              </Link>
             </Row>
           </Col>
         )
@@ -113,6 +124,7 @@ export default class MyEvents extends Component {
         name: detail.event_name,
         datestart: detail.event_date_start,
         dateend: detail.event_date_end,
+        usersjoinevent: detail.id,
         status: detail.event_status.status_name_en
       };
     });
