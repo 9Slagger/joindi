@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
+import {Link} from "react-router-dom"
+import _ from 'lodash'
+import { message } from 'antd';
+
 import { serviceTicketInOrder } from "../../../_service";
 import {
   Row,
@@ -26,13 +30,27 @@ class EventDetail extends Component {
       data: {},
       earlyprice: "",
       normalprice: "",
-      children: []
+      children: [],
+      a:[]
+
     };
   }
+  
 
-  handleChangeEarlyPrice = e => {};
-
-  handleChangeNormalPrice = e => {};
+  handleChangeEarlyPrice = (id, e) => {
+    const itemIndex = this.state.a.findIndex(item => item.id === id)
+    if(itemIndex !== -1){
+      let cloneStateA = _.cloneDeep(this.state.a)
+      cloneStateA[itemIndex].value = e
+      this.setState(() => ({
+        a: cloneStateA
+      }))
+    } else {
+      this.setState(state => ({
+        a: [...state.a, {id: id, value: e}]
+      }))
+    }
+  };
 
   showModal = () => {
     this.setState({
@@ -41,14 +59,12 @@ class EventDetail extends Component {
   };
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       visible: false
     });
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false
     });
@@ -57,24 +73,55 @@ class EventDetail extends Component {
   renderOptions = item => {
     const number_of_tickets = item;
     let array = [];
-    for (let i = 0; i <= number_of_tickets; i++) {
-      array.push(i);
+    for(let i = 0; i<=number_of_tickets; i++){
+      array.push(i)
     }
     return array.map(ent => <Option key={ent}>{ent}</Option>);
   };
 
-  handleBuyTicket = async () => {
-    try {
-      await serviceTicketInOrder.buyTicket(1, 47);
-      this.props.history.push(`/checkout`);
-    } catch (error) {
-      alert(error.messages.title_en)
+  isListOne = (list) =>{
+    let isOne = false;
+    for(let item of list){
+      let value = parseInt(item.value)
+      console.log(item)
+      if(value !== 0 && !isOne){
+        console.log("true")
+        isOne = true
+      } else if (value !== 0 && isOne){
+        console.log("false--->")
+        return false;
+      }
     }
+    console.log("isone")
+    return isOne;
+  }
+
+  handleBuyTicket = async () =>{
+  console.log(this.state.a);
+    if(this.isListOne(this.state.a)){
+      
+      const ticketid = this.state.a.map(item => 
+        item.id
+      )
+      const ticketvalue = this.state.a.map(item => 
+        item.value
+      )
+      try {
+        await serviceTicketInOrder.buyTicket(ticketid[0], ticketvalue[0]);
+        this.props.history.push(`/checkout`);
+      } catch (error) {
+        alert(error.messages.title_en)
+      }
+    }else{
+      message.success('Either one of ticket amount must be zero!!');
+    }
+    
   };
 
   async showData() {
-    const result = await Axios.get("http://localhost:8085/event/1");
-
+    const { eventId } = this.props.match.params
+    const result = await Axios.get(`http://localhost:8085/event/${eventId}`);
+    
     let temp = () => {
       const s = moment(`${result.data.result.event_date_start}`);
       const startdate = s.format("DD MMM YYYY");
@@ -100,6 +147,7 @@ class EventDetail extends Component {
         event_remark: result.data.result.event_remark,
         event_tags: result.data.result.event_tags.tag_name_en,
         ticket: result.data.result.tickets.map(item => ({
+          ticket_id: item.id,
           ticket_title: item.ticket_title,
           ticket_detail: item.ticket_detail,
           ticket_note: item.ticket_note,
@@ -115,7 +163,7 @@ class EventDetail extends Component {
       };
     };
     this.setState({
-      data: temp()
+      data: temp(console.log(this.state))
     });
   }
 
@@ -125,9 +173,7 @@ class EventDetail extends Component {
   };
 
   render() {
-    console.log(this.state.data);
-    const { data } = this.state;
-    // console.log(data.ticket);
+    console.log("this.state", this.state)
     return (
       <Row className="event-detail">
         <Col span={24}>
@@ -217,15 +263,17 @@ class EventDetail extends Component {
                             type="flex"
                             justify="end"
                             align="middle"
-                            key={index}
+                            key={item.ticket_id}
                           >
                             <Col span={16}> {item.ticket_title} </Col>
                             <Col span={5}>{item.ticket_price} &nbsp; Baht</Col>
                             <Col span={2}>
                               <Row>
                                 <Select
+                                  defaultValue="0"
+                                  
+                                  onSelect={async e => {this.handleChangeEarlyPrice(item.ticket_id, e)}}
                                   defaultValue={0}
-                                  onChange={e => this.handleChangeEarlyPrice(e)}
                                   style={{
                                     width: "60px"
                                   }}
@@ -253,11 +301,11 @@ class EventDetail extends Component {
                         </Button>
                       </Row>
                     </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+                  </Row> 
+                </Col> 
+              </Row> 
+            </Col> 
+          </Row> 
           <Divider />
           <Row className="Organized">
             <Col>
