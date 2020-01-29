@@ -1,10 +1,10 @@
-import React, { Component } from  "react";
+import React, { Component } from "react";
 // import ReactDOM from  "react-dom";
 // import { Link } from  "react-router-dom";
 import "antd/dist/antd.css";
 import "./ApproveEvent.css";
-import { Card, Icon, Row, Col, Button, Input, Modal } from  "antd";
-import { serviceEvent } from  "../../../../_service";
+import { Card, Icon, Row, Col, Button, Input, Modal } from "antd";
+import { serviceEvent } from "../../../../_service";
 
 const { TextArea } = Input;
 const { Search } = Input;
@@ -46,15 +46,15 @@ export default class ApproveEvent extends Component {
     }
   }
 
-  async pendEventAdminReject(event_id) {
-    console.log("event_id", event_id);
-    try {
-      let eventStatus = await serviceEvent.approveEventAdminReject(event_id);
-      this.setState({ eventStatus });
-    } catch (error) {
-      console.log("error", error);
-    }
-  }
+  // async pendEventAdminReject(event_id) {
+  //   console.log("event_id", event_id);
+  //   try {
+  //     let eventStatus = await serviceEvent.approveEventAdminReject(event_id);
+  //     this.setState({ eventStatus });
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // }
 
   async rejectEventAdmin(event_id, remark) {
     console.log("reject approve", event_id, remark);
@@ -80,14 +80,14 @@ export default class ApproveEvent extends Component {
   };
 
   handleSendReject = (id, remark) => {
-    console.log({
-      id: id,
-      remark: remark
-    });
+    // console.log({
+    //   id: id,
+    //   remark: remark
+    // });
     this.rejectEventAdmin(id, remark);
     this.setState({ visible: false });
     this.setState({ value: "" });
-    window.location.reload(true);
+    // window.location.reload(true);
   };
 
   handleApproveWait = id => {
@@ -95,10 +95,10 @@ export default class ApproveEvent extends Component {
     window.location.reload(true);
   };
 
-  handlePendReject = id => {
-    this.pendEventAdminReject(id);
-    window.location.reload(true);
-  };
+  // handlePendReject = id => {
+  //   this.pendEventAdminReject(id);
+  //   window.location.reload(true);
+  // };
 
   render() {
     const { visible, value } = this.state;
