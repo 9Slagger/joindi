@@ -6,9 +6,9 @@ import CompanyProfile from "./components/CompanyProfile";
 export default class index extends Component {
   render() {
     return (
-      <UserLayout {...this.props}> 
-        <PersonalProfile />
-        {/* <CompanyProfile /> */}
+      <UserLayout {...this.props}>
+        {/* <PersonalProfile /> */}
+        <CompanyProfile />
       </UserLayout>
     );
   }
