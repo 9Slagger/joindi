@@ -72,11 +72,12 @@ class EventDetail extends Component {
     // TODO: call api if success go to page checkout if fail alert buy ticket fail
   };
   async showData() {
+    const { eventId } = this.props.match.params
+
+    console.log("test : "+eventId)
     
+    const result = await Axios.get(`http://localhost:8085/event/${eventId}`);
     
-    const result = await Axios.get("http://localhost:8085/event/1");
-    
-    // console.log("test"+App)
     let temp = () => {
       const s = moment(`${result.data.result.event_date_start}`);
       const startdate = s.format("DD MMM YYYY");
