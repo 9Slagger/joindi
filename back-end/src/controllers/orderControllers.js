@@ -13,7 +13,7 @@ module.exports = {
         include: [
           {
             model: db.TicketInOrderModel,
-            // where:{ ticket_in_order_staus_id: "4"},
+            where: { ticket_in_order_status_id: 4 },
             include: [
               { model: db.TicketInOrderStatusModel },
               { model: db.TicketModel, include: [{ model: db.EventModel }] }

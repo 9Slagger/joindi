@@ -539,23 +539,39 @@ module.exports = {
   getUserJoinEvent: async (req, res, next) => {
     let userJoinEventResult;
     try {
-      userJoinEventResult = await db.EventModel.findAll({
+      userJoinEventResult = await db.EventModel.findOne({
         where: {
           user_id: req.user.id,
           id: req.params.eventId
         },
-        include: [{
-          model: db.TicketModel,
-          include: [{
-            model: db.TicketInOrderModel,
-            include: [{
-              model: db.OrderModel
-            },
-            {
-              model: db.TicketInOrderStatusModel
-            }]
-          }]
-        }]
+        include: [
+          {
+            model: db.TicketModel,
+            include: [
+              {
+                model: db.TicketInOrderModel,
+                include: [
+                  {
+                    model: db.OrderModel,
+                    include: [
+                      {
+                        model: db.UserModel,
+                        include: [
+                          {
+                            model: db.UserIndividualDetailModel
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    model: db.TicketInOrderStatusModel
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       });
       res.status(200).json({
         result: userJoinEventResult,
