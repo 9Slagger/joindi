@@ -85,8 +85,8 @@ module.exports = {
           { model: db.EventCategoryModel },
           { model: db.EventTagModel },
           {
-            model: db.BookmarkModel,
-            where: { event_id: req.params.eventId }
+            model: db.BookmarkModel
+            // where: { event_id: req.params.eventId }
           },
           { model: db.OrganizedContactModel },
           {
@@ -100,10 +100,13 @@ module.exports = {
         ]
       });
       eventDetailResult = JSON.parse(JSON.stringify(eventDetailResult));
-      eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
-        bookmark => bookmark.user_id === req.user.id
-      ).length;
-      // console.log("eventDetailResult🟢", eventDetailResult);
+      if (!_.isEmpty(eventDetailResult.bookmarks)) {
+        eventDetailResult.bookmarks = !!eventDetailResult.bookmarks.filter(
+          bookmark => bookmark.user_id === req.user.id
+        ).length;
+      } else {
+        eventDetailResult.bookmarks = false;
+      }
       res.status(200).json({
         result: eventDetailResult,
         messages: { title_en: "get event detail success", title_th: "" }
@@ -358,12 +361,26 @@ module.exports = {
     }
   },
   getCategorieAndEvent: async (req, res, next) => {
-    let categorieAndEventResult;
+    let categorieAndEventResult, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       categorieAndEventResult = await db.EventCategoryModel.findOne({
         where: { id: req.params.categorieId },
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
+      if (_.isEmpty(categorieAndEventResult)) {
+        categorieAndEventResult = await db.EventCategoryModel.findOne({
+          where: { id: req.params.categorieId }
+        });
+      }
       return res.status(200).json({
         result: categorieAndEventResult,
         messages: { title_en: "get categorie and event success", title_th: "" }
@@ -374,11 +391,21 @@ module.exports = {
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
   },
+  // FIXME: delete me
   getEventCatagorieList: async (req, res, next) => {
-    let eventCatagorieList;
+    let eventCatagorieList, eventStatusResult;
     try {
+      eventStatusResult = await db.EventStatusModel.findOne({
+        where: { status_code: "02AD" },
+        raw: true
+      });
       eventCatagorieList = await db.EventCategoryModel.findAll({
-        include: [{ model: db.EventModel }]
+        include: [
+          {
+            model: db.EventModel,
+            where: { event_status_id: eventStatusResult.id }
+          }
+        ]
       });
       res.status(200).json({
         result: eventCatagorieList,
@@ -390,6 +417,7 @@ module.exports = {
       });
     }
   },
+  // FIXME: delete me
   updateEvent: async (req, res, next) => {
     let transaction,
       targetEvent,
@@ -474,6 +502,77 @@ module.exports = {
       console.log(error);
       transaction.rollback();
       return res.status(400);
+    }
+  },
+  getMyEvents: async (req, res, next) => {
+    let eventResult, bookmarkResult;
+    try {
+      eventResult = await db.EventModel.findAll({
+        where: {
+          user_id: req.user.id
+        },
+        include: [
+          {
+            model: db.EventStatusModel,
+            attributes: ["status_name_en"]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get my events success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: eventResult,
+        messages: {
+          title_en: "get my events fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  getUserJoinEvent: async (req, res, next) => {
+    let userJoinEventResult;
+    try {
+      userJoinEventResult = await db.EventModel.findAll({
+        where: {
+          user_id: req.user.id,
+          id: req.params.eventId
+        },
+        include: [{
+          model: db.TicketModel,
+          include: [{
+            model: db.TicketInOrderModel,
+            include: [{
+              model: db.OrderModel
+            },
+            {
+              model: db.TicketInOrderStatusModel
+            }]
+          }]
+        }]
+      });
+      res.status(200).json({
+        result: userJoinEventResult,
+        messages: {
+          title_en: "get user join event success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("🔴", error);
+      res.status(200).json({
+        result: userJoinEventResult,
+        messages: {
+          title_en: "get user join event fail",
+          title_th: ""
+        }
+      });
     }
   }
 };

@@ -80,6 +80,12 @@ module.exports = {
           }
         ]
       });
+      if (_.isEmpty(tagAndEventResult)) {
+        tagAndEventResult = await db.EventTagModel.findOne({
+          where: { id: req.params.tagId }
+        })
+      }
+
       return res.status(200).json({
         result: tagAndEventResult,
         messages: { title_en: "get tag and event success", title_th: "" }

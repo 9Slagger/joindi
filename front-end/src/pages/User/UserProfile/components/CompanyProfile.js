@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import { Row, Col, Avatar, Input, Button } from "antd";
 import "./Profile.css";
+import { serviceUser } from "../../../../_service";
 import { Link } from "react-router-dom";
 
 const { TextArea } = Input;
 
 export default class CompanyProfile extends Component {
+  state = {
+    detailUser: {}
+  };
+
+  componentDidMount = () => {
+    this.getUserDetail();
+  };
+
+  getUserDetail = async () => {
+    try {
+      const res = await serviceUser.getUserDetail();
+      console.log("res.result", res.result);
+      const detailUser = res.result;
+      this.setState({ detailUser });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
+    const { detailUser } = this.state;
     return (
       <Col className="profile">
         <Row className="Profile" type="flex" justify="center">
@@ -30,46 +50,31 @@ export default class CompanyProfile extends Component {
                   <Col className="UserData" span={15}>
                     <Row>Company Name :</Row>
                     <Row>
-                      <Input></Input>
+                      <Input value={detailUser.user_company_detail && detailUser.user_company_detail.company_name} />
                     </Row>
                   </Col>
                 </Row>
-                <Row
-                  className="UserData"
-                  type="flex"
-                  justify="left"
-                  style={{ paddingLeft: "165px" }}
-                >
-                  <Col className="UserData" span={18}>
+                <Row className="UserData" type="flex" justify="center">
+                  <Col className="UserData" span={15}>
                     <Row>Address :</Row>
                     <Row>
-                      <TextArea rows={4} />
+                      <TextArea autoSize={{ minRows: 3, maxRows: 6 }} value={detailUser.user_company_detail && detailUser.user_company_detail.company_address} />
                     </Row>
                   </Col>
                 </Row>
-                <Row
-                  className="UserData"
-                  type="flex"
-                  justify="left"
-                  style={{ paddingLeft: "165px" }}
-                >
+                <Row className="UserData" type="flex" justify="center">
                   <Col className="UserData" span={15}>
                     <Row>E-mail. :</Row>
                     <Row>
-                      <Input></Input>
+                      <Input value={detailUser && detailUser.email}/>
                     </Row>
                   </Col>
                 </Row>
-                <Row
-                  className="UserData"
-                  type="flex"
-                  justify="left"
-                  style={{ paddingLeft: "165px" }}
-                >
-                  <Col className="UserData" span={10}>
-                    <Row>Mobile No. :</Row>
+                <Row className="UserData" type="flex" justify="center">
+                  <Col className="UserData" span={15}>
+                    <Row>Phone Number :</Row>
                     <Row>
-                      <Input></Input>
+                      <Input value={detailUser && detailUser.phone_number}/>
                     </Row>
                   </Col>
                 </Row>

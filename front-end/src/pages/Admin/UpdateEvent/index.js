@@ -17,6 +17,7 @@ export default class index extends Component {
     super(props);
     this.state = {
       tagList: [],
+      // eventId: "",
       eventName: "",
       address: "",
       date: "",
@@ -39,8 +40,7 @@ export default class index extends Component {
     // console.log("eventId", this.props.match.params.eventId);
     this.getTagAdmin();
     this.getEventDetail();
-    console.log("😂😂😂", this.state.imgUrl);
-    
+    // console.log("😂😂😂", this.state.imgUrl);
   }
 
   async getTagAdmin() {
@@ -55,14 +55,16 @@ export default class index extends Component {
   }
 
   async getEventDetail() {
-    
     try {
       const dateFormat = "DD-MM-YYYY";
       let eventList = await serviceEvent.getEventDetail(
         this.props.match.params.eventId
       );
       eventList = eventList.result;
+      console.log("eventList", eventList);
+      // console.log("props😊😊😊", this.props.match.params.eventId);
       this.setState({ eventList });
+      // this.setState({ event_id: this.props.match.params.eventId });
       this.setState({ eventName: eventList.event_name });
       this.setState({ address: eventList.event_address });
       this.setState({ latitudeLocation: eventList.event_latitude_map });
@@ -70,9 +72,9 @@ export default class index extends Component {
       this.setState({ dateStart: eventList.event_date_start });
       this.setState({ dateEnd: eventList.event_date_end });
       // console.log("date", moment(eventList.event_date_start).format("DD-MM-YYYY"), moment(eventList.event_date_end));
-      let tag_EN = eventList.event_tags.map(obj => obj.tag_name_en);
+      // let tag_EN = eventList.event_tags.map(obj => obj.tag_name_en);
       // let tag_TH = eventList.event_tags.map(obj => obj.tag_name_th);
-      this.setState({ addTag: tag_EN });
+      this.setState({ addTag: eventList.event_tags });
       // this.setState({ getEventContent: eventList.event_content });
       // let ticket_EN = eventList.event_tags.map(obj => obj.tag_name_en);
       // let ticket_TH = eventList.event_tags.map(obj => obj.tag_name_th);
@@ -80,14 +82,7 @@ export default class index extends Component {
       this.setState({ richText: eventList.event_content });
       this.setState({ ticket: eventList.tickets });
       let ticketList = this.state.ticket.map(obj => ({
-        ticket_title: obj.ticket_title,
-        ticket_detail: obj.ticket_detail,
-        ticket_note: obj.ticket_note,
-        ticket_total_quantity: obj.ticket_total_quantity,
-        ticket_remaining_quantity: obj.ticket_remaining_quantity,
-        ticket_price: obj.ticket_price,
-        ticket_manufacturing_date: obj.ticket_manufacturing_date,
-        ticket_expiry_date: obj.ticket_expiry_date,
+        ...obj,
         ticketToShowStart: moment(
           parseInt(obj.ticket_manufacturing_date)
         ).format(dateFormat),
@@ -96,13 +91,12 @@ export default class index extends Component {
         )
       }));
       let imgUrl = `${ENDPOINT}/${eventList.event_has_image.image_id}.${eventList.event_has_image.image.filename_extension}`;
-      console.log("😒😒😒 ",imgUrl);
+      // console.log("😒😒😒 ", imgUrl);
       this.setState({ ticketList: ticketList });
       this.setState({ organizeContact: eventList.organized_contacts });
       this.setState({ organizedList: this.state.organizeContact });
       this.setState({ imgUrl: imgUrl });
       // console.log("this.state", this.props);
-      
     } catch (error) {
       console.log("error", error);
     }
@@ -110,7 +104,7 @@ export default class index extends Component {
 
   handleGetImageInfo = value => {
     this.setState({ imageInfo: value });
-  }
+  };
 
   handleGetEventName = value => {
     this.setState({ eventName: value });
@@ -119,6 +113,7 @@ export default class index extends Component {
     this.setState({ address: value });
   };
   handleGetDate = value => {
+    console.log("Date", value);
     this.setState({ date: value });
   };
   handleGetLatitude = value => {
@@ -140,8 +135,9 @@ export default class index extends Component {
     this.setState({ organizedList: value });
   };
 
-  handleCreateEvent = () => {
+  handleCreateEvent = async () => {
     let data = {
+      // id: this.state.eventId,
       event_name: this.state.eventName,
       event_address: this.state.address,
       event_latitude_map: this.state.latitudeLocation,
@@ -149,23 +145,32 @@ export default class index extends Component {
       event_date_start: this.state.date[0],
       event_date_end: this.state.date[1],
       event_content: this.state.richText,
-      ticketsList: this.state.ticketList,
-      organizedList: this.state.organizedList,
-      eventList: this.state.addTag,
+      tickets: this.state.ticketList,
+      organizeds: this.state.organizedList,
+      event_tags: this.state.addTag,
       imgUrl: this.state.imgUrl
     };
-    // console.log("data", data);
-    let dataImageInfo = new FormData();
-    dataImageInfo.append("image", this.state.imageInfo.file);
-    Axios.post("/image", dataImageInfo, {
-      headers: { "content-type": "multipart/form-data" }
-    })
-      .then(result => {
-        console.log(result.data);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+    console.log("data", data);
+    try {
+      await serviceEvent.updateEvent(this.props.match.params.eventId, data);
+      alert("update event success");
+    } catch (error) {
+      console.log("handleCreateEvent error", error);
+      alert("update event fail");
+    }
+    // let dataImageInfo = new FormData();
+    // console.log("IMAGE 😒", this.state.imageInfo.file);
+
+    // dataImageInfo.append("image", this.state.imageInfo.file);
+    // Axios.post("/image", dataImageInfo, {
+    //   headers: { "content-type": "multipart/form-data" }
+    // })
+    //   .then(result => {
+    //     console.log(result.data);
+    //   })
+    //   .catch(error => {
+    //     console.log(error.message);
+    //   });
   };
 
   render() {
@@ -187,8 +192,8 @@ export default class index extends Component {
       tagList,
       imgUrl
     } = this.state;
-    // console.log("ticketList | Parent", ticketList);
-    
+    // console.log("this.state", this.state);
+
     return (
       <DefaultLayout>
         <div className="outerBox">

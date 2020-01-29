@@ -7,6 +7,7 @@ import { Row, Col, Button } from  "antd";
 import RichText from  "./components/RichText";
 import "./CreateEventsStyle.css";
 import Axios from  "axios";
+import { Link } from "react-router-dom";
 
 export default class index extends Component {
   constructor(props) {
@@ -85,6 +86,7 @@ export default class index extends Component {
 
     Axios.post("/event", data)
       .then(result => {
+        this.props.history.push("/myevent")
         console.log(result.data);
       })
       .catch(error => {
@@ -122,7 +124,7 @@ export default class index extends Component {
           </Row>
           <Row>
             <Col span={24} style={{ textAlign: "right" }}>
-              <Button style={{ margin: "10px 10px" }}>Back</Button>
+              <Link to ="/myevent"><Button style={{ margin: "10px 10px" }}>Back</Button></Link>
               <Button
                 onClick={this.handleCreateEvent}
                 style={{ margin: "10px 10px" }}
