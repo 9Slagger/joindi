@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
-<<<<<<< HEAD
 import {Link} from "react-router-dom"
 import _ from 'lodash'
 
-=======
 import { serviceTicketInOrder } from "../../../_service";
->>>>>>> 8a70bf4e87f1a592f7ec810ee5a84e72c801bcd0
 import {
   Row,
   Col,
@@ -74,29 +71,22 @@ class EventDetail extends Component {
 
   renderOptions = item => {
     const number_of_tickets = item;
-<<<<<<< HEAD
-    let array = []
+    let array = [];
     for(let i = 0; i<=number_of_tickets; i++){
       array.push(i)
-=======
-    let array = [];
-    for (let i = 0; i <= number_of_tickets; i++) {
-      array.push(i);
->>>>>>> 8a70bf4e87f1a592f7ec810ee5a84e72c801bcd0
     }
     return array.map(ent => <Option key={ent}>{ent}</Option>);
   };
 
-<<<<<<< HEAD
   isListOne = (list) =>{
     let isOne = false;
     for(let item of list){
       let value = parseInt(item.value)
       if(value !== 0 && !isOne){
-        console.log("true")
+        // console.log("true")
         isOne = true
       } else if (value !== 0 && isOne){
-        console.log("false--->")
+        // console.log("false--->")
         return false;
       }
     }
@@ -109,14 +99,15 @@ class EventDetail extends Component {
       alert(true)
     }else{
       alert(false)
-=======
+    }
+  }
+
   handleBuyTicket = async () => {
     try {
       await serviceTicketInOrder.buyTicket(1, 47);
       this.props.history.push(`/checkout`);
     } catch (error) {
       alert(error.messages.title_en)
->>>>>>> 8a70bf4e87f1a592f7ec810ee5a84e72c801bcd0
     }
   };
 
@@ -271,14 +262,11 @@ class EventDetail extends Component {
                             <Col span={2}>
                               <Row>
                                 <Select
-<<<<<<< HEAD
                                   defaultValue="0"
                                   
                                   onSelect={async e => {this.handleChangeEarlyPrice(item.ticket_id, e)}}
-=======
                                   defaultValue={0}
                                   onChange={e => this.handleChangeEarlyPrice(e)}
->>>>>>> 8a70bf4e87f1a592f7ec810ee5a84e72c801bcd0
                                   style={{
                                     width: "60px"
                                   }}
@@ -301,7 +289,6 @@ class EventDetail extends Component {
                     </Col>
                     <Col span={2}>
                       <Row type="flex" justify="end" align="middle">
-<<<<<<< HEAD
                         <Button
                           type="primary"
                           onClick={this.hangleBuyTicket(this.state.a)}
@@ -315,18 +302,6 @@ class EventDetail extends Component {
               </Row> 
             </Col> 
           </Row> 
-=======
-                        <Button type="primary" onClick={this.handleBuyTicket}>
-                          Buy Ticket
-                        </Button>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
->>>>>>> 8a70bf4e87f1a592f7ec810ee5a84e72c801bcd0
           <Divider />
           <Row className="Organized">
             <Col>
