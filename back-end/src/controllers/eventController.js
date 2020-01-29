@@ -240,61 +240,6 @@ module.exports = {
       });
     }
   },
-  pendEventFromReject: async (req, res, next) => {
-    let eventTarget, eventStatusApproveResult, eventStatusPendingApproveResult;
-    try {
-      eventStatusApproveResult = await db.EventStatusModel.findOne({
-        where: { status_code: "01PA" }
-      });
-    } catch (error) {
-      console.log("🔴", error);
-      return res.status(400).json({
-        messages: {
-          title_en: "pending event fail 1",
-          title_th: ""
-        }
-      });
-    }
-    try {
-      eventStatusPendingApproveResult = await db.EventStatusModel.findOne({
-        where: { status_code: "03RJ" }
-      });
-    } catch (error) {
-      console.log("🔴", error);
-      return res.status(400).json({
-        messages: {
-          title_en: "pending event fail",
-          title_th: ""
-        }
-      });
-    }
-    try {
-      console.log("id", req.body.eventId);
-      eventTarget = await db.EventModel.findOne({
-        where: {
-          id: req.body.eventId,
-          event_status_id: eventStatusPendingApproveResult.id
-        }
-      });
-      await eventTarget.update({
-        event_status_id: eventStatusApproveResult.id
-      });
-      res.status(200).json({
-        messages: {
-          title_en: "pending event success",
-          title_th: ""
-        }
-      });
-    } catch (error) {
-      console.log("error", error);
-      res.status(200).json({
-        messages: {
-          title_en: "pending event fail 3",
-          title_th: ""
-        }
-      });
-    }
-  },
   rejectEvent: async (req, res, next) => {
     let eventTarget, eventStatusRejectResult, eventStatusPendingRejectResult;
     try {
