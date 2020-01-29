@@ -173,6 +173,7 @@ class EventDetail extends Component {
   };
 
   render() {
+    console.log("this.state", this.state)
     return (
       <Row className="event-detail">
         <Col span={24}>
