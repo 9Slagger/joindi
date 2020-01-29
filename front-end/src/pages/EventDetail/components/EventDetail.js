@@ -3,6 +3,7 @@ import Axios from "axios";
 import moment from "moment";
 import {Link} from "react-router-dom"
 import _ from 'lodash'
+import { message } from 'antd';
 
 import { serviceTicketInOrder } from "../../../_service";
 import {
@@ -82,6 +83,7 @@ class EventDetail extends Component {
     let isOne = false;
     for(let item of list){
       let value = parseInt(item.value)
+      console.log(item)
       if(value !== 0 && !isOne){
         console.log("true")
         isOne = true
@@ -94,25 +96,24 @@ class EventDetail extends Component {
     return isOne;
   }
 
-  hangleBuyTicket = id => async () => {
-    if(this.isListOne(this.state.a)){
-      alert(true)
-    }else{
-      alert(false)
-    }
-  }
-
   handleBuyTicket = async () =>{
   console.log(this.state.a);
     if(this.isListOne(this.state.a)){
+      
+      const ticketid = this.state.a.map(item => 
+        item.id
+      )
+      const ticketvalue = this.state.a.map(item => 
+        item.value
+      )
       try {
-        await serviceTicketInOrder.buyTicket(3, 47);
+        await serviceTicketInOrder.buyTicket(ticketid[0], ticketvalue[0]);
         this.props.history.push(`/checkout`);
       } catch (error) {
         alert(error.messages.title_en)
       }
     }else{
-      alert(false)
+      message.success('Either one of ticket amount must be zero!!');
     }
     
   };
@@ -272,7 +273,6 @@ class EventDetail extends Component {
                                   
                                   onSelect={async e => {this.handleChangeEarlyPrice(item.ticket_id, e)}}
                                   defaultValue={0}
-                                  onChange={e => this.handleChangeEarlyPrice(e)}
                                   style={{
                                     width: "60px"
                                   }}
@@ -295,7 +295,7 @@ class EventDetail extends Component {
                     </Col>
                     <Col span={2}>
                       <Row type="flex" justify="end" align="middle">
-                        <Button type="primary" onClick={this.hangleBuyTicket()}>
+                        <Button type="primary" onClick={this.handleBuyTicket}>
                           Buy Ticket
                         </Button>
                       </Row>
