@@ -80,7 +80,7 @@ class Pay extends Component {
 
   callBackDatas = async datas => {
     // console.log("callBack");
-    // console.log(datas);
+    console.log(datas);
     await this.setState({
       ticketLists: this.state.ticketLists
     });
@@ -99,6 +99,8 @@ class Pay extends Component {
     // if (!_.isEmpty(datas[0])) {
     Axios.post(`/image`, datas, config)
       .then(res => {
+        console.log(this.state.ticket_in_order_id, res.data.id);
+
         Axios.post(`/ticketInOrderHasImage`, {
           ticket_in_order_id: this.state.ticket_in_order_id,
           image_id: res.data.id
