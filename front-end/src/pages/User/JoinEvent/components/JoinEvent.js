@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./JoinEvent.css";
-import { Table, Divider, Tag, Icon, Row, Col, Link, Button } from "antd";
+import { Table,
+  // Divider, Tag,
+  Icon, Row, Col,
+  // Link, Button
+} from "antd";
 import moment from "moment";
 
 const data = [

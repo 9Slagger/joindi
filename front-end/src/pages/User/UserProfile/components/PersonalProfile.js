@@ -12,7 +12,7 @@ import {
 } from "antd";
 import "./Profile.css";
 import { serviceUser } from "../../../../_service";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import moment from "moment";
 const dateFormat = "DD/MM/YYYY";
 
@@ -90,7 +90,9 @@ class PersonalProfile extends Component {
   };
   render() {
     const { detailUser } = this.state;
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const { getFieldDecorator,
+      // setFieldsValue
+    } = this.props.form;
     return (
       <Col className="profile">
         <Row className="Profile" type="flex" justify="center">

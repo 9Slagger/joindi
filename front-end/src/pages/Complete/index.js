@@ -7,7 +7,7 @@ export default class index extends Component {
   render() {
     return (
       <DefaultLayout {...this.props}>
-        <Complete />
+        <Complete {...this.props} />
       </DefaultLayout>
     );
   }

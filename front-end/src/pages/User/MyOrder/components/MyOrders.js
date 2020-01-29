@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Link } from  "react-router-dom";
+// import { Link } from  "react-router-dom";
 import "./MyOrders.css";
 import { Table,  Icon, Row, Col, Button } from "antd";
 
@@ -100,7 +100,7 @@ export default class MyOrders extends Component {
         width:"150px",
         key: "status",
         render: status =>
-          status == "Successful" ? (
+          status === "Successful" ? (
             <Button className="btn-success">{status}</Button>
           ) : (
             <Button className="btn-payment">{status}</Button>

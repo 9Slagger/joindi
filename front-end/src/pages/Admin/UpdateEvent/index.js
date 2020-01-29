@@ -8,7 +8,7 @@ import RichText from "./components/RichText";
 import { serviceTag } from "../../../_service/tagServices";
 import { serviceEvent } from "../../../_service/eventServices";
 import moment from "moment";
-import Axios from "axios";
+// import Axios from "axios";
 import "./CreateEventsStyle.css";
 import { ENDPOINT } from "../../../_constants/index";
 

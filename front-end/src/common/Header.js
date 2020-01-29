@@ -10,7 +10,7 @@ import {
   Button,
   Drawer,
   Badge,
-  Divider
+  // Divider
 } from "antd";
 import "../css/Header.css";
 import Login from "./Login";
