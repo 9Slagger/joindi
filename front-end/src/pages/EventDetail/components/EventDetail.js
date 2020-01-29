@@ -65,8 +65,8 @@ class EventDetail extends Component {
 
   handleBuyTicket = async () => {
     try {
-      await serviceTicketInOrder.buyTicket(1, 5);
-      this.props.history.push(`/checkout?ticket_in_order_id=${1}`);
+      await serviceTicketInOrder.buyTicket(1, 47);
+      this.props.history.push(`/checkout`);
     } catch (error) {
       alert(error.messages.title_en)
     }
