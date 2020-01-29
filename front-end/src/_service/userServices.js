@@ -62,5 +62,17 @@ export const serviceUser = {
         if (error.response.status < 500) reject(error.response.data);
       }
     });
+  },
+  updateCompanyUser: companyNewData => {
+    return new Promise(async (resolve, reject) => {
+      let res;
+      try {
+        res = await axios.put("/user/updatecompanyuser", companyNewData);
+        resolve(res.data);
+        console.log(res.data);
+      } catch (error) {
+        if (error.response.status < 500) reject(error.response.data);
+      }
+    });
   }
 };
