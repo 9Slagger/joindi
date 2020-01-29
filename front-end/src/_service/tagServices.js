@@ -5,7 +5,7 @@ export const serviceTag = {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.get("/tag");
+        res = await axios.get("/tag/");
         resolve(res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
@@ -28,7 +28,7 @@ export const serviceTag = {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.post("/tag", {
+        res = await axios.post("/", {
           tagNameEn,
           tagNameTh
         });

@@ -24,10 +24,9 @@ TicketInOrderStatusModel.init(
       validate: {
         notEmpty: false
       }
-    },
+    }
   },
   { sequelize, modelName: "ticket_in_order_status" }
 );
 
 module.exports = { TicketInOrderStatusModel };
-

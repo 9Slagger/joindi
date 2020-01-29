@@ -1,8 +1,10 @@
 const db = require("../models");
 const _ = require("lodash");
 
-const modelName = "imageModel";
+const modelName = "ImageModel";
 const arrayOfFields = ["file_size", "filename_extension"];
+
+var fs = require("fs");
 
 module.exports = {
   findAll: async (req, res, next) => {
@@ -12,6 +14,7 @@ module.exports = {
       console.log(resultInfo);
       res.status(200).send(resultInfo);
     } catch (error) {
+      console.log("findAll");
       console.error(error.message);
       res.status(400).send({ message: error.message });
     }
@@ -20,10 +23,23 @@ module.exports = {
     let resultInfo,
       obj = {};
     try {
-      arrayOfFields.forEach(item => {
-        obj[item] = req.body[item];
-      });
+      // req.body.originFileObj.mv(
+      //   `uploads/payslip/${req.body["filename_extension"]}`
+      // );
+      console.log("files", req.files);
 
+      let rand = parseInt(Math.random() * 1000000);
+
+      req.files.image.mv(`uploads/payslips/${rand}_${req.files.image["name"]}`);
+
+      // console.log(req.body);
+
+      obj.file_size = req.files.image.size;
+      obj.filename_extension = `${rand}_${req.files.image["name"]}`;
+
+      // console.log(obj);
+
+      //Upload image
       resultInfo = await db[modelName].create(obj);
       console.log(resultInfo);
       res.status(200).send(resultInfo);

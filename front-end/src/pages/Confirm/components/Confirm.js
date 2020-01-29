@@ -1,5 +1,7 @@
-import React, { Component } from  "react";
-import { Button, Row, Col } from  "antd";
+import React, { Component } from "react";
+import { Button, Row, Col } from "antd";
+
+import Axios from "../../../_helper/axios";
 
 import { withRouter } from "react-router-dom";
 
@@ -11,11 +13,42 @@ import "./Confirm.css";
 class Confirm extends Component {
   state = {};
 
-  goToCompletePage = () => {
-    this.props.history.push({
-      pathname: `/complete`,
-      search: ``
-    });
+  componentDidMount = async () => {
+    console.log(this.props.location.search);
+    let ticket_in_order_id = "";
+    try {
+      let res = this.props.location.search.split("=");
+      ticket_in_order_id = res[1];
+      await this.getTicketInOrderDatas(ticket_in_order_id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  goToCompletePage = ticket_in_order_id => {
+    // Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
+    //   ticket_in_order_status_id: 4
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+    // this.props.history.push({
+    //   pathname: `/complete`,
+    //   search: ``
+    // });
+  };
+
+  getTicketInOrderDatas = async ticket_in_order_id => {
+    await Axios.get(`/ticketInOrder/wait_for_approve/${ticket_in_order_id}`)
+      .then(res => {
+        this.setState({ ticketLists: res.data });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   renderProcess = () => (
@@ -31,7 +64,7 @@ class Confirm extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 2 </Button>
           <p>Pay</p>
         </Col>
@@ -41,22 +74,12 @@ class Confirm extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary" className="active">
             {" "}
             3{" "}
           </Button>
           <p>Confirm</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={3}>
-          <Button type="primary"> 4 </Button>
-          <p>Complete</p>
         </Col>
       </Row>
     </div>

@@ -8,7 +8,6 @@ router.get("/", getTag);
 router.get("/tagAndEvent/:tagId", getTagAndEvent)
 const { getManageTag } = require("../controllers/tagController.js")
 
-router.get("/", getTag);
 router.get("/manage", getManageTag);
 router.put("/", toggleActiveTag);
 router.post("/", addTag);

@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
   Form,
-  Select,
-  InputNumber,
-  Switch,
-  Radio,
-  Slider,
+  // Select,
+  // InputNumber,
+  // Switch,
+  // Radio,
+  // Slider,
   Button,
   Upload,
   Icon,
-  Rate,
-  Checkbox,
-  Row,
-  Col
+  // Rate,
+  // Checkbox,
+  // Row,
+  // Col
 } from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 class Demo extends React.Component {
   handleSubmit = e => {
@@ -24,6 +24,9 @@ class Demo extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        let data = new FormData();
+        data.append("image", values.dragger[0].originFileObj);
+        this.props.sendDataToParent(data);
       }
     });
   };
@@ -49,7 +52,7 @@ class Demo extends React.Component {
             valuePropName: "fileList",
             getValueFromEvent: this.normFile
           })(
-            <Upload.Dragger name="files" action="/upload.do">
+            <Upload.Dragger name="files" accept="image/*">
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
               </p>

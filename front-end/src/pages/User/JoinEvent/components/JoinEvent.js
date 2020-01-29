@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./JoinEvent.css";
-import { Table, Divider, Tag, Icon, Row, Col, Link, Button } from "antd";
+import { Table,
+  // Divider, Tag,
+  Icon, Row, Col,
+  // Link, Button
+} from "antd";
 import moment from "moment";
 
 const data = [
@@ -64,6 +68,7 @@ export default class JoinEvent extends Component {
       {
         title: "Join Events",
         dataIndex: "name",
+        width: "300px",
         key: "name",
         render: text => (
           <Row
@@ -95,6 +100,7 @@ export default class JoinEvent extends Component {
       {
         title: "Date",
         dataIndex: "date",
+        width: "150px",
         key: "date",
         render: (date, recode, index) => (
           <Col
@@ -115,6 +121,7 @@ export default class JoinEvent extends Component {
       {
         title: "Time",
         dataIndex: "date",
+        width: "150px",
         key: "time",
         render: date => (
           <Col type="flex" align="center">
@@ -136,7 +143,7 @@ export default class JoinEvent extends Component {
         dataSource={data}
         onChange={this.handleChange}
         className="tableEvent"
-        scroll={{ x: 1200, y: 500 }}
+        scroll={{ x: 0, y: 500 }}
       />
     );
   }

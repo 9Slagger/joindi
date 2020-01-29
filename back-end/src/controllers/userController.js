@@ -158,7 +158,7 @@ module.exports = {
         }
       });
     } catch (error) {
-      if(error.original.errno === 1062) {
+      if (error.original.errno === 1062) {
         return res.status(400).json({
           messages: {
             title_en: error.original.message,
@@ -191,6 +191,148 @@ module.exports = {
       }
     } catch (error) {
       res.status(400).send({ message: error.message });
+    }
+  },
+  getUser: async (req, res, next) => {
+    try {
+      const resultUser = await db.UserModel.findAll({
+        include: [
+          {
+            model: db.UserIndividualDetailModel,
+            attributes: ["id", "first_name", "last_name"]
+          },
+          {
+            model: db.UserCompanyDetailModel,
+            attributes: ["id", "company_name", "company_address"]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: resultUser,
+        messages: {
+          title_en: "get User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "get User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  getUserDetail: async (req, res, next) => {
+    try {
+      const resultUser = await db.UserModel.findOne({
+        where: { id: req.user.id },
+        include: [
+          {
+            model: db.UserIndividualDetailModel,
+            attributes: ["id", "first_name", "last_name", "birthday"]
+          },
+          {
+            model: db.UserCompanyDetailModel,
+            attributes: ["id", "company_name", "company_address"]
+          }
+        ]
+      });
+      res.status(200).json({
+        result: resultUser,
+        messages: {
+          title_en: "get User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "get User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateUserDetailIndividual: async (req, res, next) => {
+    try {
+      const resultUpdateUserIndividual = await db.UserIndividualDetailModel.update(
+        {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          birthday: req.body.birthday
+        },
+        { where: { user_id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateUserIndividual,
+        messages: {
+          title_en: "Update User Individual success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update Company User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateUser: async (req, res, next) => {
+    try {
+      const resultUpdateUser = await db.UserModel.update(
+        {
+          phone_number: req.body.phone_number,
+          email: req.body.email
+        },
+        { where: { id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateUser,
+        messages: {
+          title_en: "Update User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update User fail",
+          title_th: ""
+        }
+      });
+    }
+  },
+  updateCompanyUser: async (req, res, next) => {
+    try {
+      const resultUpdateCompanyUser = await db.UserCompanyDetailModel.update(
+        {
+          company_name: req.body.company_name,
+          company_address: req.body.company_address
+        },
+        { where: { user_id: req.user.id } }
+      );
+      res.status(200).json({
+        result: resultUpdateCompanyUser,
+        messages: {
+          title_en: "Update Company User success",
+          title_th: ""
+        }
+      });
+    } catch (error) {
+      console.log("❌", error);
+      res.status(400).json({
+        messages: {
+          title_en: "Update Company User fail",
+          title_th: ""
+        }
+      });
     }
   }
 };

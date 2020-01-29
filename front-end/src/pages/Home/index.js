@@ -40,7 +40,6 @@ export default class index extends Component {
     }
   }
 
-
   async getEvents() {
     this.setState({ loadEventListStatus: true });
     try {
@@ -49,18 +48,22 @@ export default class index extends Component {
       const freeEventList = res.result.events.filter(
         event =>
           event.tickets.filter(ticket => ticket.ticket_price === 0).length !== 0
-      )
+      );
       this.setState({ eventList, freeEventList, loadEventListStatus: false });
     } catch (error) {
       this.setState({ loadEventListStatus: false, getDataFail: true });
-      Notification(
-        selectLang(error.messages.title_en, error.messages.title_th)
-      );
+      Notification();
+      // selectLang(error.messages.title_en, error.messages.title_th)
     }
   }
 
   render() {
-    const { getDataFail, eventCatagorieList, eventList, freeEventList } = this.state;
+    const {
+      getDataFail,
+      eventCatagorieList,
+      eventList,
+      freeEventList
+    } = this.state;
     return (
       <DefaultLayout {...this.props}>
         {!getDataFail ? (

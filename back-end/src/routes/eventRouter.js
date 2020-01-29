@@ -9,7 +9,10 @@ const {
   getCategorieAndEvent,
   getEventApprove,
   getEventDetail,
-  getEventCatagorieList
+  getEventCatagorieList,
+  updateEvent,
+  getMyEvents,
+  getUserJoinEvent
 } = require("../controllers/eventController");
 const { verify, verifyCustomer, verifyAdmin } = require("../_helper/jwt");
 
@@ -20,7 +23,9 @@ router.get("/statusapprove", verify, getEventApprove);
 router.get("/admin", verifyAdmin, adminGetEvents);
 router.put("/approveWait", verifyAdmin, approveEventFromWait);
 router.put("/pendReject", verifyAdmin, pendEventFromReject);
-router.put("/reject", verifyAdmin, rejectEvent);
+router.get("/myevents", verifyCustomer, getMyEvents)
+router.get("/userjoinevent/:eventId", verifyCustomer, getUserJoinEvent)
 router.get("/:eventId", verify, getEventDetail);
+router.put("/:eventId", verifyAdmin, updateEvent);
 
 module.exports = router;

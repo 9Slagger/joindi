@@ -1,7 +1,9 @@
 import React, { Component } from  "react";
 import "./CategoriesEvents.css";
 import CardEvents from  "../../../common/CardEvents";
-import { Row, Col } from  "antd";
+import { Row,
+  // Col
+} from  "antd";
 
 export default class CategoriesEvents extends Component {
   render() {

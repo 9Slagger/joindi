@@ -1,14 +1,10 @@
-import React, { Component } from  "react";
-import { Button, Row, Col, Table } from  "antd";
-
+import React, { Component } from "react";
+import { Button, Row, Col, Table } from "antd";
 import { withRouter } from "react-router-dom";
-
-import Axios from "../../../_helper/axios";
-
+// import Axios from "../../../_helper/axios";
+import { serviceTicket } from "../../../_service/ticketServices";
 import _ from "lodash";
-
 import * as constants from "../../../_constants";
-
 import "antd/dist/antd.css";
 import "./Checkout.css";
 
@@ -39,42 +35,25 @@ class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ticketLists: []
+      ticket: {}
     };
   }
 
-  componentDidMount = async () => {
-    await this.getTicketInOrderDatas();
-    console.log(this.state);
-  };
+  componentDidMount() {
+    this.getTicket();
+  }
 
-  goToPayPage = ticket_in_order_id => {
-    Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
-      ticket_in_order_status_id: 2
-    })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-
-    this.props.history.push({
-      pathname: `/pay/`,
-      search: `?ticket_in_order_id=${ticket_in_order_id}`
-    });
-  };
-
-  getTicketInOrderDatas = async () => {
-    await Axios.get(`/ticketInOrder/checkout`)
-      .then(res => {
-        this.setState({ ticketLists: res.data });
-      })
-      .catch(err => {
-        console.log("xxx");
-        console.error(err);
-      });
-  };
+  async getTicket() {
+    try {
+      const res = await serviceTicket.getTicket(
+        this.props.match.params.ticketId
+      );
+      const ticket = res.result;
+      this.setState({ ticket });
+    } catch (error) {
+      alert(error.messages.title_en);
+    }
+  }
 
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
@@ -92,7 +71,7 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 2 </Button>
           <p>Pay</p>
         </Col>
@@ -102,19 +81,9 @@ class Checkout extends Component {
             <i className="fas fa-ellipsis-h"></i>
           </h2>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <Button type="primary"> 3 </Button>
           <p>Confirm</p>
-        </Col>
-        <Col span={3}>
-          <h2>
-            <i className="fas fa-ellipsis-h"></i>
-            <i className="fas fa-ellipsis-h"></i>
-          </h2>
-        </Col>
-        <Col span={3}>
-          <Button type="primary"> 4 </Button>
-          <p>Complete</p>
         </Col>
       </Row>
     </div>
@@ -127,7 +96,7 @@ class Checkout extends Component {
     </div>
   );
 
-  renderTotal = () => (
+  renderTotal = ticket => (
     <div id="total-div" className="mt-4">
       <h3 className="p-2">Total</h3>
       <Row className="total-header-row font-weight-bold">
@@ -135,33 +104,27 @@ class Checkout extends Component {
         <Col span={6}>Ticket Amount</Col>
         <Col span={6}></Col>
       </Row>
-      {this.state.ticketLists.map((item, idx) => {
-        let ticket_in_order_id = item.ticket_in_order_id;
-        return (
-          <Row key={idx} className="total-header-body">
-            <Col span={12}>
-              <Row span={24}>
-                <Col span={24 / 2}>
-                  <img className="" src="https://picsum.photos/100" alt="" />
-                </Col>
-                <Col>
-                  <p className="mt-2">{item.event_name}</p>
-                  <p>{item.ticket_title}</p>
-                </Col>
-              </Row>
+      <Row className="total-header-body">
+        <Col span={12}>
+          <Row span={24}>
+            <Col span={24 / 2}>
+              <img className="" src="https://picsum.photos/100" alt="" />
             </Col>
-            <Col span={6}>{item.ticket_price * item.ticket_quantity}</Col>
-            <Col span={6}>
-              <Button
-                type="primary"
-                onClick={() => this.goToPayPage(ticket_in_order_id)}
-              >
-                Confrim Order
-              </Button>
+            <Col>
+              <p className="mt-2">{ticket.event_name}</p>
+              <p>{ticket.ticket_title}</p>
             </Col>
           </Row>
-        );
-      })}
+        </Col>
+        <Col span={6}>{ticket.ticket_price * ticket.ticket_quantity}</Col>
+        <Col span={6}>
+          <Button
+            type="primary"
+          >
+            Confrim Order
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 
@@ -194,35 +157,13 @@ class Checkout extends Component {
     );
   };
 
-  toPayPage = ticketInOrderId => () => {
-    // TODO: call api send ticketInOrderId if success go to page pay page if fail alert
-  };
-
   render() {
+    const { ticket } = this.state
+    console.log("ticket", ticket)
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
-        {/* {this.renderConuntDown()} */}
-        {this.renderTotal()}
-
-
-
-        {/* {this.renderReviewOrderSummary()} */}
-
-        {this.renderReviewOrderSummary()}
-
-        <Row className="mt-4">
-          <Col span={24 / 2}>
-            <Button type="danger">Cancel Order</Button>
-          </Col>
-          <Col span={24 / 2} className="text-right">
-            <Button type="primary" onClick={this.toPayPage}>
-              Confirm Order
-            </Button>
-          </Col>
-        </Row>
-
-
+        {this.renderTotal(ticket)}
       </section>
     );
   }

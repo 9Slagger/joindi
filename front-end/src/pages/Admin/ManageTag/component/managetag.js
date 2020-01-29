@@ -26,7 +26,7 @@ class ManageTag extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          let res = await serviceTag.addTag(TagNameEn, TagNameTh);
+          await serviceTag.addTag(TagNameEn, TagNameTh);
           this.props.form.resetFields();
           await this.setState({
             visible: false
@@ -211,7 +211,9 @@ class ManageTag extends Component {
                 dataIndex="tag_active"
                 key="status"
                 render={(text, data, index) => (
-                  <>{data.tag_active ? "Active" : "In-Active"}</>
+                  <>{data.tag_active ? <Button type="primary">Active</Button> : <Button type="danger">
+                  In-Active
+                </Button>}</>
                 )}
               />
               <Column

@@ -1,0 +1,17 @@
+
+
+.buttonAddNewEvents{
+    background-color:#345586 ;
+    color:white;
+    font-family: "Prompt", sans-serif;
+    font-weight:bold;
+    width:200px;
+    margin:0 0 30px;
+}
+
+.buttonAddNewEvents:hover{
+    background-color:#345586 ;
+    color:white;
+    font-family: "Prompt", sans-serif;
+    font-weight:bold;
+}
