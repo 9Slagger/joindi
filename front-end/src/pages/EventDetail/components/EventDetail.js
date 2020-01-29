@@ -289,14 +289,11 @@ class EventDetail extends Component {
                     </Col>
                     <Col span={2}>
                       <Row type="flex" justify="end" align="middle">
-                        <Button
-                          type="primary"
-                          onClick={this.hangleBuyTicket(this.state.a)}
-                        >
-                          Buy Ticket 
-                        </Button> 
-                      </Row> 
-                    </Col> 
+                        <Button type="primary" onClick={this.handleBuyTicket}>
+                          Buy Ticket
+                        </Button>
+                      </Row>
+                    </Col>
                   </Row> 
                 </Col> 
               </Row> 
