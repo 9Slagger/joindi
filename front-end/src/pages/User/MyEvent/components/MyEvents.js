@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import { Link } from "react-router-dom";
 import "./MyEvents.css";
-import { Table, Divider, Tag, Icon, Row, Col, Button } from "antd";
+import { Table, Divider, Tag, Icon, Row, Col, Button, Modal } from "antd";
 import Column from "antd/lib/table/Column";
 import moment from "moment";
 import Axios from "axios";
@@ -12,7 +12,8 @@ import { serviceEvent, serviceTag } from "../../../../_service";
 export default class MyEvents extends Component {
   state = {
     filteredInfo: null,
-    myEvent: []
+    myEvent: [],
+    visible: false
   };
 
   fetchdata = () => {
@@ -40,6 +41,26 @@ export default class MyEvents extends Component {
   clearAll = () => {
     this.setState({
       filteredInfo: null
+    });
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false
     });
   };
   render() {
@@ -74,18 +95,28 @@ export default class MyEvents extends Component {
           </Col>
         )
       },
-      {
-        title: "User Join Event",
-        dataIndex: "userjoin",
-        width: "130px",
-        render: (data, recode, index) => (
-          <Col>
-            <Row>
-              <Button />
-            </Row>
-          </Col>
-        )
-      },
+      // {
+      //   title: "Users Join Event",
+      //   dataIndex: "usersjoin",
+      //   width: "150px",
+      //   render: (data, recode, index) => (
+      //     <Col>
+      //       <Row>
+      //         <Button onClick={this.showModal}>Users Join Event</Button>
+      //         <Modal
+      //           title="Basic Modal"
+      //           visible={this.state.visible}
+      //           onOk={this.handleOk}
+      //           onCancel={this.handleCancel}
+      //         >
+      //           <p>Some contents...</p>
+      //           <p>Some contents...</p>
+      //           <p>Some contents...</p>
+      //         </Modal>
+      //       </Row>
+      //     </Col>
+      //   )
+      // },
       {
         title: "Status",
         dataIndex: "status",

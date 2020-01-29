@@ -4,6 +4,8 @@ import "antd/dist/antd.css";
 import "./JoinEvent.css";
 import { Table, Divider, Tag, Icon, Row, Col, Link, Button } from "antd";
 import moment from "moment";
+import { serviceOrder } from "../../../../_service";
+import Axios from "axios";
 
 const data = [
   {
@@ -37,7 +39,15 @@ const data = [
 
 export default class JoinEvent extends Component {
   state = {
-    filteredInfo: null
+    filteredInfo: null,
+    joinEventList: []
+  };
+
+  fetchdata = () => {
+    Axios.get("http://localhost:8085/order/joinevent").then(result => {
+      this.setState({ joinEventList: result.data.result });
+      // console.log("result-----", this.state.joinEventList);
+    });
   };
 
   handleChange = (pagination, filters) => {
@@ -59,6 +69,7 @@ export default class JoinEvent extends Component {
   render() {
     let { filteredInfo } = this.state;
     filteredInfo = filteredInfo || {};
+    console.log("result-----", this.state.joinEventList);
 
     const columns = [
       {
