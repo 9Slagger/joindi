@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
-
+import { serviceTicketInOrder } from "../../../_service";
 import {
   Row,
   Col,
@@ -54,23 +54,21 @@ class EventDetail extends Component {
     });
   };
 
-  renderOptions = (item) => {
+  renderOptions = item => {
     const number_of_tickets = item;
-    let array = []
-    for(let i = 0; i<=number_of_tickets; i++){
-      array.push(i)
+    let array = [];
+    for (let i = 0; i <= number_of_tickets; i++) {
+      array.push(i);
     }
-    return array.map(ent => (
-      <Option key={ent}>{ent}</Option>
-    ));
+    return array.map(ent => <Option key={ent}>{ent}</Option>);
   };
 
-  handleBuyTicket = () => {
-    if (false) {
-      alert("ตั๋วไม่พอกับความต้องการของคุณ")
-    }
-    else {
-      this.props.history.push(`/checkout/${1}/${5}`)
+  handleBuyTicket = async () => {
+    try {
+      await serviceTicketInOrder.buyTicket(1, 5);
+      this.props.history.push(`/checkout?ticket_in_order_id=${1}`);
+    } catch (error) {
+      alert(error.messages.title_en)
     }
   };
 
@@ -123,10 +121,7 @@ class EventDetail extends Component {
 
   componentDidMount = async () => {
     this.showData();
-    setInterval(
-      ()=>this.showData(),
-      200000
-    )
+    setInterval(() => this.showData(), 200000);
   };
 
   render() {
@@ -145,22 +140,22 @@ class EventDetail extends Component {
                   width: "50%",
                   height: "50%"
                 }}
-              /> 
-            </Col> 
+              />
+            </Col>
             <Col className="detail" span={12}>
-              <Row className="event-name"> {this.state.data.event_name} </Row> 
+              <Row className="event-name"> {this.state.data.event_name} </Row>
               <Row className="event-date">
-                <Icon type="calendar" />: &nbsp; {this.state.data.event_date} 
-              </Row> 
+                <Icon type="calendar" />: &nbsp; {this.state.data.event_date}
+              </Row>
               <Row className="event-date">
-                <Icon type="hourglass" />: &nbsp; {this.state.data.event_time} 
-              </Row> 
+                <Icon type="hourglass" />: &nbsp; {this.state.data.event_time}
+              </Row>
               <Row className="event-date">
-                <Icon type="environment" /> Location: &nbsp; 
-                {this.state.data.event_address} 
-              </Row> 
+                <Icon type="environment" /> Location: &nbsp;
+                {this.state.data.event_address}
+              </Row>
               <Row className="event-date">
-                <Icon type="tags" /> Tags: &nbsp; 
+                <Icon type="tags" /> Tags: &nbsp;
                 {this.state.data.eventtag
                   ? this.state.data.eventtag.map((item, index) => {
                       return (
@@ -175,28 +170,27 @@ class EventDetail extends Component {
                         </Tag>
                       );
                     })
-                  : ""} 
-                 
-              </Row> 
-            </Col> 
-          </Row> 
+                  : ""}
+              </Row>
+            </Col>
+          </Row>
           <Row
             type="flex"
             justify="center"
             align="middle"
             className="event-description"
           >
-            <div> {this.state.data.event_remark} </div> 
-          </Row> 
+            <div> {this.state.data.event_remark} </div>
+          </Row>
           <Divider />
           <Row type="flex" align="middle" className="event-ticket">
             <Col span={24}>
               <Row>
                 <Col span={16}>
                   <Row type="flex" align="middle">
-                    <b> Tickets </b> 
-                  </Row> 
-                </Col> 
+                    <b> Tickets </b>
+                  </Row>
+                </Col>
                 <Col span={5}>
                   <Row type="flex" justify="end" align="middle">
                     <Input
@@ -204,15 +198,15 @@ class EventDetail extends Component {
                       style={{
                         width: "200px"
                       }}
-                    /> 
-                  </Row> 
-                </Col> 
+                    />
+                  </Row>
+                </Col>
                 <Col span={3}>
                   <Row type="flex" justify="end" align="middle">
-                    <Button> Apply </Button> 
-                  </Row> 
-                </Col> 
-              </Row> 
+                    <Button> Apply </Button>
+                  </Row>
+                </Col>
+              </Row>
               <Divider />
               <Row>
                 <Col span={24}>
@@ -225,11 +219,8 @@ class EventDetail extends Component {
                             align="middle"
                             key={index}
                           >
-                            <Col span={16}> {item.ticket_title} </Col> 
-                            <Col span={5}>
-                               
-                              {item.ticket_price} &nbsp; Baht 
-                            </Col> 
+                            <Col span={16}> {item.ticket_title} </Col>
+                            <Col span={5}>{item.ticket_price} &nbsp; Baht</Col>
                             <Col span={2}>
                               <Row>
                                 <Select
@@ -239,35 +230,34 @@ class EventDetail extends Component {
                                     width: "60px"
                                   }}
                                 >
-                                  {this.renderOptions(item.ticket_total_quantity)}
-                                </Select> 
-                              </Row> 
-                            </Col> 
+                                  {this.renderOptions(
+                                    item.ticket_total_quantity
+                                  )}
+                                </Select>
+                              </Row>
+                            </Col>
                           </Row>
                         );
                       })
-                    : ""} 
+                    : ""}
                   <Divider />
                   <Row type="flex" align="middle">
                     <Col className="ps" span={22}>
-                      <Row> * All Prices exclude VAT </Row> 
-                      <Row> * Some fees may be applied </Row> 
-                    </Col> 
+                      <Row> * All Prices exclude VAT </Row>
+                      <Row> * Some fees may be applied </Row>
+                    </Col>
                     <Col span={2}>
                       <Row type="flex" justify="end" align="middle">
-                        <Button
-                          type="primary"
-                          onClick={this.handleBuyTicket}
-                        >
+                        <Button type="primary" onClick={this.handleBuyTicket}>
                           Buy Ticket
-                        </Button> 
-                      </Row> 
-                    </Col> 
-                  </Row> 
-                </Col> 
-              </Row> 
-            </Col> 
-          </Row> 
+                        </Button>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
           <Divider />
           <Row className="Organized">
             <Col>
@@ -280,11 +270,11 @@ class EventDetail extends Component {
                       width: "50%",
                       height: "50%"
                     }}
-                  /> 
-                </Col> 
+                  />
+                </Col>
                 <Col span={14}>
-                  <Row> Organized by </Row> <Row> Zaap Party </Row> 
-                </Col> 
+                  <Row> Organized by </Row> <Row> Zaap Party </Row>
+                </Col>
                 <Col span={6}>
                   <Row type="flex" justify="end" align="middle">
                     <Button
@@ -294,8 +284,8 @@ class EventDetail extends Component {
                       }}
                       onClick={this.showModal}
                     >
-                      Contact 
-                    </Button> 
+                      Contact
+                    </Button>
                     <Modal
                       visible={this.state.visible}
                       onOk={this.handleOk}
@@ -304,8 +294,8 @@ class EventDetail extends Component {
                       //style={{ width: "800px" }}
                     >
                       <Row>
-                        <h2> Organized by </h2> 
-                      </Row> 
+                        <h2> Organized by </h2>
+                      </Row>
                       <Row
                         type="flex"
                         justify="center"
@@ -323,28 +313,28 @@ class EventDetail extends Component {
                                 width: "50%",
                                 height: "50%"
                               }}
-                            /> 
-                          </Row> 
+                            />
+                          </Row>
                           <Row type="flex" justify="center">
-                            <h6> ZAAP Party </h6> 
-                          </Row> 
-                        </Col> 
+                            <h6> ZAAP Party </h6>
+                          </Row>
+                        </Col>
                         <Col span={16}>
                           <Row>
-                            <h6> Facebook </h6> 
-                          </Row> 
+                            <h6> Facebook </h6>
+                          </Row>
                           <Row>
-                            <h5> facebook.com / bangkokofdreams / </h5> 
-                          </Row> 
-                        </Col> 
-                      </Row> 
-                    </Modal> 
-                  </Row> 
-                </Col> 
-              </Row> 
-            </Col> 
-          </Row> 
-        </Col> 
+                            <h5> facebook.com / bangkokofdreams / </h5>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Modal>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
       </Row>
     );
   }

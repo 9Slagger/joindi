@@ -4,15 +4,13 @@ const {
   findAll,
   create,
   update,
-  del,
-  getTicket
+  del
 } = require("../controllers/ticketController");
 
 router.get("/", findAll);
 router.post("/", create);
 router.put("/:id", update);
 router.delete("/:id", del);
-router.get("/:ticketId", getTicket)
 
 const {
   getTicketInOrder,

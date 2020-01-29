@@ -36,7 +36,7 @@ const Routers = props => {
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/managetag" component={ManageTag} />
         <Route exact path="/about" component={AboutPage} />
-        <Route exact path="/checkout/:ticketId/:ticketQuantity" component={CheckoutPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
         <Route exact path="/pay" component={PayPage} />
         <Route exact path="/confirm" component={ConfirmPage} />
         <Route exact path="/complete" component={CompletePage} />

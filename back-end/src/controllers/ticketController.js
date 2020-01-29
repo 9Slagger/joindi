@@ -72,26 +72,5 @@ module.exports = {
       console.error(error.message);
       res.status(400).send({ message: error.message });
     }
-  },
-  getTicket: async (req, res, next) => {
-    let ticketResult;
-    try {
-      ticketResult = await db.TicketModel.findOne({
-        where: { id: req.params.ticketId },
-        include: [{ model: db.EventModel }]
-      });
-      if (_.isEmpty(ticketResult)) {
-        return res
-          .status(404)
-          .json({ messages: { title_en: "ticket not found", title_th: "" } });
-      }
-      res
-        .status(200)
-        .json({ result: ticketResult, messages: { title_en: "get ticket success", title_th: "" } });
-    } catch (error) {
-      res
-        .status(400)
-        .json({ messages: { title_en: "someting is wrong", title_th: "" } });
-    }
   }
 };
