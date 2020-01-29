@@ -64,7 +64,7 @@ export default class JoinEvent extends Component {
       {
         title: "Join Events",
         dataIndex: "name",
-        width:"300px",
+        width: "300px",
         key: "name",
         render: text => (
           <Row
@@ -96,7 +96,7 @@ export default class JoinEvent extends Component {
       {
         title: "Date",
         dataIndex: "date",
-        width:"150px",
+        width: "150px",
         key: "date",
         render: (date, recode, index) => (
           <Col
@@ -117,7 +117,7 @@ export default class JoinEvent extends Component {
       {
         title: "Time",
         dataIndex: "date",
-        width:"150px",
+        width: "150px",
         key: "time",
         render: date => (
           <Col type="flex" align="center">
@@ -139,7 +139,7 @@ export default class JoinEvent extends Component {
         dataSource={data}
         onChange={this.handleChange}
         className="tableEvent"
-        scroll={{ x:0, y: 500 }}
+        scroll={{ x: 0, y: 500 }}
       />
     );
   }

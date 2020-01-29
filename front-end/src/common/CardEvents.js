@@ -2,6 +2,7 @@ import React, { Component } from  "react";
 import "../css/CardEvents.css";
 import { Card, Avatar, Typography, Icon, Row, Col } from  "antd";
 import { Link } from  "react-router-dom";
+import moment from "moment";
 const { Text, Paragraph } = Typography;
 
 class CardEvents extends Component {
@@ -14,7 +15,7 @@ class CardEvents extends Component {
         <Avatar shape="square" size={150} className="avatar-events" />
         <Col>
           <Row>
-            <Icon type="calendar" /> : <Text>{event.event_date_start}</Text>{" "}
+            <Icon type="calendar" /> : <Text>{moment(parseInt(event.event_date_start)).format("ll")}</Text>{" "}
             <br />
           </Row>
           <Row>
@@ -29,7 +30,7 @@ class CardEvents extends Component {
           <Row type="flex" justify="center">
             <span>
             {event.event_tags && event.event_tags.map(tag => (
-                      <Text code key={tag.id}>{tag.tag_name_en}&nbsp;</Text>
+                      <Text code key={tag.id + 'EventTag'}>{tag.tag_name_en}&nbsp;</Text>
                     ))}
             </span>
           </Row>

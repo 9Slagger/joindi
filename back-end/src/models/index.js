@@ -96,6 +96,7 @@ EventModel.hasOne(TicketInOrderHasImageModel, {
 //
 
 //
+BookmarkModel.belongsTo(EventModel, { foreignKey: "event_id" })
 EventModel.hasMany(BookmarkModel, { foreignKey: "event_id" });
 UserModel.hasMany(BookmarkModel, { foreignKey: "user_id" });
 //
