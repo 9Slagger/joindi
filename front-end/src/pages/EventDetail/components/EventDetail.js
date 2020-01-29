@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
 import {Link} from "react-router-dom"
+import _ from 'lodash'
 
 import {
   Row,
@@ -27,14 +28,27 @@ class EventDetail extends Component {
       data: {},
       earlyprice: "",
       normalprice: "",
-      children: []
+      children: [],
+      a:[]
+
     };
   }
   
 
-  handleChangeEarlyPrice = e => {};
-
-  handleChangeNormalPrice = e => {};
+  handleChangeEarlyPrice = (id, e) => {
+    const itemIndex = this.state.a.findIndex(item => item.id === id)
+    if(itemIndex !== -1){
+      let cloneStateA = _.cloneDeep(this.state.a)
+      cloneStateA[itemIndex].value = e
+      this.setState(() => ({
+        a: cloneStateA
+      }))
+    } else {
+      this.setState(state => ({
+        a: [...state.a, {id: id, value: e}]
+      }))
+    }
+  };
 
   showModal = () => {
     this.setState({
@@ -43,14 +57,12 @@ class EventDetail extends Component {
   };
 
   handleOk = e => {
-    // console.log(e);
     this.setState({
       visible: false
     });
   };
 
   handleCancel = e => {
-    // console.log(e);
     this.setState({
       visible: false
     });
@@ -59,7 +71,7 @@ class EventDetail extends Component {
   renderOptions = (item) => {
     const number_of_tickets = item;
     let array = []
-    for(let i = 1; i<=number_of_tickets; i++){
+    for(let i = 0; i<=number_of_tickets; i++){
       array.push(i)
     }
     return array.map(ent => (
@@ -67,15 +79,31 @@ class EventDetail extends Component {
     ));
   };
 
+  isListOne = (list) =>{
+    let isOne = false;
+    for(let item of list){
+      let value = parseInt(item.value)
+      if(value !== 0 && !isOne){
+        console.log("true")
+        isOne = true
+      } else if (value !== 0 && isOne){
+        console.log("false--->")
+        return false;
+      }
+    }
+    console.log("isone")
+    return isOne;
+  }
+
   hangleBuyTicket = id => async () => {
-    // console.log("value : ")
-    // TODO: call api if success go to page checkout if fail alert buy ticket fail
+    if(this.isListOne(this.state.a)){
+      alert(true)
+    }else{
+      alert(false)
+    }
   };
   async showData() {
     const { eventId } = this.props.match.params
-
-    console.log("test : "+eventId)
-    
     const result = await Axios.get(`http://localhost:8085/event/${eventId}`);
     
     let temp = () => {
@@ -103,6 +131,7 @@ class EventDetail extends Component {
         event_remark: result.data.result.event_remark,
         event_tags: result.data.result.event_tags.tag_name_en,
         ticket: result.data.result.tickets.map(item => ({
+          ticket_id: item.id,
           ticket_title: item.ticket_title,
           ticket_detail: item.ticket_detail,
           ticket_note: item.ticket_note,
@@ -118,7 +147,7 @@ class EventDetail extends Component {
       };
     };
     this.setState({
-      data: temp()
+      data: temp(console.log(this.state))
     });
   }
 
@@ -131,8 +160,6 @@ class EventDetail extends Component {
   };
 
   render() {
-    console.dir(this.props,{depth:null});
-    // console.log(data.ticket);
     return (
       <Row className="event-detail">
         <Col span={24}>
@@ -223,7 +250,7 @@ class EventDetail extends Component {
                             type="flex"
                             justify="end"
                             align="middle"
-                            key={index}
+                            key={item.ticket_id}
                           >
                             <Col span={16}> {item.ticket_title} </Col> 
                             <Col span={5}>
@@ -233,8 +260,9 @@ class EventDetail extends Component {
                             <Col span={2}>
                               <Row>
                                 <Select
-                                  defaultValue="1"
-                                  onChange={e => this.handleChangeEarlyPrice(e)}
+                                  defaultValue="0"
+                                  
+                                  onSelect={async e => {this.handleChangeEarlyPrice(item.ticket_id, e)}}
                                   style={{
                                     width: "60px"
                                   }}
@@ -257,11 +285,9 @@ class EventDetail extends Component {
                       <Row type="flex" justify="end" align="middle">
                         <Button
                           type="primary"
-                          onClick={this.hangleBuyTicket(1)}
+                          onClick={this.hangleBuyTicket(this.state.a)}
                         >
-                          <Link to="/checkout">
-                            Buy Ticket 
-                          </Link>
+                          Buy Ticket 
                         </Button> 
                       </Row> 
                     </Col> 
