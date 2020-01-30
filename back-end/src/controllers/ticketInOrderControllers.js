@@ -90,5 +90,18 @@ module.exports = {
     } catch (error) {
       res.status(400).send({ message: error.message });
     }
+  },
+  UpdateTicketQuantity: async (req, res, next) => {
+    try {
+      let resultModel = db.TicketModel.update(
+        {
+          ticket_remaining_quantity: req.params.stock,
+        },
+        { where: { id: req.params.ticketid } }
+      );
+      res.status(200).send(resultModel);
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
   }
-};
+}; 
