@@ -135,7 +135,11 @@ module.exports = {
             include: [
               { model: db.EventTagModel },
               { model: db.EventCategoryModel },
-              { model: db.TicketModel }
+              { model: db.TicketModel },
+              {
+                model: db.EventHasImageModel,
+                include: [{ model: db.ImageModel }]
+              }
             ]
           }
         ]
@@ -320,7 +324,13 @@ module.exports = {
         include: [
           {
             model: db.EventModel,
-            where: { event_status_id: eventStatusResult.id }
+            where: { event_status_id: eventStatusResult.id },
+            include: [
+              {
+                model: db.EventHasImageModel,
+                include: [{ model: db.ImageModel }]
+              }
+            ]
           }
         ]
       });
@@ -339,7 +349,6 @@ module.exports = {
         .json({ messages: { title_en: "someting is wrong", title_th: "" } });
     }
   },
-  // FIXME: delete me
   getEventCatagorieList: async (req, res, next) => {
     let eventCatagorieList, eventStatusResult;
     try {
@@ -351,7 +360,13 @@ module.exports = {
         include: [
           {
             model: db.EventModel,
-            where: { event_status_id: eventStatusResult.id }
+            where: { event_status_id: eventStatusResult.id },
+            include: [
+              {
+                model: db.EventHasImageModel,
+                include: [{ model: db.ImageModel }]
+              }
+            ]
           }
         ]
       });
@@ -365,7 +380,6 @@ module.exports = {
       });
     }
   },
-  // FIXME: delete me
   updateEvent: async (req, res, next) => {
     let transaction,
       targetEvent,

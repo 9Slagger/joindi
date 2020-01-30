@@ -9,7 +9,7 @@ import {
   Form,
   Button,
   Drawer,
-  Badge,
+  Badge
   // Divider
 } from "antd";
 import "../css/Header.css";
@@ -71,9 +71,7 @@ class Header extends React.Component {
       const res = await serviceCategorie.getCategorie();
       const categorieList = res.result;
       this.setState({ categorieList });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   getCategorieAndEvent = async () => {
@@ -81,10 +79,7 @@ class Header extends React.Component {
       const res = await serviceEvent.getCategorieAndEvent();
       const searchList = res.result;
       this.setState({ searchList });
-      console.log(searchList);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   getTag = async () => {
@@ -323,10 +318,12 @@ class Header extends React.Component {
                     ) : null}
                     <Menu mode="inline">
                       <SubMenu
-                        title= {<span>
-                          <Icon type="user" />
-                          <span>{Authentication.item.email}</span>
-                        </span>}
+                        title={
+                          <span>
+                            <Icon type="user" />
+                            <span>{Authentication.item.email}</span>
+                          </span>
+                        }
                       >
                         <Menu.Item key="profile">
                           <Link to="/userprofile">Profile</Link>
@@ -362,11 +359,19 @@ class Header extends React.Component {
 
                 <Row>
                   <Menu onClick={this.handleClickTag} mode="inline">
-                    <Menu.Item key="changelanguage">  <Icon type="global" />Language: EN</Menu.Item>
-                    <SubMenu  title= {<span>
+                    <Menu.Item key="changelanguage">
+                      {" "}
+                      <Icon type="global" />
+                      Language: EN
+                    </Menu.Item>
+                    <SubMenu
+                      title={
+                        <span>
                           <Icon type="calendar" />
                           <span>Events</span>
-                        </span>}>
+                        </span>
+                      }
+                    >
                       {categorieList.map(data => (
                         <Menu.Item
                           key={data.id}
