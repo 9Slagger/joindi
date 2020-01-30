@@ -14,13 +14,18 @@ router.delete("/:id", del);
 
 const {
   getTicketInOrder,
-  ApproveTicketInOrder
+  ApproveTicketInOrder,
+  UpdateTicketQuantity
 } = require("../controllers/ticketInOrderControllers");
-// router.get("/a", getTicketInOrder);
+
 router.get("/admin/ticketinorder", getTicketInOrder);
 router.post(
   "/admin/addticketinorder/:id/:status/:remark",
   ApproveTicketInOrder
+);
+router.post(
+  "/admin/updateticket/:ticketid/:stock",
+  UpdateTicketQuantity
 );
 
 module.exports = router;

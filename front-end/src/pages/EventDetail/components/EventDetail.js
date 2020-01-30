@@ -168,8 +168,11 @@ class EventDetail extends Component {
   }
 
   componentDidMount = async () => {
-    this.showData();
-    setInterval(() => this.showData(), 200000);
+    this.showData()
+    setInterval(
+      ()=>this.showData(), 
+      2000
+    )
   };
 
   render() {

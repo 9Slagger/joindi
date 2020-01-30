@@ -54,25 +54,27 @@ class ApprovePayment extends Component {
     this.setState({ [type]: key });
   };
 
-  approvePayment=(id)=>{
+  approvePayment=(id,ticketid,stock)=>{
     const str = null;
-    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/2/${str}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/4/${str}`).then(res => {
+      });
+    Axios.post(`http://localhost:8085/ticket/admin/updateticket/${ticketid}/${stock}`).then(res => {
       });
   }
 
-  handleApprove = (id) => {
+  handleApprove = (id,ticketid,stock) => {
     confirm({
       title: 'Do you want to Approve Item?',
       content: 'When clicked the OK button, this dialog will be closed',
       onOk: ()=> {
-        this.approvePayment(id);
+        this.approvePayment(id,ticketid,stock);
       },
       onCancel:()=>{},
     });
   }
 
   handleDelete = (id,remark) => {
-    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/3/${remark}`).then(res => {
+    Axios.post(`http://localhost:8085/ticket/admin/addticketinorder/${id}/5/${remark}`).then(res => {
       this.setState({
         remark: "",
         visible: false
@@ -103,10 +105,14 @@ class ApprovePayment extends Component {
     const result = await Axios.get("http://localhost:8085/ticket/admin/ticketinorder");
       let temp = result.data.map((item) => {
         return {
-          id: item.id,
-          ticket_title: item.ticket.ticket_title,
+          id:item.id,
+          ticket_quantity: item.ticket_quantity,
           ticket_in_order_remark_reject: item.ticket_in_order_remark_reject,
-          ticket_in_order_status_id: item.ticket_in_order_status_id
+          ticket_id: item.ticket.id,
+          ticket_title: item.ticket.ticket_title,
+          ticket_in_order_status_id: item.ticket_in_order_status_id,
+          ticket_total_quantity: item.ticket.ticket_total_quantity,
+          
         }
       });
       this.setState({ data: temp }, ()=>{});
@@ -125,9 +131,9 @@ class ApprovePayment extends Component {
     // console.log(this.state.data)
     const contentListNoTitle = {
       Waiting: ( 
-        this.state.data.filter(item => item.ticket_in_order_status_id === 1).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 3).map((obj)=>{
           // console.log('test')
-          console.log(obj.ticket_title)
+          const remainig_quantity = Number(obj.ticket_total_quantity - obj.ticket_quantity)
           return(
             <div>
                <Card
@@ -144,7 +150,11 @@ class ApprovePayment extends Component {
                   <Button
                     style={{ border: "none", color: "#345586" }}
                     shape="circle"
-                    onClick={()=>this.handleApprove(obj.id)}
+                    onClick={()=>this.handleApprove(
+                      obj.id,
+                      obj.ticket_id,
+                      remainig_quantity
+                    )}
                   >
                     <Icon type="check-circle" style={{ fontSize: "25px" }} />
                   </Button>
@@ -165,7 +175,7 @@ class ApprovePayment extends Component {
         
       ),
       Approved: ( 
-        this.state.data.filter(item => item.ticket_in_order_status_id === 2).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 4).map((obj)=>{
           // console.log(obj)
           return(
             <div>
@@ -186,7 +196,7 @@ class ApprovePayment extends Component {
         })
       ),
       Rejected: ( 
-        this.state.data.filter(item => item.ticket_in_order_status_id === 3).map((obj)=>{
+        this.state.data.filter(item => item.ticket_in_order_status_id === 5).map((obj)=>{
           // console.log(obj)
           return(
             <div>
