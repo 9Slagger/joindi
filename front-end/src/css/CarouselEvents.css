@@ -5,27 +5,18 @@
 }
 
 .carouselEvents {
-  background-color: black !important;
-  height: 400px;
+  height: auto;
   margin-bottom: 40px;
   width: 100%;
 }
 
 .imageCarousel {
   width: 100%;
-  /* object-fit: contain; */
-  /* object-position: 100% 0; */
-  /* max-height: 400px; */
+  height: auto;
 }
 
 @media only screen and (max-width: 600px) {
-  .carouselEvents {
-    height: 200px;
-  }
-}
-
-@media only screen and (max-width: 300px) {
-  .carouselEvents {
-    height: 50px;
-  }
+  /* .carouselEvents {
+    height: auto;
+  } */
 }

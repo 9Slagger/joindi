@@ -1,8 +1,20 @@
-.layoutContent{
-  background-color: #FFFFFF;
+.layoutContent {
+  background-color: #ffffff;
   min-height: 78vh !important;
   margin-top: 30px !important;
   margin-left: 10% !important;
   margin-bottom: 30px !important;
   margin-right: 10% !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .layoutContent {
+    margin: 30px 5% 30px 5% !important;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .layoutContent {
+    margin: 30px 2% 30px 2% !important;
+  }
 }
