@@ -76,16 +76,21 @@ module.exports = {
         include: [
           {
             model: db.EventModel,
-            where: { event_status_id: eventStatusResult.id }
+            where: { event_status_id: eventStatusResult.id },
+            include: [
+              {
+                model: db.EventHasImageModel,
+                include: [{ model: db.ImageModel }]
+              }
+            ]
           }
         ]
       });
       if (_.isEmpty(tagAndEventResult)) {
         tagAndEventResult = await db.EventTagModel.findOne({
           where: { id: req.params.tagId }
-        })
+        });
       }
-
       return res.status(200).json({
         result: tagAndEventResult,
         messages: { title_en: "get tag and event success", title_th: "" }

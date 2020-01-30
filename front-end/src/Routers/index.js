@@ -45,12 +45,6 @@ const Routers = props => {
         <Route exact path="/approvepayment" component={ApprovePayment} />
         <Route exact path="/updateevent/:eventId" component={UpdateEvent} />
         <Route exact path="/eventdetail/:eventId" component={EventDetail} />
-
-        <Route
-          exact
-          path="/categoriesevents/:categorieId"
-          component={CategoriesEvents}
-        />
         <Route
           exact
           path="/categoriesevents/:categorieId"

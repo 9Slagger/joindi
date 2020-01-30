@@ -10,7 +10,6 @@ export const serviceTicketInOrder = {
         });
         resolve(res.data);
       } catch (error) {
-        console.log("error", error.response);
         if (error.status < 500) reject(error.response.data);
       }
     });
