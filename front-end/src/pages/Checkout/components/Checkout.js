@@ -1,68 +1,100 @@
 import React, { Component } from "react";
 import { Button, Row, Col, Table } from "antd";
-
 import { withRouter } from "react-router-dom";
-
 import Axios from "../../../_helper/axios";
-
-import _ from "lodash";
-
-import * as constants from "../../../_constants";
-
 import "antd/dist/antd.css";
 import "./Checkout.css";
-
-const reviewOrderSummaryColumns = [
-  {
-    title: "Ticket",
-    dataIndex: "ticket_title",
-    key: "ticket_title"
-  },
-  {
-    title: "Price",
-    dataIndex: "ticket_price",
-    key: "ticket_price"
-  },
-  {
-    title: "Quantity",
-    dataIndex: "ticket_quantity",
-    key: "ticket_quantity"
-  },
-  {
-    title: "Subtotal",
-    dataIndex: "subtotal",
-    key: "subtotal"
-  }
-];
+import { ENDPOINT } from "../../../_constants";
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ticketLists: []
+      ticketLists: [],
+      columnsTicket: [
+        {
+          title: "Order NO.",
+          dataIndex: "id",
+          render: (value, ticketInOrder, index) => {
+            let orderNumber = `${ticketInOrder.id}`;
+            while (orderNumber.length < 8) {
+              orderNumber = `0${orderNumber}`;
+            }
+            return <label>#{orderNumber}</label>;
+          }
+        },
+        {
+          title: "Event",
+          dataIndex: "eventimage",
+          render: (value, ticketInOrder, index) => {
+            console.log("ticketInOrder", ticketInOrder);
+            return (
+              <img
+                src={`${ENDPOINT}/${ticketInOrder.ticket.event.event_has_image.image.id}.${ticketInOrder.ticket.event.event_has_image.image.filename_extension}`}
+                style={{ width: "50px" }}
+              />
+            );
+          }
+        },
+        {
+          title: "Event Name",
+          dataIndex: "eventname",
+          render: (value, ticketInOrder, index) => (
+            <label>{ticketInOrder.ticket.event.event_name}</label>
+          )
+        },
+        {
+          title: "Ticket Name",
+          dataIndex: "ticketname",
+          render: (value, ticketInOrder, index) => (
+            <label>{ticketInOrder.ticket.ticket_title}</label>
+          )
+        },
+        {
+          title: "Ticket in Stock",
+          dataIndex: "ticketinstock",
+          render: (value, ticketInOrder, index) => (
+            <label>{ticketInOrder.ticket.ticket_remaining_quantity}</label>
+          )
+        },
+        {
+          title: "Buy Ticket",
+          dataIndex: "buyticket",
+          render: (value, ticketInOrder, index) => (
+            <label>{ticketInOrder.ticket_quantity}</label>
+          )
+        },
+        {
+          title: "Check Out",
+          dataIndex: "checkout",
+          align: "center",
+          render: (value, ticketInOrder, index) => (
+            <Button type="primary" onClick={this.goToPayPage(ticketInOrder.id)}>
+              Check Out
+            </Button>
+          )
+        }
+      ]
     };
   }
 
   componentDidMount = async () => {
     await this.getTicketInOrderDatas();
-    console.log(this.state);
   };
 
-  goToPayPage = ticket_in_order_id => {
+  goToPayPage = ticket_in_order_id => () => {
     Axios.put(`/ticketInOrder/${ticket_in_order_id}`, {
       ticket_in_order_status_id: 2
     })
       .then(res => {
-        console.log(res);
+        this.props.history.push({
+          pathname: `/pay`,
+          search: `?ticket_in_order_id=${ticket_in_order_id}`
+        });
       })
       .catch(err => {
         console.error(err);
       });
-
-    this.props.history.push({
-      pathname: `/pay`,
-      search: `?ticket_in_order_id=${ticket_in_order_id}`
-    });
   };
 
   getTicketInOrderDatas = async () => {
@@ -71,7 +103,6 @@ class Checkout extends Component {
         this.setState({ ticketLists: res.data.result });
       })
       .catch(err => {
-        console.log("xxx");
         console.error(err);
       });
   };
@@ -110,89 +141,26 @@ class Checkout extends Component {
     </div>
   );
 
-  renderConuntDown = () => (
-    <div id="countdown-div" className="border p-3">
-      <span className="ml-5 mr-5">15:00</span>
-      <span className="ml-5">{constants.COUNTDOWN_TEXT}</span>
-    </div>
-  );
-
   renderTotal = () => (
-    <div id="total-div" className="mt-4">
-      <h3 className="p-2">Total</h3>
-      <Row className="total-header-row font-weight-bold">
-        <Col span={12}>Event</Col>
-        <Col span={6}>Ticket Amount</Col>
-        <Col span={6}></Col>
-      </Row>
-      {this.state.ticketLists.map((item, idx) => {
-        let ticket_in_order_id = item.id;
-        return (
-          <Row key={idx} className="total-header-body">
-            <Col span={12}>
-              <Row span={24}>
-                <Col span={24 / 2}>
-                  <img className="" src="https://picsum.photos/100" alt="" />
-                </Col>
-                <Col>
-                  <p className="mt-2">{item.event_name}</p>
-                  <p>{item.ticket_title}</p>
-                </Col>
-              </Row>
-            </Col>
-            <Col span={6}>
-              {item.ticket.ticket_price * item.ticket_quantity}
-            </Col>
-            <Col span={6}>
-              <Button
-                type="primary"
-                onClick={() => this.goToPayPage(ticket_in_order_id)}
-              >
-                Confrim Order
-              </Button>
-            </Col>
-          </Row>
-        );
-      })}
-    </div>
-  );
-
-  renderReviewOrderSummary = () => {
-    let reviewOrderSummaryDatas = this.state.ticketLists.slice(
-      0,
-      this.state.ticketLists.length
-    );
-
-    let sum = 0;
-    this.state.ticketLists.forEach(obj => {
-      // console.log(obj.ticket_price * obj.ticket_quantity);
-      sum += obj.ticket_price * obj.ticket_quantity;
-    });
-
-    reviewOrderSummaryDatas.push({
-      key: reviewOrderSummaryDatas.length + 1,
-      ticket_quantity: "Grand Total",
-      subtotal: sum
-    });
-    return (
-      <div id="review-order-summary-div" className="mt-4">
-        <h3 className="p-2">Review Order Summary</h3>
+    <Row type="flex" justify="center">
+      <Col span={20}>
         <Table
-          columns={reviewOrderSummaryColumns}
-          dataSource={reviewOrderSummaryDatas}
-          pagination={false}
+          columns={this.state.columnsTicket}
+          dataSource={this.state.ticketLists}
+          size="middle"
+          align="center"
+          // scroll={{ x: 200, y: 0 }}
         />
-      </div>
-    );
-  };
+      </Col>
+    </Row>
+  );
 
   render() {
+    console.log("this.state.ticketLists", this.state.ticketLists);
     return (
       <section id="checkout-section" className="container mt-4">
         {this.renderProcess()}
-        {/* {this.renderConuntDown()} */}
         {this.renderTotal()}
-        {/* {this.renderReviewOrderSummary()} */}
       </section>
     );
   }
