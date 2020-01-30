@@ -64,7 +64,20 @@ module.exports = {
           ticket_in_order_status_id: ticketInOrderStatusResult.id
         },
         include: [
-          { model: db.TicketModel, include: [{ model: db.EventModel }] }
+          {
+            model: db.TicketModel,
+            include: [
+              {
+                model: db.EventModel,
+                include: [
+                  {
+                    model: db.EventHasImageModel,
+                    include: [{ model: db.ImageModel }]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       });
       res.status(200).json({ result: ticketInOrderResult });
