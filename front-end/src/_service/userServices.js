@@ -24,6 +24,7 @@ export const serviceUser = {
         });
         resolve(res.data);
       } catch (error) {
+        console.log(error && error.response);
         if (error.response.status < 500) reject(error.response.data);
       }
     });
