@@ -47,8 +47,9 @@ export default class RichText extends Component {
                     );
                   })
                   .catch(err => {
-                    failure(err);
+                    failure(err); 
                   });
+
               }
             }}
             onChange={this.handleGetRichText}
