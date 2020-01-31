@@ -1,6 +1,7 @@
-import { authConstants } from  "../actions/type";
-import { SUCCESS, FAIL } from  "../../_constants";
-import jwtDecode from  "jwt-decode";
+import { authConstants } from "../actions/type";
+import { SUCCESS, FAIL } from "../../_constants";
+import jwtDecode from "jwt-decode";
+import { history } from "../../Routers";
 
 const initialState = {
   item: {
@@ -78,6 +79,9 @@ export default function(state = initialState, { type, payload }) {
       return { ...state, ...getStatus() };
     case authConstants.SIGNOUT_SUCCESS:
       localStorage.clear();
+      setTimeout(() => {
+        history.push("/");
+      }, 10);
       return {
         ...state,
         item: {

@@ -71,6 +71,10 @@ class InfoEvents extends Component {
     });
   };
 
+  handleChange = addtags => {
+    this.props.handleGetAddTag(addtags);
+  };
+
   render() {
     const { imageInfo } = this.state;
     // console.log(this.state);

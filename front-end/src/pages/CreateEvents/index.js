@@ -93,9 +93,7 @@ export default class index extends Component {
   };
 
   render() {
-    console.log("❗️❗️44444❗️", this.state.date[0]);
-    console.log("✅", this.state);
-    console.log("♨️", this.state.imageInfo.file);
+    console.log("❗️❗️44444❗️", this.state);
 
     return (
       <DefaultLayout {...this.props}>

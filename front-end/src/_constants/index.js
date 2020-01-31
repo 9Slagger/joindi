@@ -1,6 +1,7 @@
 import selectLang from "../_helper/selectLang";
 
 export const ENDPOINT = "http://localhost:8085";
+// export const ENDPOINT = "http://192.168.43.111:8085";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const FAIL = "FAIL";
 export const SUCCESS = "SUCCESS";

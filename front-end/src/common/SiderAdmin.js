@@ -1,7 +1,7 @@
-import React, { Component } from  "react";
-import { Layout, Icon, Row, Col } from  "antd";
+import React, { Component } from "react";
+import { Layout, Icon, Row, Col } from "antd";
 import "../css/SiderAdmin.css";
-import { Link } from  "react-router-dom";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -23,7 +23,7 @@ export class SiderAdmin extends Component {
               </Link>
             </Row>
             <Row>
-              <Link to="/">
+              <Link to="/manageuser">
                 <br />
                 <Icon
                   type="user"

@@ -1,10 +1,11 @@
-import React, { Component } from  "react";
-import { Row, Col, Icon, Menu, Dropdown } from  "antd";
+import React, { Component } from "react";
+import { Row, Col, Icon, Menu, Dropdown } from "antd";
 import "../css/HeaderAdmin.css";
-import { connect } from  "react-redux";
-import { signout } from  "../redux/actions";
-import Login from  "./Login";
-import Signup from  "./Signup";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { signout } from "../redux/actions";
+import Login from "./Login";
+import Signup from "./Signup";
 
 export class HeaderAdmin extends Component {
   handleClickLogout = () => {
@@ -15,11 +16,13 @@ export class HeaderAdmin extends Component {
     return (
       <Row className="headerBox" type="flex" align="middle">
         <Col span={4}>
-          <img
-            src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
-            alt="join-DI-logo1"
-            style={{ height: "50px", width: "auto" }}
-          />
+          <Link to="/">
+            <img
+              src="https://i.ibb.co/28WfkY9/join-DI-logo1.png"
+              alt="join-DI-logo1"
+              style={{ height: "50px", width: "auto" }}
+            />
+          </Link>
         </Col>
         <Col span={4} className="headerLogo">
           <span>Management</span>
@@ -46,7 +49,6 @@ export class HeaderAdmin extends Component {
             ) : (
               <>
                 <Login />
-                <Signup />
               </>
             )}
           </Row>

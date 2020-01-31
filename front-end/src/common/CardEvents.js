@@ -27,11 +27,15 @@ class CardEvents extends Component {
               <br />
             </Row>
             <Row>
-              <Text strong>{event.event_name}</Text> <br />
+              <Paragraph strong ellipsis>
+                {event.event_name}
+              </Paragraph>
             </Row>
             <Row>
               <Col>
-                <Paragraph type="secondary">{event.event_address}</Paragraph>
+                <Paragraph type="secondary" ellipsis>
+                  {event.event_address}
+                </Paragraph>
               </Col>
             </Row>
 

@@ -35,6 +35,7 @@ module.exports = {
       );
 
       let event_has_tag_list = [];
+      console.log("🌏🌏🌏🌏🌏", req.body)
 
       req.body.eventList.map(tag_id => {
         event_has_tag_list.push({
@@ -53,9 +54,11 @@ module.exports = {
       } catch (error) {
         return res.status(400).send({ message: error.message });
       }
+      // console.log("☄️☄️☄️☄️☄️", req.body.eventList)
       resultInfo.event_has_image = eventHasImageResult;
-
+      // console.log("🔥🔥🔥🔥🔥", event_has_tag_list)
       resultHasTag = await db.EventHasTagModel.bulkCreate(event_has_tag_list);
+      // console.log("🌪🌪🌪🌪🌪", resultHasTag)
       res.status(200).send(resultInfo);
     } catch (error) {
       console.error(error);
