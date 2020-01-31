@@ -85,6 +85,7 @@ module.exports = {
         },
         { transaction }
       );
+      await db.OrderModel.create({ user_id: userResult.id }, { transaction });
       if (customerTypeResult.customer_type_code === "01INDV") {
         if (validate(req.body.firstName)) {
           return res.status(400).json({
@@ -131,12 +132,16 @@ module.exports = {
           });
         }
         try {
-          await db.UserCompanyDetailModel.create(
+          userResult = await db.UserCompanyDetailModel.create(
             {
               company_name: req.body.companyName,
               company_address: req.body.companyAddress || null,
               user_id: userResult.id
             },
+            { transaction }
+          );
+          await db.OrderModel.create(
+            { user_id: userResult.id },
             { transaction }
           );
         } catch (error) {

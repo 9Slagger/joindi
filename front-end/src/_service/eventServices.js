@@ -18,7 +18,6 @@ export const serviceEvent = {
       try {
         res = await axios.get(`/event/${eventId}`);
         resolve(res.data);
-        console.log("res.data", res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
       }
@@ -30,7 +29,6 @@ export const serviceEvent = {
       try {
         res = await axios.get("/event/admin");
         resolve(res.data);
-        // console.log('res.data', res.data)
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }
@@ -44,7 +42,6 @@ export const serviceEvent = {
           eventId: id
         });
         resolve(res.data);
-        // console.log("approve", res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }
@@ -58,7 +55,6 @@ export const serviceEvent = {
   //         eventId: id
   //       });
   //       resolve(res.data);
-  //       console.log("pending", res.data);
   //     } catch (error) {
   //       if (error.response.status < 500) reject(error.response.data);
   //     }
@@ -72,7 +68,6 @@ export const serviceEvent = {
           eventId: id,
           eventRemark: remark
         });
-        console.log("eventId", id, "eventRemark", remark);
         resolve(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
@@ -86,7 +81,7 @@ export const serviceEvent = {
         res = await axios.get("/event/statusapprove");
         resolve(res.data);
       } catch (error) {
-        // if (error.response.status < 500) reject(error.response.data);
+        if (error.response.status < 500) reject(error.response.data);
       }
     });
   },
@@ -114,12 +109,9 @@ export const serviceEvent = {
   },
   updateEvent: (eventId, body) => {
     return new Promise(async (resolve, reject) => {
-      console.log("eventId", eventId);
-      console.log("body", body);
       let res;
       try {
         res = await axios.put(`/event/${eventId}`, body);
-        console.log("res", res);
         resolve(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
@@ -132,7 +124,6 @@ export const serviceEvent = {
       try {
         res = await axios.get(`/event/userjoinevent/${eventId}`);
         resolve(res.data);
-        console.log("res.data", res.data);
       } catch (error) {
         if (error.status < 500) reject(error.response.data);
       }

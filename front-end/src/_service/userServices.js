@@ -24,6 +24,7 @@ export const serviceUser = {
         });
         resolve(res.data);
       } catch (error) {
+        console.log(error && error.response);
         if (error.response.status < 500) reject(error.response.data);
       }
     });
@@ -45,7 +46,6 @@ export const serviceUser = {
       try {
         res = await axios.put("/user/updateuserindividual", userNewData);
         resolve(res.data);
-        console.log(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }
@@ -57,7 +57,6 @@ export const serviceUser = {
       try {
         res = await axios.put("/user/updateuser", newEmailAndPhoneNumber);
         resolve(res.data);
-        console.log(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }
@@ -69,7 +68,6 @@ export const serviceUser = {
       try {
         res = await axios.put("/user/updatecompanyuser", companyNewData);
         resolve(res.data);
-        console.log(res.data);
       } catch (error) {
         if (error.response.status < 500) reject(error.response.data);
       }

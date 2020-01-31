@@ -70,11 +70,21 @@ class Confirm extends Component {
   renderProcess = () => (
     <div id="process-div" className="mt-2 mb-2">
       <Row className="text-center">
-        <Col offset={6} span={4}>
+        <Col offset={1} span={3}>
           <Button type="primary"> 1 </Button>
-          <p>Pay</p>
+          <p>Checkout</p>
+        </Col>
+        <Col span={3}>
+          <h2>
+            <i className="fas fa-ellipsis-h"></i>
+            <i className="fas fa-ellipsis-h"></i>
+          </h2>
         </Col>
         <Col span={4}>
+          <Button type="primary"> 2 </Button>
+          <p>Pay</p>
+        </Col>
+        <Col span={3}>
           <h2>
             <i className="fas fa-ellipsis-h"></i>
             <i className="fas fa-ellipsis-h"></i>
@@ -83,7 +93,7 @@ class Confirm extends Component {
         <Col span={4}>
           <Button type="primary" className="active">
             {" "}
-            2{" "}
+            3{" "}
           </Button>
           <p>Confirm</p>
         </Col>
@@ -113,7 +123,11 @@ class Confirm extends Component {
 
         <Row className="mt-4">
           <Col span={24} className="text-right">
-            <Button onClick={() => this.goToHomePage()} type="primary">
+            <Button
+              onClick={() => this.goToHomePage()}
+              type="primary"
+              className="Active"
+            >
               Complete
             </Button>
           </Col>

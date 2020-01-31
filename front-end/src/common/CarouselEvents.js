@@ -1,23 +1,36 @@
-import React, { Component } from  "react";
-import "../css/CarouselEvents.css"
-import { Carousel } from  "antd";
+import React, { Component } from "react";
+import "../css/CarouselEvents.css";
+import { Carousel } from "antd";
 
 export default class CarouselEvents extends Component {
   render() {
     return (
       <div>
-        <Carousel  autoplay className="carouselEvents" style={{backgroundColor:"black", height:"400px"}}>
+        <Carousel autoplay className="carouselEvents">
           <div>
-          <h3 className="text">1</h3>
+            <img
+              src="https://i.imgur.com/yypksvO.jpg"
+              className="imageCarousel"
+            />
           </div>
           <div>
-            <h3 className="text">2</h3>
+            <img
+              src="https://i.imgur.com/aIAoQbN.png"
+              className="imageCarousel"
+            />
+          </div>
+
+          <div>
+            <img
+              src="https://i.imgur.com/BWnafwZ.png"
+              className="imageCarousel"
+            />
           </div>
           <div>
-            <h3 className="text">3</h3>
-          </div>
-          <div>
-            <h3 className="text">4</h3>
+            <img
+              src="https://i.imgur.com/X6YdE41.png"
+              className="imageCarousel"
+            />
           </div>
         </Carousel>
       </div>

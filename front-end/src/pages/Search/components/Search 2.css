@@ -1,0 +1,35 @@
+.selectSortBy{
+  width:120px
+}
+
+.colTextSearchResult{
+  padding-top:30px
+}
+
+
+.textSearchResult{
+  font-family:"Prompt", sans-serif;
+  color: #345886 !important;
+  font-size: 2.5vw;
+  margin-bottom: 0;
+  text-align:center;
+}
+
+.selectSortBy{
+  padding-top:40px;
+  margin-left:70%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .textSearchResult{
+    font-size:20px !important;
+    display:flex;
+    justify-content:center;
+  }
+
+  .selectSortBy{
+    margin-left:0;
+    display:flex;
+    justify-content:center;
+  }
+}

@@ -1,24 +1,22 @@
-.text{
+.text {
   color: #ffffff;
   text-align: center;
-  padding:150px
+  padding: 150px;
 }
 
-.carouselEvents{
-  background-color:black !important;
-  margin-bottom:40px;
+.carouselEvents {
+  height: auto;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
+.imageCarousel {
+  width: 100%;
+  height: auto;
+}
 
 @media only screen and (max-width: 600px) {
-  .carouselEvents{
-    height:200px
-  }
+  /* .carouselEvents {
+    height: auto;
+  } */
 }
-
-@media only screen and (max-width: 300px) {
-  .carouselEvents{
-    height:50px
-  }
-}
-

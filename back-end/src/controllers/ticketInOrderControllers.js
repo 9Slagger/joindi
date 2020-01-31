@@ -74,8 +74,8 @@ module.exports = {
             model: db.ImageModel
           }
         }
-        ]
-      });
+      ]
+    });
       res.status(200).send(resultModel);
     } catch (error) {
       res.status(400).send({ message: error.message });
@@ -99,7 +99,7 @@ module.exports = {
     try {
       let resultModel = db.TicketModel.update(
         {
-          ticket_remaining_quantity: req.params.stock,
+          ticket_remaining_quantity: req.params.stock
         },
         { where: { id: req.params.ticketid } }
       );
@@ -108,4 +108,4 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   }
-}; 
+};
