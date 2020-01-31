@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import moment from "moment";
-import {Link} from "react-router-dom"
-import _ from 'lodash'
-import { message } from 'antd';
-
+import _ from "lodash";
+import { message } from "antd";
+import { ENDPOINT } from "../../../_constants";
 import { serviceTicketInOrder } from "../../../_service";
 import {
   Row,
@@ -31,24 +30,22 @@ class EventDetail extends Component {
       earlyprice: "",
       normalprice: "",
       children: [],
-      a:[]
-
+      a: []
     };
   }
-  
 
   handleChangeEarlyPrice = (id, e) => {
-    const itemIndex = this.state.a.findIndex(item => item.id === id)
-    if(itemIndex !== -1){
-      let cloneStateA = _.cloneDeep(this.state.a)
-      cloneStateA[itemIndex].value = e
+    const itemIndex = this.state.a.findIndex(item => item.id === id);
+    if (itemIndex !== -1) {
+      let cloneStateA = _.cloneDeep(this.state.a);
+      cloneStateA[itemIndex].value = e;
       this.setState(() => ({
         a: cloneStateA
-      }))
+      }));
     } else {
       this.setState(state => ({
-        a: [...state.a, {id: id, value: e}]
-      }))
+        a: [...state.a, { id: id, value: e }]
+      }));
     }
   };
 
@@ -73,131 +70,104 @@ class EventDetail extends Component {
   renderOptions = item => {
     const number_of_tickets = item;
     let array = [];
-    for(let i = 0; i<=number_of_tickets; i++){
-      array.push(i)
+    for (let i = 0; i <= number_of_tickets; i++) {
+      array.push(i);
     }
     return array.map(ent => <Option key={ent}>{ent}</Option>);
   };
 
-  isListOne = (list) =>{
+  isListOne = list => {
     let isOne = false;
-    for(let item of list){
-      let value = parseInt(item.value)
-      console.log(item)
-      if(value !== 0 && !isOne){
-        console.log("true")
-        isOne = true
-      } else if (value !== 0 && isOne){
-        console.log("false--->")
+    for (let item of list) {
+      let value = parseInt(item.value);
+      console.log(item);
+      if (value !== 0 && !isOne) {
+        console.log("true");
+        isOne = true;
+      } else if (value !== 0 && isOne) {
+        console.log("false--->");
         return false;
       }
     }
-    console.log("isone")
+    console.log("isone");
     return isOne;
-  }
+  };
 
-  handleBuyTicket = async () =>{
-  console.log(this.state.a);
-    if(this.isListOne(this.state.a)){
-      
-      const ticketid = this.state.a.map(item => 
-        item.id
-      )
-      const ticketvalue = this.state.a.map(item => 
-        item.value
-      )
+  handleBuyTicket = async () => {
+    console.log(this.state.a);
+    if (this.isListOne(this.state.a)) {
+      const ticketid = this.state.a.map(item => item.id);
+      const ticketvalue = this.state.a.map(item => item.value);
       try {
         await serviceTicketInOrder.buyTicket(ticketid[0], ticketvalue[0]);
         this.props.history.push(`/checkout`);
       } catch (error) {
-        alert(error.messages.title_en)
+        alert(error.messages.title_en);
       }
-    }else{
-      message.success('Either one of ticket amount must be zero!!');
+    } else {
+      message.success("Either one of ticket amount must be zero!!");
     }
-    
   };
 
   async showData() {
-    const { eventId } = this.props.match.params
+    const { eventId } = this.props.match.params;
     const result = await Axios.get(`http://localhost:8085/event/${eventId}`);
-    
     let temp = () => {
-      const s = moment(`${result.data.result.event_date_start}`);
-      const startdate = s.format("DD MMM YYYY");
-      const e = moment(`${result.data.result.event_date_end}`);
-      const enddate = e.format("DD MMM YYYY");
-
-      const showalldate = startdate + " - " + enddate;
-      const showeventdate = startdate == enddate ? startdate : showalldate;
-
-      const starttime = s.format("LT");
-      const endtime = e.format("LT");
-
-      const showeventtime = starttime + " - " + endtime;
-
-      // console.log(item.tickets[0].ticket_price)
       return {
         id: result.data.result.id,
         event_name: result.data.result.event_name,
         event_address: result.data.result.event_address,
-        event_date: showeventdate,
-        event_time: showeventtime,
-        event_address: result.data.result.event_address,
+        event_content: result.data.result.event_content,
+        event_date: result.data.result.event_date_start,
+        event_time: result.data.result.event_date_end,
         event_remark: result.data.result.event_remark,
         event_tags: result.data.result.event_tags.tag_name_en,
-        ticket: result.data.result.tickets.map(item => ({
-          ticket_id: item.id,
-          ticket_title: item.ticket_title,
-          ticket_detail: item.ticket_detail,
-          ticket_note: item.ticket_note,
-          ticket_total_quantity: item.ticket_total_quantity,
-          ticket_remaining_quantity: item.ticket_remaining_quantity,
-          ticket_price: item.ticket_price
-        })),
-        eventtag: result.data.result.event_tags.map(item => ({
-          tag_name_en: item.tag_name_en,
-          tag_name_th: item.tag_name_th,
-          tag_active: item.tag_active
-        }))
+        ticket: result.data.result.tickets,
+        eventtag: result.data.result.event_tags,
+        organized_contacts: result.data.result.organized_contacts,
+        bookmarks: result.data.result.bookmarks,
+        event_has_image: result.data.result.event_has_image
       };
     };
     this.setState({
-      data: temp(console.log(this.state))
+      data: temp()
     });
   }
 
   componentDidMount = async () => {
-    this.showData()
-    setInterval(
-      ()=>this.showData(), 
-      2000
-    )
+    this.showData();
   };
 
   render() {
-    console.log("this.state", this.state)
     return (
       <Row className="event-detail">
         <Col span={24}>
           <Row className="event-info" type="flex" align="middle">
             <Col className="img-info" span={8}>
-              <img
-                src="https://p-u.popcdn.net/events/poster_a4s/000/006/779/large/001_Poster-Image.jpg?1575465335"
-                alt="event-img"
-                style={{
-                  width: "50%",
-                  height: "50%"
-                }}
-              />
+              {this.state.data.event_has_image && (
+                <img
+                  src={`${ENDPOINT}/${this.state.data.event_has_image.image.id}.${this.state.data.event_has_image.image.filename_extension}`}
+                  alt="event-img"
+                  style={{
+                    width: "50%",
+                    height: "50%"
+                  }}
+                />
+              )}
             </Col>
             <Col className="detail" span={12}>
               <Row className="event-name"> {this.state.data.event_name} </Row>
               <Row className="event-date">
-                <Icon type="calendar" />: &nbsp; {this.state.data.event_date}
+                <Icon type="calendar" />: &nbsp;{" "}
+                {moment(parseInt(this.state.data.event_date, 10)).format(
+                  "Do MMM YYYY"
+                )}
               </Row>
               <Row className="event-date">
-                <Icon type="hourglass" />: &nbsp; {this.state.data.event_time}
+                <Icon type="hourglass" />: &nbsp;{" "}
+                {moment(parseInt(this.state.data.event_time, 10)).format(
+                  "Do MMM YYYY"
+                )}
               </Row>
               <Row className="event-date">
                 <Icon type="environment" /> Location: &nbsp;
@@ -223,14 +193,18 @@ class EventDetail extends Component {
               </Row>
             </Col>
           </Row>
-          <Row
+          {/* <Row
             type="flex"
             justify="center"
             align="middle"
             className="event-description"
-          >
-            <div> {this.state.data.event_remark} </div>
-          </Row>
+          > */}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: this.state.data.event_content
+            }}
+          ></div>
+          {/* </Row> */}
           <Divider />
           <Row type="flex" align="middle" className="event-ticket">
             <Col span={24}>
@@ -266,7 +240,7 @@ class EventDetail extends Component {
                             type="flex"
                             justify="end"
                             align="middle"
-                            key={item.ticket_id}
+                            key={item.id}
                           >
                             <Col span={16}> {item.ticket_title} </Col>
                             <Col span={5}>{item.ticket_price} &nbsp; Baht</Col>
@@ -274,8 +248,9 @@ class EventDetail extends Component {
                               <Row>
                                 <Select
                                   defaultValue="0"
-                                  
-                                  onSelect={async e => {this.handleChangeEarlyPrice(item.ticket_id, e)}}
+                                  onSelect={async e => {
+                                    this.handleChangeEarlyPrice(item.id, e);
+                                  }}
                                   defaultValue={0}
                                   style={{
                                     width: "60px"
@@ -304,29 +279,16 @@ class EventDetail extends Component {
                         </Button>
                       </Row>
                     </Col>
-                  </Row> 
-                </Col> 
-              </Row> 
-            </Col> 
-          </Row> 
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
           <Divider />
           <Row className="Organized">
             <Col>
               <Row type="flex" align="middle">
-                <Col span={4}>
-                  <img
-                    src="https://p-u.popcdn.net/organizers/avatars/000/000/021/thumb/10670031_655476147898254_4774340467057592600_n.jpg?1493105685"
-                    alt="img-organized"
-                    style={{
-                      width: "50%",
-                      height: "50%"
-                    }}
-                  />
-                </Col>
-                <Col span={14}>
-                  <Row> Organized by </Row> <Row> Zaap Party </Row>
-                </Col>
-                <Col span={6}>
+                <Col span={24}>
                   <Row type="flex" justify="end" align="middle">
                     <Button
                       type="link"
@@ -342,7 +304,6 @@ class EventDetail extends Component {
                       onOk={this.handleOk}
                       onCancel={this.handleCancel}
                       footer={null}
-                      //style={{ width: "800px" }}
                     >
                       <Row>
                         <h2> Organized by </h2>
@@ -355,28 +316,20 @@ class EventDetail extends Component {
                           border: "1px solid #345586"
                         }}
                       >
-                        <Col span={8}>
-                          <Row type="flex" justify="center">
-                            <img
-                              src="https://p-u.popcdn.net/organizers/avatars/000/000/021/thumb/10670031_655476147898254_4774340467057592600_n.jpg?1493105685"
-                              alt="img-organized"
-                              style={{
-                                width: "50%",
-                                height: "50%"
-                              }}
-                            />
-                          </Row>
-                          <Row type="flex" justify="center">
-                            <h6> ZAAP Party </h6>
-                          </Row>
-                        </Col>
-                        <Col span={16}>
-                          <Row>
-                            <h6> Facebook </h6>
-                          </Row>
-                          <Row>
-                            <h5> facebook.com / bangkokofdreams / </h5>
-                          </Row>
+                        <Col span={24}>
+                          {this.state.data &&
+                            this.state.data.organized_contacts &&
+                            this.state.data.organized_contacts.map(contact => (
+                              <React.Fragment key={contact.id}>
+                                <Row justify="center" align="middle">
+                                  <h6>{contact.organized_contact_title}</h6>
+                                </Row>
+                                <Row>
+                                  <h5>{contact.organized_contact}</h5>
+                                  <Divider type="horizontal" />
+                                </Row>
+                              </React.Fragment>
+                            ))}
                         </Col>
                       </Row>
                     </Modal>
