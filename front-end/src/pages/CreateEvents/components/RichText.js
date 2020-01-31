@@ -1,5 +1,5 @@
-import React, { Component } from  "react";
-import { Editor } from  "@tinymce/tinymce-react";
+import React, { Component } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 import "./StyleComponents/RichTextStyle.css";
 import { Row } from "antd";
 import Axios from "axios";
@@ -40,16 +40,16 @@ export default class RichText extends Component {
               images_upload_handler: function(blobInfo, success, failure) {
                 let data = new FormData();
                 data.append("image", blobInfo.blob());
-                Axios.post("/image", data)
+                Axios.post("/image/safe", data)
                   .then(result => {
+                    console.log("result", result);
                     success(
                       `${ENDPOINT}/${result.data.result.id}.${result.data.result.filename_extension}`
                     );
                   })
                   .catch(err => {
-                    failure(err); 
+                    failure(err);
                   });
-
               }
             }}
             onChange={this.handleGetRichText}

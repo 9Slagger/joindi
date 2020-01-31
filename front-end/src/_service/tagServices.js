@@ -19,8 +19,7 @@ export const serviceTag = {
         res = await axios.get(`/tag/tagAndEvent/${tagId}`);
         resolve(res.data);
       } catch (error) {
-        if(error.status  < 500)
-        reject(error.response.data);
+        if (error.status < 500) reject(error.response.data);
       }
     });
   },
@@ -28,7 +27,7 @@ export const serviceTag = {
     return new Promise(async (resolve, reject) => {
       let res;
       try {
-        res = await axios.post("/", {
+        res = await axios.post("/tag", {
           tagNameEn,
           tagNameTh
         });

@@ -1,19 +1,19 @@
-import React, { Component } from  "react";
-import DefaultLayout from  "../../common/DefaultLayout";
-import InfoEvents from  "./components/InfoEvents";
-import Ticket from  "./components/Ticket";
-import OrganizedBy from  "./components/OrganizedBy";
-import { Row, Col, Button } from  "antd";
-import RichText from  "./components/RichText";
+import React, { Component } from "react";
+import DefaultLayout from "../../common/DefaultLayout";
+import InfoEvents from "./components/InfoEvents";
+import Ticket from "./components/Ticket";
+import OrganizedBy from "./components/OrganizedBy";
+import { Row, Col, Button } from "antd";
+import RichText from "./components/RichText";
 import "./CreateEventsStyle.css";
-import Axios from  "axios";
+import Axios from "axios";
 import { Link } from "react-router-dom";
 
 export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageInfo:[],
+      imageInfo: [],
       eventName: "",
       createrName: "",
       date: "",
@@ -22,14 +22,13 @@ export default class index extends Component {
       addTag: [],
       richText: "",
       ticketList: [],
-      organizedList: [],
-      
+      organizedList: []
     };
   }
 
   handleGetImageInfo = value => {
     this.setState({ imageInfo: value });
-  }
+  };
 
   handleGetEventName = value => {
     this.setState({ eventName: value });
@@ -59,7 +58,7 @@ export default class index extends Component {
     this.setState({ organizedList: value });
   };
 
-  handleCreateEvent  = () => {
+  handleCreateEvent = () => {
     let data = {
       event_name: this.state.eventName,
       event_address: this.state.createrName,
@@ -73,38 +72,37 @@ export default class index extends Component {
       eventList: this.state.addTag
     };
     let dataImageInfo = new FormData();
-    dataImageInfo.append('image',this.state.imageInfo.file)
-    Axios.post("/image", dataImageInfo,{
-      headers:{'content-type':'multipart/form-data'}
+    dataImageInfo.append("image", this.state.imageInfo.file);
+    Axios.post("/image/safe", dataImageInfo, {
+      headers: { "content-type": "multipart/form-data" }
     })
       .then(result => {
-        console.log(result.data)
-      })
-      .catch(error =>{
-        console.log(error.message)
-      })
-
-    Axios.post("/event", data)
-      .then(result => {
-        this.props.history.push("/myevent")
-        console.log(result.data);
+        data.imageId = result.data.result.id;
+        Axios.post("/event", data)
+          .then(result => {
+            this.props.history.push("/myevent");
+          })
+          .catch(error => {
+            console.log(error);
+          });
       })
       .catch(error => {
-        console.log(error);
+        alert("upload cover image fail");
+        console.log(error.message);
       });
   };
 
   render() {
     console.log("❗️❗️44444❗️", this.state.date[0]);
     console.log("✅", this.state);
-    console.log("♨️",this.state.imageInfo.file )
-    
+    console.log("♨️", this.state.imageInfo.file);
+
     return (
       <DefaultLayout {...this.props}>
         <div className="outerBox">
           <Row className="infoEvents">
             <InfoEvents
-            handleGetImageInfo={this.handleGetImageInfo}
+              handleGetImageInfo={this.handleGetImageInfo}
               handleGetEventName={this.handleGetEventName}
               handleGetCreaterName={this.handleGetCreaterName}
               handleGetDate={this.handleGetDate}
@@ -124,7 +122,9 @@ export default class index extends Component {
           </Row>
           <Row>
             <Col span={24} style={{ textAlign: "right" }}>
-              <Link to ="/myevent"><Button style={{ margin: "10px 10px" }}>Back</Button></Link>
+              <Link to="/myevent">
+                <Button style={{ margin: "10px 10px" }}>Back</Button>
+              </Link>
               <Button
                 onClick={this.handleCreateEvent}
                 style={{ margin: "10px 10px" }}

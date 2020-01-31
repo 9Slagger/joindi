@@ -20,10 +20,7 @@ TicketModel.init(
     },
     ticket_note: {
       type: DataTypes.STRING(2000),
-      allowNull: true,
-      validate: {
-        notEmpty: false
-      }
+      allowNull: true
     },
     ticket_total_quantity: {
       type: DataTypes.INTEGER,

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { DatePicker, Select, Modal } from "antd";
 import { Upload, Icon, Row, Col, Form, Input } from "antd";
 import "./StyleComponents/infoEventStyle.css";
-import Axios from  "axios";
+import Axios from "axios";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -123,16 +123,18 @@ class InfoEvents extends Component {
                   onChange={this.handleChangeImageInfo}
                 >
                   {fileList.length >= 1 ? null : uploadButton}
-                 
                 </Upload>
                 <Modal
-          visible={previewVisible}
-          footer={null}
-          onCancel={this.handleCancel}
-          
-        >
-          <img alt="avatar" style={{ width: "100%" }} src={previewImage} />
-        </Modal>
+                  visible={previewVisible}
+                  footer={null}
+                  onCancel={this.handleCancel}
+                >
+                  <img
+                    alt="avatar"
+                    style={{ width: "100%" }}
+                    src={previewImage}
+                  />
+                </Modal>
               </Col>
             </Row>
           </Col>
@@ -174,9 +176,7 @@ class InfoEvents extends Component {
             </Row>
             <Row>
               <Col xs={24} md={8} xl={6}>
-                <h5 style={{ marginTop: "6px", color: "white" }}>
-                  Address :
-                </h5>
+                <h5 style={{ marginTop: "6px", color: "white" }}>Address :</h5>
               </Col>
               <Col xs={24} md={10} xl={12}>
                 <Form.Item>
