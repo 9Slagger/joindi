@@ -4,6 +4,7 @@ import Axios from "axios";
 import "antd/dist/antd.css";
 import "./index.css";
 import AdminLayout from "../../../common/AdminLayout";
+import { ENDPOINT } from "../../../_constants";
 const { TextArea, Search } = Input;
 const { confirm } = Modal;
 
@@ -21,7 +22,7 @@ const tabListNoTitle = [
     key: "Approved",
     tab: (
       <span className="sub-header-admin">
-       <Icon type="credit-card" />
+        <Icon type="credit-card" />
         Confirm
       </span>
     )
@@ -47,7 +48,7 @@ class ApprovePayment extends Component {
       id: "",
       remark: "",
       data: [],
-      filename_extension:""
+      filename_extension: ""
     };
   }
 
@@ -143,7 +144,9 @@ class ApprovePayment extends Component {
         payment_slip_image: item.ticket_in_order_has_image
       };
     });
-    this.setState({ data: temp }, () => {console.log(temp)});
+    this.setState({ data: temp }, () => {
+      console.log(temp);
+    });
   }
 
   componentDidMount = async () => {
@@ -177,16 +180,17 @@ class ApprovePayment extends Component {
                   </Col>
                   <Col span={10} style={{ textAlign: "right" }}>
                     <Button
-                      onClick={() => this.modalShowSlip(
-                        obj.payment_slip_image.image.filename_extension
-                        )}
-                        className="buttonViewSlip"
+                      onClick={() =>
+                        this.modalShowSlip(
+                          obj.payment_slip_image.image.filename_extension
+                        )
+                      }
+                      className="buttonViewSlip"
                     >
                       view slip
                       {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
                     </Button>
                     &nbsp;&nbsp;
-                    
                     <Button
                       style={{ border: "none", color: "#345586" }}
                       shape="circle"
@@ -235,10 +239,12 @@ class ApprovePayment extends Component {
                   </Col>
                   <Col span={10} style={{ textAlign: "right" }}>
                     <Button
-                      onClick={() => this.modalShowSlip(
-                        obj.payment_slip_image.image.filename_extension
-                        )}
-                        className="buttonViewSlip"
+                      onClick={() =>
+                        this.modalShowSlip(
+                          obj.payment_slip_image.image.filename_extension
+                        )
+                      }
+                      className="buttonViewSlip"
                     >
                       view slip
                       {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
@@ -273,10 +279,12 @@ class ApprovePayment extends Component {
                   </Col>
                   <Col span={4} style={{ textAlign: "right" }}>
                     <Button
-                      onClick={() => this.modalShowSlip(
-                        obj.payment_slip_image.image.filename_extension
-                        )}
-                        className="buttonViewSlip"
+                      onClick={() =>
+                        this.modalShowSlip(
+                          obj.payment_slip_image.image.filename_extension
+                        )
+                      }
+                      className="buttonViewSlip"
                     >
                       view slip
                       {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
@@ -366,15 +374,17 @@ class ApprovePayment extends Component {
             </Row>
           </Modal>
 
-
-
-
-
           {/* part Model Delete Item */}
-          <Modal visible={visiblePaymentSlip} footer={null} onCancel={this.handlePaymentSlipCancel}>
+          <Modal
+            visible={visiblePaymentSlip}
+            footer={null}
+            onCancel={this.handlePaymentSlipCancel}
+          >
             <Row type="flex" justify="center">
-            <img src={`images/payslips/${this.state.filename_extension}`} />
-              
+              <img
+                style={{ width: "500px" }}
+                src={`${ENDPOINT}/payslips/${this.state.filename_extension}`}
+              />
             </Row>
           </Modal>
         </AdminLayout>
