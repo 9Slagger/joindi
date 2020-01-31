@@ -60,3 +60,9 @@
   color: #fff;
   background-color: #345586;
 }
+
+.buttonViewSlip:hover{
+  box-shadow: 10px 10px 5px 0px rgba(157,191,204,1);
+  background-color: none;
+  border: none;
+}

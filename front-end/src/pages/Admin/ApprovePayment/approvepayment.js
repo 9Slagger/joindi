@@ -12,7 +12,7 @@ const tabListNoTitle = [
     key: "Waiting",
     tab: (
       <span className="sub-header-admin">
-        <Icon type="question-circle" />
+        <Icon type="unordered-list" />
         Waiting
       </span>
     )
@@ -21,8 +21,8 @@ const tabListNoTitle = [
     key: "Approved",
     tab: (
       <span className="sub-header-admin">
-        <Icon type="check-circle" />
-        Approve
+       <Icon type="credit-card" />
+        Confirm
       </span>
     )
   },
@@ -43,9 +43,11 @@ class ApprovePayment extends Component {
       key: "tab1",
       noTitleKey: "app",
       visible: false,
+      visiblePaymentSlip: false,
       id: "",
       remark: "",
-      data: []
+      data: [],
+      filename_extension:""
     };
   }
 
@@ -104,8 +106,20 @@ class ApprovePayment extends Component {
     this.showModal();
   };
 
+  modalShowSlip = file => {
+    console.log(file);
+    this.setState({
+      filename_extension: file
+    });
+    this.showModalSlip();
+  };
+
   handleCancel = () => {
     this.setState({ visible: false });
+  };
+
+  handlePaymentSlipCancel = () => {
+    this.setState({ visiblePaymentSlip: false });
   };
 
   onChangeRemark = e => {
@@ -125,10 +139,11 @@ class ApprovePayment extends Component {
         ticket_id: item.ticket.id,
         ticket_title: item.ticket.ticket_title,
         ticket_in_order_status_id: item.ticket_in_order_status_id,
-        ticket_total_quantity: item.ticket.ticket_total_quantity
+        ticket_total_quantity: item.ticket.ticket_total_quantity,
+        payment_slip_image: item.ticket_in_order_has_image
       };
     });
-    this.setState({ data: temp }, () => {});
+    this.setState({ data: temp }, () => {console.log(temp)});
   }
 
   componentDidMount = async () => {
@@ -158,8 +173,20 @@ class ApprovePayment extends Component {
                 <Row type="flex" justify="space-between">
                   <Col span={10} style={{ textAlign: "left" }}>
                     {obj.ticket_title}
+                    {console.log(obj)}
                   </Col>
-                  <Col span={4} style={{ textAlign: "right" }}>
+                  <Col span={10} style={{ textAlign: "right" }}>
+                    <Button
+                      onClick={() => this.modalShowSlip(
+                        obj.payment_slip_image.image.filename_extension
+                        )}
+                        className="buttonViewSlip"
+                    >
+                      view slip
+                      {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
+                    </Button>
+                    &nbsp;&nbsp;
+                    
                     <Button
                       style={{ border: "none", color: "#345586" }}
                       shape="circle"
@@ -203,8 +230,19 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col span={20} style={{ textAlign: "left" }}>
+                  <Col span={10} style={{ textAlign: "left" }}>
                     {obj.ticket_title}
+                  </Col>
+                  <Col span={10} style={{ textAlign: "right" }}>
+                    <Button
+                      onClick={() => this.modalShowSlip(
+                        obj.payment_slip_image.image.filename_extension
+                        )}
+                        className="buttonViewSlip"
+                    >
+                      view slip
+                      {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
+                    </Button>
                   </Col>
                 </Row>
               </Card>
@@ -227,11 +265,22 @@ class ApprovePayment extends Component {
                 className="card-list"
               >
                 <Row type="flex" justify="space-between">
-                  <Col span={10} style={{ textAlign: "left" }}>
+                  <Col span={8} style={{ textAlign: "left" }}>
                     {obj.ticket_title}
                   </Col>
-                  <Col span={10} style={{ textAlign: "left" }}>
+                  <Col span={8} style={{ textAlign: "left" }}>
                     {obj.ticket_in_order_remark_reject}
+                  </Col>
+                  <Col span={4} style={{ textAlign: "right" }}>
+                    <Button
+                      onClick={() => this.modalShowSlip(
+                        obj.payment_slip_image.image.filename_extension
+                        )}
+                        className="buttonViewSlip"
+                    >
+                      view slip
+                      {/* <Icon type="check-circle" style={{ fontSize: "25px" }} /> */}
+                    </Button>
                   </Col>
                 </Row>
               </Card>
@@ -240,13 +289,22 @@ class ApprovePayment extends Component {
           );
         })
     };
+
     const {
-      visible
+      visible,
+      visiblePaymentSlip
       // value
     } = this.state;
+
     this.showModal = () => {
       this.setState({
         visible: true
+      });
+    };
+
+    this.showModalSlip = () => {
+      this.setState({
+        visiblePaymentSlip: true
       });
     };
 
@@ -305,6 +363,18 @@ class ApprovePayment extends Component {
               >
                 Send
               </Button>
+            </Row>
+          </Modal>
+
+
+
+
+
+          {/* part Model Delete Item */}
+          <Modal visible={visiblePaymentSlip} footer={null} onCancel={this.handlePaymentSlipCancel}>
+            <Row type="flex" justify="center">
+            <img src={`images/payslips/${this.state.filename_extension}`} />
+              
             </Row>
           </Modal>
         </AdminLayout>

@@ -66,16 +66,16 @@ module.exports = {
     try {
       let resultModel = await db.TicketInOrderModel.findAll({
         include: [
-          {
-            // Notice `include` takes an ARRAY
-            model: db.TicketModel
-          },
-          {
-            model: db.TicketInOrderHasImageModel,
-            include: [{ model: db.ImageModel }]
+        {
+          model: db.TicketModel,
+        },{
+          model: db.TicketInOrderHasImageModel,
+          include:{
+            model: db.ImageModel
           }
-        ]
-      });
+        }
+      ]
+    });
       res.status(200).send(resultModel);
     } catch (error) {
       res.status(400).send({ message: error.message });
