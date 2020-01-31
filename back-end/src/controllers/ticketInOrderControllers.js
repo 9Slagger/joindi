@@ -69,6 +69,10 @@ module.exports = {
           {
             // Notice `include` takes an ARRAY
             model: db.TicketModel
+          },
+          {
+            model: db.TicketInOrderHasImageModel,
+            include: [{ model: db.ImageModel }]
           }
         ]
       });
@@ -95,7 +99,7 @@ module.exports = {
     try {
       let resultModel = db.TicketModel.update(
         {
-          ticket_remaining_quantity: req.params.stock,
+          ticket_remaining_quantity: req.params.stock
         },
         { where: { id: req.params.ticketid } }
       );
@@ -104,4 +108,4 @@ module.exports = {
       res.status(400).send({ message: error.message });
     }
   }
-}; 
+};
