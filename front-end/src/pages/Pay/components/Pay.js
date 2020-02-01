@@ -14,6 +14,7 @@ import UploadForm from "./UploadForm";
 
 import "antd/dist/antd.css";
 import "./Pay.css";
+import { ENDPOINT } from "../../../_constants";
 
 class Pay extends Component {
   constructor(props) {
@@ -200,34 +201,22 @@ class Pay extends Component {
 
   renderBankAccount = () => {
     return (
-      <div id="bank-account-div" className="mt-4">
+      <>
         <h3 className="p-2">Bank Account</h3>
-        <div className="p-5">
-          <Row>
-            <Col span={12} className="text-right">
-              <Row>
-                <Col span={24}>
-                  <img
-                    src="./images/scb.png"
-                    style={{ width: "90px", height: "90px" }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col span={8} className="">
-              <Row className="bg-white">
-                <Col span={24}>
-                  <p>{"ธนาคาร ไทยพานิชย์"}</p>
-                  <p>{"ชื่อบัญชี นาย จอน โด"}</p>
-                </Col>
-              </Row>
-              <Row className="bg-white">
-                <Col span={24}>{"{XXX-XXXXX-XXX}"}</Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-      </div>
+        <Row
+          style={{ paddingLeft: "22rem" }}
+          type="flex"
+          justify="center"
+          align="middle"
+        >
+          <Col span={24}>
+            <img
+              src={`${ENDPOINT}/payment/accountnumber.png`}
+              style={{ width: "400px" }}
+            />
+          </Col>
+        </Row>
+      </>
     );
   };
 

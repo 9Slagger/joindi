@@ -47,6 +47,7 @@ class PersonalProfile extends Component {
         phone_number: detailUser.phone_number
       });
       this.setState({ detailUser });
+      console.log("🌈", detailUser);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +108,8 @@ class PersonalProfile extends Component {
   };
   render() {
     const { detailUser } = this.state;
-    const { getFieldDecorator,
+    const {
+      getFieldDecorator
       // setFieldsValue
     } = this.props.form;
     return (
